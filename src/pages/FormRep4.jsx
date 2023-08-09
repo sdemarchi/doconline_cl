@@ -38,6 +38,8 @@ function FormRep4() {
         forceUpdate()
     }
 
+    console.log(patolog)
+    
     return (
         <>
             <img className="mx-auto w-52 pb-2" src={logo}></img>

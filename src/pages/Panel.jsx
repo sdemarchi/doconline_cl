@@ -2,9 +2,10 @@ import logo from '../assets/logo-doconline-500.png'
 import DataBox from '../components/DataBox'
 import { LinkButton, MiniActionButtonRed } from '../components/Buttons'
 import { useNavigate, useOutletContext } from 'react-router-dom'
-import { perfil, getTurnoPaciente } from '../data/pacientes'
+import { perfil, descargarFormulario, getTurnoPaciente } from '../data/pacientes'
 import { cancelarTurno } from '../data/turnero'
 import { useEffect, useState } from 'react'
+import useForm from '../hooks/useForm'
 
 function Panel() {
 
@@ -15,6 +16,8 @@ function Panel() {
     const [paciente, setPaciente] = useState({})
     const [cargando] = useState(0)
     const [turnoPaciente, setTurnoPaciente] = useState({})
+
+    const { setFormCargado, llenarFormulario } = useForm()
 
     async function cargarTurnoPaciente() {
         const response = await getTurnoPaciente(user.userId)
@@ -30,6 +33,11 @@ function Panel() {
         async function getPaciente() {
             const response = await perfil(user.userId)
             setPaciente(response)
+            const response2 = await descargarFormulario(response.dni)
+            if(response2.error.code == 0){
+                //setFormCargado(response2.data)
+                llenarFormulario(response2.data, response2.patologias)
+            }
         }
         getPaciente()
         cargarTurnoPaciente()

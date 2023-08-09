@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react'
-import { Form, useActionData, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import logo from '../assets/logo-doconline-reprocann-500.png'
-import FormInput, { FormInputHook } from '../components/FormInput'
-import { SubmitButton, LinkButton } from '../components/Buttons'
+import { FormInputHook } from '../components/FormInput'
+import { SubmitButton } from '../components/Buttons'
 import useForm from '../hooks/useForm'
 import TextArea from '../components/TextArea'
-import RadioSiNo from '../components/Radio'
+import RadioSiNo, {RadioSiNoAlt}  from '../components/Radio'
 import { useForm as useFormHook } from "react-hook-form"
-import Error, { ErrorMax, ErrorReq } from '../components/Error'
+import Error, { ErrorMax } from '../components/Error'
 import { getContactos } from '../data/pacientes'
-import Select, { SelectHook } from '../components/Select'
-import { selectValidator } from '../data/validators'
+import Select from '../components/Select'
 
 
 function FormRep3b() {
@@ -19,6 +18,7 @@ function FormRep3b() {
 
     const { form3b, setForm3b, contactoActual, setContactoActual }  = useForm()
     const [contactos, setContactos] = useState([])
+    const [esMenor, setEsMenor] = useState(false)
     const [cargando] = useState(0)
     
     const [errorContacto, setErrorContacto] = useState(0)
@@ -28,6 +28,9 @@ function FormRep3b() {
         async function cargaContactos(){
             const response = await getContactos()
             setContactos(response)
+            setEsMenor(form3b.es_menor)
+            console.log(form3b)
+            
         }
         cargaContactos()
     }, [cargando])
@@ -39,8 +42,10 @@ function FormRep3b() {
             return
         }
         data.idcontacto = contactoActual
+        data.es_menor = esMenor ? 1 : 0
         setForm3b(data)
-        return data.es_menor == '1' ? navigate('/tutor-1') : navigate('/formulario-4')
+        console.log(form3b)
+        return data.es_menor ? navigate('/tutor-1') : navigate('/formulario-4')
     }
     
     function changeContacto(event){
@@ -77,12 +82,14 @@ function FormRep3b() {
                 />
                 { errors.patologia?.type == 'maxLength' && <ErrorMax>500</ErrorMax> }
                 
-                <RadioSiNo 
-                    label="¿Otra persona cultivará para tí?" 
-                    id="es_menor" 
-                    register={ register('es_menor')} 
-                    checked={ form3b.es_menor == 1 ? true : false }
+                <RadioSiNoAlt 
+                    label="¿Otra persona cultivará para tí?"
+                    id="es_menor"
+                    checked={ esMenor }
+                    onChange={ () => setEsMenor(!esMenor) }
                 />
+                
+                
                 <h6 className="text-gray-500 text-xs leading-3 pb-1 pt-2">Si la respuesta es "Sí", ingrese a continuación los datos del tutor</h6>
                 
                 <div className='pt-4'>

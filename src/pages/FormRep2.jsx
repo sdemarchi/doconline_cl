@@ -124,7 +124,7 @@ function FormRep2() {
                     placeholder="Seleccione una Ocupacion"
                     datos={ocupaciones}
                 />
-                { errorOcup > 0  && <Error>Seleccione una Provincia</Error> }
+                { errorOcup > 0  && <Error>Seleccione una Ocupación</Error> }
                 
                 
                 <FormInputHook label="Ocupación Otra" id="ocupacion"

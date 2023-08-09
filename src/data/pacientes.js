@@ -43,8 +43,43 @@ export async function registrarGoogle(paciente) {
     }
 }
 
+export async function descargarFormulario(dni){
+    const url = import.meta.env.VITE_API_URL + '/formulario/' + dni
+    console.log(url)
+    try {
+        const respuesta = await fetch(url)
+        const resp = await respuesta.json()
+        return resp
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export async function guardarFormulario(form) {
     const url = import.meta.env.VITE_API_URL + '/formulario'
+    try {
+        const respuesta = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(form),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const status = respuesta.status
+        if(status == 500) return 'error 500'
+        const resp = await respuesta.json()
+        if(resp.code == 0){
+            return ''
+        } else {
+            return resp.message
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export async function actualizarFormulario(id, form) {
+    const url = import.meta.env.VITE_API_URL + '/formulario/' + id
     try {
         const respuesta = await fetch(url, {
             method: 'POST',

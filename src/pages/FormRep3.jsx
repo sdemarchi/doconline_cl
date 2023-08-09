@@ -1,30 +1,47 @@
+import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { Form, useActionData, useNavigate } from 'react-router-dom'
 import logo from '../assets/logo-doconline-reprocann-500.png'
-import FormInput, { FormInputHook } from '../components/FormInput'
-import { SubmitButton, LinkButton } from '../components/Buttons'
+import { SubmitButton } from '../components/Buttons'
 import useForm from '../hooks/useForm'
 import TextArea from '../components/TextArea'
-import RadioSiNo from '../components/Radio'
+import RadioSiNo, {RadioSiNoAlt} from '../components/Radio'
 import { useForm as useFormHook } from "react-hook-form"
-import Error, { ErrorMax, ErrorReq } from '../components/Error'
-import { getContactos } from '../data/pacientes'
-import { SelectHook } from '../components/Select'
-import { selectValidator } from '../data/validators'
-
+import { ErrorMax } from '../components/Error'
 
 function FormRep3() {
 
     const { register, formState: { errors }, handleSubmit } = useFormHook()
 
     const { form3, setForm3 }  = useForm()
+
+    const [ arritmia, setArritmia ] = useState(false)
+    const [ alergia, setAlergia ] = useState(false)
+    const [ embarazada, setEmbarazada ] = useState(false)
+    const [ salud_mental, setSalud_mental ] = useState(false)
+    const [ maneja_maq, setManeja_maq ] = useState(false)
+    const [cargando] = useState(0)
     
     const navigate = useNavigate()
     
-    console.log(form3)
+    useEffect(() => {
+        async function cargarEstados(){
+            setArritmia(form3.arritmia)
+            setAlergia(form3.alergia)
+            setEmbarazada(form3.embarazada)
+            setSalud_mental(form3.salud_mental)
+            setManeja_maq(form3.maneja_maq)
+            
+            console.log(form3)
+        }
+        cargarEstados()
+    }, [cargando])
 
-    
     const onSubmit = (data) => {
+        data.arritmia = arritmia ? 1 : 0
+        data.alergia = alergia ? 1 : 0
+        data.embarazada = embarazada ? 1 : 0
+        data.salud_mental = salud_mental ? 1 : 0
+        data.maneja_maq = maneja_maq ? 1 : 0
         setForm3(data)
         return navigate('/formulario-3b')
     }
@@ -33,32 +50,38 @@ function FormRep3() {
         <>
             <img className="mx-auto w-52 pb-2" src={logo}></img>
             <form onSubmit={ handleSubmit(onSubmit) }>
-                <RadioSiNo 
+                {/*<RadioSiNo 
                     label="¿Tiene arritmias en actividad?" 
                     id="arritmia" 
                     register={ register('arritmia')} 
                     checked={ form3.arritmia == 1 ? true : false }
+                />*/}
+                <RadioSiNoAlt 
+                    label="¿Tiene arritmias en actividad?"
+                    id="arritmia"
+                    checked={ arritmia }
+                    onChange={ () => setArritmia(!arritmia) }
                 />
                 
-                <RadioSiNo 
-                    label="¿Tiene alergia a algún componente de la planta?" 
-                    id="alergia" 
-                    register={ register('alergia')} 
-                    checked={ form3.alergia == 1 ? true : false }
-                />
-                
-                <RadioSiNo 
-                    label="¿Está embarazada o realizando lactancia?" 
-                    id="embarazada" 
-                    register={ register('embarazada')} 
-                    checked={ form3.embarazada == 1 ? true : false }
+                <RadioSiNoAlt 
+                    label="¿Tiene alergia a algún componente de la planta?"
+                    id="alergia"
+                    checked={ alergia }
+                    onChange={ () => setAlergia(!alergia) }
                 />
 
-                <RadioSiNo 
-                    label="¿Tiene antecedentes de algún padecimiento en salud mental?¿Se encuentra actualmente en tratamiento" 
-                    id="salud_mental" 
-                    register={ register('salud_mental')} 
-                    checked={ form3.salud_mental == 1 ? true : false }
+                <RadioSiNoAlt 
+                    label="¿Está embarazada o realizando lactancia?"
+                    id="embarazada"
+                    checked={ embarazada }
+                    onChange={ () => setEmbarazada(!embarazada) }
+                />
+
+                <RadioSiNoAlt 
+                    label="¿Tiene antecedentes de algún padecimiento en salud mental?¿Se encuentra actualmente en tratamiento?"
+                    id="salud_mental"
+                    checked={ salud_mental }
+                    onChange={ () => setSalud_mental(!salud_mental) }
                 />
 
                 <TextArea 
@@ -69,11 +92,11 @@ function FormRep3() {
                 />
                 { errors.salud_ment_esp?.type == 'maxLength' && <ErrorMax>80</ErrorMax> }
                 
-                <RadioSiNo 
-                    label="¿Maneja maquinarias de alta precisión?" 
-                    id="maneja_maq" 
-                    register={ register('maneja_maq')} 
-                    checked={ form3.maneja_maq == 1 ? true : false }
+                <RadioSiNoAlt 
+                    label="¿Maneja maquinarias de alta precisión?"
+                    id="maneja_maq"
+                    checked={ maneja_maq }
+                    onChange={ () => setManeja_maq(!maneja_maq) }
                 />
                 
                 <div className='pt-4'>

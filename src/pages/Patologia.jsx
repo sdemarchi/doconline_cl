@@ -58,7 +58,7 @@ function Patologia() {
                     maxLength={4}
                     register={register('anio_aprox', { required:true, max: 2050, validate: numberValidator })}
                 />
-                { errors.anio_aprox?.type == 'required' && <ErrorReq>Año</ErrorReq> }
+                {errors.anio_aprox?.type == 'required' && <ErrorReq>Año</ErrorReq> }
                 {errors.anio_aprox?.type == 'max' && <ErrorVal>2050</ErrorVal>}
                 {errors.anio_aprox && <Error>Año no válido</Error>}
                 <TextArea
