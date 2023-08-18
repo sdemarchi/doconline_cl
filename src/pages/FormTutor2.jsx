@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import logo from '../assets/logo-doconline-reprocann-500.png'
-import FormInput, { FormInputHook } from '../components/FormInput'
-import { SubmitButton, LinkButton } from '../components/Buttons'
+import/* FormInput,*/ { FormInputHook } from '../components/FormInput'
+import { SubmitButton,/* LinkButton*/ } from '../components/Buttons'
 import RadioSiNo from '../components/Radio'
 import { useForm as useFormHook } from "react-hook-form"
 import Error, { ErrorMax, ErrorReq } from '../components/Error'
 import useForm from '../hooks/useForm'
 import { getProvincias } from '../data/pacientes'
-import Select, { SelectHook } from '../components/Select'
-import { selectValidator } from '../data/validators'
+import Select/*, { SelectHook }*/ from '../components/Select'
+//import { selectValidator } from '../data/validators'
 
 function FormTutor2() {
 
@@ -123,7 +123,7 @@ function FormTutor2() {
                 
             </form>
 
-            <div className='mb-6 mx-auto p-3 text-center'>
+            <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/tutor-1')} >Atrás</button>
             </div>
         </>

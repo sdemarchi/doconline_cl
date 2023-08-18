@@ -17,7 +17,7 @@ function FormRep1() {
     const { form1, setForm1 } = useForm()
     const navigate = useNavigate()
 
-    const [paciente, setPaciente] = useState({})
+    const [/*paciente,*/ setPaciente] = useState({})
     const [fechaNac, setFechaNac] = useState('')
     const [errorFechaNac, setErrorFechaNac] = useState('')
 
@@ -122,7 +122,7 @@ function FormRep1() {
                 </div>
 
             </form>
-            <div className='mb-6 mx-auto p-3 text-center'>
+            <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/panel')} >Volver</button>
             </div>
 

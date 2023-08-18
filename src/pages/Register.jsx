@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import {/* useState,*/ useEffect } from 'react'
 import { Form, useActionData, useNavigate } from 'react-router-dom'
 import FormInput from '../components/FormInput'
 import { SubmitButton } from '../components/Buttons'
@@ -106,7 +106,7 @@ function Register() {
                 <div className='pt-4'><SubmitButton value="Registrarme" /></div>
                 
             </Form>
-            <div className='mb-6 mx-auto p-3 text-center'>
+            <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/login')} >Volver</button>
             </div>
         </>

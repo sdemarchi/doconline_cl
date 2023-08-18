@@ -4,7 +4,7 @@ import logo from '../assets/logo-doconline-reprocann-500.png'
 import { SubmitButton } from '../components/Buttons'
 import useForm from '../hooks/useForm'
 import TextArea from '../components/TextArea'
-import RadioSiNo, {RadioSiNoAlt} from '../components/Radio'
+import /*RadioSiNo, */{RadioSiNoAlt} from '../components/Radio'
 import { useForm as useFormHook } from "react-hook-form"
 import { ErrorMax } from '../components/Error'
 
@@ -104,7 +104,7 @@ function FormRep3() {
                 </div>
                 
             </form>
-            <div className='mb-6 mx-auto p-3 text-center'>
+            <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/formulario-2')} >Atrás</button>
             </div>
         </>

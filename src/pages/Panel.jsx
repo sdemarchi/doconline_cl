@@ -17,7 +17,7 @@ function Panel() {
     const [cargando] = useState(0)
     const [turnoPaciente, setTurnoPaciente] = useState({})
 
-    const { setFormCargado, llenarFormulario } = useForm()
+    const {/* setFormCargado,*/ llenarFormulario } = useForm()
 
     async function cargarTurnoPaciente() {
         const response = await getTurnoPaciente(user.userId)

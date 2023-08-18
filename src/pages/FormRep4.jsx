@@ -59,7 +59,7 @@ function FormRep4() {
             <div className='pt-4'>
                 <LinkButton to="/formulario-5" value="Continuar" /> 
             </div>  
-            <div className='mb-6 mx-auto p-3 text-center'>
+            <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/formulario-3b')} >Atrás</button>
             </div>
         </>
