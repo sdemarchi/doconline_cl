@@ -83,7 +83,7 @@ function Register() {
                         <FormInput label="DNI*" id="dni" maxlenght="10" placeholder="12345676" />
                     </div>
                 </div>
-                <FormInput label="Domicilio*" id="domicilio" placeholder="Calle y Número" />
+                <FormInput label="Domicilio*" id="direccion" placeholder="Calle y Número" />
                 <div className='flex flex-row'>
                     <div className='basis-1/2 pe-1'>
                         <FormInput label="Teléfono*" id="telefono" placeholder="342 4392819" />

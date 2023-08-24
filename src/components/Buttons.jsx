@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 function SubmitButton(props) {
     return (
@@ -13,7 +13,7 @@ function SubmitButton(props) {
 function ActionButton(props) {
     return (
         <button
-            className="bg-gradient-to-r from-grad-green to-grad-blue text-white w-full p-2 rounded-md cursor-pointer"
+            className="action-button bg-gradient-to-r from-grad-green to-grad-blue text-white w-full p-2 rounded-md cursor-pointer"
             onClick={props.onClick}
         >{props.value}</button>
     )

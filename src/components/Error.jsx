@@ -15,11 +15,18 @@ function ErrorGral({children}) {
 }
 
 function ErrorReq({children}) {
+  if(children == 'Edad'){
   return (
     <h6 className="text-red-600 text-xs">
-        {children} es requerido
+        {children} requerida.
     </h6>
-  )
+  )}else{
+    return (
+      <h6 className="text-red-600 text-xs">
+          {children} es requerido.
+      </h6>
+    )
+  }
 }
 
 function ErrorMax({children}) {
