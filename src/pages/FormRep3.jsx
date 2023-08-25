@@ -85,7 +85,7 @@ function FormRep3() {
                 />
 
                 <TextArea 
-                    label="Comentarios sobre su estado de salud que quiera comentar o aclarar"
+                    label="Completar con medicación si corresponde"
                     id="salud_ment_esp"
                     defaultValue={form3?.salud_ment_esp}
                     register={ register('salud_ment_esp', {maxLength:80}) }

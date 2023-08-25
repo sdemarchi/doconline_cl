@@ -10,18 +10,25 @@ import { useForm as useFormHook } from "react-hook-form"
 import { dateValidator, emailValidator, numberValidator } from '../data/validators'
 
 function FormRep1() {
-    const user = useOutletContext()
+    const user = useOutletContext();
 
-    const { register, formState: { errors }, handleSubmit } = useFormHook()
+    const { register, formState: { errors }, handleSubmit, getValues } = useFormHook();
 
-    const { form1, setForm1 } = useForm()
-    const navigate = useNavigate()
+    const { form1, setForm1 } = useForm();
+    const navigate = useNavigate();
 
-    const [/*paciente,*/ setPaciente] = useState({})
-    const [fechaNac, setFechaNac] = useState('')
-    const [errorFechaNac, setErrorFechaNac] = useState('')
+    const [/*paciente,*/ setPaciente] = useState({});
+    var [fechaNac, setFechaNac] = useState('');
+    const [errorFechaNac, setErrorFechaNac] = useState('');
 
-    const [cargando] = useState(0)
+    const [cargando] = useState(0);
+
+    var celValue;
+    var [confirmarCelular, setConfirmarCelular] = useState('');
+
+    const handleConfirmarCelularChange = (event) => {
+        setConfirmarCelular(event.target.value);
+    };
 
     useEffect(() => {
         async function getPaciente() {
@@ -35,18 +42,33 @@ function FormRep1() {
     }, [cargando])
 
     const onSubmit = (data) => {
+        celValue = getValues('celular')
+        var validForm = false;
+        var validFecha = false;
+        var validCel = false;
+
         if(dateValidator(fechaNac)){
             setErrorFechaNac('')
-        } else {
+            validFecha = true;
+        }else{
             setErrorFechaNac('Fecha no válida')
-            return
         }
-        setForm1(data)
-        setForm1(data => ({
-            ...data,
-            ...{fe_nacim:fechaNac}
-          }))
-        return navigate('/formulario-2')
+
+        if(celValue === confirmarCelular){
+           validCel = true;
+        }
+
+        validForm = validFecha && validCel;
+        
+        if(validForm){
+            setForm1(data)
+            setForm1(data => ({
+                ...data,
+                ...{fe_nacim:fechaNac}
+              }))
+            return navigate('/formulario-2')
+        }
+        return
     }
 
     return (
@@ -62,14 +84,19 @@ function FormRep1() {
                 {errors.nom_ape?.type == 'required' && <ErrorReq>Nombre y Apellido</ErrorReq>}
                 {errors.nom_ape?.type == 'maxLength' && <ErrorMax>255</ErrorMax>}
 
+
+
                 <FormInputDate label="Fecha de Nacimiento*" id=""
                     value={fechaNac}
                     maxLength={10}
                     onChange={(e) => setFechaNac(e)}
                 />
                 {errorFechaNac && <Error>{errorFechaNac}</Error>}
+
+
                         
                 <div className='flex flex-row'>
+
                     <div className='basis-1/2 pe-1'>
                         <FormInputHook label="DNI*" id="dni"
                             defaultValue={form1?.dni}
@@ -81,6 +108,8 @@ function FormRep1() {
                         {errors.dni?.type == 'maxLength' && <ErrorMax>10</ErrorMax>}
                         {!(errors.dni?.type == 'required' || errors.dni?.type == 'maxLength') && errors.dni && <Error>DNI no válido</Error>}            
                     </div>
+
+
                     <div className='basis-1/2 ps-1'>
                         <FormInputHook label="Edad*" id="edad"
                             defaultValue={form1?.edad}
@@ -93,6 +122,9 @@ function FormRep1() {
 
                     </div>
                 </div>
+
+
+
                 <FormInputHook label="E-Mail*" id="email"
                     defaultValue={form1?.email}
                     maxLength={150}
@@ -102,13 +134,24 @@ function FormRep1() {
                 {errors.email?.type == 'maxLength' && <ErrorMax>150</ErrorMax>}
                 {!(errors.email?.type == 'maxLength' || errors.email?.type == 'required') && errors.email && <Error>E-Mail no válido</Error>}
 
+
                 <FormInputHook label="Teléfono Celular*" id="celular"
                     defaultValue={form1?.celular}
                     maxLength={20}
-                    register={register('celular', { required: true, maxLength: 15 })}
+                    register={ register('celular', { required: true, maxLength: 15})}
+                    
+    
                 />
                 {errors.celular?.type == 'required' && <ErrorReq>Celular</ErrorReq>}
                 {errors.celular?.type == 'maxLength' && <ErrorMax>15</ErrorMax>}
+                {errors.celular?.pattern == 'maxLength' && <ErrorMax>15</ErrorMax>}
+                
+                
+                <FormInputHook label="Repetir Teléfono Celular*"
+                    maxLength={20}
+                    onChange={handleConfirmarCelularChange} 
+                />
+                { confirmarCelular !== getValues("celular") && <Error>Los telefonos no coinciden</Error>}
 
                 <FormInputHook label="Código de Vinculación de REPROCANN" id="cod_vincu"
                     defaultValue={form1?.cod_vincu}
@@ -116,6 +159,9 @@ function FormRep1() {
                     register={register('cod_vincu', { maxLength: 50 })}
                 />
                 {errors.cod_vincu?.type == 'maxLength' && <ErrorMax>50</ErrorMax>}
+
+
+
 
                 <div className='pt-4'>
                     <SubmitButton value="Continuar" />

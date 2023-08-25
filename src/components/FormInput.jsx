@@ -15,6 +15,7 @@ function FormInput(props) {
                 placeholder={ props.placeholder }
                 name={ props.id }
                 defaultValue={ props.defaultValue }
+                value = { props.defaultValue }
             />
         </div>
     )
@@ -75,6 +76,7 @@ function FormInputHook(props) {
                 className="block w-full p-2 bg-white border-input focus:border-input border-2 text-xs text-gray-500"
                 placeholder={ props.placeholder }
                 defaultValue={ props.defaultValue }
+                onChange = {props.onChange}
                 { ...props.register }
                 
             />
