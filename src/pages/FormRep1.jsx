@@ -10,6 +10,8 @@ import { useForm as useFormHook } from "react-hook-form"
 import { dateValidator, emailValidator, numberValidator } from '../data/validators'
 
 function FormRep1() {
+
+
     const user = useOutletContext();
 
     const { register, formState: { errors }, handleSubmit, getValues } = useFormHook();
@@ -28,7 +30,7 @@ function FormRep1() {
 
     const handleConfirmarCelularChange = (event) => {
         setConfirmarCelular(event.target.value);
-    };
+    };      
 
     useEffect(() => {
         async function getPaciente() {
@@ -77,7 +79,7 @@ function FormRep1() {
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 <FormInputHook label="Nombre y Apellido*" id="nom_ape"
-                    defaultValue={form1?.nom_ape}
+                    defaultValue={/*form1?.nom_ape ||*/ sessionStorage.getItem('nombre')}
                     maxLength={255}
                     register={register('nom_ape', { required: true, maxLength: 255 })}
                 />
@@ -87,7 +89,7 @@ function FormRep1() {
 
 
                 <FormInputDate label="Fecha de Nacimiento*" id=""
-                    value={fechaNac}
+                    value={/*fechaNac*/ sessionStorage.getItem('fecha_nac')}
                     maxLength={10}
                     onChange={(e) => setFechaNac(e)}
                 />
@@ -99,7 +101,7 @@ function FormRep1() {
 
                     <div className='basis-1/2 pe-1'>
                         <FormInputHook label="DNI*" id="dni"
-                            defaultValue={form1?.dni}
+                            defaultValue={/*form1?.dni*/ sessionStorage.getItem('dni')}
                             maxLength={8}
                             register={register('dni', {
                                 required: true, maxLength: 8, validate: numberValidator})}
@@ -112,7 +114,7 @@ function FormRep1() {
 
                     <div className='basis-1/2 ps-1'>
                         <FormInputHook label="Edad*" id="edad"
-                            defaultValue={form1?.edad}
+                            defaultValue={/*form1?.edad*/ sessionStorage.getItem('edad')}
                             maxLength={3}
                             register={register('edad', { required: true, max: 100, validate: numberValidator })}
                         />
@@ -126,7 +128,7 @@ function FormRep1() {
 
 
                 <FormInputHook label="E-Mail*" id="email"
-                    defaultValue={form1?.email}
+                    defaultValue={/*form1?.email*/ sessionStorage.getItem('email')}
                     maxLength={150}
                     register={register('email', { required: true, maxLength: 150, validate: emailValidator })}
                 />
@@ -136,7 +138,7 @@ function FormRep1() {
 
 
                 <FormInputHook label="Teléfono Celular*" id="celular"
-                    defaultValue={form1?.celular}
+                    defaultValue={/*form1?.celular */sessionStorage.getItem('telefono')}
                     maxLength={20}
                     register={ register('celular', { required: true, maxLength: 15})}
                     

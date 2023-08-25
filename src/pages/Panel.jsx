@@ -73,7 +73,7 @@ function Panel() {
                     <DataBox label="Teléfono" value={paciente.telefono} />
                 </div>
             </div>
-            <DataBox label="Domicilio" value={paciente.direccion} />
+     
             <DataBox label="E-Mail" value={paciente.email} />
 
             <hr className='solid border-input border-1 my-4'></hr>

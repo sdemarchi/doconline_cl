@@ -1,7 +1,17 @@
-export async function perfil(id) {
+
+    export async function perfil(id) {
     const url = import.meta.env.VITE_API_URL + '/profile/' + id
     const response = await fetch(url)
     const result = await response.json()
+    //const jsonString = JSON.stringify(result);
+
+    sessionStorage.setItem('dni',result.dni);
+    sessionStorage.setItem('fecha_nac',result.fecha_nac);
+    sessionStorage.setItem('dni',result.dni);
+    sessionStorage.setItem('nombre',result.nombre);
+    sessionStorage.setItem('telefono',result.telefono);
+    sessionStorage.setItem('email',result.email);
+
     return result
 }
 
