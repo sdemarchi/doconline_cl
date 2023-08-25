@@ -29,6 +29,14 @@ function ErrorReq({children}) {
   }
 }
 
+function ErrorText(promps) {
+  return (
+    <h6 className="text-red-600 text-xs">
+       { promps.text }
+    </h6>
+  )
+}
+
 function ErrorMax({children}) {
   return (
     <h6 className="text-red-600 text-xs">
@@ -45,5 +53,5 @@ function ErrorVal({children}) {
   )
 }
 
-export {ErrorGral, ErrorReq, ErrorMax, ErrorVal}
+export {ErrorGral, ErrorReq, ErrorMax, ErrorVal, ErrorText}
 export default Error

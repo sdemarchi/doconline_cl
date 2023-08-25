@@ -22,11 +22,13 @@ function FormRep1() {
     const [/*paciente,*/ setPaciente] = useState({});
     var [fechaNac, setFechaNac] = useState('');
     const [errorFechaNac, setErrorFechaNac] = useState('');
+    fechaNac = sessionStorage.getItem('fecha_nac');
 
     const [cargando] = useState(0);
-
+ 
     var celValue;
     var [confirmarCelular, setConfirmarCelular] = useState('');
+    let corfimCelError = 'Los telefonos no coinciden.';
 
     const handleConfirmarCelularChange = (event) => {
         setConfirmarCelular(event.target.value);
@@ -58,7 +60,10 @@ function FormRep1() {
 
         if(celValue === confirmarCelular){
            validCel = true;
-        }
+        }else{
+            corfimCelError = 'Los telefonos no coinciden.';
+          }
+        
 
         validForm = validFecha && validCel;
         
@@ -79,7 +84,7 @@ function FormRep1() {
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 <FormInputHook label="Nombre y Apellido*" id="nom_ape"
-                    defaultValue={/*form1?.nom_ape ||*/ sessionStorage.getItem('nombre')}
+                    defaultValue={form1?.nom_ape?.length && form1?.nom_ape || sessionStorage.getItem('nombre')}
                     maxLength={255}
                     register={register('nom_ape', { required: true, maxLength: 255 })}
                 />
@@ -101,7 +106,7 @@ function FormRep1() {
 
                     <div className='basis-1/2 pe-1'>
                         <FormInputHook label="DNI*" id="dni"
-                            defaultValue={/*form1?.dni*/ sessionStorage.getItem('dni')}
+                            defaultValue={form1?.dni !== sessionStorage.getItem('dni') && sessionStorage.getItem('dni') || sessionStorage.getItem('dni')}
                             maxLength={8}
                             register={register('dni', {
                                 required: true, maxLength: 8, validate: numberValidator})}
@@ -114,7 +119,7 @@ function FormRep1() {
 
                     <div className='basis-1/2 ps-1'>
                         <FormInputHook label="Edad*" id="edad"
-                            defaultValue={/*form1?.edad*/ sessionStorage.getItem('edad')}
+                            defaultValue={form1?.edad  !== sessionStorage.getItem('edad') && form1?.edad || '' }
                             maxLength={3}
                             register={register('edad', { required: true, max: 100, validate: numberValidator })}
                         />
@@ -128,7 +133,7 @@ function FormRep1() {
 
 
                 <FormInputHook label="E-Mail*" id="email"
-                    defaultValue={/*form1?.email*/ sessionStorage.getItem('email')}
+                    defaultValue={form1?.email !== sessionStorage.getItem('email') && form1?.email || sessionStorage.getItem('email')}
                     maxLength={150}
                     register={register('email', { required: true, maxLength: 150, validate: emailValidator })}
                 />
@@ -138,7 +143,7 @@ function FormRep1() {
 
 
                 <FormInputHook label="Teléfono Celular*" id="celular"
-                    defaultValue={/*form1?.celular */sessionStorage.getItem('telefono')}
+                    defaultValue={form1?.celular !== sessionStorage.getItem('telefono') && form1?.celular || sessionStorage.getItem('telefono')}
                     maxLength={20}
                     register={ register('celular', { required: true, maxLength: 15})}
                     
@@ -153,7 +158,7 @@ function FormRep1() {
                     maxLength={20}
                     onChange={handleConfirmarCelularChange} 
                 />
-                { confirmarCelular !== getValues("celular") && <Error>Los telefonos no coinciden</Error>}
+                { confirmarCelular !== getValues("celular") && <Error>{corfimCelError}</Error>}
 
                 <FormInputHook label="Código de Vinculación de REPROCANN" id="cod_vincu"
                     defaultValue={form1?.cod_vincu}
