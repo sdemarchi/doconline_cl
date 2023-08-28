@@ -1,31 +1,33 @@
-import { useNavigate, useOutletContext } from 'react-router-dom'
-import logo from '../assets/logo-doconline-reprocann-500.png'
-import { ActionButton } from '../components/Buttons'
-import Calendario from '../components/Calendario'
-import { getPrestadores, getCalendario, getTurno } from '../data/turnero'
-import { useEffect, useState } from 'react'
-import Select from '../components/Select'
-import useTurno from '../hooks/useTurno'
+import { useNavigate, useOutletContext } from 'react-router-dom';
+import logo from '../assets/logo-doconline-reprocann-500.png';
+import { ActionButton } from '../components/Buttons';
+import Calendario from '../components/Calendario';
+import { getPrestadores, getCalendario, getTurno } from '../data/turnero';
+import { useEffect, useState } from 'react';
+import Select from '../components/Select';
+import useTurno from '../hooks/useTurno';
+import Spinner from '../components/Spinner';
 
 function Turnos() {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     
-    const { setTurno } = useTurno()
-    const user = useOutletContext()
+    const { setTurno } = useTurno();
+    const user = useOutletContext();
     
-    const now = new Date()
+    const now = new Date();
     
-    const [prestador, setPrestador] = useState(0)
-    const [prestadores, setPrestadores] = useState([])
-    const [mes, SetMes] = useState(now.getMonth() + 1)
-    const [anio, setAnio] = useState(now.getFullYear())
-    const [turnoFecha, setTurnoFecha] = useState('')
-    const [turnoHora, setTurnoHora] = useState('')
-    const [turnoDesc, setTurnoDesc] = useState('')
-    const [calendario, setCalendario] = useState([])
+    const [prestador, setPrestador] = useState(0);
+    const [prestadores, setPrestadores] = useState([]);
+    const [mes, SetMes] = useState(now.getMonth() + 1);
+    const [anio, setAnio] = useState(now.getFullYear());
+    const [turnoFecha, setTurnoFecha] = useState('');
+    const [turnoHora, setTurnoHora] = useState('');
+    const [datosCargados, setDatosCargados] = useState(false);
+    const [turnoDesc, setTurnoDesc] = useState('');
+    const [calendario, setCalendario] = useState([]);
     
-    const [ cargando, setCargando ] = useState(0)
+    const [ cargando, setCargando ] = useState(0);
 
     
     async function cargarPrestadores(){
@@ -34,8 +36,9 @@ function Turnos() {
     }
     
     async function cargarCalendario(mes, anio, prestador){
-        const response = await getCalendario(mes, anio, prestador)
-        setCalendario(response)
+        const response = await getCalendario(mes, anio, prestador);
+        setDatosCargados(true);
+        setCalendario(response);
     }
     
     function prestadorSeleccionado(id){
@@ -75,10 +78,13 @@ function Turnos() {
     useEffect(() => {
         cargarPrestadores()
         cargarCalendario(mes,anio,prestador)
-    }, [cargando])
+    }, [])
 
     return (
         <>
+        { !datosCargados && <Spinner />}
+        { datosCargados &&
+        <div className="turnos-container">
             <img className="mx-auto w-52 pb-2" src={logo}></img>
             
             <Select 
@@ -109,10 +115,12 @@ function Turnos() {
                     value="Confirmar" 
                 />
             </div>
-            <div className='mb-6 mx-auto p-3 text-center'>
+            <div className='mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/panel')} >Volver</button>
             </div>
-            
+
+            </div>
+            }
         </>
     )
 }

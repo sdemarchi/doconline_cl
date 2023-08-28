@@ -3,6 +3,7 @@
   max-width: 96vw;
   padding: 20px;
   margin: 8px 0;
+  min-height: 600px;
 }
 
 .login-container{
@@ -10,6 +11,7 @@
   width:380px;
   max-width: 96vw;
   padding: 40px 20px;
+  min-height: 600px;
 }
 
 @media screen and (max-width:600px) {

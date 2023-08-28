@@ -138,7 +138,7 @@ function Login() {
 
     return (
         <>
-            <img className="mx-auto w-20 pb-4" src={ logo }></img>
+            <img className="mb-6 mx-auto w-20 pb-4" src={ logo }></img>
 
             {msg && <Alerta alerta={ alerta } />}
             
@@ -158,7 +158,7 @@ function Login() {
                 password={true}
             />
             <div className='mb-4'>
-                <Link to='#' className='text-gray-500 text-sm'>¿Olvidaste tu Contraseña?</Link>
+                <Link to='#' className='mb-6 text-gray-500 text-sm'>¿Olvidaste tu Contraseña?</Link>
             </div>
             <ActionButton value="Iniciar Sesión" onClick={login} />
             <div className='mx-auto pt-3 text-center'>

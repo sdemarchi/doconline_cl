@@ -6,23 +6,25 @@ import { perfil, descargarFormulario, getTurnoPaciente } from '../data/pacientes
 import { cancelarTurno } from '../data/turnero';
 import { useEffect, useState } from 'react';
 import useForm from '../hooks/useForm';
-import '../global-styles/panel-styles.css'
+import '../global-styles/panel-styles.css';
+import Spinner from '../components/Spinner';
 
 function Panel() {
 
-    const user = useOutletContext()
+    const user = useOutletContext();
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const [paciente, setPaciente] = useState({})
-    const [cargando] = useState(0)
-    const [turnoPaciente, setTurnoPaciente] = useState({})
+    const [paciente, setPaciente] = useState({});
+    const [cargando] = useState(0);
+    const [DatosCargados, setDatosCargados] = useState(false);
+    const [turnoPaciente, setTurnoPaciente] = useState({});
 
-    const {/* setFormCargado,*/ llenarFormulario } = useForm()
+    const {/* setFormCargado,*/ llenarFormulario } = useForm();
 
     async function cargarTurnoPaciente() {
-        const response = await getTurnoPaciente(user.userId)
-        setTurnoPaciente(response)
+        const response = await getTurnoPaciente(user.userId);
+        setTurnoPaciente(response);
     }
 
     async function cancelarMiTurno() {
@@ -32,17 +34,20 @@ function Panel() {
 
     useEffect(() => {
         async function getPaciente() {
-            const response = await perfil(user.userId)
-            setPaciente(response)
-            const response2 = await descargarFormulario(response.dni)
+            const response = await perfil(user.userId);
+            setPaciente(response);
+            setDatosCargados(true);
+            const response2 = await descargarFormulario(response.dni);
             if(response2.error.code == 0){
                 //setFormCargado(response2.data)
-                llenarFormulario(response2.data, response2.patologias)
+                setDatosCargados(true);
+                llenarFormulario(response2.data, response2.patologias);
+
             }
         }
-        getPaciente()
+        getPaciente();
         cargarTurnoPaciente()
-    }, [cargando])
+    }, [])
 
     function logout() {
         localStorage.removeItem('dc_userId')
@@ -53,6 +58,9 @@ function Panel() {
     return (
 
         <>
+        {!DatosCargados && <Spinner />}
+
+        {DatosCargados &&
         <div className='panel-container'>
             <img className="panel-logo mx-auto w-50" src={logo}></img>
             <div className='mb-3 mx-auto text-center'>
@@ -106,7 +114,7 @@ function Panel() {
             <div className='panel-button mx-auto p-3 text-center'>
                 <button className='text-red-700' onClick={() => logout()} >Cerrar Sesión</button>
             </div>
-        </div> 
+        </div>}
         </>
     )
 }
