@@ -26,8 +26,8 @@ function MainLayout() {
 
     return (
         <div className="min-h-screen bg-gradient-to-bl from-grad-blue to-grad-green overflow-y-auto flex items-center justify-center">
-            <div className="p-6 flex items-center justify-center">
-                <div className="max-w-sm p-6 bg-white rounded-md shadow-lg w-80">
+            <div className="flex items-center justify-center">
+                <div className="form-container max-w-sm bg-white rounded-md shadow-lg w-80">
                 <Outlet context={user}/>
                 </div>
             </div>

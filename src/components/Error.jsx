@@ -1,6 +1,8 @@
+import '../global-styles/error-styles.css';
+
 function Error({children}) {
   return (
-    <h6 className="text-red-600 text-xs">
+    <h6 className="error-msg text-red-600 text-xs">
         {children}
     </h6>
   )
@@ -8,7 +10,7 @@ function Error({children}) {
 
 function ErrorGral({children}) {
   return (
-    <h6 className="text-red-600 text-sm text-center py-2">
+    <h6 className="error-msg text-red-600 text-sm text-center py-2">
         {children}
     </h6>
   )
@@ -17,12 +19,12 @@ function ErrorGral({children}) {
 function ErrorReq({children}) {
   if(children == 'Edad'){
   return (
-    <h6 className="text-red-600 text-xs">
+    <h6 className="error-msg text-red-600 text-xs">
         {children} requerida.
     </h6>
   )}else{
     return (
-      <h6 className="text-red-600 text-xs">
+      <h6 className="error-msg  text-red-600 text-xs">
           {children} es requerido.
       </h6>
     )
@@ -31,7 +33,7 @@ function ErrorReq({children}) {
 
 function ErrorText(promps) {
   return (
-    <h6 className="text-red-600 text-xs">
+    <h6 className="error-msg  text-red-600 text-xs">
        { promps.text }
     </h6>
   )
@@ -39,7 +41,7 @@ function ErrorText(promps) {
 
 function ErrorMax({children}) {
   return (
-    <h6 className="text-red-600 text-xs">
+    <h6 className="error-msg  text-red-600 text-xs">
         La longitud máxima es de {children}
     </h6>
   )
@@ -47,7 +49,7 @@ function ErrorMax({children}) {
 
 function ErrorVal({children}) {
   return (
-    <h6 className="text-red-600 text-xs">
+    <h6 className="error-msg text-red-600 text-xs">
         El valor máximo es {children}
     </h6>
   )

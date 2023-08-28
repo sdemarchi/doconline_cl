@@ -1,10 +1,11 @@
 import ReactInputDateMask from 'react-input-date-mask';
+import '../global-styles/form-styles.css';
 
 function FormInput(props) {
     return (
-        <div className="mt-1">
+        <div className="input-container mt-1">
             <label
-                className="text-gray-500 text-xs font-semibold"
+                className="input-label text-gray-500 text-xs font-semibold"
                 htmlFor={ props.id }
             >{ props.label }</label>
             <input
@@ -23,9 +24,9 @@ function FormInput(props) {
 
 function FormInputReadonly(props) {
     return (
-        <div className="mt-1">
+        <div className="input-container mt-1">
             <label
-                className="text-gray-500 text-xs font-semibold"
+                className="input-label text-gray-500 text-xs font-semibold"
                 htmlFor={ props.id }
             >{ props.label }</label>
             <input
@@ -44,9 +45,9 @@ function FormInputReadonly(props) {
 
 function FormInputState(props) {
     return (
-        <div className="mt-1">
+        <div className="input-container mt-1">
             <label
-                className="text-gray-500 text-xs font-semibold"
+                className="input-label text-gray-500 text-xs font-semibold"
                 htmlFor={ props.id }
             >{ props.label }</label>
             <input
@@ -64,9 +65,9 @@ function FormInputState(props) {
 
 function FormInputHook(props) {
     return (
-        <div className="mt-1">
+        <div className="input-container mt-1">
             <label
-                className="text-gray-500 text-xs font-semibold inline-block"
+                className="input-label text-gray-500 text-xs font-semibold inline-block"
                 htmlFor={ props.id }
             >{ props.label }</label>
             <input
@@ -86,9 +87,9 @@ function FormInputHook(props) {
 
 function FormInputDate(props) {
     return (
-        <div className="mt-1">
+        <div className="input-container mt-1">
             <label
-                className="text-gray-500 text-xs font-semibold inline-block"
+                className="input-label text-gray-500 text-xs font-semibold inline-block"
                 htmlFor={ props.id }
             >{ props.label }</label>
             <ReactInputDateMask  

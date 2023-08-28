@@ -175,7 +175,7 @@ function FormRep1() {
                 </div>
 
             </form>
-            <div className='mb-0 mx-auto p-3 text-center'>
+            <div className=' mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/panel')} >Volver</button>
             </div>
 

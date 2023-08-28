@@ -1,11 +1,12 @@
-import logo from '../assets/logo-doconline-500.png'
-import DataBox from '../components/DataBox'
-import { LinkButton, MiniActionButtonRed } from '../components/Buttons'
-import { useNavigate, useOutletContext } from 'react-router-dom'
-import { perfil, descargarFormulario, getTurnoPaciente } from '../data/pacientes'
-import { cancelarTurno } from '../data/turnero'
-import { useEffect, useState } from 'react'
-import useForm from '../hooks/useForm'
+import logo from '../assets/logo-doconline-500.png';
+import DataBox from '../components/DataBox';
+import { LinkButton, MiniActionButtonRed } from '../components/Buttons';
+import { useNavigate, useOutletContext } from 'react-router-dom';
+import { perfil, descargarFormulario, getTurnoPaciente } from '../data/pacientes';
+import { cancelarTurno } from '../data/turnero';
+import { useEffect, useState } from 'react';
+import useForm from '../hooks/useForm';
+import '../global-styles/panel-styles.css'
 
 function Panel() {
 
@@ -52,10 +53,10 @@ function Panel() {
     return (
 
         <>
-
-            <img className="mx-auto w-50" src={logo}></img>
+        <div className='panel-container'>
+            <img className="panel-logo mx-auto w-50" src={logo}></img>
             <div className='mb-3 mx-auto text-center'>
-                <span className='font-semibold text-gray-500'>PERFIL / PACIENTE</span>
+                <span className='font-semibold text-gray-500'>Perfil / Paciente</span>
             </div>
             <div className='flex flex-row'>
                 <div className='basis-1/2 pe-1'>
@@ -73,11 +74,13 @@ function Panel() {
                     <DataBox label="Teléfono" value={paciente.telefono} />
                 </div>
             </div>
+
      
             <DataBox label="E-Mail" value={paciente.email} />
 
-            <hr className='solid border-input border-1 my-4'></hr>
+            <hr className='panel-separador solid border-input border-1 my-4'></hr>
 {/*  */}
+            <div className="turnos-container">
             <h6 className="text-gray-500 text-sm font-semibold leading-3">Mis Turnos</h6>
             {turnoPaciente.id > 0 ?
                 <>
@@ -91,17 +94,19 @@ function Panel() {
                 :
                 <>
                     <h6 className='text-gray-500 text-xs font-semibold px-10 py-3'>No tienes turnos pendientes</h6>
-                    <div className='pt-4'><LinkButton to="/turno" value="Solicitar Turno" /></div>
+                    <div className='panel-button pt-4'><LinkButton to="/turno" value="Solicitar Turno" /></div>
                     
                 </>
 
 
             }
+            </div>
    
             <div className='pt-4'><LinkButton to="/formulario-1" value="Formulario REPROCANN" /></div>
-            <div className='mb-6 mx-auto p-3 text-center'>
+            <div className='panel-button mx-auto p-3 text-center'>
                 <button className='text-red-700' onClick={() => logout()} >Cerrar Sesión</button>
             </div>
+        </div> 
         </>
     )
 }

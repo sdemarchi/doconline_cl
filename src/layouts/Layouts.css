@@ -1,0 +1,25 @@
+.form-container{
+  width:380px;
+  max-width: 96vw;
+  padding: 20px;
+  margin: 8px 0;
+}
+
+.login-container{
+  margin: 8px 0;
+  width:380px;
+  max-width: 96vw;
+  padding: 40px 20px;
+}
+
+@media screen and (max-width:600px) {
+  .form-container{
+    padding: 30px 10px;
+    min-width: 96vw;
+  }
+
+  .login-container{
+    padding: 50px 15px;
+    min-width: 96vw;
+  }
+}
