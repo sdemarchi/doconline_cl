@@ -47,7 +47,7 @@ function Panel() {
         }
         getPaciente();
         cargarTurnoPaciente()
-    }, [])
+    }, [cargando])
 
     function logout() {
         localStorage.removeItem('dc_userId')

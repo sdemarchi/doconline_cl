@@ -9,6 +9,7 @@ import { getPrecios } from '../data/turnero'
 import Alerta from '../components/Alerta'
 import { aplicarCupon } from '../data/turnero'
 import Chip from '../components/Chip'
+import Spinner from '../components/Spinner'
 
 function Pagos() {
 
@@ -23,9 +24,11 @@ function Pagos() {
     const [ importeCupon, setImporteCupon ] = useState(0)
     const [ cargando ] = useState(0)
     const [alerta, setAlerta] = useState({})
+    const [datosCargados, setDatosCargados] = useState(false);
 
     async function cargarPrecios(){
         const response = await getPrecios()
+        setDatosCargados(true);
         setPrecioTrans(response.precioTransf)
         setPrecioMP(response.precioMP)
     }
@@ -70,6 +73,8 @@ function Pagos() {
         
     return (
         <>
+        {!datosCargados && <Spinner/>}
+        {datosCargados && <div>
             {msg && <Alerta alerta={ alerta } />}
             
             
@@ -105,8 +110,9 @@ function Pagos() {
             <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/turno')} >Atrás</button>
             </div>
-            
+            </div>}
         </>
+    
     )
 }
 

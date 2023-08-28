@@ -78,7 +78,7 @@ function Turnos() {
     useEffect(() => {
         cargarPrestadores()
         cargarCalendario(mes,anio,prestador)
-    }, [])
+    }, [cargando])
 
     return (
         <>
