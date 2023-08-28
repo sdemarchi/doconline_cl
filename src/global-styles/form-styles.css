@@ -1,4 +1,4 @@
-input[type="text"],input[type="number"], input[type="date"], select {
+input[type="text"],input[type="number"], input[type="date"], select, textarea {
   margin: 15px 0;
   margin-top:6px;
   font-size: 14px !important;
@@ -15,6 +15,11 @@ input::placeholder {
   font-size: 14px;
   font-weight: 500;
   font-family: 'Montserrat', sans-serif;
+  display: block;
+}
+
+.checks-input{
+  margin: 20px 0;
 }
 
 @media screen and (max-width:600px) {

@@ -66,12 +66,8 @@ function FormRep2() {
         <>
             <img className="mx-auto w-52 pb-2" src={logo}></img>
             <form onSubmit={ handleSubmit(onSubmit) }>
-                <label
-                    className="text-gray-500 text-xs font-semibold"
-                    htmlFor="idprovincia"
-                >Provincia</label>
+            <label className="input-label">Provincia*</label>
                 <Select 
-                    label="Provincia*"
                     onChange={e => changeProvincia(e)}
                     value={provActual}
                     id="idprovincia"
@@ -116,8 +112,8 @@ function FormRep2() {
                     </div>
                 </div>
                 
+                <label className="input-label">Ocupacion*</label>
                 <Select 
-                    label="Ocupación*"
                     onChange={e => changeOcupacion(e)}
                     value={ocupacionActual}
                     id="ocupacion_id"
@@ -134,8 +130,8 @@ function FormRep2() {
                 />
                 { errors.ocupacion?.type == 'maxLength' && <ErrorMax>100</ErrorMax> }
                 
+                <label className="input-label traslate-5">Comentarios sobre su estado de salud que quiera comentar o aclarar</label>
                 <TextArea 
-                    label="Comentarios sobre su estado de salud que quiera comentar o aclarar"
                     id="comentario"
                     defaultValue={form2?.comentario}
                     register={ register('comentario', {maxLength:500}) }

@@ -2,14 +2,14 @@ function Select(props) {
     return (
         <>
         <label
-            className="text-gray-500 text-xs font-semibold"
+            className="input-label"
             htmlFor={ props.id }
         >{ props.label }</label>
         <select
             onChange={props.onChange}
             value={props.value}
             id={props.id}
-            className="block w-full p-2 bg-white border-input border-2 text-xs text-gray-500">
+            className="input-form block w-full p-2 bg-white border-input border-2 text-xs text-gray-500">
             <option value='0'>{props.placeholder}</option>
             {props.datos.map( dato =>(
                 <option 

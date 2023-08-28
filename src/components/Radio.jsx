@@ -10,8 +10,8 @@ function RadioSiNo(props) {
     },[cargando])
 
     return (
-        <div className="mt-2">
-            <h6 className="text-gray-500 text-xs font-semibold leading-3">{ props.label }</h6>
+        <div className="checks-input mt-2">
+            <label className=" input-label">{ props.label }</label>
             <input value="1" name={props.id} type="radio" checked={chequeado} { ...props.register } onChange={ () => setChequeado(!chequeado)}
                 className="appearance-none h-3 w-3 border-2 rounded-full border-input checked:bg-input"/>
             <label htmlFor={props.id + '_yes'} className="text-gray-500 text-xs me-20 ps-1">Sí</label>
@@ -32,8 +32,8 @@ function RadioSiNoAlt(props) {
     },[cargando])
 
     return (
-        <div className="mt-2">
-        <h6 className="text-gray-500 text-xs font-semibold leading-3">{ props.label }</h6>
+        <div className="checks-input mt-2">
+        <label className="input-label">{ props.label }</label>
             <input name={props.id} type="radio" checked={props.checked} onChange={ (e) => props.onChange() }
                 className="appearance-none h-3 w-3 border-2 rounded-full border-input checked:bg-input"/>
             <label htmlFor={props.id + '_yes'} className="text-gray-500 text-xs me-20 ps-1">Sí</label>

@@ -56,28 +56,28 @@ function FormRep3() {
                     register={ register('arritmia')} 
                     checked={ form3.arritmia == 1 ? true : false }
                 />*/}
-                <RadioSiNoAlt 
+                <RadioSiNoAlt className="checks-input"
                     label="¿Tiene arritmias en actividad?"
                     id="arritmia"
                     checked={ arritmia }
                     onChange={ () => setArritmia(!arritmia) }
                 />
                 
-                <RadioSiNoAlt 
+                <RadioSiNoAlt className ="checks-input"
                     label="¿Tiene alergia a algún componente de la planta?"
                     id="alergia"
                     checked={ alergia }
                     onChange={ () => setAlergia(!alergia) }
                 />
 
-                <RadioSiNoAlt 
+                <RadioSiNoAlt className ="checks-input"
                     label="¿Está embarazada o realizando lactancia?"
                     id="embarazada"
                     checked={ embarazada }
                     onChange={ () => setEmbarazada(!embarazada) }
                 />
 
-                <RadioSiNoAlt 
+                <RadioSiNoAlt className ="checks-input"
                     label="¿Tiene antecedentes de algún padecimiento en salud mental?¿Se encuentra actualmente en tratamiento?"
                     id="salud_mental"
                     checked={ salud_mental }
@@ -92,7 +92,7 @@ function FormRep3() {
                 />
                 { errors.salud_ment_esp?.type == 'maxLength' && <ErrorMax>80</ErrorMax> }
                 
-                <RadioSiNoAlt 
+                <RadioSiNoAlt className ="checks-input"
                     label="¿Maneja maquinarias de alta precisión?"
                     id="maneja_maq"
                     checked={ maneja_maq }
