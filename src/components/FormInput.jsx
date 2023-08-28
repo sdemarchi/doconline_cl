@@ -92,16 +92,18 @@ function FormInputDate(props) {
                 className="input-label text-gray-500 text-xs font-semibold inline-block"
                 htmlFor={ props.id }
             >{ props.label }</label>
-            <ReactInputDateMask  
-                id={ props.id }
-                mask='dd/mm/yyyy'
-                showMaskOnFocus={true}
-                type="date"
-                maxLength={ props.maxLength }
-                className="w-full p-2 bg-white border-input focus:border-input border-2 text-xs text-gray-500 inline-flex"
-                value={ props.value }
-                onChange={props.onChange}
-            />
+            <div className="">
+                <ReactInputDateMask  
+                    id={ props.id }
+                    mask='dd/mm/yyyy'
+                    showMaskOnFocus={true}
+                    type="date"
+                    maxLength={ props.maxLength }
+                    className=" date-input w-full p-2 bg-white border-input focus:border-input border-2 text-xs text-gray-500 inline-flex"
+                    value={ props.value }
+                    onChange={props.onChange}
+                />
+            </div>
         </div>
     )
 }
