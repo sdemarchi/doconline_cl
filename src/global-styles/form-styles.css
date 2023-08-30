@@ -26,7 +26,7 @@ input::placeholder {
   margin-left:9px;
   height: 16px;
   transform:translateY(3px);
-  opacity:75%;
+  opacity:85%;
 }
 
 .icon-button:active{
