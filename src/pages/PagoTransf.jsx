@@ -1,31 +1,33 @@
-import { useState, useEffect } from 'react'
-import { ActionButton } from '../components/Buttons'
-import { getDatosTransf/*, uploadComprobante*/ } from '../data/turnero'
-import useAuth from '../hooks/useAuth'
-import useTurno from '../hooks/useTurno'
-import { useNavigate, useOutletContext } from 'react-router-dom'
-import { confirmarTurno } from '../data/turnero'
-import Spinner from '../components/Spinner'
-import axios from 'axios'
+import { useState, useEffect } from 'react';
+import { ActionButton } from '../components/Buttons';
+import { getDatosTransf/*, uploadComprobante*/ } from '../data/turnero';
+import useAuth from '../hooks/useAuth';
+import useTurno from '../hooks/useTurno';
+import { useNavigate, useOutletContext } from 'react-router-dom';
+import { confirmarTurno } from '../data/turnero';
+import Spinner from '../components/Spinner';
+import axios from 'axios';
+import copyIcon from '../assets/copy-icon.ico';
+import '../global-styles/form-styles.css';
 
 
 function PagoTransf() {
 
-    const { importe } = useAuth()
-    const { turno, cuponValidado, comprobante, setComprobante } = useTurno()
+    const { importe } = useAuth();
+    const { turno, cuponValidado, comprobante, setComprobante } = useTurno();
 
-    const user = useOutletContext()
+    const user = useOutletContext();
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const [cbu, setCbu] = useState()
-    const [alias, setAlias] = useState()
-    const [cargando] = useState(0)
-    const [enviando, setEnviando] = useState(false)
-    const [uploadResult, setUploadResult] = useState(0)
+    const [cbu, setCbu] = useState();
+    const [alias, setAlias] = useState();
+    const [cargando] = useState(0);
+    const [enviando, setEnviando] = useState(false);
+    const [uploadResult, setUploadResult] = useState(0);
+    const [datosCargados, setDatosCargados] = useState(false);
 
-    const [/*file,*/ setFile] = useState()
-
+    const [file , setFile] = useState();
     
     const subirArchivo = async (e) => {
         setFile(e.target.files[0])
@@ -36,28 +38,34 @@ function PagoTransf() {
         axios
             .post(url, data)
             .then(res => {
-                setUploadResult(1)
+                setUploadResult(1);
                 console.log(res.data.filename)
                 setComprobante(res.data.filename)
             })
             .catch(err => {
-                setUploadResult(2)
+                setUploadResult(2);
                 console.log(err)
             })
         setEnviando(false)
     }
 
     async function cargarDatosTransf() {
-        const response = await getDatosTransf()
-        setCbu(response.cbu)
-        setAlias(response.alias)
+        const response = await getDatosTransf();
+        setCbu(response.cbu);
+        setAlias(response.alias);
+        setDatosCargados(true);
     }
 
     async function guardarTurno() {
-        const response = await confirmarTurno(turno, cuponValidado, comprobante, importe, user.userId)
+        const response = await confirmarTurno(turno, cuponValidado, comprobante, importe, user.userId);
+        console.log(response)
         if (response.error == 0) {
-            return navigate('/turno-success')
+            return navigate('/turno-success');
         } 
+    }
+
+    function copiarAlPortapapeles(texto){
+        navigator.clipboard.writeText(texto)
     }
 
     useEffect(() => {
@@ -66,20 +74,26 @@ function PagoTransf() {
 
 
     return (
-        <>
-            <div className='mb-3 mx-auto text-center'>
+        <>{!datosCargados && <Spinner/>}{datosCargados && <div>
+
+            <div className='mb-6 mt-4 mx-auto text-center'>
                 <span className='font-semibold text-gray-500'>PAGAR POR TRANSFERENCIA</span>
             </div>
 
-            <div className="block w-full my-3 p-2 border-input focus:border-input border-2 text-center ">
-                <h4 className="text-gray-500 font-bold pt-1">Transferinos a la siguiente cuenta</h4>
-                <h4 className="text-gray-600 font-semibold text-sm pt-1"><strong>CBU:</strong> {cbu}</h4>
-                <h4 className="text-gray-600 font-semibold text-sm pt-1"><strong>Alias:</strong> {alias}</h4>
-                <h4 className="text-green-600 text-2xl font-bold pt-1">${importe}</h4>
+            <div className="w-full my-8 p-2 border-input focus:border-input border-2 text-center ">
+                <h4 className="text-gray-500 my-2 font-bold pt-1">Transferinos a la siguiente cuenta</h4>
+
+                <h4 className="text-gray-600 my-2 font-semibold text-sm pt-1"><strong>CBU:</strong> {cbu} 
+                <button className="icon-button" onClick={copiarAlPortapapeles(cbu)}><img title="Copiar CBU" className="icon" src={copyIcon}/></button></h4>
+
+                <h4 className="text-gray-600 my-2 font-semibold text-sm pt-1"><strong>Alias:</strong> {alias} 
+                <button className="icon-button"  onClick={copiarAlPortapapeles(alias)}><img title="Copiar Alias" className="icon" src={copyIcon}/></button></h4>
+
+                <h4 className="text-green-600 my-2 text-2xl font-bold pt-1">${importe}</h4>
             </div>
 
             <div className='my-2'>
-                <div className='pt-2 pb-2'>
+                <div className='pt-2 pb-0'>
                     {enviando ?
                         <label className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer">
                             <Spinner />
@@ -102,24 +116,26 @@ function PagoTransf() {
             {uploadResult == 0 ? '' :
                 <div className='pb-4'>
                     {uploadResult == 1 ? 
-                        <h6 className="text-green-600 text-sm font-bold text-center py-2">
+                        <h6 className="text-green-600 text-sm font-bold text-center pb-2">
                             Comprobante enviado
                         </h6> 
                         :
-                        <h6 className="text-red-600 text-sm font-bold text-center py-2">
+                        <h6 className="text-red-600 text-sm font-bold text-center pb-2">
                             Error al subir el comprobante
                         </h6>}
                 </div>
             }
 
-
-            <ActionButton value="Confirmar Turno" onClick={() => guardarTurno()} />
-            <div className='mb-0 mx-auto p-3 text-center'>
-                <button className='text-gray-500' onClick={() => navigate('/pagos')} >Atrás</button>
+            <div className="mt-10">
+                <ActionButton value="Confirmar Turno" onClick={() => guardarTurno()} />
+                <div className='mb-0 mx-auto p-3 text-center'>
+                    <button className='text-gray-500' onClick={() => navigate('/pagos')} >Atrás</button>
+                </div>
             </div>
-        </>
+
+        </div>}</>
 
     )
 }
 
-export default PagoTransf
+export default PagoTransf;

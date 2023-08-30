@@ -7,36 +7,23 @@ import useAuth from '../hooks/useAuth'
 import Alerta from '../components/Alerta'
 import {/* GoogleLogin, googleLogout,*/ useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+import Spinner from '../components/Spinner'
 
 
 function Login() {
-
-    const { setUser, /*googleProfile,*/ setGoogleProfile } = useAuth()
-
-    const [userid, setUserid] = useState('')
-    const [password, setPassword] = useState('')
-    const [alerta, setAlerta] = useState({})
-
+    const { setUser, /*googleProfile,*/ setGoogleProfile } = useAuth();
+    const [userid, setUserid] = useState('');
+    const [password, setPassword] = useState('');
+    const [contenidoCargado, setContenidoCargado] = useState('true');
+    const [alerta, setAlerta] = useState({});
     const [ googleUser, setGoogleUser ] = useState();
-    
-    const navigate = useNavigate()
-
-    /*
-
-    const responseMessage = (response) => {
-        console.log(response);
-    };
-    
-    const errorMessage = (error) => {
-        console.log(error);
-    };
-
-    */
-
+    const navigate = useNavigate();
+    const regex_mail = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
     const gLogin = useGoogleLogin({
         onSuccess: (codeResponse) => setGoogleUser(codeResponse),
         onError: (error) => console.log('Login Failed:', error)
     });
+
 
     useEffect(
         () => {
@@ -60,9 +47,9 @@ function Login() {
         [ googleUser ]
     );
 
-    const regex_mail = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
-    
+
     async function login() {
+
         if([userid, password].includes('')) {
             setAlerta({
                 msg: 'Todos los campos son obligatorios',
@@ -70,6 +57,8 @@ function Login() {
             });
             return
         }
+
+        setContenidoCargado(false);
         
         let url = import.meta.env.VITE_API_URL + '/turnero.loginUser'
         if(regex_mail.test(userid)) { //Verifica si es un e-mail
@@ -94,6 +83,7 @@ function Login() {
                 })
                 return navigate('/panel')
             } else {
+                setContenidoCargado(true);
                 setAlerta({
                     msg: resp.error.message,
                     error: true
@@ -106,6 +96,7 @@ function Login() {
     }
 
     async function loginConGoogle(email) {
+
         let url = import.meta.env.VITE_API_URL + '/turnero.loginGoogle'
         
         try {
@@ -137,7 +128,9 @@ function Login() {
     const { msg } = alerta
 
     return (
-        <>
+        <> { !contenidoCargado && <Spinner />}{ contenidoCargado && 
+
+        <div>
             <img className="mb-6 mx-auto w-20 pb-4" src={ logo }></img>
 
             {msg && <Alerta alerta={ alerta } />}
@@ -176,10 +169,9 @@ function Login() {
                 </button>
 
             </div>
-            
-            
-            
-        </>
+        </div>
+        
+        }</>
     )
 }
 

@@ -78,24 +78,24 @@ function Pagos() {
             {msg && <Alerta alerta={ alerta } />}
             
             
-            <div className='mb-3 mx-auto text-center'>
+            <div className='mb-8 mt-4 mx-auto text-center'>
                 <span className='font-semibold text-gray-500'>SELECCIONAR FORMA DE PAGO</span>
             </div>
             { cuponValidado.cupon ?
                 <>
-                    <h6 className="text-gray-500 text-xs mb-2 font-semibold leading-3">Cupón Aplicado:</h6>
+                    <h6 className="text-gray-500 text-xs my-4 font-semibold leading-3">Cupón Aplicado:</h6>
                     <Chip value={cupon} onClick={ () => quitarCupon() } />
                 </>
             :
             <>
                 <FormInputState 
                     id="turno"
-                    label="Cupón Descuento" 
+                    label="Cupón" 
                     value={cupon}
                     onChange={ e => setCupon(e.target.value)}
                     placeholder="A-123456"
                 /> 
-                <div className='py-2'>
+                <div className=' pb-8'>
                     <ActionButton onClick={() => cupon && validarCupon()} value="Aplicar Cupón" />
                 </div>
             </>

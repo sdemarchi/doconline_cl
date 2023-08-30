@@ -109,4 +109,4 @@ function FormInputDate(props) {
 }
 
 export default FormInput
-export { FormInputState, FormInputHook, FormInputReadonly, FormInputDate }
+export {FormInput, FormInputState, FormInputHook, FormInputReadonly, FormInputDate }

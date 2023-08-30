@@ -9,7 +9,7 @@ function TurnoSuccess() {
 
     return (
         <>
-            <img className="mx-auto w-20 pb-8" src={logo}></img>
+            <img className="mx-auto mb-8 w-20 pb-8" src={logo}></img>
             <h1 className='text-xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-grad-green to-grad-blue'>FELICITACIONES<br />TURNO CONFIRMADO</h1>
             <img className="mx-auto w-14 pt-8" src={icon}></img>
             <div className="block w-full my-8 p-1 border-input focus:border-input border-2 text-center rounded-md ">

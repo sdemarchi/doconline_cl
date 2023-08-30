@@ -48,7 +48,7 @@ function FormRep3() {
     
     return (
         <>
-            <img className="mx-auto w-52 pb-2" src={logo}></img>
+            <img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>
             <form onSubmit={ handleSubmit(onSubmit) }>
                 {/*<RadioSiNo 
                     label="¿Tiene arritmias en actividad?" 

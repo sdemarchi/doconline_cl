@@ -1,70 +1,72 @@
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import logo from '../assets/logo-doconline-reprocann-500.png'
-import { FormInputHook } from '../components/FormInput'
-import { SubmitButton } from '../components/Buttons'
-import TextArea from '../components/TextArea'
-import useForm from '../hooks/useForm'
-import Error, { ErrorMax, ErrorReq } from '../components/Error'
-import Select /*, { SelectHook }*/ from '../components/Select'
-import { getOcupaciones, getProvincias } from '../data/pacientes'
-import { useForm as useFormHook } from "react-hook-form"
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import logo from '../assets/logo-doconline-reprocann-500.png';
+import { FormInputHook } from '../components/FormInput';
+import { SubmitButton } from '../components/Buttons';
+import TextArea from '../components/TextArea';
+import useForm from '../hooks/useForm';
+import Error, { ErrorMax, ErrorReq } from '../components/Error';
+import Select /*, { SelectHook }*/ from '../components/Select';
+import { getOcupaciones, getProvincias } from '../data/pacientes';
+import { useForm as useFormHook } from "react-hook-form";
 //import { selectValidator } from '../data/validators'
 
 function FormRep2() {
 
-    const { register, formState: { errors }, handleSubmit } = useFormHook()
-
-    const { form2, setForm2, provActual, setProvActual, ocupacionActual, setOcupacionActual } = useForm()
-    
-    const [provincias, setProvincias] = useState([])
-    const [ocupaciones, setOcupaciones] = useState([])
-    const [cargando] = useState(0)
-
-    const [errorProv, setErrorProv] = useState(0)
-    const [errorOcup, setErrorOcup] = useState(0)
-    
-    const navigate = useNavigate()
+    const { register, formState: { errors }, handleSubmit } = useFormHook();
+    const { form2, setForm2, provActual, setProvActual, ocupacionActual, setOcupacionActual } = useForm();
+    const [provincias, setProvincias] = useState([]);
+    const [ocupaciones, setOcupaciones] = useState([]);
+    const [cargando] = useState(0);
+    const [errorProv, setErrorProv] = useState(0);
+    const [errorOcup, setErrorOcup] = useState(0);
+    const navigate = useNavigate();
     
     useEffect(() => {
         async function cargarCombos(){
-            const response = await getProvincias()
-            setProvincias(response)
-            const response2 = await getOcupaciones()
-            setOcupaciones(response2)
+            const response = await getProvincias();
+            setProvincias(response);
+            const response2 = await getOcupaciones();
+            setOcupaciones(response2);
         }
-        cargarCombos()
+        cargarCombos();
     }, [cargando])
     
     const onSubmit = (data) => {
         if(!provActual){
-            setErrorProv(1)
-            return
+            setErrorProv(1);
+            return;
         }
         if(!ocupacionActual){
-            setErrorOcup(1)
-            return
+            setErrorOcup(1);
+            return;
         }
-        data.idprovincia = provActual
-        data.ocupacion_id = ocupacionActual
+        data.idprovincia = provActual;
+        data.ocupacion_id = ocupacionActual;
         setForm2(data)
 
-        return navigate('/formulario-3')
+        return navigate('/formulario-3');
     }
     
     function changeProvincia(event){
-        setProvActual(event.target.value)
+        setProvActual(event.target.value);
     }
 
     function changeOcupacion(event){
-        setOcupacionActual(event.target.value)
+        setOcupacionActual(event.target.value);
+        //alert(JSON.stringify(ocupaciones));
+    }
+
+    function buscarOcupacionPorId(id){
+        const resultado = ocupaciones.find(item => item.id == id);
+        return resultado ? resultado.nombre : null;   
     }
 
     console.log(form2)
     
     return (
         <>
-            <img className="mx-auto w-52 pb-2" src={logo}></img>
+            <img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>
             <form onSubmit={ handleSubmit(onSubmit) }>
             <label className="input-label">Provincia*</label>
                 <Select 
@@ -123,13 +125,16 @@ function FormRep2() {
                 { errorOcup > 0  && <Error>Seleccione una Ocupación</Error> }
                 
                 
+                {buscarOcupacionPorId(ocupacionActual) == 'Otra'  && 
                 <FormInputHook label="Ocupación Otra" id="ocupacion"
                     defaultValue={form2?.ocupacion}
                     maxLength={100}
                     register={ register('ocupacion', {maxLength:100}) }
-                />
+                />}
+
                 { errors.ocupacion?.type == 'maxLength' && <ErrorMax>100</ErrorMax> }
                 
+
                 <label className="input-label traslate-5">Comentarios sobre su estado de salud que quiera comentar o aclarar</label>
                 <TextArea 
                     id="comentario"

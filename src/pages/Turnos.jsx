@@ -85,7 +85,7 @@ function Turnos() {
         { !datosCargados && <Spinner />}
         { datosCargados &&
         <div className="turnos-container">
-            <img className="mx-auto w-52 pb-2" src={logo}></img>
+            <img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>
             
             <Select 
                 label="Seleccionar Prestador" 

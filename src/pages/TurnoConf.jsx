@@ -6,7 +6,7 @@ import FormInput from '../components/FormInput'
 function TurnoConf() {
     return (
         <>
-            <img className="mx-auto w-50 pb-2" src={logo}></img>
+            <img className="mx-auto mb-8 w-50 pb-2" src={logo}></img>
             <h6 className="text-gray-500 text-xs font-semibold pt-10">Confirmación de Turno</h6>
             <div className="block w-full p-2 my-1 border-input focus:border-input border-2 text-xs">
                 <strong>Lugar:</strong>Whatsapp<br/>

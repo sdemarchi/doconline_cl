@@ -1,5 +1,5 @@
 input[type="text"],input[type="number"], input[type="date"], input[type="password"], select, textarea, .date-input {
-  margin: 18px 0;
+  margin: 25px 0;
   margin-top:6px;
   font-size: 14px !important;
   color:rgb(0, 0, 0) !important;
@@ -22,7 +22,20 @@ input::placeholder {
   margin: 20px 0;
 }
 
-@media screen and (max-width:600px) {
+.icon{
+  margin-left:9px;
+  height: 16px;
+  transform:translateY(3px);
+  opacity:75%;
+}
+
+.icon-button:active{
+  transform:translateY(1px);
+  opacity: 100%;
+}
+
+
+@media screen and (max-width:800px) {
   input{
     font-size: 16px !important;
   }

@@ -57,14 +57,14 @@ function FormRep5() {
 
     return (
         <>
-            <img className="mx-auto w-52 pb-2" src={logo}></img>
+            <img className="mb-8 mx-auto w-52 pb-2" src={logo}></img>
 
             {error && <ErrorGral>{error}</ErrorGral>}
 
-            <h3 className='text-gray-500 text-s font-semibold'>Firmas</h3>
-            <h6 className="text-gray-500 text-xs font-semibold pt-2">Firma</h6>
+            <h3 className='text-gray-500 mb-3 text-xl font-semibold'>Firmas</h3>
+            <h6 className="text-gray-500 text-xm font-semibold pt-2">Firma</h6>
             {firma != null ? <img src={firma} className='p-4' /> :
-                <div className='border-gray-300 border border-solid mt-2'>
+                <div style={{width:"fit-content", margin:"15px auto"}} className='border-gray-300 border border-solid mt-2'>
                     <SignatureCanvas
                         ref={data => setSignFirma(data)}
                         canvasProps={{ width: 270, height: 150, className: 'sigCanvas' }}
@@ -76,9 +76,9 @@ function FormRep5() {
                 <MiniActionButtonRed onClick={() => handleClearFirma()} value="Limpiar" />
             </div>
 
-            <h6 className="text-gray-500 text-xs font-semibold pt-2">Aclaración</h6>
+            <h6 className="text-gray-500 text-xm font-semibold pt-2">Aclaración</h6>
             {aclaracion != null ? <img src={aclaracion} className='p-4' /> :
-                <div className='border-gray-300 border border-solid mt-2'>
+                <div style={{width:"fit-content",margin:"15px auto"}} className='border-gray-300 border border-solid mt-2'>
                     <SignatureCanvas
                         ref={data => setSignAclaracion(data)}
                         canvasProps={{ width: 270, height: 150, className: 'sigCanvas2' }}

@@ -80,7 +80,7 @@ function FormRep1() {
 
     return (
         <>
-            <img className="mx-auto w-52 pb-2" src={logo}></img>
+            <img className="mx-auto w-52 mb-8 pb-2" src={logo}></img>
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 <FormInputHook label="Nombre y Apellido*" id="nom_ape"

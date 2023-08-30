@@ -42,7 +42,7 @@ function FormRep4() {
     
     return (
         <>
-            <img className="mx-auto w-52 pb-2" src={logo}></img>
+            <img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>
             <h3 className='text-gray-500 text-s font-semibold'>Patologías</h3>
             { patolog.map( (p, index) => (
                 <Chip 

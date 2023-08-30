@@ -49,12 +49,17 @@ function FormRep3b() {
     }
     
     function changeContacto(event){
-        setContactoActual(event.target.value)
+        setContactoActual(event.target.value);
+    }
+
+    function buscarContactoPorId(id){
+        const resultado = contactos.find(item => item.id == id);
+        return resultado ? resultado.nombre : null;   
     }
 
     return (
         <>
-            <img className="mx-auto w-52 pb-2" src={logo}></img>
+            <img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>
             <form onSubmit={ handleSubmit(onSubmit) }>
                 
                 <Select 
@@ -66,12 +71,15 @@ function FormRep3b() {
                     datos={contactos}
                 />
                 { errorContacto > 0  && <Error>Seleccione un Contacto</Error> }
-                
+
+
+                { buscarContactoPorId(contactoActual) == 'Otro' &&
                 <FormInputHook label="Contacto Otro" id="contacto_otro" placeholder="Otra forma de contacto" 
                     defaultValue={form3b?.contacto_otro}
                     maxLength={255}
                     register={ register('contacto_otro', {maxLength:255}) }
-                />
+                />}
+
                 { errors.domicilio?.type == 'maxLength' && <ErrorMax>100</ErrorMax> }
 
                 <TextArea 

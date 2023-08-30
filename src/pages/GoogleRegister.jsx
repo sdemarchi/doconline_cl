@@ -1,6 +1,6 @@
 import {/* useState,*/ useEffect } from 'react'
 import { Form, useActionData, useNavigate } from 'react-router-dom'
-import FormInput /*,{ FormInputReadonly }*/ from '../components/FormInput'
+import { FormInput , FormInputDate } /*,{ FormInputReadonly }*/ from '../components/FormInput'
 import { SubmitButton } from '../components/Buttons'
 import Error from '../components/Error'
 import { esFechaValida } from '../utils/validation'
@@ -71,7 +71,7 @@ function GoogleRegister() {
                 <FormInput label="Nombre y Apellido*" id="nombre"  maxlenght="150" defaultValue={ googleProfile.name } />
                 <div className='flex flex-row'>
                     <div className='basis-1/2 pe-1'>
-                        <FormInput label="Fecha de Nacimiento*" id="fecha_nac" placeholder="dd/mm/aaaa" />
+                        <FormInputDate label="Fecha de Nacimiento*" id="fecha_nac" placeholder="dd/mm/aaaa" maxLength={10} />
                     </div>
                     <div className='basis-1/2 ps-1'>
                         <FormInput label="DNI*" id="dni" maxlenght="10" placeholder="12345676" />
