@@ -1,4 +1,4 @@
-input[type="text"],input[type="number"], input[type="date"], input[type="password"], select, textarea, .date-input {
+input[type="text"], input[type="number"], input[type="date"], input[type="password"], select, textarea, .date-input {
   margin: 21px 0;
   margin-top:6px;
   font-size: 14px !important;
