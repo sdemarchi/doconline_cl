@@ -25,9 +25,9 @@ export async function getTurno(fecha, prestador) {
 }
 
 export async function getPrecios(){
-    const url = `${import.meta.env.VITE_API_URL}/turnero.precios`
-    const response = await fetch(url)
-    const result = await response.json()
+    const url = `${import.meta.env.VITE_API_URL}/turnero.precios`;
+    const response = await fetch(url);
+    const result = await response.json();
     //console.log(result)
     return result
 }

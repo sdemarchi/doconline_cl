@@ -13,33 +13,64 @@ import Spinner from '../components/Spinner'
 
 function Pagos() {
 
-    const { /*turno,*/ cuponValidado, setCuponValidado } = useTurno()
-    const { setImporte } = useAuth()
+    const {/* turno,*/ cuponValidado, setCuponValidado } = useTurno();
+    const { setImporte } = useAuth();
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const [ precioTrans, setPrecioTrans] = useState(0)
-    const [ precioMP, setPrecioMP] = useState(0)
-    const [ cupon, setCupon ] = useState('')
-    const [ importeCupon, setImporteCupon ] = useState(0)
-    const [ cargando ] = useState(0)
-    const [alerta, setAlerta] = useState({})
-    const [datosCargados, setDatosCargados] = useState(false);
+    const [ precioTrans, setPrecioTrans ] = useState(0);
+    const [ precioMP, setPrecioMP ] = useState(0);
+    const [ cupon, setCupon ] = useState('');
+    const [ importeCupon, setImporteCupon ] = useState(0);
+    const [ cargando ] = useState(0);
+    const [ alerta, setAlerta ] = useState({});
+    const [ datosCargados, setDatosCargados ] = useState(false);
+    var cuponSession = {cupon: '', importe:0};
 
     async function cargarPrecios(){
-        const response = await getPrecios()
+        const response = await getPrecios();
+
+        if(sessionStorage.getItem("cupon_validado")){
+            cuponSession = JSON.parse(sessionStorage.getItem("cupon_validado"));
+        }
+        
+        if(cuponSession.importe == 0){
+            //alert('no cupon')
+            setPrecioTrans(response.precioTransf);
+            sessionStorage.setItem("precio_transf", response.precioTransf);
+            setCuponValidado(cuponSession);
+
+            setPrecioMP(response.precioMP);
+            sessionStorage.setItem("precio_mp", response.precioTransf);
+            
+        }else{
+            setPrecioTrans(response.precioTransf - cuponValidado.importe);
+            sessionStorage.setItem("precio_transf", response.precioTransf - cuponValidado.importe);
+
+            setPrecioMP(response.precioMP - cuponValidado.importe);
+            sessionStorage.setItem("precio_mp", response.precioTransf - cuponValidado.importe);
+        }
+
         setDatosCargados(true);
-        setPrecioTrans(response.precioTransf)
-        setPrecioMP(response.precioMP)
     }
 
     async function validarCupon(){
-        const response = await aplicarCupon(cupon)
+        const response = await aplicarCupon(cupon);
+
         if(response.valido){
-            setImporteCupon(response.descuento)
-            setPrecioMP(precioMP - response.descuento)
-            setPrecioTrans(precioTrans - response.descuento)
-            setCuponValidado({cupon: cupon, importe:response.descuento  })
+            setImporteCupon(response.descuento);
+
+            setPrecioMP(precioMP - response.descuento);
+            sessionStorage.setItem("precio_mp",precioMP - response.descuento); //modifica el precio de mercadopago en session storage también
+
+            setPrecioTrans(precioTrans - response.descuento);
+            sessionStorage.setItem("precio_transf", precioTrans - response.descuento); //modifica el precio de transferencia ...
+
+            let cuponValidadoObject = {cupon: cupon, importe:response.descuento}; // guarda cupon en variable para usarse en las dos siguientes lineas
+            
+            setCuponValidado(cuponValidadoObject);
+            sessionStorage.setItem("cupon_validado",JSON.stringify(cuponValidadoObject)); //convierto el objeto en string para enviarlo al session storage sin modificar sus propiedades, pudiendo luego volverlo a convertir en el mismo objeto 
+
         } else {
             setAlerta({
                 msg: 'El cupón ingresado no es válido',
@@ -49,18 +80,21 @@ function Pagos() {
     }
 
     async function quitarCupon(){
+        setDatosCargados(false);
         setImporteCupon(0)
-        setCuponValidado({cupon: '', importe:0})
-        cargarPrecios()
+        setCuponValidado({cupon: '', importe:0});
+        sessionStorage.setItem("cupon_validado",JSON.stringify({cupon: '', importe:0}));
+        cargarPrecios();
     }
 
     useEffect(() => {
-        cargarPrecios()
-        console.log(cuponValidado)
-        setCupon(cuponValidado.cupon)
-        setImporteCupon(cuponValidado.importe)
-        setPrecioMP(precioMP - cuponValidado.importe)
-        setPrecioTrans(precioTrans - cuponValidado.importe)
+        cargarPrecios();
+        console.log(cuponValidado);
+        setCupon(cuponValidado.cupon);
+        setImporteCupon(cuponValidado.importe);
+        setPrecioMP(precioMP - cuponValidado.importe);
+        setPrecioTrans(precioTrans - cuponValidado.importe);
+        sessionStorage.setItem("precio_transf", precioTrans - cuponValidado.importe)
             
     }, [cargando])
 
@@ -102,7 +136,7 @@ function Pagos() {
             }
 
             <PagoCard medio="TRANSFERENCIA" 
-                importe={precioTrans} 
+                importe={sessionStorage.getItem("precio_transf") || precioTrans} 
                 descuento={importeCupon}
                 mensaje="Desde cualquier banco físico o virtual" 
                 onClick={ () => pagar() } />

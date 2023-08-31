@@ -66,13 +66,17 @@ function Turnos() {
     }
 
     function confirmarTurno(){
-        setTurno({
+        let turnoObject = {
             prestador: prestador,
             fecha: turnoFecha,
             hora: turnoHora,
             detalle: turnoDesc
-        })
-        navigate('/pagos')
+        }
+        setTurno(turnoObject);
+
+        sessionStorage.setItem('turno', JSON.stringify(turnoObject));
+
+        navigate('/pagos');
     }
 
     useEffect(() => {

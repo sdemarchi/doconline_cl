@@ -13,13 +13,20 @@ import '../global-styles/form-styles.css';
 
 function PagoTransf() {
 
-    const { importe } = useAuth();
+    const {importe} = useAuth();
     const { turno, cuponValidado, comprobante, setComprobante } = useTurno();
+
+
+    //-- VARIABLES DE SESION PARA EVITAR PERDER DATOS AL ACTUALIZAR ----------
+        const importeSession = sessionStorage.getItem("precio_transf");
+        const turnoSession = JSON.parse(sessionStorage.getItem("turno"));
+        const cuponSession = JSON.parse(sessionStorage.getItem("cupon_validado"));
+    //-----------------------------------------------------------------------
+
 
     const user = useOutletContext();
 
     const navigate = useNavigate();
-
     const [cbu, setCbu] = useState();
     const [alias, setAlias] = useState();
     const [cargando] = useState(0);
@@ -57,8 +64,13 @@ function PagoTransf() {
     }
 
     async function guardarTurno() {
-        const response = await confirmarTurno(turno, cuponValidado, comprobante, importe, user.userId);
-        console.log(response)
+        // SOLICITUD ORIGINAL: 
+        /* const response = await confirmarTurno(turno, cuponValidado, comprobante, importe, user.userId);*/
+
+        // SOLICITUD MODIFICADA:  31/08/23 para corregir problema de perdida de datos al actualizar
+        const response = await confirmarTurno(turnoSession, cuponSession , comprobante, importeSession, user.userId);
+
+        console.log(response);
         if (response.error == 0) {
             return navigate('/turno-success');
         } 
@@ -66,6 +78,7 @@ function PagoTransf() {
 
     function copiarAlPortapapeles(texto){
         navigator.clipboard.writeText(texto)
+        alert(texto);
     }
 
     useEffect(() => {
@@ -84,12 +97,12 @@ function PagoTransf() {
                 <h4 className="text-gray-500 my-2 font-bold pt-1">Transferinos a la siguiente cuenta</h4>
 
                 <h4 className="text-gray-600 my-2 font-semibold text-sm pt-1"><strong>CBU:</strong> {cbu} 
-                <button className="icon-button" onClick={copiarAlPortapapeles(cbu)}><img title="Copiar CBU" className="icon" src={copyIcon}/></button></h4>
+                <button className="icon-button" onClick={() => copiarAlPortapapeles(cbu)}><img title="Copiar CBU" className="icon" src={copyIcon}/></button></h4>
 
                 <h4 className="text-gray-600 my-2 font-semibold text-sm pt-1"><strong>Alias:</strong> {alias} 
-                <button className="icon-button"  onClick={copiarAlPortapapeles(alias)}><img title="Copiar Alias" className="icon" src={copyIcon}/></button></h4>
+                <button className="icon-button" onClick={() => copiarAlPortapapeles(alias)}><img title="Copiar Alias" className="icon" src={copyIcon}/></button></h4>
 
-                <h4 className="text-green-600 my-2 text-2xl font-bold pt-1">${importe}</h4>
+                <h4 className="text-green-600 my-2 text-2xl font-bold pt-1">${importeSession}</h4>
             </div>
 
             <div className='my-2'>

@@ -1,6 +1,6 @@
 function Chip(props) {
     return (
-        <div className="mr-0.5 my-0.5 center relative inline-block select-none whitespace-nowrap rounded-lg bg-gradient-to-tr from-lime-700 to-lime-400 py-2 px-3.5 align-baseline font-sans text-xs font-bold uppercase leading-none text-white">
+        <div className="mr-0.5 mb-8 my-0.5 center relative inline-block select-none whitespace-nowrap rounded-lg bg-gradient-to-tr from-lime-700 to-lime-400 py-2 px-3.5 align-baseline font-sans text-xs font-bold uppercase leading-none text-white">
                     <div className="mr-5 mt-px">{props.value}</div>
                     <div
                         className="absolute top-1 right-1 mx-px mt-[0.5px] w-max rounded-md bg-lime-800 transition-colors hover:bg-lime-950"
