@@ -25,7 +25,7 @@ function Login() {
     });
     document.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
-            login();
+            login;
         }
     });
 
@@ -96,7 +96,7 @@ function Login() {
             }
             //console.log(resp)
         } catch (error) {
-            console.log(error)
+           // console.log(error)
         }
     }
 
