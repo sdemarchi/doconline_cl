@@ -1,0 +1,44 @@
+.notification {
+  display: none;
+  position: absolute;
+  margin:auto;
+  font-size: 15px;
+  background-color: #31dd59;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 10px 0px;
+  text-align: center;
+  animation-name: notificacionM;
+  animation-duration: 0.2s;
+  border-radius: 0;
+  top:0;
+  left:0;
+  right: 0;
+  width: 100%;
+}
+
+.notification.visible {
+  display: block;
+}
+
+@keyframes notificacion {
+  0% {
+    transform: translateY(5px);
+    opacity: 0%;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 100%;
+  }
+}
+
+@keyframes notificacionM {
+  0% {
+    transform: translateY(-5px);
+    opacity: 0%;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 100%;
+  }
+}

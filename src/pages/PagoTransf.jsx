@@ -9,6 +9,7 @@ import Spinner from '../components/Spinner';
 import axios from 'axios';
 import copyIcon from '../assets/copy-icon.ico';
 import '../global-styles/form-styles.css';
+import Notificacion from '../components/notificacion/Notificacion';
 
 
 function PagoTransf() {
@@ -33,6 +34,7 @@ function PagoTransf() {
     const [enviando, setEnviando] = useState(false);
     const [uploadResult, setUploadResult] = useState(0);
     const [datosCargados, setDatosCargados] = useState(false);
+    const [mostrarNotification, setMostrarNotification] = useState(false);
 
     const [file , setFile] = useState();
     
@@ -56,6 +58,15 @@ function PagoTransf() {
         setEnviando(false)
     }
 
+    const handleMostrarNotification = () => {
+        setMostrarNotification(true);
+    
+        // Ocultar la notificación después de 2 segundos
+        setTimeout(() => {
+          setMostrarNotification(false);
+        }, 3000);
+      };
+
     async function cargarDatosTransf() {
         const response = await getDatosTransf();
         setCbu(response.cbu);
@@ -77,8 +88,8 @@ function PagoTransf() {
     }
 
     function copiarAlPortapapeles(texto){
-        navigator.clipboard.writeText(texto)
-        alert(texto);
+        navigator.clipboard.writeText(texto);
+        handleMostrarNotification();
     }
 
     useEffect(() => {
@@ -88,6 +99,7 @@ function PagoTransf() {
 
     return (
         <>{!datosCargados && <Spinner/>}{datosCargados && <div>
+            {mostrarNotification && <Notificacion message="Texto copiado al portapapeles" />}
 
             <div className='mb-6 mt-4 mx-auto text-center'>
                 <span className='font-semibold text-gray-500'>PAGAR POR TRANSFERENCIA</span>

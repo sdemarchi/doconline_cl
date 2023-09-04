@@ -14,9 +14,9 @@ function Turnos() {
     
     const { setTurno } = useTurno();
     const user = useOutletContext();
-    
     const now = new Date();
-    
+    const botones = document.querySelectorAll("button");
+    const [calendarioCargado,setCalendarioCargado] = useState(false);
     const [prestador, setPrestador] = useState(0);
     const [prestadores, setPrestadores] = useState([]);
     const [mes, SetMes] = useState(now.getMonth() + 1);
@@ -26,43 +26,62 @@ function Turnos() {
     const [datosCargados, setDatosCargados] = useState(false);
     const [turnoDesc, setTurnoDesc] = useState('');
     const [calendario, setCalendario] = useState([]);
-    
-    const [ cargando, setCargando ] = useState(0);
+    const [cargando, setCargando] = useState(0);
 
     
+    
     async function cargarPrestadores(){
-        const response = await getPrestadores()
-        setPrestadores(response)
+        const response = await getPrestadores();
+        setPrestadores(response);
     }
+
     
     async function cargarCalendario(mes, anio, prestador){
+        setCalendarioCargado(false);
         const response = await getCalendario(mes, anio, prestador);
         setDatosCargados(true);
         setCalendario(response);
+        setCalendarioCargado(true);
     }
     
     function prestadorSeleccionado(id){
-        setPrestador(id)
-        setCargando(cargando + 1)
+        setPrestador(id);
+        setCargando(cargando + 1);
     }
 
     function sumarMes(){
-        if(mes == 12) setAnio(anio + 1)
-        SetMes(mes == 12 ? 1 : mes + 1)
-        setCargando(cargando + 1)
+        if(mes == 12) setAnio(anio + 1);
+        SetMes(mes == 12 ? 1 : mes + 1);
+        setCargando(cargando + 1);
     }
 
     function restarMes(){
-        if(mes == 1) setAnio(anio - 1)
-        SetMes(mes == 1 ? 12: mes-1)
-        setCargando(cargando + 1)
+        if(mes == 1) setAnio(anio - 1);
+        SetMes(mes == 1 ? 12: mes-1);
+        setCargando(cargando + 1);
+    }
+
+    function cambiarCursor(estado){
+       if(estado =="cargando"){
+        document.body.style.cursor = "progress";
+        botones.forEach((boton) => {
+        boton.style.cursor = "progress";});
+       }else{
+        document.body.style.cursor = "default";
+        botones.forEach((boton) => {
+        boton.style.cursor = "pointer";});
+       }
     }
 
     async function selectDia(dia){
-        const turno = await getTurno(dia, prestador)
-        setTurnoFecha(turno.fecha)
-        setTurnoHora(turno.hora)
-        setTurnoDesc(turno.detalle)
+        cambiarCursor("cargando");
+
+        const turno = await getTurno(dia, prestador);
+        setTurnoFecha(turno.fecha);
+        setTurnoHora(turno.hora);
+        setTurnoDesc(turno.detalle);
+
+        cambiarCursor("cargado");
     }
 
     function confirmarTurno(){
@@ -80,8 +99,8 @@ function Turnos() {
     }
 
     useEffect(() => {
-        cargarPrestadores()
-        cargarCalendario(mes,anio,prestador)
+        cargarPrestadores();
+        cargarCalendario(mes,anio,prestador);
     }, [cargando])
 
     return (
@@ -100,6 +119,8 @@ function Turnos() {
             />
             <h6 className="text-gray-500 text-xs font-semibold pt-2">Seleccionar el Día</h6>
             <h6 className="text-green-500 font-semibold text-xs ps-3">En color verde los días disponibles</h6>
+            { !calendarioCargado && <div className="calendario-spinner-contenedor"> <Spinner/> </div>}
+            { calendarioCargado &&
             <Calendario 
                 calendario={ calendario } 
                 mes={ mes } 
@@ -107,7 +128,8 @@ function Turnos() {
                 sumar={ () => sumarMes() } 
                 restar={ () => restarMes() }
                 select={ (fecha) => selectDia(fecha) } 
-            />
+            /> 
+            }
             <h6 className="text-gray-500 text-xs font-semibold pt-2">Confirmar Turno</h6>
             <textarea disabled
             className="block w-full p-1 my-1 border-input focus:border-input border-2 text-xs text-gray-500"

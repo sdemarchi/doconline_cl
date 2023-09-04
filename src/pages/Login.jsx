@@ -142,6 +142,7 @@ function Login() {
                 onChange={ e => setUserid(e.target.value)}
                 placeholder="Nombre de Usuario o E-Mail"
             />
+
             <FormInputState 
                 id="password"
                 label="Contraseña" 
@@ -150,6 +151,7 @@ function Login() {
                 placeholder="Contraseña"
                 password={true}
             />
+            
             <div className='mb-4'>
                 <Link to='#' className='mb-6 text-gray-500 text-sm'>¿Olvidaste tu Contraseña?</Link>
             </div>
