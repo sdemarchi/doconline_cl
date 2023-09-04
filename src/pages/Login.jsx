@@ -23,6 +23,11 @@ function Login() {
         onSuccess: (codeResponse) => setGoogleUser(codeResponse),
         onError: (error) => console.log('Login Failed:', error)
     });
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            login();
+        }
+    });
 
 
     useEffect(
