@@ -19,16 +19,16 @@ function FormRep1() {
     const { form1, setForm1 } = useForm();
     const navigate = useNavigate();
 
-    const [/*paciente,*/ setPaciente] = useState({});
+    const [/*paciente*/, setPaciente] = useState({});
     var [fechaNac, setFechaNac] = useState('');
     const [errorFechaNac, setErrorFechaNac] = useState('');
     fechaNac = sessionStorage.getItem('fecha_nac');
 
     const [cargando] = useState(0);
+    const [confimCelError , setConfimCelError] = useState('');
  
     var celValue;
     var [confirmarCelular, setConfirmarCelular] = useState('');
-    let corfimCelError = 'Los telefonos no coinciden.';
 
     const handleConfirmarCelularChange = (event) => {
         setConfirmarCelular(event.target.value);
@@ -61,8 +61,8 @@ function FormRep1() {
         if(celValue === confirmarCelular){
            validCel = true;
         }else{
-            corfimCelError = 'Los telefonos no coinciden.';
-          }
+            setConfimCelError('Los telefonos no coinciden.');
+        }
         
 
         validForm = validFecha && validCel;
@@ -158,7 +158,7 @@ function FormRep1() {
                     maxLength={20}
                     onChange={handleConfirmarCelularChange} 
                 />
-                { confirmarCelular !== getValues("celular") && <Error>{corfimCelError}</Error>}
+                { confirmarCelular !== getValues("celular") && <Error>{confimCelError}</Error>}
 
                 <FormInputHook label="Código de Vinculación de REPROCANN" id="cod_vincu"
                     defaultValue={form1?.cod_vincu}

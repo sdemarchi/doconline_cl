@@ -37,25 +37,26 @@ function PagoTransf() {
     const [mostrarNotification, setMostrarNotification] = useState(false);
 
     const [file , setFile] = useState();
-    
+
     const subirArchivo = async (e) => {
+        setEnviando(true);
         setFile(e.target.files[0])
         const url = `${import.meta.env.VITE_API_URL}/turnero.comprobante`
         const data = new FormData()
         data.append("file", e.target.files[0])
-        setEnviando(true)
         axios
             .post(url, data)
             .then(res => {
                 setUploadResult(1);
-                console.log(res.data.filename)
-                setComprobante(res.data.filename)
+                console.log(res.data.filename);
+                setComprobante(res.data.filename);
+                setEnviando(false);
+                sessionStorage.setItem("comprobante-enviado",true);
             })
             .catch(err => {
                 setUploadResult(2);
-                console.log(err)
+                console.log(err);
             })
-        setEnviando(false)
     }
 
     const handleMostrarNotification = () => {
@@ -75,13 +76,13 @@ function PagoTransf() {
     }
 
     async function guardarTurno() {
+        setDatosCargados(false);
         // SOLICITUD ORIGINAL: 
         /* const response = await confirmarTurno(turno, cuponValidado, comprobante, importe, user.userId);*/
 
         // SOLICITUD MODIFICADA:  31/08/23 para corregir problema de perdida de datos al actualizar
         //alert(JSON.stringify(turnoSession) + JSON.stringify(cuponSession) || JSON.stringify(cuponValidado) + JSON.stringify(comprobante) + JSON.stringify(importeSession) + JSON.stringify(user.userId));
         const response = await confirmarTurno(turnoSession, cuponSession || cuponValidado, comprobante, importeSession, user.userId);
-
         console.log(response);
         if (response.error == 0) {
             return navigate('/turno-success');
@@ -94,6 +95,7 @@ function PagoTransf() {
     }
 
     useEffect(() => {
+        sessionStorage.setItem('comprobante-enviado',false);
         cargarDatosTransf()
     }, [cargando])
 
@@ -120,13 +122,12 @@ function PagoTransf() {
 
             <div className='my-2'>
                 <div className='pt-2 pb-0'>
-                    {enviando ?
+                    {enviando &&
                         <label className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer">
-                            <Spinner />
                             <span className="mt-2 text-base leading-normal">Enviando...</span>
                         </label>
-
-                        :
+                    }   
+                    { !enviando &&
                         <label className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer hover:bg-gradient-to-r hover:from-grad-green hover:to-grad-blue hover:text-white">
                             <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                 <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
