@@ -79,7 +79,8 @@ function PagoTransf() {
         /* const response = await confirmarTurno(turno, cuponValidado, comprobante, importe, user.userId);*/
 
         // SOLICITUD MODIFICADA:  31/08/23 para corregir problema de perdida de datos al actualizar
-        const response = await confirmarTurno(turnoSession, cuponSession , comprobante, importeSession, user.userId);
+        //alert(JSON.stringify(turnoSession) + JSON.stringify(cuponSession) || JSON.stringify(cuponValidado) + JSON.stringify(comprobante) + JSON.stringify(importeSession) + JSON.stringify(user.userId));
+        const response = await confirmarTurno(turnoSession, cuponSession || cuponValidado, comprobante, importeSession, user.userId);
 
         console.log(response);
         if (response.error == 0) {
@@ -109,10 +110,10 @@ function PagoTransf() {
                 <h4 className="text-gray-500 my-2 font-bold pt-1">Transferinos a la siguiente cuenta</h4>
 
                 <h4 className="text-gray-600 my-2 font-semibold text-sm pt-1"><strong>CBU:</strong> {cbu} 
-                <button className="icon-button" onClick={() => copiarAlPortapapeles(cbu)}><img title="Copiar CBU" className="icon" src={copyIcon}/></button></h4>
+                <button className="icon-button" onClick={() => copiarAlPortapapeles(cbu)}><img title="Copiar CBU" className="icon" src={copyIcon}></img></button></h4>
 
                 <h4 className="text-gray-600 my-2 font-semibold text-sm pt-1"><strong>Alias:</strong> {alias} 
-                <button className="icon-button" onClick={() => copiarAlPortapapeles(alias)}><img title="Copiar Alias" className="icon" src={copyIcon}/></button></h4>
+                <button className="icon-button" onClick={() => copiarAlPortapapeles(alias)}><img title="Copiar Alias" className="icon" src={copyIcon}></img></button></h4>
 
                 <h4 className="text-green-600 my-2 text-2xl font-bold pt-1">${importeSession}</h4>
             </div>
