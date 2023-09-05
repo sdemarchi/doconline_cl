@@ -18,20 +18,22 @@ function Login() {
     const [alerta, setAlerta] = useState({});
     const [ googleUser, setGoogleUser ] = useState();
     const navigate = useNavigate();
+    const loginButton = document.getElementById('login-button');
     const regex_mail = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
     const gLogin = useGoogleLogin({
         onSuccess: (codeResponse) => setGoogleUser(codeResponse),
         onError: (error) => console.log('Login Failed:', error)
     });
+
+    
     document.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
-            login;
+            loginButton.click();
         }
     });
 
 
-    useEffect(
-        () => {
+    useEffect(() => {
             if (googleUser) {
                 axios
                     .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${googleUser.access_token}`, {
@@ -160,7 +162,7 @@ function Login() {
             <div className='mb-4'>
                 <Link to='#' className='mb-6 text-gray-500 text-sm'>¿Olvidaste tu Contraseña?</Link>
             </div>
-            <ActionButton value="Iniciar Sesión" onClick={login} />
+            <ActionButton id="login-button" value="Iniciar Sesión" onClick={login} />
             <div className='mx-auto pt-3 text-center'>
                 <Link to='/registrarme' className='text-gray-500'>Registrarme</Link>
             </div>

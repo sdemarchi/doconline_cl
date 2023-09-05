@@ -13,6 +13,7 @@ function SubmitButton(props) {
 function ActionButton(props) {
     return (
         <button
+            id={props.id}
             className="action-button bg-gradient-to-r from-grad-green to-grad-blue text-white w-full p-2 rounded-md cursor-pointer"
             onClick={props.onClick}
         >{props.value}</button>
