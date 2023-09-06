@@ -22,7 +22,7 @@ function TurnoSuccess() {
             <>
             <img className="mx-auto w-20 pb-8" src={logo}></img>
             <h1 className='text-xl font-extrabold mb-5 text-center text-transparent bg-clip-text bg-gradient-to-r from-grad-green to-grad-blue'>FELICITACIONES</h1>
-            <h3 className='text-lg font-semibold text-center bg-clip-text text-black'>Envianos el comprobante de pago por Whatsapp para evitar la cancelacion del turno.</h3>
+            <h3 className='text-lg font-semibold text-center bg-clip-text' style={{color:"#343434"}}>Envianos el comprobante de pago por Whatsapp para evitar la cancelacion del turno.</h3>
             <img className="mx-auto w-14 pt-8 opacity-90" src={icon}></img>
             </> 
             }

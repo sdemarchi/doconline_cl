@@ -89,8 +89,8 @@ function PagoTransf() {
         } 
     }
 
-    function copiarAlPortapapeles(texto){
-        navigator.clipboard.writeText(texto);
+    async function copiarAlPortapapeles(texto){
+        await navigator.clipboard.writeText(texto);
         handleMostrarNotification();
     }
 

@@ -129,7 +129,7 @@ function Turnos() {
                 placeholder='Seleccione un prestador' 
                 onChange={(event) => prestadorSeleccionado(event.target.value)}
             />
-            <h6 className="text-gray-500 text-xs font-semibold pt-2">Seleccionar el Día</h6>
+            <h6 className="input-label">Seleccionar el Día</h6>
             <h6 className="text-green-500 font-semibold text-xs ps-3">En color verde los días disponibles</h6>
             { !calendarioCargado && <div className="calendario-spinner-contenedor"> <Spinner/> </div>}
             { calendarioCargado &&
@@ -142,7 +142,7 @@ function Turnos() {
                 select={ (fecha) => selectDia(fecha) } 
             /> 
             }
-            <h6 className="text-gray-500 text-xs font-semibold pt-2">Confirmar Turno</h6>
+            <h6 className="input-label mt-5">Confirmar Turno</h6>
             {!cargandoTurno ? 
             <>
             <textarea disabled
