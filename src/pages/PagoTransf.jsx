@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { React, useState, useEffect } from 'react';
 import { ActionButton } from '../components/Buttons';
 import { getDatosTransf/*, uploadComprobante*/ } from '../data/turnero';
 import useAuth from '../hooks/useAuth';

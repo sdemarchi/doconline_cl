@@ -15,7 +15,8 @@ function Select(props) {
                 <option 
                 key={dato.id} 
                 value={dato.id}
-                >{dato.nombre}</option>
+                >{dato.nombre}
+                </option>
             ))}
         </select>
         </>

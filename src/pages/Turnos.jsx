@@ -17,7 +17,7 @@ function Turnos() {
     const now = new Date();
     const botones = document.querySelectorAll("button");
     const [calendarioCargado,setCalendarioCargado] = useState(false);
-    const [prestador, setPrestador] = useState(0);
+    const [prestador, setPrestador] = useState(1);
     const [prestadores, setPrestadores] = useState([]);
     const [mes, SetMes] = useState(now.getMonth() + 1);
     const [anio, setAnio] = useState(now.getFullYear());
@@ -27,21 +27,24 @@ function Turnos() {
     const [turnoDesc, setTurnoDesc] = useState('');
     const [calendario, setCalendario] = useState([]);
     const [cargando, setCargando] = useState(0);
+    const [cargandoTurno, setCargandoTurno] = useState(false);
 
     
     
     async function cargarPrestadores(){
         const response = await getPrestadores();
         setPrestadores(response);
+        setPrestador(response[0].id);
+        return response;
     }
 
     
     async function cargarCalendario(mes, anio, prestador){
         setCalendarioCargado(false);
         const response = await getCalendario(mes, anio, prestador);
-        setDatosCargados(true);
         setCalendario(response);
         setCalendarioCargado(true);
+        setDatosCargados(true);
     }
     
     function prestadorSeleccionado(id){
@@ -75,6 +78,7 @@ function Turnos() {
 
     async function selectDia(dia){
         cambiarCursor("cargando");
+        setCargandoTurno(true);
 
         const turno = await getTurno(dia, prestador);
         setTurnoFecha(turno.fecha);
@@ -82,6 +86,7 @@ function Turnos() {
         setTurnoDesc(turno.detalle);
 
         cambiarCursor("cargado");
+        setCargandoTurno(false);
     }
 
     function confirmarTurno(){
@@ -99,8 +104,14 @@ function Turnos() {
     }
 
     useEffect(() => {
-        cargarPrestadores();
-        cargarCalendario(mes,anio,prestador);
+        cargarPrestadores().then((response)=>{
+            if(prestador == 0){
+                cargarCalendario(mes,anio,response[0].id)
+            }else{
+                cargarCalendario(mes,anio,prestador)
+            }
+         }
+        );
     }, [cargando])
 
     return (
@@ -113,9 +124,10 @@ function Turnos() {
             <Select 
                 label="Seleccionar Prestador" 
                 id="prestador" 
-                datos={prestadores} 
+                datos={prestadores}
+                value={1}
                 placeholder='Seleccione un prestador' 
-                onChange={(event) => prestadorSeleccionado(event.target.value) }
+                onChange={(event) => prestadorSeleccionado(event.target.value)}
             />
             <h6 className="text-gray-500 text-xs font-semibold pt-2">Seleccionar el Día</h6>
             <h6 className="text-green-500 font-semibold text-xs ps-3">En color verde los días disponibles</h6>
@@ -131,10 +143,15 @@ function Turnos() {
             /> 
             }
             <h6 className="text-gray-500 text-xs font-semibold pt-2">Confirmar Turno</h6>
+            {!cargandoTurno ? 
+            <>
             <textarea disabled
             className="block w-full p-1 my-1 border-input focus:border-input border-2 text-xs text-gray-500"
             value={ turnoDesc }
-            ></textarea>
+            ></textarea> 
+            </>
+            : <div style={{height:"52px",width:"100%",display:"flex",color:"#4E4E4E",alignItems:"center",justifyContent:"center"}}>Cargando...</div>
+            }
             <div className='pt-4'>
                 <ActionButton 
                     onClick={() => turnoDesc != '' ? confirmarTurno() : {}} 
@@ -151,4 +168,4 @@ function Turnos() {
     )
 }
 
-export default Turnos
+export default Turnos;
