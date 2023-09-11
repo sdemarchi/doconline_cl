@@ -9,6 +9,7 @@ function GuestLayout() {
                 <Outlet />
                 </div>
             </div>
+            
         </div>
     )
 }

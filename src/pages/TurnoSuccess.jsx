@@ -1,8 +1,8 @@
-import logo from '../assets/logo-doconline-vert.png'
-import icon from '../assets/icon-success.png'
-//import iconEspera from '../assets/icon-espera.png'
-import {/* SubmitButton,*/ LinkButton } from '../components/Buttons'
-import useTurno from '../hooks/useTurno'
+import logo from '../assets/logo-doconline-vert.png';
+import icon from '../assets/icon-success.png';
+//import iconEspera from '../assets/icon-espera.png';
+import {/* SubmitButton,*/ LinkButton } from '../components/Buttons';
+import useTurno from '../hooks/useTurno';
 
 function TurnoSuccess() {
 

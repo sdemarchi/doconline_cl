@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import useForm from '../hooks/useForm';
 import '../global-styles/panel-styles.css';
 import Spinner from '../components/Spinner';
+import { BsInfoCircle } from "react-icons/bs";
+import '../styles/panel.css';
 
 function Panel() {
 
@@ -40,8 +42,8 @@ function Panel() {
             const response2 = await descargarFormulario(response.dni);
             if(response2.error.code == 0){
                 //setFormCargado(response2.data)
-                setDatosCargados(true);
                 llenarFormulario(response2.data, response2.patologias);
+                setDatosCargados(true);
 
             }
         }
@@ -64,7 +66,7 @@ function Panel() {
         <div className='panel-container'>
             <img className="panel-logo mx-auto w-50" src={logo}></img>
             <div className='mb-3 mx-auto text-center'>
-                <span className='font-semibold text-gray-500'>Perfil / Paciente</span>
+                <span className='font-semibold text-gray-500'>Tus datos</span>
             </div>
             <div className='flex flex-row'>
                 <div className='basis-1/2 pe-1'>
@@ -86,13 +88,14 @@ function Panel() {
      
             <DataBox label="E-Mail" value={paciente.email} />
 
-            <hr className='panel-separador solid border-input border-1 my-4'></hr>
+            <hr className='panel-separador solid border-input border-1 my-3'></hr>
 {/*  */}
             <div className="turnos-container">
-            <h6 className="text-gray-500 text-sm font-semibold leading-3">Mis Turnos</h6>
             {turnoPaciente.id > 0 ?
-                <>
-                    <div className="block w-full mt-3 p-1 border-input focus:border-input border-2 text-center rounded-md">
+            
+            <>
+            <h6 className="text-gray-500 text-sm font-semibold leading-3">Mis Turnos</h6>
+                    <div className="block w-full mt-3 p-1 mb-8 border-input focus:border-input border-2 text-center rounded-md">
                         <h4 className="text-gray-500 text-sm font-bold pt-1">{turnoPaciente.detalle}</h4>
                         <div className='flex flex-row-reverse pt-1'>
                             <MiniActionButtonRed onClick={() => cancelarMiTurno()} value="Cancelar" />
@@ -100,17 +103,17 @@ function Panel() {
                     </div>
                 </>
                 :
-                <>
-                    <h6 className='text-gray-500 text-xs font-semibold px-10 py-3'>No tienes turnos pendientes</h6>
-                    <div className='panel-button pt-4'><LinkButton to="/turno" value="Solicitar Turno" /></div>
+                <> 
+                    <div className="panel-info">
+                        <p className="panel-info-text"><BsInfoCircle className="panel-info-icon"/>Solicita un turno con nosotros y a continuación completa el formulario de Reprocann.</p>
+                    </div>
+                    {/*<h6 className='text-gray-500 text-xs font-semibold px-10 py-3'>No tienes turnos pendientes</h6>*/}
+                    <div className='pt-3 pb-5'><LinkButton to="/turno" value="Solicitar Turno" /></div>
                     
                 </>
-
-
             }
             </div>
-   
-            <div className='pt-4'><LinkButton to="/formulario-1" value="Formulario REPROCANN" /></div>
+            <div className='pt-1 pb-0'><LinkButton to="/formulario-1" value="Formulario REPROCANN" /></div>
             <div className='panel-button mx-auto p-3 text-center'>
                 <button className='text-red-700' onClick={() => logout()} >Cerrar Sesión</button>
             </div>

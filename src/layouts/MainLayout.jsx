@@ -1,6 +1,7 @@
 import { Outlet, Navigate } from "react-router-dom"
 import useAuth from '../hooks/useAuth'
 import Spinner from "../components/Spinner"
+import WspBoton from "../components/wsp-boton/wsp-boton"
 
 
 function MainLayout() {
@@ -15,7 +16,6 @@ function MainLayout() {
                     <Spinner/>
                     </div>
                 </div>
-            
             </div>
         )
         
@@ -25,13 +25,15 @@ function MainLayout() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-bl from-grad-blue to-grad-green overflow-y-auto flex items-center justify-center">
-            <div className="flex items-center justify-center">
-                <div className="form-container max-w-sm bg-white rounded-md shadow-lg w-80">
-                <Outlet context={user}/>
+        <div className="background-image min-h-screen from-grad-blue  bg-gradient-to-bl to-grad-blue overflow-y-auto flex items-center justify-center">
+            <div className="background">
+                <div className="content flex items-center justify-center">
+                    <div className="form-container max-w-sm bg-white shadow-lg w-80">
+                    <Outlet context={user}/>
+                    <WspBoton/>
+                    </div>
                 </div>
             </div>
-            
         </div>
     )
 }

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import '../global-styles/buttons.css';
 
 function SubmitButton(props) {
     return (
@@ -23,7 +24,7 @@ function ActionButton(props) {
 function MiniActionButtonRed(props) {
     return (
         <button
-            className="bg-gradient-to-b from-red-600 to-red-800 text-white p-1 text-xs rounded-md cursor-pointer"
+            className="bg-red-500 text-white p-1 text-xs rounded-md cursor-pointer"
             onClick={props.onClick}
         >{props.value}</button>
     )
@@ -39,4 +40,16 @@ function LinkButton(props) {
     )
 }
 
-export { SubmitButton, ActionButton, LinkButton, MiniActionButtonRed }
+function InfoButton(props) {
+
+    return (
+        <div className="info-button-container">
+            <button type="button" className='info-button'>
+            <p className="info-button-text">{props.info}</p>
+                ?
+            </button>
+        </div>
+    )
+}
+
+export { InfoButton, SubmitButton, ActionButton, LinkButton, MiniActionButtonRed }

@@ -1,5 +1,6 @@
 import ReactInputDateMask from 'react-input-date-mask';
 import '../global-styles/form-styles.css';
+import { InfoButton } from './Buttons';
 
 function FormInput(props) {
     return (
@@ -69,7 +70,8 @@ function FormInputHook(props) {
             <label
                 className="input-label text-gray-500 text-xs font-semibold inline-block"
                 htmlFor={ props.id }
-            >{ props.label }</label>
+                style= {{ width: '100%',display:"flex"}}
+            ><span style={{minWidth:"max-content"}}>{ props.label }</span>{props.info && <InfoButton info={props.info}/>}</label>
             <input
                 id={ props.id }
                 type={ props.password ? "password" :  props.number ? "number" : "text"  }
@@ -79,7 +81,6 @@ function FormInputHook(props) {
                 defaultValue={ props.defaultValue }
                 onChange = {props.onChange}
                 { ...props.register }
-                
             />
         </div>
     )

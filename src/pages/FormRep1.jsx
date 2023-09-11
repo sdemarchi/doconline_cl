@@ -38,7 +38,6 @@ function FormRep1() {
         async function getPaciente() {
             const response = await perfil(user.userId);
             setPaciente(response);
-            console.log(fechaNac);
         }
         getPaciente()
         setFechaNac(form1.fe_nacim)
@@ -164,6 +163,7 @@ function FormRep1() {
                     defaultValue={form1?.cod_vincu}
                     maxLength={50}
                     register={register('cod_vincu', { maxLength: 50 })}
+                    info={"Si no tenes este codigo dejalo en blanco y te guiaremos por WhatsApp para obtenerlo"}
                 />
                 {errors.cod_vincu?.type == 'maxLength' && <ErrorMax>50</ErrorMax>}
 
