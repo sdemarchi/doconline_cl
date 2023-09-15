@@ -1,14 +1,16 @@
-import { useState, useEffect } from 'react'
-import {/* Form,*/ Link/*, redirect*/, useNavigate } from 'react-router-dom'
-import logo from '../assets/logo-doconline-vert.png'
-import { FormInputState } from '../components/FormInput'
-import { ActionButton } from '../components/Buttons'
-import useAuth from '../hooks/useAuth'
-import Alerta from '../components/Alerta'
+import { useState, useEffect } from 'react';
+import {/* Form,*/ Link/*, redirect*/, useNavigate } from 'react-router-dom';
+import logo from '../assets/logo-doconline.jpg';
+import { LoginInput } from '../components/FormInput';
+import { ActionButton, LoginButton } from '../components/Buttons';
+import useAuth from '../hooks/useAuth';
+import Alerta from '../components/Alerta';
 import {/* GoogleLogin, googleLogout,*/ useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
-import Spinner from '../components/Spinner'
-
+import Spinner from '../components/Spinner';
+import '../styles/login.css';
+import minImage from '../assets/min_salud.png';
+import reproImage from '../assets/reprocan.png';
 
 function Login() {
     const { setUser, /*googleProfile,*/ setGoogleProfile } = useAuth();
@@ -137,47 +139,68 @@ function Login() {
     return (
         <> { !contenidoCargado && <Spinner />}{ contenidoCargado && 
 
-        <div>
-            <img className="mb-6 mx-auto w-20 pb-4" src={ logo }></img>
+        <div className="login-container">
+            <div className="login-form">
 
-            {msg && <Alerta alerta={ alerta } />}
-            
-            <FormInputState 
-                id="userId"
-                label="Nombre de Usuario o E-Mail" 
-                value={userid}
-                onChange={ e => setUserid(e.target.value)}
-                placeholder="Nombre de Usuario o E-Mail"
-            />
+                <div className="login-logo-container">
+                    {/*<span className="login-logo-text">Cuida tu salud estés donde estés</span>*/}
+                    <img className="login-logo mx-auto pb-4" src={ logo }></img>
+                </div>
+    
+                <h3 className="login-bienvenido">Bienvenido/a</h3>
 
-            <FormInputState 
-                id="password"
-                label="Contraseña" 
-                value={password}
-                onChange={ e => setPassword(e.target.value)}
-                placeholder="Contraseña"
-                password={true}
-            />
-            
-            <div className='mb-4'>
-                <Link to='#' className='mb-6 text-gray-500 text-sm'>¿Olvidaste tu Contraseña?</Link>
-            </div>
-            <ActionButton id="login-button" value="Iniciar Sesión" onClick={login} />
-            <div className='mx-auto pt-3 text-center'>
-                <Link to='/registrarme' className='text-gray-500'>Registrarme</Link>
-            </div>
-            <div className='mx-auto p-3 text-gray-500 text-center'>
-                <span>o</span>
-            </div>
-            
-            <div className='flex flex-col items-center'>
+
                 <button onClick={() => gLogin()}
-                    className="px-4 py-2 border flex gap-2 border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150">
-                    <img className="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"/>
-                    <span>Iniciar sesión con Google</span>
+                    className="login-google-button px-4 py-2 border flex gap-2 border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150">
+                    <img className="login-google-button-icon" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"/>
+                    <span className="login-google-button-text">Iniciar sesión / registrarme con Google</span>
                 </button>
 
+                <span className="login-o">o</span>
+
+
+                {msg && <Alerta alerta={ alerta } />}
+                
+                <LoginInput
+                    className="login-input"
+                    rounded={true}
+                    id="userId"
+                    value={userid}
+                    onChange={ e => setUserid(e.target.value)}
+                    placeholder="Nombre de Usuario o E-Mail"
+                />
+
+                <LoginInput
+                    className="login-input"
+                    rounded={true}
+                    id="password"
+                    value={password}
+                    onChange={ e => setPassword(e.target.value)}
+                    placeholder="Contraseña"
+                    password={true}
+                />
+                
+                <div className='login-olvidaste mb-4'>
+                    <Link to='#' className='mb-6 text-gray-500 text-sm'>¿Olvidaste tu Contraseña?</Link>
+                </div>
+                
+                <div className="login-buttons">
+                    <ActionButton id="login-button" value="Iniciar Sesión" onClick={login} />
+                    <Link to='/registrarme' className='login-registrar'>Registrarme</Link>
+                </div>
+
+                <div className="login-terminos">
+                    <input className="login-terminos-checkbox" type="checkbox"></input>
+                    <span className="login-terminos-text">Acepto los <a>Terminos y condiciones</a></span>
+                </div>
+
             </div>
+
+            <div className="login-min-repro-container">
+                <img src={minImage} className="login-image login-min-image"></img>
+                <img src={reproImage} className="login-image login-repro-image"></img>
+            </div>
+
         </div>
         
         }</>

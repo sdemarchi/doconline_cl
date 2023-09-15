@@ -8,11 +8,11 @@
   box-shadow: 2px 2px 5px 2px rgba(128, 128, 128, 0.427);
 }
 
-.login-container{
+.layout-login-container{
   margin: 8px 0;
   width:380px;
   max-width: 96vw;
-  padding: 40px 20px;
+  padding: 0px 20px;
   min-height: 600px;
 }
 
@@ -22,8 +22,10 @@
     min-width: 96vw;
   }
 
-  .login-container{
-    padding: 50px 15px;
-    min-width: 96vw;
+  .layout-login-container{
+    padding: 0px 15px;
+    min-width: 100vw;
+    min-height: 100vh;
+    margin:0;
   }
 }

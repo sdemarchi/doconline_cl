@@ -39,3 +39,11 @@
 .info-button:hover .info-button-text{
   display:block !important;
 }
+
+
+@media screen and (width>600px){
+  .login-button{
+    font-size:12px !important;
+    color:red;
+  }
+}

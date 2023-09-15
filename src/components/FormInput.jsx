@@ -24,6 +24,7 @@ function FormInput(props) {
 }
 
 function FormInputReadonly(props) {
+
     return (
         <div className="input-container mt-1">
             <label
@@ -45,6 +46,8 @@ function FormInputReadonly(props) {
 }
 
 function FormInputState(props) {
+    const borderStyle = props.rounded ? { borderRadius: '7px' } : {};
+
     return (
         <div className="input-container mt-1">
             <label
@@ -54,6 +57,7 @@ function FormInputState(props) {
             <input
                 id={ props.id }
                 type={ props.password ? "password" : "text" }
+                style={borderStyle}
                 className="block w-full p-2 bg-white border-input focus:border-input border-2 text-xs text-gray-500"
                 placeholder={ props.placeholder }
                 value={ props.value }
@@ -63,6 +67,30 @@ function FormInputState(props) {
         </div>
     )
 }
+
+function LoginInput(props) {
+    const borderStyle = props.rounded ? { borderRadius: '8px',borderWidth:"2px", height:"43px" } : {};
+
+    return (
+        <div className="input-container mt-1">
+            <label
+                className="input-label text-gray-500 text-xs font-semibold"
+                htmlFor={ props.id }
+            >{ props.label }</label>
+            <input
+                id={ props.id }
+                type={ props.password ? "password" : "text" }
+                style={borderStyle}
+                className="login-input block w-full p-2 border-input focus:border-input border-2 text-gray-500"
+                placeholder={ props.placeholder }
+                value={ props.value }
+                onChange={ props.onChange }
+                
+            />
+        </div>
+    )
+}
+
 
 function FormInputHook(props) {
     return (
@@ -110,4 +138,4 @@ function FormInputDate(props) {
 }
 
 export default FormInput
-export {FormInput, FormInputState, FormInputHook, FormInputReadonly, FormInputDate }
+export {LoginInput, FormInput, FormInputState, FormInputHook, FormInputReadonly, FormInputDate }

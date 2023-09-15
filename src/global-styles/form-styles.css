@@ -1,9 +1,10 @@
 input[type="text"], input[type="number"], input[type="date"], input[type="password"], select, textarea, .date-input {
   margin: 21px 0;
   margin-top:6px;
-  font-size: 14px !important;
   color:rgb(0, 0, 0) !important;
   font-family: 'Montserrat', sans-serif !important;
+  height: 38px;
+  border-width: 1px;
 }
 
 input::placeholder {
@@ -34,17 +35,27 @@ input::placeholder {
   opacity: 100%;
 }
 
+.login-input::placeholder{
+  color:rgb(138, 138, 138) !important;
+  font-weight: 500;
+}
+
+.login-input{
+  height:37px !important;
+}
 
 @media screen and (max-width:800px) {
   input{
-    font-size: 16px !important;
+    font-size: 18px !important;
+  }
+
+  .login-input{
+    height:43px !important;
   }
 
   input::placeholder {
-    font-size: 15px !important;
+    font-size: 18px !important;
   }
-  
-  .input-label{
-    font-size: 15px;
-  }
+
+
 }
