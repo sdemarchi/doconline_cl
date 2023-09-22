@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@media only screen and (width > 768px){
+  .display-cel{
+    display:none;
+  }
+}
+
+@media only screen and (width <= 768px){
+  .display-pc{
+    display:none;
+  }
+}
+
+/* Fuentes:
+
+  font-family: 'Inclusive Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+
+  responsive:
+
+  0 - 768px: cel-tablet
+  768 - adelante: pc
+*/

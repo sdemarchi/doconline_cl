@@ -26,10 +26,10 @@
 @keyframes wsp-icon{
   0%{
     opacity: 0;
-    bottom:15px;
+    transform:translateY(-15)
   }
   100%{
     opacity: 100%;
-    bottom: 27px;
+    transform:translateY(0)
   }
 }

@@ -1,0 +1,31 @@
+.form-rep-container{
+  padding: 30px 16px;
+  padding-bottom: 30px;
+}
+
+.form-rep-contacto{
+  position:fixed;
+  bottom:30px;
+  right: 20px;
+}
+
+.space{
+  height: 3px;
+  margin:0;
+  padding:0;
+}
+
+.form-rep-container input{
+  margin-top: 7px !important;
+}
+
+.form-rep-container h1{
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  color:rgb(68, 68, 68);
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 20px;
+}
+

@@ -1,36 +1,37 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import './index.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Login from './pages/Login.jsx'
-import Register from './pages/Register.jsx'
-import Panel from './pages/Panel.jsx'
-import FormRep1 from './pages/FormRep1'
-import FormRep2 from './pages/FormRep2'
-import FormRep3 from './pages/FormRep3'
-import FormRep4 from './pages/FormRep4'
-import FormRep5 from './pages/FormRep5'
-import Patologia from './pages/Patologia'
-import FormTutor1 from './pages/FormTutor1'
-import FormTutor2 from './pages/FormTutor2'
-import FormSuccess from './pages/FormSuccess'
-import Turnos from './pages/Turnos'
-import Pagos from './pages/Pagos'
-import TurnoConf from './pages/TurnoConf'
-import TurnoSuccess from './pages/TurnoSuccess'
-import { AuthProvider } from './context/AuthProvider'
-import GuestLayout from './layouts/GuestLayout'
-import MainLayout from './layouts/MainLayout.jsx'
-import { action as registerAction } from './pages/Register'
-import { action as gRegisterAction } from './pages/GoogleRegister'
-import { TurnoProvider } from './context/TurnoProvider'
-import PagoMl from './pages/PagoMl'
-import PagoTransf from './pages/PagoTransf'
-import { FormProvider } from './context/FormProvider'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Login from './pages/login/Login.jsx';
+import Register from './pages/Register.jsx';
+import Panel from './pages/panel/Panel.jsx';
+import FormRep1 from './pages/formReprocann/FormRep1';
+import FormRep2 from './pages/formReprocann/FormRep2';
+import FormRep3 from './pages/formReprocann/FormRep3';
+import FormRep4 from './pages/formReprocann/FormRep4';
+import FormRep5 from './pages/formReprocann/FormRep5';
+import Patologia from './pages/patologias/Patologia';
+import FormTutor1 from './pages/tutor/FormTutor1';
+import FormTutor2 from './pages/tutor/FormTutor2';
+import FormSuccess from './pages/formReprocann/FormSuccess';
+import Turnos from './pages/turno/Turnos';
+import Pagos from './pages/pagos/Pagos';
+import TurnoConf from './pages/turno/TurnoConf';
+import TurnoSuccess from './pages/turno/TurnoSuccess';
+import { AuthProvider } from './context/AuthProvider';
+import GuestLayout from './layouts/GuestLayout';
+import MainLayout from './layouts/MainLayout.jsx';
+import { action as registerAction } from './pages/Register';
+import { action as gRegisterAction } from './pages/GoogleRegister';
+import { TurnoProvider } from './context/TurnoProvider';
+import PagoMl from './pages/pagos/PagoMl';
+import PagoTransf from './pages/pagos/PagoTransf';
+import { FormProvider } from './context/FormProvider';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import FormRep3b from './pages/FormRep3b'
-import FormError from './pages/FormError'
-import GoogleRegister from './pages/GoogleRegister'
+import FormRep3b from './pages/formReprocann/FormRep3b';
+import FormError from './pages/formReprocann/FormError';
+import GoogleRegister from './pages/GoogleRegister';
+import Ayuda from './pages/ayuda/ayuda';
 
 const router = createBrowserRouter([
   {
@@ -110,7 +111,6 @@ const router = createBrowserRouter([
         path: '/form-error',
         element: <FormError />
       },
-      
       {
         path: '/turno',
         element: <Turnos />
@@ -135,6 +135,10 @@ const router = createBrowserRouter([
         path: '/turno-success',
         element: <TurnoSuccess />
       },
+      {
+        path: '/ayuda',
+        element:<Ayuda/>
+      }
     ]
   }
 ],  { basename: "/turnero" })
