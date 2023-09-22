@@ -1,0 +1,157 @@
+.panel-container{
+  position: relative;
+  margin: 15px;
+  margin-bottom: 0;
+  padding: 25px 10px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.panel-logo{
+  margin-bottom: 13px;
+}
+
+.panel-separador{
+  margin-top:5px;
+  margin-bottom: 35px;
+  border-color: rgb(113, 113, 113);
+}
+
+.panel-button{
+  margin: 10px 0;
+}
+
+.panel-info{
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.panel-titulo{
+  font-size: 24px;
+  font-weight: 600;
+  color:rgb(89, 89, 89);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.panel-description{
+  margin: 25px 0 ;
+  color:rgb(80, 80, 80);
+  margin-bottom: 35px;
+}
+
+.panel-description-subtitle{
+  font-size: 21px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.panel-description-text{
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.panel-doctor{
+  font-size: 14px;
+  text-align: end;
+  margin:0;
+  padding:0;
+  width: 100%;
+  padding: 0 10px;
+  margin-top: 20px;
+}
+
+.panel-contactanos-container{
+  width:100%;
+  padding: 20px 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.panel-cerrar-sesion{
+  color:rgb(71, 71, 71);
+  padding-top: 10px;
+  font-weight: 500 !
+  important;
+}
+
+.panel-contacto{
+  display: block;
+  position:fixed;
+  bottom:50px;
+  height: 10px;
+  margin-bottom: 100px;
+}
+
+.panel-turno-container{
+  border:solid 1px rgb(217, 217, 217);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 30px;
+}
+
+.panel-turno-titulo{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color:rgb(40, 173, 23);
+  font-size: 20px;
+  margin-bottom: 7px;
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+  font-weight: 500;
+}
+
+.panel-turno-icon{
+  margin-right: 10px;
+  font-size: 24px;
+}
+
+@media screen and ( width > 768px ){
+  .panel-container{
+    height: fit-content;
+    padding-bottom: 0px;
+  }
+
+  .panel-buttons-container{
+    margin: 0 100px;
+    width: 400px;
+  }
+  
+  .panel-titulo{
+    font-size: 20px;
+  }
+  
+  .panel-description-subtitle{
+    font-size: 18px;
+  }
+  
+  .panel-description-text{
+    font-size: 15px;
+  }
+  
+  .panel-doctor{
+    font-size: 14px;
+  }
+  
+  .panel-cerrar-sesion{
+    font-size: 15px;
+    margin-bottom: 50px;
+  }
+
+  .panel-turno-titulo{
+    font-size: 16px;
+  }
+  
+  .panel-turno-icon{
+    font-size: 18px;
+  }
+
+  .panel-turno-container{
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  
+}

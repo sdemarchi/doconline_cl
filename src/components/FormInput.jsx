@@ -62,14 +62,13 @@ function FormInputState(props) {
                 placeholder={ props.placeholder }
                 value={ props.value }
                 onChange={ props.onChange }
-                
             />
         </div>
     )
 }
 
 function LoginInput(props) {
-    const borderStyle = props.rounded ? { borderRadius: '8px',borderWidth:"2px", height:"43px" } : {};
+    const borderStyle = props.rounded ? { borderRadius: '6px',borderWidth:"2px", height:"43px" } : {};
 
     return (
         <div className="input-container mt-1">

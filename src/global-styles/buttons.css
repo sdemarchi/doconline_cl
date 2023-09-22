@@ -1,3 +1,13 @@
+button{
+  border-radius: 6px !important;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.p-left{
+  padding-left: 16px !important;
+}
+
 .info-button{
   border:none;
   border-radius:50%;
@@ -14,10 +24,10 @@
 }
 
 .info-button-container{
+  position: relative;
   position:relative !important;
   display: inline-flex !important;
   width:100%;
-  z-index: 3000;
 }
 
 .info-button-text {
@@ -40,10 +50,55 @@
   display:block !important;
 }
 
+.login-button{
+  font-size:19px;
+  font-weight:500; 
+  border-radius:8px;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:15px;
+  color:white;
+  padding:4px 15px;
+  font-family:'Montserrat', sans-serif;
+  width:100%;
+  height: fit-content;
+}
 
-@media screen and (width>600px){
+.disabled-button{
+  background-color: #eaeaeadf;
+  color:#5d5d5d;
+  cursor:default;
+  font-weight: 500;
+  font-size: 19px;
+}
+
+.link-button{
+  display:flex !important;
+  align-items:center;
+  flex-direction:row;
+}
+
+@media screen and (width > 700px){
   .login-button{
-    font-size:12px !important;
-    color:red;
+    font-size:15px !important;
+    margin-top: 0px;
+  }
+
+  button{
+    border-radius: 6px !important;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .disabled-button{
+    background-color: #eaeaeadf;
+    color:#5d5d5d;
+    cursor:default;
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  button span{
+    font-size: 17px !important;
   }
 }

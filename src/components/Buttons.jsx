@@ -16,30 +16,17 @@ function ActionButton(props) {
         <button
             id={props.id}
             style={{fontWeight:"600"}}
-            className="text-xl action-button bg-gradient-to-r from-grad-green to-grad-blue text-white w-full p-2 rounded-md cursor-pointer"
+            className=" p-left text-xl action-button bg-gradient-to-r from-grad-green to-grad-blue text-white w-full p-2 rounded-md cursor-pointer"
             onClick={props.onClick}
         >{props.value}</button>
     )
 }
 
 function LoginButton(props) {
-    const loginButtonStyle={
-        fontSize:"22px",
-        fontWeight:"600", 
-        borderRadius:"8px",
-        marginLeft:"auto",
-        marginRight:"auto",
-        color:"white",
-        padding:"4px 15px",
-        fontFamily:"'Montserrat', sans-serif",
-        width:"fit-content",
-        height:"35px"
-    }
     return (
         <button
             id={props.id}
-            style={loginButtonStyle}
-            className="login-button bg-gradient-to-r from-grad-green to-grad-blue cursor-pointer"
+            className="p-left login-button bg-gradient-to-r from-grad-green to-grad-blue cursor-pointer"
             onClick={props.onClick}
         >{props.value}</button>
     )
@@ -48,17 +35,18 @@ function LoginButton(props) {
 function MiniActionButtonRed(props) {
     return (
         <button
-            className="bg-red-500 text-white p-1 text-xs rounded-md cursor-pointer"
+            className="pl-2 pr-2 bg-red-500 text-white p-1 text-xs rounded-md cursor-pointer"
             onClick={props.onClick}
         >{props.value}</button>
     )
 }
 
 function LinkButton(props) {
+
     return (
         <Link to={props.to}>
-            <button className='button bg-gradient-to-r from-grad-green to-grad-blue text-white w-full p-2 rounded-md'>
-                { props.value }
+            <button className={ !props.disabled ? 'link-button p-left button w-full bg-gradient-to-r from-grad-green to-grad-blue text-white p-2 rounded-md' : 'link-button button disabled-button button w-full p-2 ' } >
+                <span style={{display:"inline",fontSize:"28px",marginRight:"15px"}}>{props.icon}</span>{ props.value }
             </button>
         </Link>
     )
@@ -68,10 +56,10 @@ function InfoButton(props) {
 
     return (
         <div className="info-button-container">
-            <button type="button" className='info-button'>
+            <div type="button" className='info-button'>
             <p className="info-button-text">{props.info}</p>
                 ?
-            </button>
+            </div>
         </div>
     )
 }

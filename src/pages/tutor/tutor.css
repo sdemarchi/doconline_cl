@@ -1,0 +1,19 @@
+.tutor-container{
+  padding: 25px 15px;
+  padding-bottom: 80px;
+  min-height: 70%;
+}
+
+.tutor-contacto{
+  position:fixed;
+  bottom:30px;
+  right: 20px;
+}
+
+@media only screen and (width > 768px){
+  .tutor-container{
+    max-width: 800px;
+    min-width: 700px;
+    margin: 0 auto;
+  }
+}

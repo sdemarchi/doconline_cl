@@ -1,0 +1,12 @@
+.turno-container{
+  padding: 30px 15px;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.turno-contacto{
+  position:fixed;
+  bottom:30px;
+  right: 20px;
+}

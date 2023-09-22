@@ -1,0 +1,17 @@
+.info-container{
+  background-color: rgba(238, 238, 238, 0.637);
+  border-radius: 6px;
+  padding:5px 10px;
+}
+
+.info-text{
+  color:rgba(48, 48, 48, 0.898);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+}
+
+.info-icon{
+  display: inline;
+  margin-right: 10px;
+}
