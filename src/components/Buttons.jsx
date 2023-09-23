@@ -26,7 +26,7 @@ function LoginButton(props) {
     return (
         <button
             id={props.id}
-            className="p-left login-button bg-gradient-to-r from-grad-green to-grad-blue cursor-pointer"
+            className="p-left login-button cursor-pointer"
             onClick={props.onClick}
         >{props.value}</button>
     )
