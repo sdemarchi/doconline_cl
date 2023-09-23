@@ -31,7 +31,7 @@ function FormRep1() {
     const [confimCelError , setConfimCelError] = useState('');
  
     var celValue;
-    var [confirmarCelular, setConfirmarCelular] = useState('');
+    var [confirmarCelular, setConfirmarCelular] = useState(sessionStorage.getItem('telefono'));
 
     const handleConfirmarCelularChange = (event) => {
         setConfirmarCelular(event.target.value);
@@ -159,6 +159,7 @@ function FormRep1() {
                 <div className="space"></div>
 
                 <FormInputHook label="Repetir Teléfono Celular*"
+                    defaultValue={form1?.celular !== sessionStorage.getItem('telefono') && form1?.celular || sessionStorage.getItem('telefono')}
                     maxLength={20}
                     onChange={handleConfirmarCelularChange} 
                 />

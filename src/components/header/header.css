@@ -7,7 +7,7 @@
   align-items: center;
   padding: 0 15px;
   color:white;
-  padding-top: 15px;
+  padding-top: 10px;
   display: flex;
   justify-content: space-between;
 }
@@ -40,14 +40,16 @@
 
 @media only screen and (width > 768px){
   .header-container{
-    height:68px;
+    height:80px;
     padding-top: 7px;
     border-top-right-radius: 7px;
     border-top-left-radius: 7px;
   }
 
   .header-logo-image{
-    max-height: 70px;
+    max-width:90%;
+    max-height: 100%;
+
   }
 
   .header-nav{
@@ -84,8 +86,5 @@
     max-width: 220px;
   }
 
-  .header-logo-image{
-    max-height: 50px;
-  }
 }
 

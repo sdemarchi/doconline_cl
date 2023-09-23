@@ -5,7 +5,7 @@ function SubmitButton(props) {
     return (
         <input
             type="submit"
-            className="bg-gradient-to-r from-grad-green to-grad-blue text-white w-full p-2 rounded-md cursor-pointer"
+            className="submit-button text-white w-full p-2 rounded-md cursor-pointer"
             value={props.value}
         />
     )
@@ -16,7 +16,7 @@ function ActionButton(props) {
         <button
             id={props.id}
             style={{fontWeight:"600"}}
-            className=" p-left text-xl action-button bg-gradient-to-r from-grad-green to-grad-blue text-white w-full p-2 rounded-md cursor-pointer"
+            className="action-button p-left text-xl action-button bg-gradient-to-r from-grad-green to-grad-blue text-white w-full p-2 rounded-md cursor-pointer"
             onClick={props.onClick}
         >{props.value}</button>
     )
@@ -45,7 +45,7 @@ function LinkButton(props) {
 
     return (
         <Link to={props.to}>
-            <button className={ !props.disabled ? 'link-button p-left button w-full bg-gradient-to-r from-grad-green to-grad-blue text-white p-2 rounded-md' : 'link-button button disabled-button button w-full p-2 ' } >
+            <button className={ !props.disabled ? 'link-button p-left button w-full text-white p-2 rounded-md' : 'link-button button disabled-button button w-full p-2 ' } >
                 <span style={{display:"inline",fontSize:"28px",marginRight:"15px"}}>{props.icon}</span>{ props.value }
             </button>
         </Link>

@@ -13,7 +13,7 @@ function Header(){
       </Link>
 
       <div className="header-help">
-        <Link to="/ayuda" className="header-help-content"><AiOutlineQuestionCircle className="header-help-icon"/><span className="header-help-text">Ayuda</span></Link>
+        <a href="https://api.whatsapp.com/send/?phone=5493425319488&text&type=phone_number&app_absent=0" className="header-help-content"><AiOutlineQuestionCircle className="header-help-icon"/><span className="header-help-text">Ayuda</span></a>
       </div>
       
     </div>

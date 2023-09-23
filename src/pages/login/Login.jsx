@@ -5,7 +5,7 @@ import { LoginInput } from '../../components/FormInput';
 import {LoginButton } from '../../components/Buttons';
 import useAuth from '../../hooks/useAuth';
 import Alerta from '../../components/Alerta';
-import {/* GoogleLogin, googleLogout,*/ useGoogleLogin } from '@react-oauth/google';
+import { GoogleLogin, googleLogout, useGoogleLogin } from '@react-oauth/google'; //eslint-disable-line no-unused-vars
 import axios from 'axios';
 import Spinner from '../../components/Spinner';
 import './login.css';
@@ -13,7 +13,7 @@ import minImage from '../../assets/min_salud.png';
 import reproImage from '../../assets/reprocan.png';
 
 function Login() {
-    const { setUser, /*googleProfile,*/ setGoogleProfile } = useAuth();
+    const { setUser, googleProfile, setGoogleProfile } = useAuth();//eslint-disable-line no-unused-vars
     const [userid, setUserid] = useState('');
     const [password, setPassword] = useState('');
     const [contenidoCargado, setContenidoCargado] = useState('true');

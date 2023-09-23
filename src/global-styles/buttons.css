@@ -4,6 +4,10 @@ button{
   font-weight: 500;
 }
 
+.submit-button{
+  background-color: rgb(5, 187, 233);
+}
+
 .p-left{
   padding-left: 16px !important;
 }
@@ -14,7 +18,7 @@ button{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  background-color:#D8D8D8;
+  background-color:#D8D8D8 !important;
   color:#4A4A4A;
   margin-left:5px;
   width:17px;
@@ -37,7 +41,7 @@ button{
     position:absolute;
     right:0px;
     bottom:20px;
-    background-color:#373737;
+    background-color:#373737 !important;
     color:white;
     border-radius:8px;
     padding:5px 10px;
@@ -59,13 +63,15 @@ button{
   margin-top:15px;
   color:white;
   padding:4px 15px;
+  padding-top: 5px;
   font-family:'Montserrat', sans-serif;
   width:100%;
-  height: fit-content;
+  height: 40px;
+  background-color: rgb(5, 187, 233);
 }
 
 .disabled-button{
-  background-color: #eaeaeadf;
+  background-color: #eaeaeadf !important;
   color:#5d5d5d;
   cursor:default;
   font-weight: 500;
@@ -76,6 +82,7 @@ button{
   display:flex !important;
   align-items:center;
   flex-direction:row;
+  background-color: rgb(5, 187, 233);
 }
 
 @media screen and (width > 700px){

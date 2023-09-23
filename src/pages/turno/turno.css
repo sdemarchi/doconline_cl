@@ -10,3 +10,9 @@
   bottom:30px;
   right: 20px;
 }
+
+.turno-container textarea{
+  min-height:50px;
+  display: flex;
+  align-items: center;
+}
