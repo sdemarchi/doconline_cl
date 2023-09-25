@@ -85,6 +85,11 @@ button{
   background-color: rgb(5, 187, 233);
 }
 
+.success-button{
+  background-color: rgb(24, 229, 86);
+}
+
+
 @media screen and (width > 700px){
   .login-button{
     font-size:15px !important;

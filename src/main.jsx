@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './pages/login/Login.jsx';
-import Register from './pages/Register.jsx';
+import Register from './pages/register/Register.jsx';
 import Panel from './pages/panel/Panel.jsx';
 import FormRep1 from './pages/formReprocann/FormRep1';
 import FormRep2 from './pages/formReprocann/FormRep2';
@@ -21,8 +21,8 @@ import TurnoSuccess from './pages/turno/TurnoSuccess';
 import { AuthProvider } from './context/AuthProvider';
 import GuestLayout from './layouts/GuestLayout';
 import MainLayout from './layouts/MainLayout.jsx';
-import { action as registerAction } from './pages/Register';
-import { action as gRegisterAction } from './pages/GoogleRegister';
+import { action as registerAction } from './pages/register/Register';
+import { action as gRegisterAction } from './pages/register/GoogleRegister';
 import { TurnoProvider } from './context/TurnoProvider';
 import PagoMl from './pages/pagos/PagoMl';
 import PagoTransf from './pages/pagos/PagoTransf';
@@ -30,7 +30,7 @@ import { FormProvider } from './context/FormProvider';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import FormRep3b from './pages/formReprocann/FormRep3b';
 import FormError from './pages/formReprocann/FormError';
-import GoogleRegister from './pages/GoogleRegister';
+import GoogleRegister from './pages/register/GoogleRegister';
 import Ayuda from './pages/ayuda/ayuda';
 
 const router = createBrowserRouter([

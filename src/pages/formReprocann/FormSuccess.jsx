@@ -5,6 +5,8 @@ import icon from '../../assets/icon-success.png'
 import {/* SubmitButton,*/ LinkButton } from '../../components/Buttons'
 
 function FormSuccess() {
+    sessionStorage.setItem('form-success', 'true');
+    
     return (
         <div className="form-rep-container">
             <img className="mx-auto mb-8 w-20 pb-10" src={logo}></img>
@@ -15,4 +17,4 @@ function FormSuccess() {
     )
 }
 
-export default FormSuccess
+export default FormSuccess;

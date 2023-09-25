@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import '../global-styles/buttons.css';
+import {BsFillPatchCheckFill} from "react-icons/bs";
 
 function SubmitButton(props) {
     return (
@@ -44,11 +45,22 @@ function MiniActionButtonRed(props) {
 function LinkButton(props) {
 
     return (
-        <Link to={props.to}>
-            <button className={ !props.disabled ? 'link-button p-left button w-full text-white p-2 rounded-md' : 'link-button button disabled-button button w-full p-2 ' } >
-                <span style={{display:"inline",fontSize:"28px",marginRight:"15px"}}>{props.icon}</span>{ props.value }
-            </button>
-        </Link>
+        <>{props.success === true ?
+            <Link to={props.to}>
+                <button className={'link-button success-button p-left button w-full text-white p-2 rounded-md'} >
+                    <span style={{display:"inline",fontSize:"28px",marginRight:"15px"}}><BsFillPatchCheckFill/></span>{ props.value }
+                </button>
+            </Link>
+
+            :
+
+            <Link to={props.to}>
+                <button className={ !props.disabled ? 'link-button p-left button w-full text-white p-2 rounded-md' : 'link-button button disabled-button button w-full p-2 ' } >
+                    <span style={{display:"inline",fontSize:"28px",marginRight:"15px"}}>{props.icon}</span>{ props.value }
+                </button>
+            </Link>
+            }
+        </>
     )
 }
 
@@ -56,7 +68,7 @@ function InfoButton(props) {
 
     return (
         <div className="info-button-container">
-            <div type="button" className='info-button'>
+            <div className='info-button'>
             <p className="info-button-text">{props.info}</p>
                 ?
             </div>

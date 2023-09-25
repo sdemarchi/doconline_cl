@@ -130,6 +130,7 @@ function FormInputDate(props) {
                     className=" date-input w-full p-2 bg-white border-input focus:border-input border-2 text-xs text-gray-500 inline-flex"
                     value={ props.value }
                     onChange={props.onChange}
+                    placeholder={ props.placeholder }
                 />
             </div>
         </div>
