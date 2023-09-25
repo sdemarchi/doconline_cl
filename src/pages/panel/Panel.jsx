@@ -34,7 +34,6 @@ function Panel() {
         const response = await getTurnoPaciente(user.userId);
         setTurnoPaciente(response);
         setDatosCargados(true);
-        alert(user.userId)
     }
 
     async function cancelarMiTurno() {
@@ -100,7 +99,7 @@ function Panel() {
 
                 </>
                 :
-                <> 
+                <>
 
                     <div className="panel-info">
                         <Info text={"Solicita un turno con nosotros y a continuación completa el formulario de Reprocann."}/>
