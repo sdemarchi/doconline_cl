@@ -1,3 +1,16 @@
 .register-container{
+  position: relative;
   padding-top: 40px;
+}
+
+.register-title{
+  margin-bottom:30px;
+  margin-top:40px;
+  text-align: center;
+}
+
+.error-message{
+  color:rgb(179, 21, 21);
+  font-style: italic;
+  margin-top: 5px;
 }

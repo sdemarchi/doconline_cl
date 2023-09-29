@@ -76,7 +76,7 @@ function Register() {
             {errores?.length && errores.map( ( error, i ) => <Error key={i}>{error}</Error> )}
 
             <Form method='post' noValidate>
-                <FormInput label="Nombre y Apellido*" id="nombre"  maxlenght="150" placeholder="Nombre y Apellido" />
+                <FormInput label="Nombre y Apellido*" id="nombre" maxlenght="150" placeholder="Nombre y Apellido" />
                 <div className='flex flex-row'>
                     <div className='basis-1/2 pe-1'>
                         <FormInput label="Fecha de Nacimiento*" id="fecha_nac" placeholder="dd/mm/aaaa" />

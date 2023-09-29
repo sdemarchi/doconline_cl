@@ -1,8 +1,7 @@
 import {/* useState,*/ useEffect } from 'react';
 import { Form, useActionData, useNavigate } from 'react-router-dom';
-import { FormInput , FormInputDate } /*,{ FormInputReadonly }*/ from '../../components/FormInput';
+import { FormInput , /*FormInputDate */} /*,{ FormInputReadonly }*/ from '../../components/FormInput';
 import { SubmitButton } from '../../components/Buttons';
-import Error from '../../components/Error';
 import { esFechaValida } from '../../utils/validation';
 import { registrarGoogle } from '../../data/pacientes';
 import useAuth from '../../hooks/useAuth';
@@ -64,21 +63,25 @@ function GoogleRegister() {
     
     return (
         <>
-            {errores?.length && errores.map( ( error, i ) => <Error key={i}>{error}</Error> )}
 
-            <h3 className='text-gray-500 text-s font-semibold'>COMPLETA TU PERFIL</h3>
+
+            <h3 className='register-title text-gray-500 text-s font-semibold'>COMPLETA TU PERFIL</h3>
             
             <Form method='post' noValidate>
+
                 <FormInput label="Nombre y Apellido*" id="nombre"  maxlenght="150" defaultValue={ googleProfile.name } />
+
                 <div className='flex flex-row'>
                     <div className='basis-1/2 pe-1'>
-                        <FormInputDate label="Fecha de Nacimiento*" id="fecha_nac" placeholder="dd/mm/aaaa" maxLength={10} />
+                        <FormInput label="Fecha de Nacimiento*" id="fecha_nac" placeholder="dd/mm/aaaa" maxLength={10} />
                     </div>
                     <div className='basis-1/2 ps-1'>
                         <FormInput label="DNI*" id="dni" maxlenght="10" placeholder="12345676" />
                     </div>
                 </div>
+
                 <FormInput label="Domicilio*" id="domicilio" placeholder="Calle y Número" />
+
                 <div className='flex flex-row'>
                     <div className='basis-1/2 pe-1'>
                         <FormInput label="Teléfono*" id="telefono" placeholder="342 4392819" />
@@ -87,14 +90,21 @@ function GoogleRegister() {
                         <FormInput label="Confirmar Teléfono*" id="telefono_conf" placeholder="342 4392819" />
                     </div>
                 </div>
+
                 <FormInput label="E-Mail*" id="email" defaultValue={ googleProfile.email }/>
+
+                {errores?.length && errores.map( ( error, i ) =>
+                 <div className="error-message" style={{minHeight:"22px"}} key={i}>{error}</div>
+                )}
                 
                 <div className='pt-4'><SubmitButton value="Enviar" /></div>
                 
             </Form>
+            
             <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/login')} >Volver</button>
             </div>
+
         </>
     )
 }
