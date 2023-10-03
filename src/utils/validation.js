@@ -1,19 +1,20 @@
-import validator from 'validator'
+import validator from 'validator';
 
 export function esFechaValida(valor){
     console.log(valor)
     if(validator.isDate(valor,{format:'DD/MM/YYYY'})){
-        return true
+        return true;
     } else {
-        return false
+        return false;
     }
 }
 
 export function esEmailValido(valor){
-    let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+    let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])"); //eslint-disable-line
+    
     if(regex.test(valor)) {
-        return true
+        return true;
     } else {
-        return false
+        return false;
     }
 }

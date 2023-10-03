@@ -22,7 +22,7 @@ export async function action({request}) { //eslint-disable-line
     if(resp.error.code == 0){
         return {userId: resp.user.id, userName: resp.user.name }
     } else {
-        errores.push(resp.error.message)
+        errores.push(resp.error?.message)
         return {errores: errores}
     }
 }
@@ -76,38 +76,44 @@ function Register() {
             {errores?.length && errores.map( ( error, i ) => <Error key={i}>{error}</Error> )}
 
             <Form method='post' noValidate>
-                <FormInput label="Nombre y Apellido*" id="nombre" maxlenght="150" placeholder="Nombre y Apellido" />
+                <FormInput  type={"text"} label="Nombre y Apellido*" id="nombre" maxlenght="150" placeholder="Nombre y Apellido" />
                 <div className='flex flex-row'>
                     <div className='basis-1/2 pe-1'>
-                        <FormInput label="Fecha de Nacimiento*" id="fecha_nac" placeholder="dd/mm/aaaa" />
+                        <FormInput  type={"text"} label="Fecha de Nacimiento*" id="fecha_nac" placeholder="dd/mm/aaaa" />
                     </div>
                     <div className='basis-1/2 ps-1'>
-                        <FormInput label="DNI*" id="dni" maxlenght="10" placeholder="12345676" />
+                        <FormInput type={"number"} label="DNI*" id="dni" maxlenght="10" placeholder="12345676" />
                     </div>
                 </div>
-                <FormInput label="Domicilio*" id="direccion" placeholder="Calle y Número" />
+                <FormInput type={"text"} label="Domicilio*" id="direccion" placeholder="Calle y Número" />
                 <div className='flex flex-row'>
                     <div className='basis-1/2 pe-1'>
-                        <FormInput label="Teléfono*" id="telefono" placeholder="342 4392819" />
+                        <FormInput type={"number"} label="Teléfono*" id="telefono" placeholder="342 4392819" />
                     </div>
                     <div className='basis-1/2 ps-1'>
-                        <FormInput label="Confirmar Teléfono*" id="telefono_conf" placeholder="342 4392819" />
+                        <FormInput type={"number"} label="Confirmar Teléfono*" id="telefono_conf" placeholder="342 4392819" />
                     </div>
                 </div>
-                <FormInput label="E-Mail*" id="email" placeholder="usuario@mail.com" />
-                <FormInput label="Confirmar E-Mail*" id="email_conf" placeholder="usuario@mail.com" />
-                <FormInput label="Nombre de Usuario*" id="username" placeholder="ingrese un nombre de usuario" />
+                <FormInput type={"text"} label="E-Mail*" id="email" placeholder="usuario@mail.com" />
+
+                <FormInput  type={"text"} label="Confirmar E-Mail*" id="email_conf" placeholder="usuario@mail.com" />
+
+                <FormInput type="text" label="Nombre de Usuario*" id="username" placeholder="ingrese un nombre de usuario" />
+
                 <div className='flex flex-row'>
                     <div className='basis-1/2 pe-1'>
-                        <FormInput label="Contraseña*" id="password" password={true} />
+                        <FormInput type={"password"} label="Contraseña*" id="password"/>
+
                     </div>
                     <div className='basis-1/2 ps-1'>
-                        <FormInput label="Repetir Contraseña*" id="password_conf" password={true} />
+                        <FormInput type={"password"} label="Repetir Contraseña*" id="password_conf"/>
+
                     </div>
                 </div>
                 <div className='pt-4'><SubmitButton value="Registrarme" /></div>
                 
             </Form>
+
             <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/login')} >Volver</button>
             </div>
@@ -115,4 +121,4 @@ function Register() {
     )
 }
 
-export default Register
+export default Register;

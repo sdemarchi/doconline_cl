@@ -11,13 +11,13 @@ function FormInput(props) {
             >{ props.label }</label>
             <input
                 id={ props.id }
-                type={ props.password ? "password" : "text" }
+                type={ props.type || "text"}
                 maxLength={ props.maxlenght }
                 className="block w-full p-2 bg-white border-input focus:border-input border-2 text-xs text-gray-500"
                 placeholder={ props.placeholder }
                 name={ props.id }
                 defaultValue={ props.defaultValue }
-                value = { props.defaultValue }
+                value={ props.value}
             />
         </div>
     )
@@ -101,7 +101,7 @@ function FormInputHook(props) {
             ><span style={{minWidth:"max-content"}}>{ props.label }</span>{props.info && <InfoButton info={props.info}/>}</label>
             <input
                 id={ props.id }
-                type={ props.password ? "password" :  props.number ? "number" : "text"  }
+                type={ props.type || "text" }
                 maxLength={ props.maxLength }
                 className="block w-full p-2 bg-white border-input focus:border-input border-2 text-xs text-gray-500"
                 placeholder={ props.placeholder }

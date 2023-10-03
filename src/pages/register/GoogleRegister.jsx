@@ -69,39 +69,39 @@ function GoogleRegister() {
             
             <Form method='post' noValidate>
 
-                <FormInput label="Nombre y Apellido*" id="nombre"  maxlenght="150" defaultValue={ googleProfile.name } />
+                <FormInput  type={"text"} label="Nombre y Apellido*" id="nombre"  maxlenght="150" defaultValue={ googleProfile.name } />
 
                 <div className='flex flex-row'>
                     <div className='basis-1/2 pe-1'>
-                        <FormInput label="Fecha de Nacimiento*" id="fecha_nac" placeholder="dd/mm/aaaa" maxLength={10} />
+                        <FormInput type={"text"} label="Fecha de Nacimiento*" id="fecha_nac" placeholder="dd/mm/aaaa" maxLength={10} />
                     </div>
                     <div className='basis-1/2 ps-1'>
-                        <FormInput label="DNI*" id="dni" maxlenght="10" placeholder="12345676" />
+                        <FormInput  type={"number"}  label="DNI*" id="dni" maxlenght="10" placeholder="12345676" />
                     </div>
                 </div>
 
-                <FormInput label="Domicilio*" id="domicilio" placeholder="Calle y Número" />
+                <FormInput type={"text"} label="Domicilio*" id="domicilio" placeholder="Calle y Número" />
 
                 <div className='flex flex-row'>
                     <div className='basis-1/2 pe-1'>
-                        <FormInput label="Teléfono*" id="telefono" placeholder="342 4392819" />
+                        <FormInput  type={"number"} label="Teléfono*" id="telefono" placeholder="342 4392819" />
                     </div>
                     <div className='basis-1/2 ps-1'>
-                        <FormInput label="Confirmar Teléfono*" id="telefono_conf" placeholder="342 4392819" />
+                        <FormInput type={"number"}  label="Confirmar Teléfono*" id="telefono_conf" placeholder="342 4392819" />
                     </div>
                 </div>
 
-                <FormInput label="E-Mail*" id="email" defaultValue={ googleProfile.email }/>
+                <FormInput  type={"text"} label="E-Mail*" id="email" value={googleProfile.email} defaultValue={ googleProfile.email }/>
 
                 {errores?.length && errores.map( ( error, i ) =>
                  <div className="error-message" style={{minHeight:"22px"}} key={i}>{error}</div>
                 )}
                 
-                <div className='pt-4'><SubmitButton value="Enviar" /></div>
+                <div className='pt-4 mt-8 '><SubmitButton value="Enviar" /></div>
                 
             </Form>
             
-            <div className='mb-0 mx-auto p-3 text-center'>
+            <div className='mb-0mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/login')} >Volver</button>
             </div>
 

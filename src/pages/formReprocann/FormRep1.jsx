@@ -111,6 +111,7 @@ function FormRep1() {
                         <FormInputHook label="DNI*" id="dni"
                             defaultValue={form1?.dni !== sessionStorage.getItem('dni') && sessionStorage.getItem('dni') || sessionStorage.getItem('dni')}
                             maxLength={8}
+                            type={"number"} 
                             register={register('dni', {
                                 required: true, maxLength: 8, validate: numberValidator})}
                         />
@@ -120,7 +121,7 @@ function FormRep1() {
                     </div>
 
                     <div className='basis-1/2 ps-1'>
-                        <FormInputHook label="Edad*" id="edad"
+                        <FormInputHook  type={"number"}  label="Edad*" id="edad"
                             defaultValue={form1?.edad  !== sessionStorage.getItem('edad') && form1?.edad || '' }
                             maxLength={3}
                             register={register('edad', { required: true, max: 100, validate: numberValidator })}
@@ -145,7 +146,7 @@ function FormRep1() {
 
                 <div className="space"></div>
 
-                <FormInputHook label="Teléfono Celular*" id="celular"
+                <FormInputHook type={"number"} label="Teléfono Celular*" id="celular"
                     defaultValue={form1?.celular !== sessionStorage.getItem('telefono') && form1?.celular || sessionStorage.getItem('telefono')}
                     maxLength={20}
                     register={ register('celular', { required: true, maxLength: 15})}
@@ -158,7 +159,7 @@ function FormRep1() {
                 
                 <div className="space"></div>
 
-                <FormInputHook label="Repetir Teléfono Celular*"
+                <FormInputHook type={"number"} label="Repetir Teléfono Celular*"
                     defaultValue={form1?.celular !== sessionStorage.getItem('telefono') && form1?.celular || sessionStorage.getItem('telefono')}
                     maxLength={20}
                     onChange={handleConfirmarCelularChange} 
