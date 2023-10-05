@@ -1,4 +1,4 @@
-import { ActionButton } from '../../components/Buttons';
+import {ActionBorderButton } from '../../components/Buttons';
 import PagoCard from '../../components/PagoCard';
 import { FormInputState } from '../../components/FormInput';
 import { useNavigate  } from 'react-router-dom';
@@ -131,7 +131,7 @@ function Pagos() {
                     placeholder="A-123456"
                 /> 
                 <div className=' pb-8'>
-                    <ActionButton onClick={() => cupon && validarCupon()} value="Aplicar Cupón" />
+                    <ActionBorderButton onClick={() => cupon && validarCupon()} value="Aplicar Cupón" />
                 </div>
             </>
             }

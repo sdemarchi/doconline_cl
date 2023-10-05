@@ -10,9 +10,9 @@ import './register.css';
 
 
 export async function action({request}) { //eslint-disable-line
-    const formData = await request.formData()
-    const datos = Object.fromEntries(formData)
-    const errores = validate(datos)
+    const formData = await request.formData();
+    const datos = Object.fromEntries(formData);
+    const errores = validate(datos);
     
     if(Object.keys(errores).length) {
         return {errores: errores}

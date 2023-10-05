@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 
 
 function Header(){
+  const wspLink = "https://api.whatsapp.com/send/?phone=5493425319488&text&type=phone_number&app_absent=0";
+
   return(
     <div className="header-container">
 
@@ -13,7 +15,7 @@ function Header(){
       </Link>
 
       <div className="header-help">
-        <a href="https://api.whatsapp.com/send/?phone=5493425319488&text&type=phone_number&app_absent=0" className="header-help-content"><AiOutlineQuestionCircle className="header-help-icon"/><span className="header-help-text">Ayuda</span></a>
+        <button onClick={() => {window.open(wspLink)}} className="header-help-content"><AiOutlineQuestionCircle className="header-help-icon"/><span className="header-help-text">Ayuda</span></button>
       </div>
       
     </div>

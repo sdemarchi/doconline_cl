@@ -8,6 +8,14 @@ button{
   background-color: rgb(5, 187, 233);
 }
 
+.border-button{
+  border: 1.5px solid rgba(15, 170, 222, 0);
+  background-color: #38c631;
+  color:rgb(255, 255, 255);
+  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.182);
+  padding: 1px 5px;
+}
+
 .p-left{
   padding-left: 16px !important;
 }

@@ -17,7 +17,18 @@ function ActionButton(props) {
         <button
             id={props.id}
             style={{fontWeight:"600"}}
-            className="action-button p-left text-xl action-button bg-gradient-to-r from-grad-green to-grad-blue text-white w-full p-2 rounded-md cursor-pointer"
+            className="action-button p-left text-xl action-button submit-button text-white w-full p-2 rounded-md cursor-pointer"
+            onClick={props.onClick}
+        >{props.value}</button>
+    )
+}
+
+function ActionBorderButton(props) {
+    return (
+        <button
+            id={props.id}
+            style={{fontWeight:"600"}}
+            className="action-button border-button text-white rounded-md cursor-pointer"
             onClick={props.onClick}
         >{props.value}</button>
     )
@@ -76,4 +87,4 @@ function InfoButton(props) {
     )
 }
 
-export {LoginButton, InfoButton, SubmitButton, ActionButton, LinkButton, MiniActionButtonRed }
+export {LoginButton, ActionBorderButton, InfoButton, SubmitButton, ActionButton, LinkButton, MiniActionButtonRed }
