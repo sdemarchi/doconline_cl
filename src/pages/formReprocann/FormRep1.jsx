@@ -31,7 +31,7 @@ function FormRep1() {
     const [confimCelError , setConfimCelError] = useState('');
  
     var celValue;
-    var [confirmarCelular, setConfirmarCelular] = useState(form1?.celular || sessionStorage.getItem('telefono') );
+    var [confirmarCelular, setConfirmarCelular] = useState(sessionStorage.getItem('telefono'));
 
     const handleConfirmarCelularChange = (event) => {
         setConfirmarCelular(event.target.value);
