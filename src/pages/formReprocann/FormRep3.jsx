@@ -16,14 +16,18 @@ function FormRep3() {
 
     const { form3, setForm3 }  = useForm()
 
-    const [ arritmia, setArritmia ] = useState(false)
-    const [ alergia, setAlergia ] = useState(false)
-    const [ embarazada, setEmbarazada ] = useState(false)
-    const [ salud_mental, setSalud_mental ] = useState(false)
-    const [ maneja_maq, setManeja_maq ] = useState(false)
-    const [cargando] = useState(0)
-    
-    const navigate = useNavigate()
+    const [ arritmia, setArritmia ] = useState(false);
+    const [ alergia, setAlergia ] = useState(false);
+    const [ embarazada, setEmbarazada ] = useState(false);
+    const [ salud_mental, setSalud_mental ] = useState(false);
+    const [ maneja_maq, setManeja_maq ] = useState(false);
+    const [cargando] = useState(0);
+    const navigate = useNavigate();
+
+    const subirScroll = () =>{
+        window.scrollTo(0, 0);
+    }
+
     
     useEffect(() => {
         async function cargarEstados(){
@@ -32,6 +36,7 @@ function FormRep3() {
             setEmbarazada(form3.embarazada)
             setSalud_mental(form3.salud_mental)
             setManeja_maq(form3.maneja_maq)
+            subirScroll();
             
             console.log(form3)
         }

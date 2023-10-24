@@ -26,13 +26,17 @@ function FormRep3b() {
     const [errorContacto, setErrorContacto] = useState(0)
     const navigate = useNavigate()
     
+    const subirScroll = () =>{
+        window.scrollTo(0, 0);
+    }
+
     useEffect(() => {
+        subirScroll();
         async function cargaContactos(){
             const response = await getContactos()
             setContactos(response)
             setEsMenor(form3b.es_menor)
             console.log(form3b)
-            
         }
         cargaContactos()
     }, [cargando]) //eslint-disable-line

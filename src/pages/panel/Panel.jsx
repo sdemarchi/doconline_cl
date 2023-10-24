@@ -41,7 +41,12 @@ function Panel() {
         setTurnoPaciente(response)
     }
 
+    const subirScroll = () =>{
+        window.scrollTo(0, 0);
+    }
+
     useEffect(() => {
+        subirScroll();
         async function getPaciente() {
             const response = await perfil(user.userId);
             setPaciente(response);

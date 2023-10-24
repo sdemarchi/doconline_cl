@@ -23,8 +23,14 @@ function FormRep2() {
     const [errorProv, setErrorProv] = useState(0);
     const [errorOcup, setErrorOcup] = useState(0);
     const navigate = useNavigate();
+
+    const subirScroll = () =>{
+        window.scrollTo(0, 0);
+    }
+
     
     useEffect(() => {
+        subirScroll();
         async function cargarCombos(){
             const response = await getProvincias();
             setProvincias(response);

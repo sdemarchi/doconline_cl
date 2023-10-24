@@ -31,8 +31,6 @@ function Turnos() {
     const [cargando, setCargando] = useState(0);
     const [cargandoTurno, setCargandoTurno] = useState(false);
 
-    
-    
     async function cargarPrestadores(){
         const response = await getPrestadores();
         setPrestadores(response);
@@ -40,7 +38,6 @@ function Turnos() {
         return response;
     }
 
-    
     async function cargarCalendario(mes, anio, prestador){
         setCalendarioCargado(false);
         const response = await getCalendario(mes, anio, prestador);
@@ -105,7 +102,12 @@ function Turnos() {
         navigate('/pagos');
     }
 
+    const subirScroll = () =>{
+        window.scrollTo(0, 0);
+    }
+
     useEffect(() => {
+        subirScroll();
         cargarPrestadores().then((response)=>{
             if(prestador == 0){
                 cargarCalendario(mes,anio,response[0].id)

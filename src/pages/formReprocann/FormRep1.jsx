@@ -35,13 +35,18 @@ function FormRep1() {
 
     const handleConfirmarCelularChange = (event) => {
         setConfirmarCelular(event.target.value);
-    };      
+    };
+
+    const subirScroll = () =>{
+        window.scrollTo(0, 0);
+    }
 
     useEffect(() => {
         async function getPaciente() {
             const response = await perfil(user.userId);
             setPaciente(response);
         }
+        subirScroll();
         getPaciente()
         setFechaNac(form1.fe_nacim)
        

@@ -1,16 +1,16 @@
-//import logo from '../assets/logo-doconline-vert.png';
 import icon from '../../assets/icon-success.png';
-//import iconEspera from '../assets/icon-espera.png';
+//import { useState } from 'react';
 import {/* SubmitButton,*/ LinkButton } from '../../components/Buttons';
 import useTurno from '../../hooks/useTurno';
 import Contacto from '../../components/contacto/contacto';
 import './turno.css';
 
 function TurnoSuccess() {
-
+   // const [ formularioCompletado, setFormularioCompletado ] = useState(false);
     const { turno } = useTurno()
     const turnoSession = JSON.parse(sessionStorage.getItem("turno"));
     const comprobanteEnviado = JSON.parse(sessionStorage.getItem("comprobante-enviado"));
+    const formularioCompletado = JSON.parse(sessionStorage.getItem("form-success"));
 
     return (
         <div className="turno-container">
@@ -31,8 +31,11 @@ function TurnoSuccess() {
             <div className="block w-full my-8 p-1 border-input focus:border-input border-2 text-center rounded-md ">
                 <h4 className="text-gray-500 text-sm font-bold pt-1">{turno.detalle || turnoSession.detalle}</h4>
             </div>
-
-            <div className='pb-2'><LinkButton to="/panel" value="Volver al Perfil" /></div>
+            
+            { formularioCompletado === true ?
+            <div className='pb-2'><LinkButton to="/panel" value="Volver al Perfil"/></div>:
+            <div className='pb-2'><LinkButton to='/formulario-1' value="Continuar"/></div>
+            }
 
             <div className="turno-contacto">
                 <Contacto/>

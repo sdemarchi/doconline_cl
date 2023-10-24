@@ -9,9 +9,7 @@ import './formReprocann.css';
 import Contacto from '../../components/contacto/contacto';
 
 function FormRep4() {
-
     const navigate = useNavigate()
-    
     const { patolog, setPatolog }  = useForm()
     
     const [dolencias, setDolencias] = useState([])
@@ -20,7 +18,12 @@ function FormRep4() {
     const [, updateState] = useState();
     const forceUpdate = useCallback(() => updateState({}), []);
 
+    const subirScroll = () =>{
+        window.scrollTo(0, 0);
+    }
+
     useEffect(() => {
+        subirScroll();
         async function cargarDolencias(){
             const response = await getDolencias();
             setDolencias(response);
