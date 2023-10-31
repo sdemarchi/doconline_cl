@@ -13,7 +13,6 @@ import './turno.css';
 function Turnos() {
 
     const navigate = useNavigate();
-    
     const { setTurno } = useTurno();
     const user = useOutletContext(); //eslint-disable-line
     const now = new Date();
@@ -137,6 +136,7 @@ function Turnos() {
             <h6 className="text-green-500 font-semibold text-xs ps-3">En color verde los días disponibles</h6>
             { !calendarioCargado && <div className="calendario-spinner-contenedor"> <Spinner/> </div>}
             { calendarioCargado &&
+            
             <Calendario 
                 calendario={ calendario } 
                 mes={ mes } 

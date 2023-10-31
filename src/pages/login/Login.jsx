@@ -11,6 +11,8 @@ import Spinner from '../../components/Spinner';
 import './login.css';
 import minImage from '../../assets/min_salud.png';
 import reproImage from '../../assets/reprocan.png';
+import { useParams } from 'react-router-dom';
+import { getGrowByRoute } from '../../data/grows';
 
 function Login() {
     const { setUser, googleProfile, setGoogleProfile } = useAuth();//eslint-disable-line no-unused-vars
@@ -21,13 +23,13 @@ function Login() {
     const [ googleUser, setGoogleUser ] = useState();
     const navigate = useNavigate();
     const loginButton = document.getElementById('login-button');
+    const routeParams = useParams();
     // eslint-disable-next-line
     const regex_mail = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
     const gLogin = useGoogleLogin({
         onSuccess: (codeResponse) => setGoogleUser(codeResponse),
         onError: (error) => console.log('Login Failed:', error)
     });
-
     
     document.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
@@ -35,26 +37,38 @@ function Login() {
         }
     });
 
+    const growRoute = routeParams.grow;
+    const getGrow = () => {
+        if(growRoute !== undefined){
+            getGrowByRoute(growRoute).then((resp)=>{
+                sessionStorage.setItem('growId',resp.idgrow);
+            });
+        }else{
+            if (sessionStorage.getItem('growId')) {
+                sessionStorage.removeItem('growId');
+              }
+        }
+    }
 
     useEffect(() => {
-            if (googleUser) {
-                axios
-                    .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${googleUser.access_token}`, {
-                        headers: {
-                            Authorization: `Bearer ${googleUser.access_token}`,
-                            Accept: 'application/json'
-                        }
-                    })
-                    .then((res) => {
-                        console.log(res.data)
-                        setGoogleProfile(res.data)
-                        loginConGoogle(res.data.email);
-                    })
-                    .catch((err) => console.log(err));
-                
-            }
-        },
-        [ googleUser ] //eslint-disable-line
+        getGrow();
+        if (googleUser) {
+            axios
+                .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${googleUser.access_token}`, {
+                    headers: {
+                        Authorization: `Bearer ${googleUser.access_token}`,
+                        Accept: 'application/json'
+                    }
+                })
+                .then((res) => {
+                    console.log(res.data)
+                    setGoogleProfile(res.data)
+                    loginConGoogle(res.data.email);
+                })
+                .catch((err) => console.log(err));
+            
+        }
+    }, [ googleUser ] //eslint-disable-line
     );
 
 
@@ -69,7 +83,7 @@ function Login() {
         }
 
         setContenidoCargado(false);
-        
+
         let url = import.meta.env.VITE_API_URL + '/turnero.loginUser'
         if(regex_mail.test(userid)) { //Verifica si es un e-mail
             url = import.meta.env.VITE_API_URL + '/turnero.loginEmail'

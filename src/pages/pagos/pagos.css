@@ -12,3 +12,10 @@
   bottom:30px;
   right: 20px;
 }
+.pagos-error-msg{
+  margin: 0 !important;
+  padding: 0 ;
+  color: rgb(222, 20, 20);
+  transform:translateY(-15px);
+  font-size: 16px;
+}

@@ -26,26 +26,36 @@ export async function action({request}) { //eslint-disable-line
 }
 
 function validate(datos){
-    const errores = []
-    if(Object.values(datos).includes('')) {
-        errores.push('Todos los campos son obligatorios')
-        return errores
+    const errores = [];
+    
+    if (Object.keys(datos).some(key => key !== 'grow' && datos[key] === '')) {
+        errores.push('Todos los campos, excepto "grow", son obligatorios');
+        return errores;
     }
+
     if(!esFechaValida(datos.fecha_nac)){
-        errores.push('La fecha de nacimiento no es válida')
+        errores.push('La fecha de nacimiento no es válida');
     }
     if(datos.telefono != datos.telefono_conf){
-        errores.push('Los teléfonos no coinciden')
+        errores.push('Los teléfonos no coinciden');
     }
-    return errores
+    return errores;
 }
 
 function GoogleRegister() {
-    const { setUser, googleProfile/*, setGoogleProfile*/ } = useAuth()
+    const { setUser, googleProfile/*, setGoogleProfile*/ } = useAuth();
 
-    const navigate = useNavigate()
-    const actionResult = useActionData()
-    const errores = actionResult?.errores
+    const navigate = useNavigate();
+    const actionResult = useActionData();
+    const errores = actionResult?.errores;
+    const getGrow = () =>{
+        if (sessionStorage.getItem('growId')) {
+            return sessionStorage.getItem('growId');
+        }else{
+            return null;
+        }
+    }
+    const grow = getGrow();
     
     useEffect(() => {
         if(actionResult?.userId){
@@ -57,14 +67,11 @@ function GoogleRegister() {
             })
             return navigate('/panel')
         }
-    
     })
     
     
     return (
         <>
-
-
             <h3 className='register-title text-gray-500 text-s font-semibold'>COMPLETA TU PERFIL</h3>
             
             <Form method='post' noValidate>
@@ -97,6 +104,10 @@ function GoogleRegister() {
                  <div className="error-message" style={{minHeight:"22px"}} key={i}>{error}</div>
                 )}
                 
+                <div style={{display:'none'}} >
+                    <input type="number" id="grow" name="grow" value={grow}/>
+                </div>
+
                 <div className='pt-4 mt-8 '><SubmitButton value="Enviar" /></div>
                 
             </Form>

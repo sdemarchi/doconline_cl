@@ -47,6 +47,10 @@ const router = createBrowserRouter([
         element: <Login />
       },
       {
+        path: '/login/:grow',
+        element: <Login />
+      },
+      {
         path: '/registrarme',
         action: registerAction,
         element: <Register />

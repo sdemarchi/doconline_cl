@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import useTurno from '../../hooks/useTurno';
 import useAuth from '../../hooks/useAuth';
 import { getPrecios } from '../../data/turnero';
-import Alerta from '../../components/Alerta';
 import { aplicarCupon } from '../../data/turnero';
 import Chip from '../../components/Chip';
 import Spinner from '../../components/Spinner';
@@ -25,8 +24,8 @@ function Pagos() {
     const [ cupon, setCupon ] = useState('');
     const [ importeCupon, setImporteCupon ] = useState(0);
     const [ cargando ] = useState(0);
-    const [ alerta, setAlerta ] = useState({});
     const [ datosCargados, setDatosCargados ] = useState(false);
+    const [ showMsg , setShowMsg ] = useState(false);
     var cuponSession = {cupon: '', importe:0};
 
     async function cargarPrecios(){
@@ -72,12 +71,11 @@ function Pagos() {
             
             setCuponValidado(cuponValidadoObject);
             sessionStorage.setItem("cupon_validado",JSON.stringify(cuponValidadoObject)); //convierto el objeto en string para enviarlo al session storage sin modificar sus propiedades, pudiendo luego volverlo a convertir en el mismo objeto 
+            
+            setShowMsg(false);
 
         } else {
-            setAlerta({
-                msg: 'El cupón ingresado no es válido',
-                error: true
-            })
+            setShowMsg(true);
         }
     }
 
@@ -96,10 +94,7 @@ function Pagos() {
         setPrecioMP(precioMP - cuponValidado.importe);
         setPrecioTrans(precioTrans - cuponValidado.importe);
         sessionStorage.setItem("precio_transf", precioTrans - cuponValidado.importe)
-            
     }, [cargando])//eslint-disable-line
-
-    const { msg } = alerta
     
     function pagar(){
         setImporte(precioTrans)
@@ -110,9 +105,7 @@ function Pagos() {
         <div className="pagos-container">
         {!datosCargados && <Spinner/>}
         {datosCargados && <div>
-            {msg && <Alerta alerta={ alerta } />}
-            
-            
+
             <div className='mb-8 mt-4 mx-auto text-center'>
                 <span className='font-semibold text-gray-500'>SELECCIONAR FORMA DE PAGO</span>
             </div>
@@ -130,10 +123,12 @@ function Pagos() {
                     onChange={ e => setCupon(e.target.value)}
                     placeholder="A-123456"
                 /> 
+                {showMsg && <p className="pagos-error-msg">El cupón ingresado no es válido</p>}
                 <div className=' pb-8'>
                     <ActionBorderButton onClick={() => cupon && validarCupon()} value="Aplicar Cupón" />
                 </div>
             </>
+
             }
 
             <PagoCard medio="TRANSFERENCIA" 

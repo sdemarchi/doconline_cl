@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export async function getPrestadores() {
     const url = import.meta.env.VITE_API_URL + '/turnero.prestadores'
     const response = await fetch(url)

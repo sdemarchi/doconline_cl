@@ -56,7 +56,16 @@ function Register() {
     const navigate = useNavigate()
     const actionResult = useActionData()
     const errores = actionResult?.errores
-    
+    const getGrow = () =>{
+        if (sessionStorage.getItem('growId')) {
+            return sessionStorage.getItem('growId');
+        }else{
+            return null;
+        }
+    }
+
+    const grow = getGrow();
+
     useEffect(() => {
         if(actionResult?.userId){
             localStorage.setItem('dc_userId',actionResult.userId)
@@ -67,7 +76,6 @@ function Register() {
             })
             return navigate('/panel')
         }
-    
     })
     
     
@@ -94,23 +102,27 @@ function Register() {
                         <FormInput type={"number"} label="Confirmar Teléfono*" id="telefono_conf" placeholder="342 4392819" />
                     </div>
                 </div>
+
                 <FormInput type={"text"} label="E-Mail*" id="email" placeholder="usuario@mail.com" />
-
                 <FormInput  type={"text"} label="Confirmar E-Mail*" id="email_conf" placeholder="usuario@mail.com" />
-
                 <FormInput type="text" label="Nombre de Usuario*" id="username" placeholder="ingrese un nombre de usuario" />
+     
 
                 <div className='flex flex-row'>
                     <div className='basis-1/2 pe-1'>
                         <FormInput type={"password"} label="Contraseña*" id="password"/>
-
                     </div>
                     <div className='basis-1/2 ps-1'>
                         <FormInput type={"password"} label="Repetir Contraseña*" id="password_conf"/>
 
                     </div>
                 </div>
-                <div className='pt-4'><SubmitButton value="Registrarme" /></div>
+
+                <div style={{display:'none'}} >
+                    <input type="number" id="grow" name="grow" value={grow}/>
+                </div>
+
+                <div className='pt-4'><SubmitButton defaultValue="Registrarme"/></div>
                 
             </Form>
 
