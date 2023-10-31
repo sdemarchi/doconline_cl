@@ -48,7 +48,7 @@ function validate(datos){
     if(datos.password != datos.password_conf){
         errores.push('Las contraseñas no coinciden')
     }
-    return errores
+    return errores;
 }
 
 function Register() {
@@ -60,7 +60,7 @@ function Register() {
         if (sessionStorage.getItem('growId')) {
             return sessionStorage.getItem('growId');
         }else{
-            return null;
+            return 0;
         }
     }
 

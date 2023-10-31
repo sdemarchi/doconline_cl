@@ -39,13 +39,14 @@ function Login() {
 
     const growRoute = routeParams.grow;
     const getGrow = () => {
+        sessionStorage.setItem('growId',0);
         if(growRoute !== undefined){
             getGrowByRoute(growRoute).then((resp)=>{
                 sessionStorage.setItem('growId',resp.idgrow);
             });
         }else{
             if (sessionStorage.getItem('growId')) {
-                sessionStorage.removeItem('growId');
+                sessionStorage.setItem('growId',0);
               }
         }
     }
