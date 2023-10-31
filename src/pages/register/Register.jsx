@@ -29,9 +29,9 @@ export async function action({request}) { //eslint-disable-line
 
 function validate(datos){
     const errores = []
-    if(Object.values(datos).includes('')) {
-        errores.push('Todos los campos son obligatorios')
-        return errores
+    if (Object.keys(datos).some(key => key !== 'grow' && datos[key] === '')) {
+        errores.push('Todos los campos son obligatorios');
+        return errores;
     }
     if(!esFechaValida(datos.fecha_nac)){
         errores.push('La fecha de nacimiento no es válida')
@@ -51,6 +51,7 @@ function validate(datos){
     return errores;
 }
 
+
 function Register() {
     const { setUser } = useAuth()
     const navigate = useNavigate()
@@ -60,7 +61,7 @@ function Register() {
         if (sessionStorage.getItem('growId')) {
             return sessionStorage.getItem('growId');
         }else{
-            return 0;
+            return null;
         }
     }
 

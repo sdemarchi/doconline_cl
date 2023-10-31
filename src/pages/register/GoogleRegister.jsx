@@ -29,7 +29,7 @@ function validate(datos){
     const errores = [];
     
     if (Object.keys(datos).some(key => key !== 'grow' && datos[key] === '')) {
-        errores.push('Todos los campos, excepto "grow", son obligatorios');
+        errores.push('Todos los campos son obligatorios');
         return errores;
     }
 
