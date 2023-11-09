@@ -19,3 +19,13 @@
   transform:translateY(-15px);
   font-size: 16px;
 }
+
+.pagos-descuento{
+  border-radius: 8px;
+  color:white;
+  background-color: rgb(71, 222, 60);
+  padding:10px 15px;
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 30px;
+}

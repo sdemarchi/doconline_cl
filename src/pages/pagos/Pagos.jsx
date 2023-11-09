@@ -10,6 +10,7 @@ import { aplicarCupon } from '../../data/turnero';
 import Chip from '../../components/Chip';
 import Spinner from '../../components/Spinner';
 import Contacto from '../../components/contacto/contacto';
+import { getGrowById , getGrowByCod } from '../../data/grows';
 import './pagos.css';
 
 function Pagos() {
@@ -26,6 +27,8 @@ function Pagos() {
     const [ cargando ] = useState(0);
     const [ datosCargados, setDatosCargados ] = useState(false);
     const [ showMsg , setShowMsg ] = useState(false);
+    const [ grow , setGrow ] = useState();
+
     var cuponSession = {cupon: '', importe:0};
 
     async function cargarPrecios(){
@@ -56,27 +59,41 @@ function Pagos() {
     }
 
     async function validarCupon(){
-        const response = await aplicarCupon(cupon);
+        const grow_ = await getGrowByCod(cupon);
+        if(grow_?.idgrow){
+            setGrow(grow_);
+            sessionStorage.setItem('growId',grow_.idgrow);
+        }else{
+            const response = await aplicarCupon(cupon);
 
-        if(response.valido){
-            setImporteCupon(response.descuento);
-
-            setPrecioMP(precioMP - response.descuento);
-            sessionStorage.setItem("precio_mp",precioMP - response.descuento); //modifica el precio de mercadopago en session storage también
-
-            setPrecioTrans(precioTrans - response.descuento);
-            sessionStorage.setItem("precio_transf", precioTrans - response.descuento); //modifica el precio de transferencia ...
-
-            let cuponValidadoObject = {cupon: cupon, importe:response.descuento}; // guarda cupon en variable para usarse en las dos siguientes lineas
-            
-            setCuponValidado(cuponValidadoObject);
-            sessionStorage.setItem("cupon_validado",JSON.stringify(cuponValidadoObject)); //convierto el objeto en string para enviarlo al session storage sin modificar sus propiedades, pudiendo luego volverlo a convertir en el mismo objeto 
-            
-            setShowMsg(false);
-
-        } else {
-            setShowMsg(true);
+            if(response.valido){
+                setImporteCupon(response.descuento);
+    
+                setPrecioMP(precioMP - response.descuento);
+                sessionStorage.setItem("precio_mp",precioMP - response.descuento); //modifica el precio de mercadopago en session storage también
+    
+                setPrecioTrans(precioTrans - response.descuento);
+                sessionStorage.setItem("precio_transf", precioTrans - response.descuento); //modifica el precio de transferencia ...
+    
+                let cuponValidadoObject = {cupon: cupon, importe:response.descuento}; // guarda cupon en variable para usarse en las dos siguientes lineas
+                
+                setCuponValidado(cuponValidadoObject);
+                sessionStorage.setItem("cupon_validado",JSON.stringify(cuponValidadoObject)); //convierto el objeto en string para enviarlo al session storage sin modificar sus propiedades, pudiendo luego volverlo a convertir en el mismo objeto 
+                
+                setShowMsg(false);
+    
+            }else{
+                setShowMsg(true);
+            }
         }
+    }
+
+    
+    async function getGrow(id){
+        if(sessionStorage.getItem('growId')){
+            let grow_ =  await getGrowById(id);
+            setGrow(grow_);
+        }        
     }
 
     async function quitarCupon(){
@@ -88,54 +105,78 @@ function Pagos() {
     }
 
     useEffect(() => {
+        getGrow(113);
         cargarPrecios();
         setCupon(cuponValidado.cupon);
         setImporteCupon(cuponValidado.importe);
         setPrecioMP(precioMP - cuponValidado.importe);
         setPrecioTrans(precioTrans - cuponValidado.importe);
-        sessionStorage.setItem("precio_transf", precioTrans - cuponValidado.importe)
+        sessionStorage.setItem("precio_transf", precioTrans - cuponValidado.importe);
+        if(sessionStorage.getItem('growid') !== undefined && sessionStorage.getItem('growid') !== null){
+            const idgrow = sessionStorage.getItem('growid');
+            getGrow(idgrow);
+        }
     }, [cargando])//eslint-disable-line
     
-    function pagar(){
-        setImporte(precioTrans)
-        return navigate('/pagoTransf')
+
+    function pagar(precioFinal){
+        sessionStorage.setItem('precio_transf',precioFinal);
+        setImporte(precioTrans);
+        return navigate('/pagoTransf');
     }
         
     return (
         <div className="pagos-container">
+
         {!datosCargados && <Spinner/>}
         {datosCargados && <div>
+
+            {( grow?.descuento !== 0 && grow) &&
+                <div className="pagos-descuento">
+                    <h1>Tenés un descuento del {grow?.descuento}% por {grow?.nombre}.</h1>
+                </div>
+            }
+            
 
             <div className='mb-8 mt-4 mx-auto text-center'>
                 <span className='font-semibold text-gray-500'>SELECCIONAR FORMA DE PAGO</span>
             </div>
-            { cuponValidado.cupon ?
-                <>
-                    <h6 className="text-gray-500 text-xs my-4 font-semibold leading-3">Cupón Aplicado:</h6>
-                    <Chip value={cupon} onClick={ () => quitarCupon() } />
-                </>
-            :
-            <>
-                <FormInputState 
-                    id="turno"
-                    label="Cupón" 
-                    value={cupon}
-                    onChange={ e => setCupon(e.target.value)}
-                    placeholder="A-123456"
-                /> 
-                {showMsg && <p className="pagos-error-msg">El cupón ingresado no es válido</p>}
-                <div className=' pb-8'>
-                    <ActionBorderButton onClick={() => cupon && validarCupon()} value="Aplicar Cupón" />
-                </div>
-            </>
+    
 
-            }
+            {( grow?.descuento === 0 || !grow)&&
+                <>
+                    { cuponValidado.cupon ?
+                        <>
+                            <h6 className="text-gray-500 text-xs my-4 font-semibold leading-3">Cupón Aplicado:</h6>
+                            <Chip value={cupon} onClick={ () => quitarCupon() } />
+                        </>
+                    :
+                    <>
+                        <FormInputState 
+                            id="turno"
+                            label="Cupón" 
+                            value={cupon}
+                            onChange={ e => setCupon(e.target.value)}
+                            placeholder="A-123456"
+                        /> 
+
+                        {showMsg && <p className="pagos-error-msg">El cupón ingresado no es válido</p>}
+
+                        <div className=' pb-8'>
+                            <ActionBorderButton onClick={() => cupon && validarCupon()} value="Aplicar Cupón" />
+                        </div>
+                    </>
+                    }
+                </>
+
+        }
 
             <PagoCard medio="TRANSFERENCIA" 
                 importe={sessionStorage.getItem("precio_transf") || precioTrans} 
                 descuento={importeCupon}
+                descuentoPorc={grow?.descuento}
                 mensaje="Desde cualquier banco físico o virtual" 
-                onClick={ () => pagar() } />
+                onClick={ (precioFinal) => pagar(precioFinal) } />
             
             <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/turno')} >Atrás</button>

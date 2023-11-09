@@ -16,3 +16,53 @@
   display: flex;
   align-items: center;
 }
+
+.turno-horarios-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  animation-name: turnos;
+  animation-duration: 0.3s;
+  overflow-y: hidden;
+  height: 70px;
+}
+
+.turno-horario{
+  background-color: rgba(224, 224, 224, 0.611);
+  color: rgb(58, 58, 58);
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: 14px;
+  padding:13px 5px;
+  height: fit-content;
+  width: 27%;
+  text-align: center;
+  cursor:pointer;
+}
+
+.turno-horario-selected{
+  background-color: rgb(5, 187, 233);
+  color: white;
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: 18px;
+  padding:14px 5px;
+  height: fit-content;
+  width: 27%;
+  text-align: center;
+  cursor:pointer;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.111);
+  transition: 0.3s;
+}
+
+@keyframes turnos {
+  0%{
+    height: 0;
+    opacity: 0;
+  }
+  100%{
+    height: 70px;
+    opacity: 100%;
+  }
+}

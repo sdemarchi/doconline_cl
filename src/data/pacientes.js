@@ -164,5 +164,17 @@ export async function getTurnoPaciente(id){
         return resp
     } catch (error) {
         console.log(error)
+    }  
+}
+
+
+export async function setGrowPaciente(idpaciente,idgrow){
+    const url = `${import.meta.env.VITE_API_URL}/paciente/${idpaciente}/setGrow/${idgrow}`
+    try {
+        const respuesta = await fetch(url, { method: 'PUT'})
+        const resp = await respuesta.json()
+        return resp
+    } catch (error) {
+        console.log(error)
     }
 }

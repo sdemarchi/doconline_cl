@@ -2,7 +2,7 @@ import { useNavigate, useOutletContext } from 'react-router-dom';
 //import logo from '../assets/logo-doconline-reprocann-500.png';
 import { ActionButton } from '../../components/Buttons';
 import Calendario from '../../components/Calendario';
-import { getPrestadores, getCalendario, getTurno } from '../../data/turnero';
+import { getPrestadores, getCalendario, /*getTurno,*/ getTurnos } from '../../data/turnero';
 import { useEffect, useState } from 'react';
 import Select from '../../components/Select';
 import useTurno from '../../hooks/useTurno';
@@ -29,6 +29,9 @@ function Turnos() {
     const [calendario, setCalendario] = useState([]);
     const [cargando, setCargando] = useState(0);
     const [cargandoTurno, setCargandoTurno] = useState(false);
+    const [buttonSelected , setButtonSelected] = useState();
+    const [turnos , setTurnos] = useState([]);
+    const [descuento , setDescuento] = useState(); //eslint-disable-line
 
     async function cargarPrestadores(){
         const response = await getPrestadores();
@@ -64,13 +67,13 @@ function Turnos() {
 
     function cambiarCursor(estado){
        if(estado =="cargando"){
-        document.body.style.cursor = "progress";
-        botones.forEach((boton) => {
-        boton.style.cursor = "progress";});
+            document.body.style.cursor = "progress";
+            botones.forEach((boton) => {
+            boton.style.cursor = "progress";});
        }else{
-        document.body.style.cursor = "default";
-        botones.forEach((boton) => {
-        boton.style.cursor = "pointer";});
+            document.body.style.cursor = "default";
+            botones.forEach((boton) => {
+            boton.style.cursor = "pointer";});
        }
     }
 
@@ -78,11 +81,10 @@ function Turnos() {
         cambiarCursor("cargando");
         setCargandoTurno(true);
 
-        const turno = await getTurno(dia, prestador);
-        setTurnoFecha(turno.fecha);
-        setTurnoHora(turno.hora);
-        setTurnoDesc(turno.detalle);
+        /*const turno = await getTurno(dia, prestador);*/
+        const turnos_ = await getTurnos(dia,prestador);
 
+        setTurnos(turnos_);
         cambiarCursor("cargado");
         setCargandoTurno(false);
     }
@@ -94,11 +96,25 @@ function Turnos() {
             hora: turnoHora,
             detalle: turnoDesc
         }
+
         setTurno(turnoObject);
-
         sessionStorage.setItem('turno', JSON.stringify(turnoObject));
-
         navigate('/pagos');
+    }
+
+    const seleccionarTurno = (button,turno) => {
+        setButtonSelected(button);
+        setTurnoFecha(turno.fecha);
+        setTurnoHora(turno.hora);
+        setTurnoDesc(turno.detalle);
+    };
+
+    const isSelectedClass = (button) => {
+        if (buttonSelected == button){
+            return 'turno-horario-selected';
+        }else{
+            return 'turno-horario';
+        }
     }
 
     const subirScroll = () =>{
@@ -113,26 +129,30 @@ function Turnos() {
             }else{
                 cargarCalendario(mes,anio,prestador)
             }
-         }
+          }
         );
     }, [cargando])//eslint-disable-line
 
     return (
         <div className="turno-container">
+
         { !datosCargados && <Spinner />}
         { datosCargados &&
+
         <div className="turnos-container">
             {/*<img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>*/}
-            
-            <Select 
-                label="Seleccionar Prestador" 
-                id="prestador" 
-                datos={prestadores}
-                value={1}
-                placeholder='Seleccione un prestador' 
-                onChange={(event) => prestadorSeleccionado(event.target.value)}
-            />
+            <div className="turno-selector">
+                <Select 
+                    label="Seleccionar Prestador" 
+                    id="prestador" 
+                    datos={prestadores}
+                    value={1}
+                    placeholder='Seleccione un prestador' 
+                    onChange={(event) => prestadorSeleccionado(event.target.value)}
+                />
+            </div>
             <h6 className="input-label">Seleccionar el Día</h6>
+
             <h6 className="text-green-500 font-semibold text-xs ps-3">En color verde los días disponibles</h6>
             { !calendarioCargado && <div className="calendario-spinner-contenedor"> <Spinner/> </div>}
             { calendarioCargado &&
@@ -146,12 +166,26 @@ function Turnos() {
                 select={ (fecha) => selectDia(fecha) } 
             /> 
             }
+
+            {/*JSON.stringify(turnos)*/}
+
+            {turnos.length > 0 &&
+               <>
+                <h6 className="input-label mt-8">Seleccionar el horario</h6>
+                <div className="turno-horarios-container">
+                 {turnos.map( (turno,key) => (
+                   turno.hora !== '00:00' && <button key={key} onClick={()=>seleccionarTurno(key,turno)} className={isSelectedClass(key)}>{turno.hora} hs</button>
+                ))}
+                </div>
+                </>
+            }
+
             <h6 className="input-label mt-5">Confirmar Turno</h6>
             {!cargandoTurno ? 
             <>
             <textarea disabled
-            className="block w-full p-1 my-1 border-input focus:border-input border-2 text-xs text-gray-500"
-            value={ turnoDesc }
+                className="block w-full p-1 my-1 border-input focus:border-input border-2 text-xs text-gray-500"
+                value={ turnoDesc }
             ></textarea> 
             </>
             : <div style={{height:"52px",width:"100%",display:"flex",color:"#4E4E4E",alignItems:"center",justifyContent:"center"}}>Cargando...</div>

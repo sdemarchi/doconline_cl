@@ -5,6 +5,7 @@ import useAuth from '../../hooks/useAuth';
 import useTurno from '../../hooks/useTurno';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { confirmarTurno } from '../../data/turnero';
+import { setGrowPaciente } from '../../data/pacientes';
 import Spinner from '../../components/Spinner';
 import axios from 'axios';
 import copyIcon from '../../assets/copy-icon.ico';
@@ -37,15 +38,14 @@ function PagoTransf() {
     const [uploadResult, setUploadResult] = useState(0);
     const [datosCargados, setDatosCargados] = useState(false);
     const [mostrarNotification, setMostrarNotification] = useState(false);
-
     const [file , setFile] = useState();//eslint-disable-line
 
     const subirArchivo = async (e) => {
         setEnviando(true);
         setFile(e.target.files[0])
-        const url = `${import.meta.env.VITE_API_URL}/turnero.comprobante`
-        const data = new FormData()
-        data.append("file", e.target.files[0])
+        const url = `${import.meta.env.VITE_API_URL}/turnero.comprobante`;
+        const data = new FormData();
+        data.append("file", e.target.files[0]);
         axios
             .post(url, data)
             .then(res => {
@@ -79,6 +79,11 @@ function PagoTransf() {
 
     async function guardarTurno() {
         setDatosCargados(false);
+
+        if(sessionStorage.getItem('growId') !== undefined && sessionStorage.getItem('growId') !== null){
+            const idgrow = sessionStorage.getItem('growId');
+            setGrowPaciente(user.userId,idgrow)
+        }
         // SOLICITUD ORIGINAL: 
         /* const response = await confirmarTurno(turno, cuponValidado, comprobante, importe, user.userId);*/
 
@@ -98,15 +103,14 @@ function PagoTransf() {
 
     useEffect(() => {
         sessionStorage.setItem('comprobante-enviado',false);
-        cargarDatosTransf()
-    }, [cargando])
+        cargarDatosTransf();
 
+    }, [cargando]) // eslint-disable-line
 
     return (
         <div className="pagos-container">
         {!datosCargados && <Spinner/>}{datosCargados && <div>
             {mostrarNotification && <Notificacion message="Texto copiado al portapapeles" />}
-
             <div className='mb-6 mt-4 mx-auto text-center'>
                 <span className='font-semibold text-gray-500'>PAGAR POR TRANSFERENCIA</span>
             </div>
@@ -157,7 +161,7 @@ function PagoTransf() {
             }
 
             <div className="mt-10">
-                <ActionButton value="Confirmar Turno" onClick={() => guardarTurno()} />
+                <ActionButton value="Confirmar Turno" onClick={() => guardarTurno()}/>
                 <div className='mb-0 mx-auto p-3 text-center'>
                     <button className='text-gray-500' onClick={() => navigate('/pagos')} >Atrás</button>
                 </div>
