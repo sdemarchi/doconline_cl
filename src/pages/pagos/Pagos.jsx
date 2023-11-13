@@ -89,8 +89,9 @@ function Pagos() {
     }
 
     
-    async function getGrow(id){
+    async function getGrow(){
         if(sessionStorage.getItem('growId')){
+            let id = sessionStorage.getItem('growId');
             let grow_ =  await getGrowById(id);
             setGrow(grow_);
         }        
@@ -105,7 +106,7 @@ function Pagos() {
     }
 
     useEffect(() => {
-        getGrow(113);
+        getGrow();
         cargarPrecios();
         setCupon(cuponValidado.cupon);
         setImporteCupon(cuponValidado.importe);
@@ -131,7 +132,7 @@ function Pagos() {
         {!datosCargados && <Spinner/>}
         {datosCargados && <div>
 
-            {( grow?.descuento !== 0 && grow) &&
+            {(grow?.descuento) &&
                 <div className="pagos-descuento">
                     <h1>Tenés un descuento del {grow?.descuento}% por {grow?.nombre}.</h1>
                 </div>
@@ -143,7 +144,7 @@ function Pagos() {
             </div>
     
 
-            {( grow?.descuento === 0 || !grow)&&
+            {(!grow?.descuento) &&
                 <>
                     { cuponValidado.cupon ?
                         <>
