@@ -10,51 +10,51 @@ import Contacto from '../../components/contacto/contacto';
 
 function FormRep5() {
 
-    const navigate = useNavigate()
-
-    const [signFirma, setSignFirma] = useState()
-    const [signAclaracion, setSignAclaracion] = useState()
-
-    const { firma, aclaracion, setFirma, setAclaracion, enviarFormulario } = useForm()
-
-    const [error, setError] = useState('')
+    const navigate = useNavigate();
+    const [signFirma, setSignFirma] = useState();
+    const [signAclaracion, setSignAclaracion] = useState();
+    const { firma, aclaracion, setFirma, setAclaracion, enviarFormulario } = useForm();
+    const [error, setError] = useState('');
 
 
     async function finalizar() {
-        let urlFirma = null
-        let urlAcl = null
+        let urlFirma = null;
+        let urlAcl = null;
+
         if(firma == null){
-            urlFirma = await signFirma.getTrimmedCanvas().toDataURL('image/png')
-            setFirma(urlFirma)
+            urlFirma = await signFirma.getTrimmedCanvas().toDataURL('image/png');
+            setFirma(urlFirma);
         } 
+
         if(aclaracion == null){
-            urlAcl = await signAclaracion.getTrimmedCanvas().toDataURL('image/png')
-            setAclaracion(urlAcl)
-        }
-        const resp = await enviarFormulario(urlFirma, urlAcl)
-        if (resp == 'error 500') {
-            return navigate('/form-error')
-        }
-        if (resp == '') {
-            return navigate('/form-success')
-        } else {
-            setError(resp)
+            urlAcl = await signAclaracion.getTrimmedCanvas().toDataURL('image/png');
+            setAclaracion(urlAcl);
         }
 
+        const resp = await enviarFormulario(urlFirma, urlAcl);
+
+        if (resp == 'error 500') {
+            return navigate('/form-error');
+        }
+        if (resp == '') {
+            return navigate('/form-success');
+        } else {
+            setError(resp);
+        }
     }
 
     function handleClearFirma() {
         if(signFirma){
-            signFirma.clear()
+            signFirma.clear();
         }
-        setFirma(null)
+        setFirma(null);
     }
 
     function handleClearAclaracion() {
         if(signAclaracion){
-            signAclaracion.clear()
+            signAclaracion.clear();
         }
-        setAclaracion(null)
+        setAclaracion(null);
     }
 
     return (
