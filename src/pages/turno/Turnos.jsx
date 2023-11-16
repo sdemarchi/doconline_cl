@@ -2,7 +2,7 @@ import { useNavigate, useOutletContext } from 'react-router-dom';
 //import logo from '../assets/logo-doconline-reprocann-500.png';
 import { ActionButton } from '../../components/Buttons';
 import Calendario from '../../components/Calendario';
-import { getPrestadores, getCalendario, /*getTurno,*/ getTurnos } from '../../data/turnero';
+import { getPrestadores, getCalendario, /*getTurno,*/ getTurnos, excedeMargen } from '../../data/turnero';
 import { useEffect, useState } from 'react';
 import Select from '../../components/Select';
 import useTurno from '../../hooks/useTurno';
@@ -42,7 +42,14 @@ function Turnos() {
 
     async function cargarCalendario(mes, anio, prestador){
         setCalendarioCargado(false);
-        const response = await getCalendario(mes, anio, prestador);
+        var mesCal = mes
+        const resp = await excedeMargen(prestador);
+        console.log(resp);
+        if(resp.excede == 1){
+            SetMes(mes + 1);
+            mesCal++;
+        } 
+        const response = await getCalendario(mesCal, anio, prestador);
         setCalendario(response);
         setCalendarioCargado(true);
         setDatosCargados(true);

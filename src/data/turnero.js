@@ -55,6 +55,14 @@ export async function aplicarCupon(cupon){
     return result;
 }
 
+export async function excedeMargen(prestador){
+    const url = `${import.meta.env.VITE_API_URL}/turnero.excedeMargen/${prestador}`
+    const response = await fetch(url)
+    const result = await response.json()
+    //console.log(result)
+    return result
+}
+
 export async function confirmarTurno(turno, cupon, comprobante, importe, usuarioId){
     const url = `${import.meta.env.VITE_API_URL}/turnero.confirmar`;
     const data = {
