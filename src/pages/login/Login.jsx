@@ -84,9 +84,9 @@ function Login() {
 
         setContenidoCargado(false);
 
-        let url = import.meta.env.VITE_API_URL + '/turnero.loginUser'
+        let url = import.meta.env.VITE_API_URL + '/turnero.loginUser';
         if(regex_mail.test(userid)) { //Verifica si es un e-mail
-            url = import.meta.env.VITE_API_URL + '/turnero.loginEmail'
+            url = import.meta.env.VITE_API_URL + '/turnero.loginEmail';
         }
 
         try {
@@ -159,6 +159,7 @@ function Login() {
 
                 <div className="login-logo-container">
                     {/*<span className="login-logo-text">Cuida tu salud estés donde estés</span>*/}
+                    
                     <img className="login-logo mx-auto pb-4" src={ logo }></img>
                 </div>
     

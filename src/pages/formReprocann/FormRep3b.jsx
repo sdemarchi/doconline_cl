@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import logo from '../../assets/logo-doconline-reprocann-500.png'
+//import logo from '../../assets/logo-doconline-reprocann-500.png';
 import { FormInputHook } from '../../components/FormInput';
 import { SubmitButton } from '../../components/Buttons';
 import useForm from '../../hooks/useForm';
@@ -15,43 +15,46 @@ import Contacto from '../../components/contacto/contacto';
 
 
 function FormRep3b() {
-
-    const { register, formState: { errors }, handleSubmit } = useFormHook()
-
-    const { form3b, setForm3b, contactoActual, setContactoActual }  = useForm()
-    const [contactos, setContactos] = useState([])
-    const [esMenor, setEsMenor] = useState(false)
-    const [cargando] = useState(0)
-    
-    const [errorContacto, setErrorContacto] = useState(0)
-    const navigate = useNavigate()
-    
+    const { register, formState: { errors }, handleSubmit } = useFormHook();
+    const { form3b, setForm3b, contactoActual, setContactoActual }  = useForm();
+    const [contactos, setContactos] = useState([]);
+    const [esMenor, setEsMenor] = useState(false);
+    const [cargando] = useState(0);
+    const [errorContacto, setErrorContacto] = useState(0);
+    const navigate = useNavigate();
     const subirScroll = () =>{
         window.scrollTo(0, 0);
     }
 
     useEffect(() => {
         subirScroll();
+        contactoGrow();
         async function cargaContactos(){
-            const response = await getContactos()
-            setContactos(response)
-            setEsMenor(form3b.es_menor)
-            console.log(form3b)
+            const response = await getContactos();
+            setContactos(response);
+            setEsMenor(form3b.es_menor);
+            console.log(form3b);
         }
-        cargaContactos()
+        cargaContactos();
     }, [cargando]) //eslint-disable-line
     
 
+    const contactoGrow = () => {
+        if(sessionStorage.getItem('growId')){
+            setContactoActual(38);
+        }
+    }
+
     const onSubmit = (data) => {
         if(!contactoActual){
-            setErrorContacto(1)
-            return
+            setErrorContacto(1);
+            return;
         }
-        data.idcontacto = contactoActual
-        data.es_menor = esMenor ? 1 : 0
-        setForm3b(data)
-        console.log(form3b)
-        return data.es_menor ? navigate('/tutor-1') : navigate('/formulario-4')
+        data.idcontacto = contactoActual;
+        data.es_menor = esMenor ? 1 : 0;
+        setForm3b(data);
+        console.log(form3b);
+        return data.es_menor ? navigate('/tutor-1') : navigate('/formulario-4');
     }
     
     function changeContacto(event){
@@ -67,7 +70,6 @@ function FormRep3b() {
         <div className="form-rep-container">
            {/* <img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>*/}
             <form onSubmit={ handleSubmit(onSubmit) }>
-                
                 <Select 
                     label="¿Cómo nos contactó?*"
                     onChange={e => changeContacto(e)}
@@ -76,8 +78,8 @@ function FormRep3b() {
                     placeholder="Seleccione uno"
                     datos={contactos}
                 />
-                { errorContacto > 0  && <Error>Seleccione un Contacto</Error> }
 
+                { errorContacto > 0  && <Error>Seleccione un Contacto</Error> }
 
                 { buscarContactoPorId(contactoActual) == 'Otro' &&
                 <FormInputHook label="Contacto Otro" id="contacto_otro" placeholder="Otra forma de contacto" 
@@ -103,7 +105,6 @@ function FormRep3b() {
                     onChange={ () => setEsMenor(!esMenor) }
                 />
                 
-                
                 <h6 className="text-gray-500 text-xs leading-3 pb-1 pt-2">Si la respuesta es Sí, ingrese a continuación los datos del tutor</h6>
                 
                 <div className='pt-4'>
@@ -118,4 +119,4 @@ function FormRep3b() {
     )
 }
 
-export default FormRep3b
+export default FormRep3b;

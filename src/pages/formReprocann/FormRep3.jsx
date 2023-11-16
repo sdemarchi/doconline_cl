@@ -28,7 +28,6 @@ function FormRep3() {
         window.scrollTo(0, 0);
     }
 
-    
     useEffect(() => {
         async function cargarEstados(){
             setArritmia(form3.arritmia)
