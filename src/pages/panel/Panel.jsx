@@ -82,7 +82,7 @@ function Panel() {
                 <p className="panel-description-text">Facil y seguro sin moverte de tu casa.</p>
             </div>
 
-            <p className="panel-doctor">Dr. Joaquin Joazmi</p>
+            <p className="panel-doctor">Dr. Joaquin Jozami</p>
             <hr className='panel-separador solid border-input border-1 my-3'></hr>
 {/*  */}
             <div className="turnos-container">
