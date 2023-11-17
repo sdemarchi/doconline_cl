@@ -133,15 +133,15 @@ function Pagos() {
         {datosCargados && <div>
 
             {(grow?.descuento) &&
-                <div className="pagos-descuento">
-                    <h1>Tenés un descuento del {grow?.descuento}% por {grow?.nombre}.</h1>
+                <div>
+                    <h1 className="black-title">Tenés un descuento del {grow?.descuento}% por {grow?.nombre}.</h1>
                 </div>
             }
             
 
-           {/* <div className='mb-8 mt-4 mx-auto text-center'>
-                <span className='font-semibold text-gray-500'>SELECCIONAR FORMA DE PAGO</span>
-        </div>*/}
+        <div className='mb-8 mt-4 mx-auto text-center'>
+                <span className='font-semibold text-gray-500'>Seleccionar forma de pago</span>
+        </div>
     
        
             {(!grow?.descuento) &&
