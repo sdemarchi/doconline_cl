@@ -26,7 +26,7 @@ function MainLayout() {
         <div className="background-image min-h-screen from-grad-blue bg-gradient-to-bl to-grad-blue overflow-y-auto flex items-center justify-center">
                 <div className="layout-main-container max-w-sm bg-white shadow-lg w-80">
                     <Header/>
-                    <div className="layout-content">
+                    <div className="layout-content" style={{height: 'calc(100vh - 80px)'}}>
                     <Outlet context={user}/>
                     </div>
                     {/*<WspBoton/>*/}
