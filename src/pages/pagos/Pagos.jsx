@@ -1,4 +1,3 @@
-import {ActionBorderButton } from '../../components/Buttons';
 import PagoCard from '../../components/PagoCard';
 import { FormInputState } from '../../components/FormInput';
 import { useNavigate  } from 'react-router-dom';
@@ -12,6 +11,7 @@ import Spinner from '../../components/Spinner';
 import Contacto from '../../components/contacto/contacto';
 import { getGrowById , getGrowByCod } from '../../data/grows';
 import './pagos.css';
+import Card from '../../components/card/card';
 
 function Pagos() {
 
@@ -139,12 +139,13 @@ function Pagos() {
             }
             
 
-            <div className='mb-8 mt-4 mx-auto text-center'>
+           {/* <div className='mb-8 mt-4 mx-auto text-center'>
                 <span className='font-semibold text-gray-500'>SELECCIONAR FORMA DE PAGO</span>
-            </div>
+        </div>*/}
     
-
+       
             {(!grow?.descuento) &&
+                 <Card title="Cupón">
                 <>
                     { cuponValidado.cupon ?
                         <>
@@ -155,30 +156,28 @@ function Pagos() {
                     <>
                         <FormInputState 
                             id="turno"
-                            label="Cupón" 
                             value={cupon}
                             onChange={ e => setCupon(e.target.value)}
                             placeholder="A-123456"
                         /> 
 
                         {showMsg && <p className="pagos-error-msg">El cupón ingresado no es válido</p>}
-
-                        <div className=' pb-8'>
-                            <ActionBorderButton onClick={() => cupon && validarCupon()} value="Aplicar Cupón" />
-                        </div>
+                        <button onClick={() => cupon && validarCupon()} className='pagos-aplicar-button'>Aplicar Cupón</button>
                     </>
                     }
                 </>
+                </Card>
+            }
+        
+            <Card>
+                <PagoCard medio="TRANSFERENCIA" 
+                    importe={sessionStorage.getItem("precio_transf") || precioTrans} 
+                    descuento={importeCupon}
+                    descuentoPorc={grow?.descuento}
+                    mensaje="Desde cualquier banco físico o virtual" 
+                    onClick={ (precioFinal) => pagar(precioFinal) } />
+            </Card>
 
-        }
-
-            <PagoCard medio="TRANSFERENCIA" 
-                importe={sessionStorage.getItem("precio_transf") || precioTrans} 
-                descuento={importeCupon}
-                descuentoPorc={grow?.descuento}
-                mensaje="Desde cualquier banco físico o virtual" 
-                onClick={ (precioFinal) => pagar(precioFinal) } />
-            
             <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/turno')} >Atrás</button>
             </div>

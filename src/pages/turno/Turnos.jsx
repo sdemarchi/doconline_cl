@@ -1,13 +1,14 @@
 import { useNavigate, useOutletContext } from 'react-router-dom';
 //import logo from '../assets/logo-doconline-reprocann-500.png';
 import { ActionButton } from '../../components/Buttons';
-import Calendario from '../../components/Calendario';
+import Calendario from '../../components/calendario/Calendario';
 import { getPrestadores, getCalendario, /*getTurno,*/ getTurnos, excedeMargen } from '../../data/turnero';
 import { useEffect, useState } from 'react';
 import Select from '../../components/Select';
 import useTurno from '../../hooks/useTurno';
 import Spinner from '../../components/Spinner';
 import Contacto from '../../components/contacto/contacto';
+import Card from '../../components/card/card';
 import './turno.css';
 
 function Turnos() {
@@ -28,9 +29,10 @@ function Turnos() {
     const [turnoDesc, setTurnoDesc] = useState('');
     const [calendario, setCalendario] = useState([]);
     const [cargando, setCargando] = useState(0);
-    const [cargandoTurno, setCargandoTurno] = useState(false);
+    const [cargandoTurno, setCargandoTurno] = useState(false);  //eslint-disable-line
     const [buttonSelected , setButtonSelected] = useState();
     const [turnos , setTurnos] = useState([]);
+    const [diaSeleccionado, setDiaSeleccionado] = useState();
     const [descuento , setDescuento] = useState(); //eslint-disable-line
 
     async function cargarPrestadores(){
@@ -90,7 +92,7 @@ function Turnos() {
 
         /*const turno = await getTurno(dia, prestador);*/
         const turnos_ = await getTurnos(dia,prestador);
-
+        setDiaSeleccionado(dia);
         setTurnos(turnos_);
         cambiarCursor("cargado");
         setCargandoTurno(false);
@@ -148,7 +150,21 @@ function Turnos() {
 
         <div className="turnos-container">
             {/*<img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>*/}
-            <div className="turno-selector">
+
+            <Card title='Seleccionar prestador'>
+                <div className="turno-selector">
+                    <Select
+                        id="prestador" 
+                        datos={prestadores}
+                        value={1}
+                        placeholder='Seleccione un prestador' 
+                        onChange={(event) => prestadorSeleccionado(event.target.value)}
+                    />
+                </div>
+            </Card>
+
+
+            {/*<div className="turno-selector">
                 <Select 
                     label="Seleccionar Prestador" 
                     id="prestador" 
@@ -157,37 +173,43 @@ function Turnos() {
                     placeholder='Seleccione un prestador' 
                     onChange={(event) => prestadorSeleccionado(event.target.value)}
                 />
-            </div>
-            <h6 className="input-label">Seleccionar el Día</h6>
+            </div>*/}
 
-            <h6 className="text-green-500 font-semibold text-xs ps-3">En color verde los días disponibles</h6>
-            { !calendarioCargado && <div className="calendario-spinner-contenedor"> <Spinner/> </div>}
-            { calendarioCargado &&
-            
-            <Calendario 
-                calendario={ calendario } 
-                mes={ mes } 
-                anio={ anio } 
-                sumar={ () => sumarMes() } 
-                restar={ () => restarMes() }
-                select={ (fecha) => selectDia(fecha) } 
-            /> 
-            }
+            <Card title='Seleccionar dia'>
+                <h6 className="text-green-500 font-semibold text-xs ps-3">En color verde los días disponibles</h6>
+                { !calendarioCargado && <div className="calendario-spinner-contenedor"> <Spinner/> </div>}
+                { calendarioCargado &&
+                
+                <Calendario 
+                    calendario={ calendario } 
+                    mes={ mes } 
+                    anio={ anio } 
+                    sumar={ () => sumarMes() } 
+                    restar={ () => restarMes() }
+                    select={ (fecha) => selectDia(fecha) } 
+                    diaSeleccionado = { diaSeleccionado }
+                /> 
+                }
 
-            {/*JSON.stringify(turnos)*/}
+            </Card>
 
             {turnos.length > 0 &&
-               <>
-                <h6 className="input-label mt-8">Seleccionar el horario</h6>
-                <div className="turno-horarios-container">
-                 {turnos.map( (turno,key) => (
-                   turno.hora !== '00:00' && <button key={key} onClick={()=>seleccionarTurno(key,turno)} className={isSelectedClass(key)}>{turno.hora} hs</button>
-                ))}
-                </div>
-                </>
+               <Card title='Seleccionar horario'>
+                    <div className="turno-horarios-container">
+                        {turnos.map( (turno,key) => (
+                        turno.hora !== '00:00' && <button key={key} onClick={()=>seleccionarTurno(key,turno)} className={isSelectedClass(key)}>{turno.hora} hs</button>
+                        ))}
+                    </div>
+                </Card>
             }
 
-            <h6 className="input-label mt-5">Confirmar Turno</h6>
+
+                { turnoDesc && <Card title='Detalles del turno' animate>
+                    <p className='turno-detalles-text'>{ turnoDesc }</p>
+                </Card>}
+
+
+            {/*<h6 className="input-label mt-5">Confirmar Turno</h6>
             {!cargandoTurno ? 
             <>
             <textarea disabled
@@ -196,12 +218,17 @@ function Turnos() {
             ></textarea> 
             </>
             : <div style={{height:"52px",width:"100%",display:"flex",color:"#4E4E4E",alignItems:"center",justifyContent:"center"}}>Cargando...</div>
-            }
+            }*/}
+
+
+
             <div className='pt-4'>
+
                 <ActionButton 
                     onClick={() => turnoDesc != '' ? confirmarTurno() : {}} 
                     value="Confirmar" 
                 />
+
             </div>
             <div className='mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/panel')} >Volver</button>
@@ -210,7 +237,7 @@ function Turnos() {
             </div>
             }
 
-<           div className="turno-contacto">
+            <div className="turno-contacto">
                 <Contacto/>
             </div>
         </div>

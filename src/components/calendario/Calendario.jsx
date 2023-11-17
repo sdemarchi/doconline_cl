@@ -1,4 +1,5 @@
-import {IoMdArrowDropright,IoMdArrowDropleft} from 'react-icons/io'
+import {IoMdArrowDropright,IoMdArrowDropleft} from 'react-icons/io';
+import './calendario.css';
 
 function Calendario(props) {
 
@@ -46,7 +47,9 @@ function Calendario(props) {
                             dia={dia.dia} 
                             otroMes={!dia.enmes} 
                             disabled={!dia.activo} 
-                            turnos={dia.turnos} />
+                            turnos={dia.turnos} 
+                            seleccionado={props.diaSeleccionado == dia}/>
+                            
                     ))}
                 </div>
 
@@ -62,8 +65,9 @@ function FechaCalendario(props) {
                 <button 
                     className={`${props.otroMes ? 'bg-gray-200' : ''}
                                 ${props.disabled ? 'text-gray-400' : ' text-gray-500 '}  
-                                ${props.turnos ? 'bg-green-500 border-green-500 text-white' : ''} 
-                                font-semibold text-sm p-1 leading-6 rounded-md w-9`}
+                                ${props.turnos ? 'calendario-dia-disponible' : ''} 
+                                ${props.seleccionado && 'calendario-dia-disponible'} 
+                                font-semibold text-sm p-1 leading-6 calendario-dia w-9`}
                     onClick={() => props.select(props.fecha)}
                 >{props.dia}</button>
             </div>

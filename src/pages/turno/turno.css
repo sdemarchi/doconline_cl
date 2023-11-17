@@ -3,6 +3,9 @@
   max-width: 500px;
   width: 100%;
   margin: 0 auto;
+  background-color: rgba(239, 238, 238, 0.664);
+  min-height: 100%;
+  padding-top:20px;
 }
 
 .turno-contacto{
@@ -54,6 +57,12 @@
   cursor:pointer;
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.111);
   transition: 0.3s;
+}
+
+.turno-detalles-text{
+  font-size:'14px';
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 7px;
 }
 
 @keyframes turnos {
