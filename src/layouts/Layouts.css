@@ -19,6 +19,8 @@
   padding: 0px 0px;
   min-width: 350px;
   min-height: 500px;
+  height:calc(100vh - 80px);
+  background-color: white;
 }
 
 
@@ -48,11 +50,14 @@
     min-height: 100vh;
     margin:0;
     border-radius: 0px;
+    height:100%;
   }
 
   .layout-content{
     min-height: 100% !important;
     position:relative;
+    height:100%;
+    min-height: 100vh;
    }
 }
 
@@ -60,9 +65,11 @@
 @media screen and (width > 768px) {
   .layout-main-container{
     padding: 0px 0px;
-    min-width: 350px;
-    max-height: fit-content;
+    min-width: 370px;
     margin:15px;
     border-radius: 10px;
+    max-width: 370px;
+    height: fit-content;
   }
+
 }

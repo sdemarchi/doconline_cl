@@ -3,8 +3,8 @@
   max-width: 500px;
   width: 100%;
   margin: 0 auto;
-  background-color: rgba(239, 238, 238, 0.664);
-  min-height: 100%;
+  background-color:#f5f5f5ec;
+  min-height: calc(100vh - 80px);
   padding-top:20px;
 }
 

@@ -76,7 +76,7 @@ button{
   width:100%;
   height: 40px;
   background-color: rgb(5, 187, 233);
-}s
+}
 
 .disabled-button{
   background-color: #eaeaeadf !important;
@@ -90,6 +90,15 @@ button{
   display:flex !important;
   align-items:center;
   flex-direction:row;
+  background-color: rgb(5, 187, 233);
+}
+
+.link-button-center{
+  display:flex !important;
+  align-items:center;
+  flex-direction:row;
+  align-items: center;
+  justify-content: center;
   background-color: rgb(5, 187, 233);
 }
 

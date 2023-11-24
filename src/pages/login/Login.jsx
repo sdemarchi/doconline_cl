@@ -51,6 +51,8 @@ function Login() {
     }
 
     useEffect(() => {
+        sessionStorage.setItem('fromLogin', 'true');
+        
         getGrow();
         if (googleUser) {
             axios
@@ -120,7 +122,6 @@ function Login() {
     }
 
     async function loginConGoogle(email) {
-
         let url = import.meta.env.VITE_API_URL + '/turnero.loginGoogle'
         
         try {

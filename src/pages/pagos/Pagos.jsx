@@ -14,7 +14,6 @@ import './pagos.css';
 import Card from '../../components/card/card';
 
 function Pagos() {
-
     const {/* turno,*/ cuponValidado, setCuponValidado } = useTurno();
     const { setImporte } = useAuth();
 
@@ -133,16 +132,14 @@ function Pagos() {
         {datosCargados && <div>
 
             {(grow?.descuento) &&
-                <div>
-                    <h1 className="black-title">Tenés un descuento del {grow?.descuento}% por {grow?.nombre}.</h1>
+                <div className="pagos-descuento">
+                    <h1>Tenés un descuento del {grow?.descuento}% por {grow?.nombre}.</h1>
                 </div>
             }
             
-
-        <div className='mb-8 mt-4 mx-auto text-center'>
-                <span className='font-semibold text-gray-500'>Seleccionar forma de pago</span>
-        </div>
-    
+            <div className='mt-2 mb-2' style={{textAlign:'center',paddingBottom:'15px'}}>
+              <h2 className="black-title">Ir a pagar</h2>
+            </div>
        
             {(!grow?.descuento) &&
                  <Card title="Cupón">
@@ -159,6 +156,7 @@ function Pagos() {
                             value={cupon}
                             onChange={ e => setCupon(e.target.value)}
                             placeholder="A-123456"
+                            rounded
                         /> 
 
                         {showMsg && <p className="pagos-error-msg">El cupón ingresado no es válido</p>}
@@ -170,7 +168,7 @@ function Pagos() {
             }
         
             <Card>
-                <PagoCard medio="TRANSFERENCIA" 
+                <PagoCard medio="Transferencia" 
                     importe={sessionStorage.getItem("precio_transf") || precioTrans} 
                     descuento={importeCupon}
                     descuentoPorc={grow?.descuento}

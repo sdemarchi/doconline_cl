@@ -1,6 +1,7 @@
 import './info.css';
 import { BsInfoCircle } from "react-icons/bs";
 
+
 function Info (props){
   return (
     <div className="info-container">

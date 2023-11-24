@@ -17,31 +17,26 @@ function PagoCard(props) {
     },[props.importe,props.descuentoPorc,props.descuento]); //eslint-disable-line
 
     return (
-        <div className="block w-full my-3 p-2 border-input focus:border-input border-2 text-center ">
+        <div className="block w-full my-1 text-center ">
 
-
-            <h4 className="text-gray-500 font-bold pt-1">{props.medio}</h4>
-
-            {precioFinal !== props.importe && <h3 className="text-gray-400 font-semibold text-2xl pt-2" style={{textDecoration:'line-through'}}>${props.importe}</h3>}
-            <h1 className="text-gray-500 font-semibold text-5xl pt-2">${precioFinal}</h1>
-
-
+            {precioFinal !== props.importe && <h3 className="text-gray-600 font-semibold text-2xl pt-2" style={{textDecoration:'line-through'}}>${props.importe}</h3>}
+            <h1 className="text-gray-600 font-semibold text-5xl pt-2">${precioFinal}</h1>
 
             {/* ------------ MENSAJE DESCUENTO ------------ */}
 
             {props.descuento ? 
-                <h4 className="text-green-500 font-bold pt-2 text-xs leading-5">Descuento de ${props.descuento} aplicado</h4>
+                <h4 className="font-bold pt-2 text-xs leading-5">Descuento de ${props.descuento} aplicado</h4>
                 :
             ''}
             {
                 (props.descuentoPorc) ?
-                <h4 className="text-green-500 font-bold pt-2 text-xs leading-5">Descuento del {props.descuentoPorc}% aplicado</h4>
+                <h4 className="text-green-600 font-bold pt-2 text-xs leading-5">Descuento del {props.descuentoPorc}% aplicado</h4>
                 :
             ''
             }
 
 
-            <h4 className="text-gray-500 pt-2 leading-5">{props.mensaje}</h4>
+            <h4 className="pt-4 pb-2 leading-5" style={{fontSize:'16px',fontWeight:'500',color:'',fontFamily: 'Montserrat'}}>{props.mensaje}</h4>
             <div className="px-6 py-2"><ActionButton onClick={() => props.onClick(precioFinal)} value="Ir a Pagar" /></div>
             
             

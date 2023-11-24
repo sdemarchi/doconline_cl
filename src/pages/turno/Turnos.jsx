@@ -92,10 +92,20 @@ function Turnos() {
 
         /*const turno = await getTurno(dia, prestador);*/
         const turnos_ = await getTurnos(dia,prestador);
+
+        setTurnoDesc('');
+        setTurnoHora('');
+        setButtonSelected();
+
         setDiaSeleccionado(dia);
         setTurnos(turnos_);
         cambiarCursor("cargado");
         setCargandoTurno(false);
+        setTimeout(window.scroll({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth'
+        }),500);
+
     }
 
     function confirmarTurno(){
@@ -116,6 +126,10 @@ function Turnos() {
         setTurnoFecha(turno.fecha);
         setTurnoHora(turno.hora);
         setTurnoDesc(turno.detalle);
+        window.scroll({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth' // Opcional: Agrega desplazamiento suave
+          });
     };
 
     const isSelectedClass = (button) => {
@@ -131,6 +145,10 @@ function Turnos() {
     }
 
     useEffect(() => {
+        if(sessionStorage.getItem('fromLogin') == 'true'){
+            sessionStorage.removeItem('fromLogin');
+        }
+
         subirScroll();
         cargarPrestadores().then((response)=>{
             if(prestador == 0){
@@ -149,6 +167,10 @@ function Turnos() {
         { datosCargados &&
 
         <div className="turnos-container">
+            <div className='text-center' style={{textAlign:'center', paddingBottom:'15px'}}>
+              <h2 className="black-title">Solicitar turno</h2>
+            </div>
+
             {/*<img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>*/}
 
             <Card title='Seleccionar prestador'>
@@ -162,7 +184,6 @@ function Turnos() {
                     />
                 </div>
             </Card>
-
 
             {/*<div className="turno-selector">
                 <Select 
@@ -208,7 +229,6 @@ function Turnos() {
                     <p className='turno-detalles-text'>{ turnoDesc }</p>
                 </Card>}
 
-
             {/*<h6 className="input-label mt-5">Confirmar Turno</h6>
             {!cargandoTurno ? 
             <>
@@ -220,13 +240,11 @@ function Turnos() {
             : <div style={{height:"52px",width:"100%",display:"flex",color:"#4E4E4E",alignItems:"center",justifyContent:"center"}}>Cargando...</div>
             }*/}
 
-
-
             <div className='pt-4'>
 
                 <ActionButton 
                     onClick={() => turnoDesc != '' ? confirmarTurno() : {}} 
-                    value="Confirmar" 
+                    value="Continuar" 
                 />
 
             </div>

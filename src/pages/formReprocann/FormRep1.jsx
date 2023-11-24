@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-//import logo from '../assets/logo-doconline-reprocann-500.png'
 import { FormInputDate, FormInputHook } from '../../components/FormInput';
 import { SubmitButton } from '../../components/Buttons';
 import useForm from '../../hooks/useForm';
@@ -10,6 +9,7 @@ import { useForm as useFormHook } from "react-hook-form";
 import { dateValidator, emailValidator, numberValidator } from '../../data/validators';
 import './formReprocann.css';
 import WspBoton from '../../components/wsp-boton/wsp-boton';
+import Info from '../../components/info/info';
 
 
 function FormRep1() {
@@ -83,8 +83,17 @@ function FormRep1() {
         <div className="form-rep-container">
            {/* <img className="mx-auto w-52 mb-8 pb-2" src={logo}></img> <h1>Formulario Reprocann</h1>*/}
             
+           <div className='mb-4' style={{textAlign:'center',paddingBottom:'15px'}}>
+              <h2 className="black-title mb-3">Completa tus datos</h2>
+              
+            <Info text='Completa los siguientes datos para que el medico pueda llenar tu Declaracion Jurada y Consentinmiento Informado. 
+Muchas Gracias!'/>
 
+            </div>
+
+ 
             <form onSubmit={handleSubmit(onSubmit)}>
+                
 
                 <FormInputHook label="Nombre y Apellido*" id="nom_ape"
                     defaultValue={form1?.nom_ape?.length && form1?.nom_ape || sessionStorage.getItem('nombre')}

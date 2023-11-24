@@ -13,6 +13,7 @@ import '../../global-styles/form-styles.css';
 import Notificacion from '../../components/notificacion/Notificacion';
 import Contacto from '../../components/contacto/contacto';
 import './pagos.css';
+import Card from '../../components/card/card';
 
 
 function PagoTransf() {
@@ -110,23 +111,33 @@ function PagoTransf() {
     return (
         <div className="pagos-container">
         {!datosCargados && <Spinner/>}{datosCargados && <div>
-            {mostrarNotification && <Notificacion message="Texto copiado al portapapeles" />}
+            {mostrarNotification && <Notificacion message="Texto copiado al portapapeles"/>}
+  
             <div className='mb-6 mt-4 mx-auto text-center'>
-                <span className='font-semibold text-gray-500'>PAGAR POR TRANSFERENCIA</span>
+                <span className='black-title'>Transferí a la siguiente cuenta</span>
             </div>
 
-            <div className="w-full my-8 p-2 border-input focus:border-input border-2 text-center ">
-                <h4 className="text-gray-500 my-2 font-bold pt-1">Transferinos a la siguiente cuenta</h4>
+            <Card center>
+                <div style={{textAlign:'center'}}>
 
-                <h4 className="text-gray-600 my-2 font-semibold text-sm pt-1"><strong>CBU:</strong> {cbu} 
-                <button className="icon-button" onClick={() => copiarAlPortapapeles(cbu)}><img title="Copiar CBU" className="icon" src={copyIcon}></img></button></h4>
+                <h4 className="text-gray-600 pagos-transf-info-title">
+                    <strong>CBU:</strong> 
+                    <span className="pagos-transf-info"> {cbu}</span>
+                    <button className="icon-button" onClick={() => copiarAlPortapapeles(cbu)}><img title="Copiar CBU" className="icon" src={copyIcon}></img></button>
+                </h4>
 
-                <h4 className="text-gray-600 my-2 font-semibold text-sm pt-1"><strong>Alias:</strong> {alias} 
-                <button className="icon-button" onClick={() => copiarAlPortapapeles(alias)}><img title="Copiar Alias" className="icon" src={copyIcon}></img></button></h4>
+                <h4 className="text-gray-600 my-2 pt-1 pagos-transf-info-title">
+                    <strong>Alias:</strong> 
+                    <span className="pagos-transf-info-alias"> {alias}</span>
+                    <button className="icon-button" onClick={() => copiarAlPortapapeles(alias)}><img title="Copiar Alias" className="icon" src={copyIcon}></img></button>
+                </h4>
 
-                <h4 className="text-green-600 my-2 text-2xl font-bold pt-1">${importeSession}</h4>
-            </div>
+                <h4 className="text-green-600 mt-2 text-2xl font-bold pt-1">${importeSession}</h4>
+                </div>
+        
+            </Card>
 
+            <Card>
             <div className='my-2'>
                 <div className='pt-2 pb-0'>
                     {enviando &&
@@ -139,13 +150,13 @@ function PagoTransf() {
                             <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                 <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
                             </svg>
-                            <span className="mt-2 text-base leading-normal">Enviar Comprobante</span>
+                            <span className="mt-2 text-base leading-normal" style={{fontSize:'18px',fontWeight:'600'}}>Adjuntar Comprobante</span>
                             <input type='file' className="hidden" onChange={subirArchivo} />
                         </label>
                     }
-
                 </div>
             </div>
+           </Card> 
 
             {uploadResult == 0 ? '' :
                 <div className='pb-4'>
@@ -161,7 +172,7 @@ function PagoTransf() {
             }
 
             <div className="mt-10">
-                <ActionButton value="Confirmar Turno" onClick={() => guardarTurno()}/>
+                <ActionButton value="Continuar" onClick={() => guardarTurno()}/>
                 <div className='mb-0 mx-auto p-3 text-center'>
                     <button className='text-gray-500' onClick={() => navigate('/pagos')} >Atrás</button>
                 </div>

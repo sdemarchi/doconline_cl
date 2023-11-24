@@ -1,20 +1,25 @@
 .card-container{
-  box-shadow: 2px 3px 4px 2px rgba(48, 48, 48, 0.168);
-  border-radius: 10px;
+  box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.16);
+  border-radius: 8px;
   padding:15px 15px;
   background-color: white;
-  margin-bottom: 20px;
+  margin-bottom: 17px;
 }
 
 .card-title{
-  font-size: 17px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   font-family: 'Montserrat', sans-serif;
+  color:rgba(0, 0, 0, 0.809);
 }
 
 .animation-card{
   animation-name: cardAnimation;
   animation-duration: 0.3s;
+}
+
+.card-title-center{
+  text-align: center;
 }
 
 @keyframes cardAnimation{

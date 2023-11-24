@@ -48,11 +48,10 @@ function Calendario(props) {
                             otroMes={!dia.enmes} 
                             disabled={!dia.activo} 
                             turnos={dia.turnos} 
-                            seleccionado={props.diaSeleccionado == dia}/>
+                            seleccionado={props.diaSeleccionado == dia.fecha}/>
                             
                     ))}
                 </div>
-
             ))}
         </>
     )
@@ -66,7 +65,7 @@ function FechaCalendario(props) {
                     className={`${props.otroMes ? 'bg-gray-200' : ''}
                                 ${props.disabled ? 'text-gray-400' : ' text-gray-500 '}  
                                 ${props.turnos ? 'calendario-dia-disponible' : ''} 
-                                ${props.seleccionado && 'calendario-dia-disponible'} 
+                                ${props.seleccionado && 'calendario-dia-seleccionado'} 
                                 font-semibold text-sm p-1 leading-6 calendario-dia w-9`}
                     onClick={() => props.select(props.fecha)}
                 >{props.dia}</button>

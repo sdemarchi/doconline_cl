@@ -58,7 +58,7 @@ function LinkButton(props) {
     return (
         <>{props.success === true ?
             <Link to={props.to}>
-                <button className={'link-button success-button p-left button w-full text-white p-2 rounded-md'} >
+                <button style={{textAlign:'center !important'}} className={'link-button success-button p-left button w-full text-white p-2 rounded-md'} >
                     <span style={{display:"inline",fontSize:"28px",marginRight:"15px"}}><BsFillPatchCheckFill/></span>{ props.value }
                 </button>
             </Link>
@@ -66,8 +66,31 @@ function LinkButton(props) {
             :
 
             <Link to={props.to}>
-                <button className={ !props.disabled ? 'link-button p-left button w-full text-white p-2 rounded-md' : 'link-button button disabled-button button w-full p-2 ' } >
+                <button style={{textAlign:'center'}} className={ !props.disabled ? 'link-button p-left button w-full text-white p-2 rounded-md' : 'link-button button disabled-button button w-full p-2 ' } >
                     <span style={{display:"inline",fontSize:"28px",marginRight:"15px"}}>{props.icon}</span>{ props.value }
+                </button>
+            </Link>
+            }
+        </>
+    )
+}
+
+
+function LinkButtonCenter(props) {
+
+    return (
+        <>{props.success === true ?
+            <Link to={props.to}>
+                <button style={{textAlign:'center !important'}} className={'link-button-center success-button p-left button w-full text-white p-2 rounded-md'} >
+                    <span style={{display:"inline",fontSize:"28px"}}><BsFillPatchCheckFill/></span>{ props.value }
+                </button>
+            </Link>
+
+            :
+
+            <Link to={props.to}>
+                <button style={{textAlign:'center'}} className={ !props.disabled ? 'link-button-center p-left button w-full text-white p-2 rounded-md' : 'link-button button disabled-button button w-full p-2 ' } >
+                    <span style={{display:"inline",fontSize:"28px"}}>{props.icon}</span>{ props.value }
                 </button>
             </Link>
             }
@@ -87,4 +110,4 @@ function InfoButton(props) {
     )
 }
 
-export {LoginButton, ActionBorderButton, InfoButton, SubmitButton, ActionButton, LinkButton, MiniActionButtonRed }
+export {LoginButton, ActionBorderButton, InfoButton, SubmitButton, ActionButton, LinkButton, MiniActionButtonRed, LinkButtonCenter }

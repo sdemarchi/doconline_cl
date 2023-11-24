@@ -10,8 +10,7 @@ function MainLayout() {
     if(cargando){
         return(
             <div className="min-h-screen bg-gradient-to-bl from-grad-blue to-grad-green">
-                    <div className="layout-main-container max-w-sm p-16 bg-white rounded-md overflow-hidden shadow-lg w-80">
-                        
+                    <div className="layout-main-container">
                     <Spinner/>
                     </div>
             </div>
@@ -24,9 +23,9 @@ function MainLayout() {
 
     return (
         <div className="background-image min-h-screen from-grad-blue bg-gradient-to-bl to-grad-blue overflow-y-auto flex items-center justify-center">
-                <div className="layout-main-container max-w-sm bg-white shadow-lg w-80">
+                <div className="layout-main-container">
                     <Header/>
-                    <div className="layout-content" style={{minHeight: 'calc(100vh - 80px)'}}>
+                    <div className="layout-content">
                     <Outlet context={user}/>
                     </div>
                     {/*<WspBoton/>*/}
