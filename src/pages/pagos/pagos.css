@@ -42,6 +42,7 @@
 
 .pagos-transf-info-title{
   font-size: 17px;
+  justify-content: space-around;
   
 }
 
@@ -53,6 +54,14 @@
 .pagos-transf-info-alias{
   font-weight: 400;
   font-size: 20px;
+}
+
+.pagos-comprobante-adj{
+  color:rgb(18, 168, 18);
+  font-size: 18px;
+  width: 100%;
+  text-align: center;
+  margin-top:18px;
 }
 
 @media screen and (width > 768px) {

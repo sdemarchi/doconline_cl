@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from 'react-router-dom';
 import { ActionButton } from '../../components/Buttons';
 import Calendario from '../../components/calendario/Calendario';
 import { getPrestadores, getCalendario, /*getTurno,*/ getTurnos, excedeMargen } from '../../data/turnero';
-import { useEffect, useState } from 'react';
+import { useEffect,  useRef, useState } from 'react';
 import Select from '../../components/Select';
 import useTurno from '../../hooks/useTurno';
 import Spinner from '../../components/Spinner';
@@ -12,7 +12,6 @@ import Card from '../../components/card/card';
 import './turno.css';
 
 function Turnos() {
-
     const navigate = useNavigate();
     const { setTurno } = useTurno();
     const user = useOutletContext(); //eslint-disable-line
@@ -34,7 +33,8 @@ function Turnos() {
     const [turnos , setTurnos] = useState([]);
     const [diaSeleccionado, setDiaSeleccionado] = useState();
     const [descuento , setDescuento] = useState(); //eslint-disable-line
-
+    const elementRef = useRef(null);
+    
     async function cargarPrestadores(){
         const response = await getPrestadores();
         setPrestadores(response);
@@ -89,7 +89,6 @@ function Turnos() {
     async function selectDia(dia){
         cambiarCursor("cargando");
         setCargandoTurno(true);
-
         /*const turno = await getTurno(dia, prestador);*/
         const turnos_ = await getTurnos(dia,prestador);
 
@@ -101,10 +100,13 @@ function Turnos() {
         setTurnos(turnos_);
         cambiarCursor("cargado");
         setCargandoTurno(false);
-        setTimeout(window.scroll({
-            top: document.documentElement.scrollHeight,
-            behavior: 'smooth'
-        }),500);
+
+        setTimeout(() => {
+            window.scroll({
+                top: document.documentElement.scrollHeight,
+                behavior: 'smooth'
+            });
+        }, 3000);
 
     }
 
@@ -126,10 +128,12 @@ function Turnos() {
         setTurnoFecha(turno.fecha);
         setTurnoHora(turno.hora);
         setTurnoDesc(turno.detalle);
-        window.scroll({
-            top: document.documentElement.scrollHeight,
-            behavior: 'smooth' // Opcional: Agrega desplazamiento suave
-          });
+            setTimeout(() => {
+            window.scroll({
+                top: document.documentElement.scrollHeight,
+                behavior: 'smooth'
+            });
+        }, 300);
     };
 
     const isSelectedClass = (button) => {
@@ -143,6 +147,7 @@ function Turnos() {
     const subirScroll = () =>{
         window.scrollTo(0, 0);
     }
+
 
     useEffect(() => {
         if(sessionStorage.getItem('fromLogin') == 'true'){
@@ -196,8 +201,8 @@ function Turnos() {
                 />
             </div>*/}
 
-            <Card title='Seleccionar dia'>
-                <h6 className="text-green-500 font-semibold text-xs ps-3">En color verde los días disponibles</h6>
+            <Card title='Seleccionar día'>
+                {/*<h6 className="text-green-500 font-semibold text-xs ps-3">En color verde los días disponibles</h6>*/}
                 { !calendarioCargado && <div className="calendario-spinner-contenedor"> <Spinner/> </div>}
                 { calendarioCargado &&
                 
@@ -225,7 +230,7 @@ function Turnos() {
             }
 
 
-                { turnoDesc && <Card title='Detalles del turno' animate>
+                { turnoDesc && <Card ref={elementRef} title='Detalles del turno' animate>
                     <p className='turno-detalles-text'>{ turnoDesc }</p>
                 </Card>}
 

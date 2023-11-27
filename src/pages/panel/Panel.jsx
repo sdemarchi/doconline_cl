@@ -83,14 +83,14 @@ function Panel() {
                 <h2 className="panel-titulo">Hola, {paciente.nombre}<span className='panel-titulo-icon'><GrFormNext style={{display:"inline",opacity:"70%"}}/></span></h2>
 
                 <div className="panel-description">
-                    <h3 className="panel-description-subtitle">Tramitá tu reprocann</h3>
-                    <p className="panel-description-text">Facil, seguro y sin moverte de tu casa.</p>
+                    <h3 className="panel-description-subtitle">Tramitá tu Reprocann</h3>
+                    <p className="panel-description-text">Fácil, seguro y sin moverte de tu casa.</p>
                 </div>
             </Card>
 
             {/*<p className="panel-doctor">Dr. Joaquin Joazmi</p>
             <hr className='panel-separador solid border-input border-1 my-3'></hr>
-             */}
+            */}
              
             <div className="turnos-container">
                 
@@ -125,7 +125,7 @@ function Panel() {
             {(turnoPaciente.id > 0 && formSuccess == false && false) && 
 
             <div className="panel-info">
-                <InfoCard text={"Completa el formulario de Reprocann para iniciar o renovar el tramite."}/>
+                <InfoCard text={"Completa el formulario de Reprocann para iniciar o renovar el tramite."} />
             </div>
 
             }
@@ -138,7 +138,7 @@ function Panel() {
      
             {(turnoPaciente.id > 0 && formSuccess) && 
 
-            <div className="panel-info pt-4">
+            <div className="panel-info">
                 <InfoCard text={"El dia del turno nos pondremos en contacto mediante whatsapp."}/>
             </div>
 

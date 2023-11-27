@@ -128,10 +128,10 @@ function Pagos() {
     return (
         <div className="pagos-container">
 
-        {!datosCargados && <Spinner/>}
-        {datosCargados && <div>
+        {!datosCargados ? <Spinner/>:
 
-            {(grow?.descuento) &&
+        <div>
+            {grow?.descuento !== 0 &&
                 <div className="pagos-descuento">
                     <h1>Tenés un descuento del {grow?.descuento}% por {grow?.nombre}.</h1>
                 </div>
@@ -149,8 +149,8 @@ function Pagos() {
                             <h6 className="text-gray-500 text-xs my-4 font-semibold leading-3">Cupón Aplicado:</h6>
                             <Chip value={cupon} onClick={ () => quitarCupon() } />
                         </>
-                    :
-                    <>
+                        :
+                        <>
                         <FormInputState 
                             id="turno"
                             value={cupon}

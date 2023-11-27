@@ -8,7 +8,7 @@ import { perfil } from '../../data/pacientes';
 import { useForm as useFormHook } from "react-hook-form";
 import { dateValidator, emailValidator, numberValidator } from '../../data/validators';
 import './formReprocann.css';
-import WspBoton from '../../components/wsp-boton/wsp-boton';
+import Contacto from '../../components/contacto/contacto';
 import Info from '../../components/info/info';
 
 
@@ -200,7 +200,7 @@ Muchas Gracias!'/>
             </div>
             
             <div className="form-rep-contacto">
-                <WspBoton/>
+               <Contacto />
             </div>
         </div>
     )
