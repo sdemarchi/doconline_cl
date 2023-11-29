@@ -1,6 +1,7 @@
 import ReactInputDateMask from 'react-input-date-mask';
 import '../global-styles/form-styles.css';
 import { InfoButton } from './Buttons';
+import { useState } from 'react';
 
 function FormInput(props) {
     return (
@@ -120,7 +121,6 @@ function FormInputDate(props) {
                 className="input-label text-gray-500 text-xs font-semibold inline-block"
                 htmlFor={ props.id }
             >{ props.label }</label>
-            <div className="">
                 <ReactInputDateMask  
                     id={ props.id }
                     mask='dd/mm/yyyy'
@@ -132,10 +132,42 @@ function FormInputDate(props) {
                     onChange={props.onChange}
                     placeholder={ props.placeholder }
                 />
-            </div>
         </div>
     )
 }
 
+
+function InputDate(props) {
+    const [dateValue, setDateValue] = useState(props.defaultValue || '');
+  
+    const handleDateChange = (event) => {
+      const newValue = event.target.value;
+      setDateValue(newValue);
+      if (props.onChange) {
+        props.onChange(newValue);
+      }
+    };
+  
+    return (
+      <div className="input-container mt-1">
+        <label
+          className="input-label text-gray-500 text-xs font-semibold inline-block"
+          htmlFor={props.id}
+        >
+          {props.label}
+        </label>
+        <input
+          id={props.id}
+          type="date"
+          className="date-input w-full p-2 bg-white border-input focus:border-input border-2 text-xs text-gray-500 inline-flex"
+          value={dateValue}
+          onChange={handleDateChange}
+          name={ props.id }
+        />
+      </div>
+    );
+  }
+  
+
 export default FormInput
-export {LoginInput, FormInput, FormInputState, FormInputHook, FormInputReadonly, FormInputDate }
+export {LoginInput, FormInput, FormInputState, FormInputHook, FormInputReadonly, FormInputDate, InputDate }

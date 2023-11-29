@@ -173,9 +173,6 @@ function PagoTransf() {
                                 <input type='file' className="hidden" onChange={subirArchivo} />
                             </label>
                         </div>
-                        <h6 className="pagos-comprobante-adj">
-                            Comprobante adjunto
-                        </h6>
                         </> 
                     }
 

@@ -131,7 +131,7 @@ function Pagos() {
         {!datosCargados ? <Spinner/>:
 
         <div>
-            {grow?.descuento !== 0 &&
+            {grow?.descuento !== undefined && grow?.descuento !== 0 &&
                 <div className="pagos-descuento">
                     <h1>Tenés un descuento del {grow?.descuento}% por {grow?.nombre}.</h1>
                 </div>

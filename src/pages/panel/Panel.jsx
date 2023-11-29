@@ -74,7 +74,8 @@ function Panel() {
 
         <>
         {!DatosCargados &&
-             <div className='panel-container'> <Spinner /></div>}
+             <div className='panel-container'> <Spinner /></div>
+        }
 
         {DatosCargados &&
         <div className='panel-container'>
@@ -133,15 +134,13 @@ function Panel() {
 
             <Card title={formSuccess ? 'Edita tus datos' : 'Completa tus datos'}>
                 <p className='pb-3'>{formSuccess ? 'Modifica o actualiza tus datos en caso de que sea necesario' : 'Completa los datos necesarios para realizar tu tramite'}</p>
-                <LinkButton icon={<FaWpforms/>} success={formSuccess} disabled={turnoPaciente.id == 0} to="/formulario-1" value={"Formulario REPROCANN"} />
+                <LinkButton icon={<FaWpforms/>}  disabled={turnoPaciente.id == 0} to="/formulario-1" value={"Formulario REPROCANN"} />
             </Card>
      
             {(turnoPaciente.id > 0 && formSuccess) && 
-
-            <div className="panel-info">
-                <InfoCard text={"El dia del turno nos pondremos en contacto mediante whatsapp."}/>
-            </div>
-
+                <div className="panel-info">
+                    <InfoCard text={"El dia del turno nos pondremos en contacto mediante whatsapp."}/>
+                </div>
             }
 
             <div style={{display:"none"}} className="panel-contactanos-container">

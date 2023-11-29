@@ -58,10 +58,10 @@
 
 .pagos-comprobante-adj{
   color:rgb(18, 168, 18);
-  font-size: 18px;
+  font-size: 17px;
   width: 100%;
   text-align: center;
-  margin-top:18px;
+  margin-top:25px;
 }
 
 @media screen and (width > 768px) {
