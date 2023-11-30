@@ -7,13 +7,14 @@ import { getDolencias } from '../../data/pacientes';
 import Chip from '../../components/Chip';
 import './formReprocann.css';
 import Contacto from '../../components/contacto/contacto';
+import Spinner from '../../components/Spinner';
 
 function FormRep4() {
     const navigate = useNavigate()
     const { patolog, setPatolog }  = useForm()
     
     const [dolencias, setDolencias] = useState([])
-    const [cargando] = useState(0)
+    const [cargando, setCargando] = useState(true)
     
     const [, updateState] = useState();
     const forceUpdate = useCallback(() => updateState({}), []);
@@ -27,6 +28,7 @@ function FormRep4() {
         async function cargarDolencias(){
             const response = await getDolencias();
             setDolencias(response);
+            setCargando(false);
         }
         cargarDolencias();
     }, [cargando])
@@ -45,7 +47,8 @@ function FormRep4() {
     
     return (
         <div className="form-rep-container">
-           {/* <img className="mx-auto mb-8 w-52 pb-2" src={logo}></img> */}
+            { cargando ? <Spinner/> : 
+            <>
             <h3 className='text-gray-500 text-s font-semibold'>Patologías</h3>
             { patolog.map( (p, index) => (
                 <Chip 
@@ -68,6 +71,8 @@ function FormRep4() {
             <div className="form-rep-contacto">
                 <Contacto />
             </div>
+            </>
+            }
         </div>
     )
 }

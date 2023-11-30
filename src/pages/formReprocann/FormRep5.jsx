@@ -7,6 +7,7 @@ import SignatureCanvas from 'react-signature-canvas';
 import { ErrorGral } from '../../components/Error';
 import './formReprocann.css';
 import Contacto from '../../components/contacto/contacto';
+import Spinner from '../../components/Spinner';
 
 function FormRep5() {
 
@@ -15,7 +16,7 @@ function FormRep5() {
     const [signAclaracion, setSignAclaracion] = useState();
     const { firma, aclaracion, setFirma, setAclaracion, enviarFormulario } = useForm();
     const [error, setError] = useState('');
-
+    const [ cargando  ] = useState(false);
 
     async function finalizar() {
         let urlFirma = null;
@@ -59,8 +60,8 @@ function FormRep5() {
 
     return (
         <div className="form-rep-container">
-           {/* <img className="mb-8 mx-auto w-52 pb-2" src={logo}></img>*/}
-
+           { cargando ? <Spinner/> :
+            <>
             {error && <ErrorGral>{error}</ErrorGral>}
 
             <h3 className='text-gray-500 mb-3 text-xl font-semibold'>Firmas</h3>
@@ -104,7 +105,7 @@ function FormRep5() {
 
             <div className="form-rep-contacto">
                 <Contacto />
-            </div>
+            </div></>}
         </div>
     )
 }

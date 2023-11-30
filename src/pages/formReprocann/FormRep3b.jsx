@@ -12,6 +12,7 @@ import { getContactos } from '../../data/pacientes';
 import Select from '../../components/Select';
 import './formReprocann.css';
 import Contacto from '../../components/contacto/contacto';
+import Spinner from '../../components/Spinner';
 
 
 function FormRep3b() {
@@ -19,7 +20,7 @@ function FormRep3b() {
     const { form3b, setForm3b, contactoActual, setContactoActual }  = useForm();
     const [contactos, setContactos] = useState([]);
     const [esMenor, setEsMenor] = useState(false);
-    const [cargando] = useState(0);
+    const [cargando, setCargando] = useState(true);
     const [errorContacto, setErrorContacto] = useState(0);
     const navigate = useNavigate();
     const subirScroll = () =>{
@@ -34,9 +35,10 @@ function FormRep3b() {
             setContactos(response);
             setEsMenor(form3b.es_menor);
             console.log(form3b);
+            setCargando(false);
         }
         cargaContactos();
-    }, [cargando]) //eslint-disable-line
+    }, []) //eslint-disable-line
     
 
     const contactoGrow = () => {
@@ -68,7 +70,8 @@ function FormRep3b() {
 
     return (
         <div className="form-rep-container">
-           {/* <img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>*/}
+           {cargando ? <Spinner />:
+            <> 
             <form onSubmit={ handleSubmit(onSubmit) }>
                 <Select 
                     label="¿Cómo nos contactó?*"
@@ -112,9 +115,13 @@ function FormRep3b() {
                 </div>
                 
             </form>
+            <div className='mb-0 mx-auto p-3 text-center'>
+                <button className='text-gray-500' onClick={() => navigate('/formulario-3')} >Atrás</button>
+            </div>
             <div className="form-rep-contacto">
                 <Contacto />
             </div>
+            </>}
         </div>
     )
 }

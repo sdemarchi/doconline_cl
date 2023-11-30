@@ -1,6 +1,7 @@
 .form-rep-container{
   padding: 30px 16px;
   padding-bottom: 30px;
+  min-height: calc(100vh - 80px);
 }
 
 .form-rep-contacto{

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import logo from '../assets/logo-doconline-reprocann-500.png';
 import { FormInputHook } from '../../components/FormInput';
 import { SubmitButton } from '../../components/Buttons';
 import TextArea from '../../components/TextArea';
@@ -11,6 +10,7 @@ import { getOcupaciones, getProvincias } from '../../data/pacientes';
 import { useForm as useFormHook } from "react-hook-form";
 import './formReprocann.css';
 import Contacto from '../../components/contacto/contacto';
+import Spinner from '../../components/Spinner';
 //import { selectValidator } from '../data/validators'
 
 function FormRep2() {
@@ -19,7 +19,7 @@ function FormRep2() {
     const { form2, setForm2, provActual, setProvActual, ocupacionActual, setOcupacionActual } = useForm();
     const [provincias, setProvincias] = useState([]);
     const [ocupaciones, setOcupaciones] = useState([]);
-    const [cargando] = useState(0);
+    const [cargando, setCargando] = useState(true);
     const [errorProv, setErrorProv] = useState(0);
     const [errorOcup, setErrorOcup] = useState(0);
     const navigate = useNavigate();
@@ -36,9 +36,9 @@ function FormRep2() {
             setProvincias(response);
             const response2 = await getOcupaciones();
             setOcupaciones(response2);
-        }
+            setCargando(false);        }
         cargarCombos();
-    }, [cargando])
+    }, [])
     
     const onSubmit = (data) => {
         if(!provActual){
@@ -71,7 +71,8 @@ function FormRep2() {
     
     return (
         <div className="form-rep-container">
-            {/* <img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>*/}
+           { cargando? <Spinner/>:
+            <>
             <form onSubmit={ handleSubmit(onSubmit) }>
             <label className="input-label">Provincia*</label>
                 <Select 
@@ -160,6 +161,7 @@ function FormRep2() {
             <div className="form-rep-contacto">
                 <Contacto />
             </div>
+            </>}
         </div>
     )
 }

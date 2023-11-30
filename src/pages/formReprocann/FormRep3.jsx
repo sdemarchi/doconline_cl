@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-//import logo from '../assets/logo-doconline-reprocann-500.png'
 import { SubmitButton } from '../../components/Buttons';
 import useForm from '../../hooks/useForm';
 import TextArea from '../../components/TextArea';
@@ -9,19 +8,18 @@ import { useForm as useFormHook } from "react-hook-form";
 import { ErrorMax } from '../../components/Error';
 import './formReprocann.css';
 import Contacto from '../../components/contacto/contacto';
+import Spinner from '../../components/Spinner';
 
 function FormRep3() {
 
-    const { register, formState: { errors }, handleSubmit } = useFormHook()
-
-    const { form3, setForm3 }  = useForm()
-
+    const { register, formState: { errors }, handleSubmit } = useFormHook();
+    const { form3, setForm3 }  = useForm();
     const [ arritmia, setArritmia ] = useState(false);
     const [ alergia, setAlergia ] = useState(false);
     const [ embarazada, setEmbarazada ] = useState(false);
     const [ salud_mental, setSalud_mental ] = useState(false);
     const [ maneja_maq, setManeja_maq ] = useState(false);
-    const [cargando] = useState(0);
+    const [cargando, setCargando] = useState(true);
     const navigate = useNavigate();
 
     const subirScroll = () =>{
@@ -30,17 +28,17 @@ function FormRep3() {
 
     useEffect(() => {
         async function cargarEstados(){
-            setArritmia(form3.arritmia)
-            setAlergia(form3.alergia)
-            setEmbarazada(form3.embarazada)
-            setSalud_mental(form3.salud_mental)
-            setManeja_maq(form3.maneja_maq)
+            setArritmia(form3.arritmia);
+            setAlergia(form3.alergia);
+            setEmbarazada(form3.embarazada);
+            setSalud_mental(form3.salud_mental);
+            setManeja_maq(form3.maneja_maq);
             subirScroll();
-            
-            console.log(form3)
+            setCargando(false);
+            console.log(form3);
         }
         cargarEstados()
-    }, [cargando]) //eslint-disable-line
+    }, []) //eslint-disable-line
 
     const onSubmit = (data) => {
         data.arritmia = arritmia ? 1 : 0
@@ -48,14 +46,14 @@ function FormRep3() {
         data.embarazada = embarazada ? 1 : 0
         data.salud_mental = salud_mental ? 1 : 0
         data.maneja_maq = maneja_maq ? 1 : 0
-        setForm3(data)
-        return navigate('/formulario-3b')
+        setForm3(data);
+        return navigate('/formulario-3b');
     }
     
     return (
         <div className="form-rep-container">
-            {/*<img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>*/}
-            <form onSubmit={ handleSubmit(onSubmit) }>
+        {cargando ? <Spinner />:
+            <> <form onSubmit={ handleSubmit(onSubmit) }>
                 {/*<RadioSiNo 
                     label="¿Tiene arritmias en actividad?" 
                     id="arritmia" 
@@ -116,7 +114,7 @@ function FormRep3() {
 
             <div className="form-rep-contacto">
                 <Contacto />
-            </div>
+            </div></>}
         </div>
     )
 }
