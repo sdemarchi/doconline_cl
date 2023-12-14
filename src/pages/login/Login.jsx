@@ -52,8 +52,8 @@ function Login() {
 
     useEffect(() => {
         sessionStorage.setItem('fromLogin', 'true');
-        
         getGrow();
+
         if (googleUser) {
             axios
                 .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${googleUser.access_token}`, {
@@ -122,6 +122,7 @@ function Login() {
     }
 
     async function loginConGoogle(email) {
+        setContenidoCargado(false);
         let url = import.meta.env.VITE_API_URL + '/turnero.loginGoogle'
         
         try {
@@ -198,7 +199,7 @@ function Login() {
                 />
                 
                 <div className='login-olvidaste mb-4'>
-                    <Link to='#' className='mb-6 text-gray-500 text-sm'>¿Olvidaste tu Contraseña?</Link>
+                    <Link to='/restablecer' className='mb-6 text-gray-500 text-sm'>¿Olvidaste tu Contraseña?</Link>
                 </div>
                 
                 <div className="login-buttons">

@@ -114,6 +114,28 @@ function FormInputHook(props) {
     )
 }
 
+function Input(props) {
+    return (
+        <div className="input-container mt-1 mb-4">
+            <label
+                className="input-label text-gray-500 text-xs font-semibold inline-block"
+                htmlFor={ props.id }
+                style= {{ width: '100%',display:"flex"}}
+            ><span style={{minWidth:"max-content"}}>{ props.label }</span>{props.info && <InfoButton info={props.info}/>}</label>
+            <input
+                id={ props.id }
+                type={ props.type || "text" }
+                maxLength={ props.maxLength }
+                className="block w-full p-2 bg-white border-input focus:border-input border-2 text-xs text-gray-500"
+                placeholder={ props.placeholder }
+                defaultValue={ props.defaultValue }
+                onChange = {(e)=> props.onChange(e)}
+                   { ...props.register }
+            />
+        </div>
+    )
+}
+
 function FormInputDate(props) {
     return (
         <div className="input-container mt-1">
@@ -170,4 +192,4 @@ function InputDate(props) {
   
 
 export default FormInput
-export {LoginInput, FormInput, FormInputState, FormInputHook, FormInputReadonly, FormInputDate, InputDate }
+export {LoginInput, FormInput, FormInputState, FormInputHook, FormInputReadonly, FormInputDate, InputDate, Input }

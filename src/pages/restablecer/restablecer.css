@@ -1,0 +1,20 @@
+.restablecer-container{
+  background-color: rgba(240, 240, 240, 0.678);
+  width: 100%;
+  padding:8px 15px;
+  min-height: calc(100vh - 75px);
+  margin:0;
+}
+
+.restablecer-card-container{
+  margin: 10px 0;
+  margin-bottom: 50px;
+}
+
+.restablecer-card-msg{
+  font-family:'Montserrat', sans-serif;
+  color:rgb(58, 58, 58);
+  font-size: 15px;
+  font-weight:500;
+  margin-top:0;
+}

@@ -1,6 +1,7 @@
 import { LinkButton, MiniActionButtonRed } from '../../components/Buttons';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { perfil, descargarFormulario, getTurnoPaciente } from '../../data/pacientes';
+import { getGrowByEmail } from '../../data/grows';
 import { cancelarTurno } from '../../data/turnero';
 import { useEffect, useState } from 'react';
 import useForm from '../../hooks/useForm';
@@ -14,18 +15,18 @@ import Nav from '../../components/nav/nav';
 import {GrFormNext } from "react-icons/gr";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import Card from '../../components/card/card';
+import LinkCard from '../../components/link-card/link-card';
 
 function Panel() {
     const user = useOutletContext();
     const navigate = useNavigate();
-
     const [paciente, setPaciente] = useState({});
-    const [cargando] = useState(0);
     const [DatosCargados, setDatosCargados] = useState(false);
+    const [pacienteCargado, setPacienteCargado] = useState(false);
+    const [growCargado, setGrowCargado] = useState(false); // eslint-disable-line
     const [turnoPaciente, setTurnoPaciente] = useState({});
-
+    const [growAdmin, setGrowAdmin] = useState();
     const {/* setFormCargado,*/ llenarFormulario } = useForm();
-
     const formSuccess = JSON.parse(sessionStorage.getItem('form-success')) || false;
 
     async function cargarTurnoPaciente() {
@@ -33,11 +34,12 @@ function Panel() {
         setTurnoPaciente(response);
         const fromLogin = sessionStorage.getItem('fromLogin');
 
-        if(response.id  == 0 && fromLogin=='true'){
+        if(response.id  == 0 && fromLogin == 'true' && !growAdmin.idgrow){
             return navigate('/turno');
         }
-
+        
         setDatosCargados(true);
+
     }
 
     async function cancelarMiTurno() {
@@ -49,20 +51,32 @@ function Panel() {
         window.scrollTo(0, 0);
     }
 
+    const getGrow = (email) => {
+        setGrowCargado(false);
+        getGrowByEmail(email).then((resp)=>{
+            setGrowAdmin(resp);
+            setGrowCargado(true);
+        });
+    }
+
+    async function getPaciente() {
+        perfil(user.userId).then((response)=>{
+            setPaciente(response);
+            getGrow(response.email);
+            descargarFormulario(response.dni).then((resp)=>{
+                if(resp.error.code == 0){
+                    llenarFormulario(resp.data, resp.patologias);
+                }
+                setPacienteCargado(true);
+            });
+        });      
+    }
+
     useEffect(() => {
         subirScroll();
-        async function getPaciente() {
-            const response = await perfil(user.userId);
-            setPaciente(response);
-            
-            const response2 = await descargarFormulario(response.dni);
-            if(response2.error.code == 0){
-                llenarFormulario(response2.data, response2.patologias);
-            }
-        }
-        getPaciente();
+        getPaciente()
         cargarTurnoPaciente();
-    }, [cargando]) //eslint-disable-line
+    },[]) //eslint-disable-line
 
     function logout() {
         localStorage.removeItem('dc_userId')
@@ -73,11 +87,9 @@ function Panel() {
     return (
 
         <>
-        {!DatosCargados &&
+        {(!DatosCargados && !pacienteCargado)?
              <div className='panel-container'> <Spinner /></div>
-        }
-
-        {DatosCargados &&
+        :
         <div className='panel-container'>
 
             <Card>
@@ -89,9 +101,11 @@ function Panel() {
                 </div>
             </Card>
 
-            {/*<p className="panel-doctor">Dr. Joaquin Joazmi</p>
-            <hr className='panel-separador solid border-input border-1 my-3'></hr>
-            */}
+           {growAdmin && 
+                <LinkCard title="Ver pacientes" href={'/estadisticas/'+growAdmin.idgrow}>
+                    <p>Ver pacientes registrados con tu URL.</p>
+                </LinkCard>
+            }
              
             <div className="turnos-container">
                 
@@ -110,12 +124,8 @@ function Panel() {
                 </>
                 :
                 <>
-                   {/*} <div className="panel-info">
-                        <InfoCard text={"Solicita un turno con nosotros y completa el formulario de Reprocann."}/>
-                    </div>*/}
-
                     <Card title="Solicitar turno">
-                        <p className='pb-3'>Solicita turno con nosotros para tramitar el Reprocann</p>
+                        <p className='pb-3'>Solicita turno con nosotros para tramitar tu Reprocann</p>
                         <LinkButton icon={<BsCalendarWeek/>} to="/turno" value="Solicitar Turno" />
                     </Card>
                 </>

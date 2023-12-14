@@ -55,5 +55,10 @@ function ErrorVal({children}) {
   )
 }
 
-export {ErrorGral, ErrorReq, ErrorMax, ErrorVal, ErrorText}
-export default Error
+function CustomError({ mostrar, children }) {
+  return mostrar && <span style={{color:'red',fontFamily:'Montserrat',transform:'translateY(-12px)',display:'block'}}>{children}</span>;
+}
+
+
+export {CustomError, ErrorGral, ErrorReq, ErrorMax, ErrorVal, ErrorText};
+export default Error;

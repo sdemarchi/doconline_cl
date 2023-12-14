@@ -4,7 +4,7 @@ import { ActionButton } from '../../components/Buttons';
 import Calendario from '../../components/calendario/Calendario';
 import { getPrestadores, getCalendario, /*getTurno,*/ getTurnos, excedeMargen } from '../../data/turnero';
 import { useEffect,  useRef, useState } from 'react';
-import Select from '../../components/Select';
+import {CustomSelect} from '../../components/Select';
 import useTurno from '../../hooks/useTurno';
 import Spinner from '../../components/Spinner';
 import Contacto from '../../components/contacto/contacto';
@@ -176,11 +176,10 @@ function Turnos() {
               <h2 className="black-title">Solicitar turno</h2>
             </div>
 
-            {/*<img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>*/}
 
             <Card title='Seleccionar prestador'>
                 <div className="turno-selector">
-                    <Select
+                    <CustomSelect
                         id="prestador" 
                         datos={prestadores}
                         value={1}
@@ -189,17 +188,6 @@ function Turnos() {
                     />
                 </div>
             </Card>
-
-            {/*<div className="turno-selector">
-                <Select 
-                    label="Seleccionar Prestador" 
-                    id="prestador" 
-                    datos={prestadores}
-                    value={1}
-                    placeholder='Seleccione un prestador' 
-                    onChange={(event) => prestadorSeleccionado(event.target.value)}
-                />
-            </div>*/}
 
             <Card title='Seleccionar día'>
                 {/*<h6 className="text-green-500 font-semibold text-xs ps-3">En color verde los días disponibles</h6>*/}
@@ -254,7 +242,7 @@ function Turnos() {
 
             </div>
             <div className='mx-auto p-3 text-center'>
-                <button className='text-gray-500' onClick={() => navigate('/panel')} >Volver</button>
+                <button className='text-gray-500' onClick={() => navigate('/panel')}>Volver</button>
             </div>
 
             </div>

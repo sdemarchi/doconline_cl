@@ -32,6 +32,10 @@ import FormRep3b from './pages/formReprocann/FormRep3b';
 import FormError from './pages/formReprocann/FormError';
 import GoogleRegister from './pages/register/GoogleRegister';
 import Ayuda from './pages/ayuda/ayuda';
+import GrowEstadisticas from './pages/grow-estadisticas/grow-estadisticas.jsx';
+import Restablecer from './pages/restablecer/restablecer.jsx';
+import FormPassword from './pages/restablecer/formPassword.jsx';
+import RePassLayout from './layouts/RePassLayout.jsx';
 
 const router = createBrowserRouter([
   {
@@ -59,7 +63,8 @@ const router = createBrowserRouter([
         path: '/g-perfil',
         action: gRegisterAction,
         element: <GoogleRegister />
-      },
+      }
+      
     ],
 
   },
@@ -142,10 +147,30 @@ const router = createBrowserRouter([
       {
         path: '/ayuda',
         element:<Ayuda/>
+      },
+      {
+        path: '/estadisticas/:id',
+        element:<GrowEstadisticas/>
       }
     ]
   }
-],  { basename: "/turnero" })
+  ,  {
+    path: '/',
+    element: <RePassLayout />,
+    children: [
+    {
+      path: '/restablecer',
+      element:<Restablecer/>
+    },
+    {
+      path: '/restablecer-password/:t',
+      element:<FormPassword/>
+    }
+  ]
+}
+],  
+
+{ basename: "/turnero" })
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
