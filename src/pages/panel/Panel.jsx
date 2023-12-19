@@ -161,7 +161,6 @@ function Panel() {
                 <button className="panel-cerrar-sesion" onClick={() => logout()} >Cerrar Sesión</button>
             </div>
 
-
             <div className="main-contacto">
                 <Contacto bottom='90px'/>
             </div>

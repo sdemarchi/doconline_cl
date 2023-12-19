@@ -105,6 +105,7 @@ function Register() {
             <div className='mb-2' style={{textAlign:'center',paddingBottom:'15px'}}>
               <h2 className="black-title">Registrar usuario</h2>
             </div>
+            
             <Form method='post' noValidate>
                 <FormInput  type={"text"} label="Nombre y Apellido*" id="nombre" maxlenght="150" placeholder="Nombre y Apellido" />
                 <div className='flex flex-row'>

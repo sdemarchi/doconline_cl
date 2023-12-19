@@ -1,6 +1,6 @@
 import {/* useState,*/ useEffect } from 'react';
 import { Form, useActionData, useNavigate } from 'react-router-dom';
-import { FormInput , /*FormInputDate */} /*,{ FormInputReadonly }*/ from '../../components/FormInput';
+import { FormInput , InputDate } /*,{ FormInputReadonly }*/ from '../../components/FormInput';
 import { SubmitButton } from '../../components/Buttons';
 import { esFechaValida } from '../../utils/validation';
 import { registrarGoogle } from '../../data/pacientes';
@@ -25,8 +25,24 @@ export async function action({request}) { //eslint-disable-line
     }
 }
 
+function formatearFecha(cadenaFecha) {
+    if (cadenaFecha !== null && cadenaFecha !== undefined) {
+      const fechaISO = new Date(cadenaFecha);
+      const dia = fechaISO.getDate().toString().padStart(2, '0');
+      const mes = (fechaISO.getMonth() + 1).toString().padStart(2, '0');
+      const anio = fechaISO.getFullYear();
+  
+      const fechaFormateada = `${dia}/${mes}/${anio}`;
+      return fechaFormateada;
+    } else {
+      return cadenaFecha;
+    }
+  }
+
+
 function validate(datos){
     const errores = [];
+    datos.fecha_nac = formatearFecha(datos.fecha_nac);
     
     if (Object.keys(datos).some(key => key !== 'grow' && datos[key] === '')) {
         errores.push('Todos los campos son obligatorios');
@@ -72,15 +88,18 @@ function GoogleRegister() {
     
     return (
         <>
-            <h3 className='register-title text-gray-500 text-s font-semibold'>COMPLETA TU PERFIL</h3>
+            <div className='mb-2' style={{textAlign:'center',paddingBottom:'15px',paddingTop:'20px'}}>
+              <h2 className="black-title">Registrar usuario</h2>
+            </div>
             
             <Form method='post' noValidate>
 
-                <FormInput  type={"text"} label="Nombre y Apellido*" id="nombre"  maxlenght="150" defaultValue={ googleProfile.name } />
+                <FormInput  type={"text"} label="Nombre y Apellido*" id="nombre" placeholder='Nombre y apellido' maxlenght="150" defaultValue={ googleProfile.name } />
 
                 <div className='flex flex-row'>
                     <div className='basis-1/2 pe-1'>
-                        <FormInput type={"text"} label="Fecha de Nacimiento*" id="fecha_nac" placeholder="dd/mm/aaaa" maxLength={10} />
+                       {/* <FormInput type={"text"} label="Fecha de Nacimiento*" id="fecha_nac" placeholder="dd/mm/aaaa" maxLength={10} />*/}
+                        <InputDate label="Fecha de Nacimiento*" id="fecha_nac"/>
                     </div>
                     <div className='basis-1/2 ps-1'>
                         <FormInput  type={"number"}  label="DNI*" id="dni" maxlenght="10" placeholder="12345676" />
