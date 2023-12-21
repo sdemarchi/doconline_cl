@@ -9,17 +9,16 @@ import Card from '../../components/card/card';
 function TurnoSuccess() {
    // const [ formularioCompletado, setFormularioCompletado ] = useState(false);
     const { turno } = useTurno()
-    const turnoSession = JSON.parse(sessionStorage.getItem("turno"));
-    const comprobanteEnviado = JSON.parse(sessionStorage.getItem("comprobante-enviado"));
-    const formularioCompletado = JSON.parse(sessionStorage.getItem("form-success"));
+    const turnoSession = JSON.parse(localStorage.getItem("turno"));
+    const comprobanteEnviado = JSON.parse(localStorage.getItem("comprobante-enviado"));
+    const formularioCompletado = JSON.parse(localStorage.getItem("form-success"));
 
     return (
         <div className="turno-container">
             <Card>
             {comprobanteEnviado ? 
             <>
-                        {/*<img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>*/}
-
+                {/*<img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>*/}
                 <h1 className='font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-grad-green to-grad-blue' style={{fontSize:'30px'}}>FELICITACIONES<br />TURNO CONFIRMADO</h1>
                 <img className="mx-auto w-14 pt-8" src={icon}></img>
             </> :

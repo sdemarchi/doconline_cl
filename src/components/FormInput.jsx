@@ -137,21 +137,25 @@ function Input(props) {
 }
 
 function FormInputDate(props) {
+    const  [dateValue, setDateValue] = useState('');
     return (
         <div className="input-container mt-1">
+            <input style={{display:'none'}} name={props.id} value={dateValue}/>
+            
             <label
                 className="input-label text-gray-500 text-xs font-semibold inline-block"
                 htmlFor={ props.id }
             >{ props.label }</label>
+
                 <ReactInputDateMask  
-                    id={ props.id }
+                    id={ props.id }  
                     mask='dd/mm/yyyy'
                     showMaskOnFocus={true}
                     type="date"
                     maxLength={ props.maxLength }
                     className=" date-input w-full p-2 bg-white border-input focus:border-input border-2 text-xs text-gray-500 inline-flex"
                     value={ props.value }
-                    onChange={props.onChange}
+                    onChange={props.onChange || setDateValue}
                     placeholder={ props.placeholder }
                 />
         </div>

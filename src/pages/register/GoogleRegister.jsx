@@ -1,6 +1,6 @@
 import {/* useState,*/ useEffect } from 'react';
 import { Form, useActionData, useNavigate } from 'react-router-dom';
-import { FormInput , InputDate } /*,{ FormInputReadonly }*/ from '../../components/FormInput';
+import { FormInput , FormInputDate } /*,{ FormInputReadonly }*/ from '../../components/FormInput';
 import { SubmitButton } from '../../components/Buttons';
 import { esFechaValida } from '../../utils/validation';
 import { registrarGoogle } from '../../data/pacientes';
@@ -24,7 +24,7 @@ export async function action({request}) { //eslint-disable-line
         return {errores: errores}
     }
 }
-
+/*
 function formatearFecha(cadenaFecha) {
     if (cadenaFecha !== null && cadenaFecha !== undefined) {
       const fechaISO = new Date(cadenaFecha);
@@ -37,12 +37,12 @@ function formatearFecha(cadenaFecha) {
     } else {
       return cadenaFecha;
     }
-  }
+  }*/
 
 
 function validate(datos){
     const errores = [];
-    datos.fecha_nac = formatearFecha(datos.fecha_nac);
+    //datos.fecha_nac = formatearFecha(datos.fecha_nac);
     
     if (Object.keys(datos).some(key => key !== 'grow' && datos[key] === '')) {
         errores.push('Todos los campos son obligatorios');
@@ -99,7 +99,7 @@ function GoogleRegister() {
                 <div className='flex flex-row'>
                     <div className='basis-1/2 pe-1'>
                        {/* <FormInput type={"text"} label="Fecha de Nacimiento*" id="fecha_nac" placeholder="dd/mm/aaaa" maxLength={10} />*/}
-                        <InputDate label="Fecha de Nacimiento*" id="fecha_nac"/>
+                        <FormInputDate label="Fecha de Nacimiento*" id="fecha_nac"/>
                     </div>
                     <div className='basis-1/2 ps-1'>
                         <FormInput  type={"number"}  label="DNI*" id="dni" maxlenght="10" placeholder="12345676" />

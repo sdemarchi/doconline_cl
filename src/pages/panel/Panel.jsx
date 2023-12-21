@@ -39,7 +39,6 @@ function Panel() {
         }
         
         setDatosCargados(true);
-
     }
 
     async function cancelarMiTurno() {
@@ -101,7 +100,7 @@ function Panel() {
                 </div>
             </Card>
 
-           {growAdmin && 
+           {(growAdmin?.idgrow !== undefined) && 
                 <LinkCard title="Ver pacientes" href={'/estadisticas/'+growAdmin.idgrow}>
                     <p>Ver pacientes registrados con tu URL.</p>
                 </LinkCard>

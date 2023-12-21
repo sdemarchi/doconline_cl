@@ -11,7 +11,7 @@ function Select(props) {
                 id={props.id}
                 className="input-form block w-full p-2 bg-white border-input border-2 text-xs text-gray-500">
                 <option value='0'>{props.placeholder}</option>
-                {props.datos.map( dato =>(
+                {props.datos?.map( dato =>(
                     <option 
                         key={dato.id} 
                         value={dato.id}
@@ -37,7 +37,7 @@ function CustomSelect(props) {
                 style={{borderRadius:'6px',backgroundColor:'#F0F0F0',width:'100%',border:'solid 1px #EAEAEA',marginBottom:'10px',marginTop:'10px',
                 fontSize:'18px' }}>
                 <option value='0'>{props.placeholder}</option>
-                {props.datos.map( dato =>(
+                {props.datos?.map( dato =>(
                     <option 
                         key={dato.id} 
                         value={dato.id}
@@ -62,7 +62,7 @@ function SelectHook(props) {
                 { ...props.register }
                 className="block w-full p-2 bg-white border-input focus:border-input border-2 text-xs text-gray-500">
                 <option value='0'>{props.placeholder}</option>
-                {props.datos.map( dato =>(
+                {props.datos?.map( dato =>(
                     <option 
                         key={dato.id} 
                         value={dato.id}

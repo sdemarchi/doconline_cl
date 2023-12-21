@@ -119,7 +119,7 @@ function Turnos() {
         }
 
         setTurno(turnoObject);
-        sessionStorage.setItem('turno', JSON.stringify(turnoObject));
+        localStorage.setItem('turno', JSON.stringify(turnoObject));
         navigate('/pagos');
     }
 
@@ -163,6 +163,7 @@ function Turnos() {
             }
           }
         );
+
     }, [cargando])//eslint-disable-line
 
     return (
@@ -210,7 +211,7 @@ function Turnos() {
             {turnos.length > 0 &&
                <Card title='Seleccionar horario'>
                     <div className="turno-horarios-container">
-                        {turnos.map( (turno,key) => (
+                        {turnos?.map( (turno,key) => (
                         turno.hora !== '00:00' && <button key={key} onClick={()=>seleccionarTurno(key,turno)} className={isSelectedClass(key)}>{turno.hora} hs</button>
                         ))}
                     </div>

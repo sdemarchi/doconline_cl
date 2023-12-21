@@ -24,9 +24,9 @@ function PagoTransf() {
  
 
     //-- VARIABLES DE SESION PARA EVITAR PERDER DATOS AL ACTUALIZAR ----------
-        const importeSession = sessionStorage.getItem("precio_transf");
-        const turnoSession = JSON.parse(sessionStorage.getItem("turno"));
-        const cuponSession = JSON.parse(sessionStorage.getItem("cupon_validado"));
+        const importeSession = localStorage.getItem("precio_transf");
+        const turnoSession = JSON.parse(localStorage.getItem("turno"));
+        const cuponSession = JSON.parse(localStorage.getItem("cupon_validado"));
     //-----------------------------------------------------------------------
 
 

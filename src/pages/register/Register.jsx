@@ -1,6 +1,6 @@
 import {useEffect } from 'react';
 import { Form, useActionData, useNavigate } from 'react-router-dom';
-import {FormInput, InputDate} from '../../components/FormInput';
+import {FormInput, FormInputDate} from '../../components/FormInput';
 import { SubmitButton } from '../../components/Buttons';
 import Error from '../../components/Error';
 import { esFechaValida, esEmailValido } from '../../utils/validation';
@@ -29,7 +29,7 @@ export async function action({request}) { //eslint-disable-line
 }
 
 function validate(datos){
-    datos.fecha_nac = formatearFecha(datos.fecha_nac);
+    //datos.fecha_nac = formatearFecha(datos.fecha_nac);
 
     const errores = []
     if (Object.keys(datos).some(key => key !== 'grow' && datos[key] === '')) {
@@ -54,7 +54,7 @@ function validate(datos){
 
     return errores;
 }
-
+/*
 function formatearFecha(cadenaFecha) {
     if (cadenaFecha !== null && cadenaFecha !== undefined) {
       const fechaISO = new Date(cadenaFecha);
@@ -63,13 +63,15 @@ function formatearFecha(cadenaFecha) {
       const anio = fechaISO.getFullYear();
   
       const fechaFormateada = `${dia}/${mes}/${anio}`;
+      
+      alert(cadenaFecha + ' '+ fechaFormateada);
       return fechaFormateada;
     } else {
       return cadenaFecha;
     }
   }
 
-
+*/
 function Register() {
     const { setUser } = useAuth();
     const navigate = useNavigate();
@@ -105,12 +107,12 @@ function Register() {
             <div className='mb-2' style={{textAlign:'center',paddingBottom:'15px'}}>
               <h2 className="black-title">Registrar usuario</h2>
             </div>
-            
+
             <Form method='post' noValidate>
                 <FormInput  type={"text"} label="Nombre y Apellido*" id="nombre" maxlenght="150" placeholder="Nombre y Apellido" />
                 <div className='flex flex-row'>
                     <div className='basis-1/2 pe-1'>
-                        <InputDate label="Fecha de Nacimiento*" id="fecha_nac"/>
+                        <FormInputDate label="Fecha de Nacimiento*" maxLength={10} id="fecha_nac"/>
                     </div>
                     <div className='basis-1/2 ps-1'>
                         <FormInput type={"number"} label="DNI*" id="dni" maxlenght="10" placeholder="12345676" />

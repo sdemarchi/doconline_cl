@@ -37,21 +37,21 @@ function Calendario(props) {
                 <Titulo dia="sab."/>
             </div>
 
-            {props.calendario.map(linea => (
-                <div key={linea.key} className='flex flex-row gap-1 mb-2'>
-                    {linea.linea.map(dia => (
-                        <FechaCalendario 
+            {props.calendario?.map(linea => (
+                <span key={linea.key} className='flex flex-row gap-1 mb-2'>
+                    {linea.linea?.map((dia,key)=> (
+                        <FechaCalendario
+                            id={key} 
                             select={dia.turnos ? props.select : ''} 
                             fecha={dia.fecha}
                             key={dia.key} 
                             dia={dia.dia} 
                             otroMes={!dia.enmes} 
-                            disabled={!dia.activo} 
-                            turnos={dia.turnos} 
+                            disabled={!dia.activo } 
+                            turnos={(dia.fecha !== '2023-12-25' && dia.fecha !== '2024-01-01') ? dia.turnos : false}
                             seleccionado={props.diaSeleccionado == dia.fecha}/>
-                            
                     ))}
-                </div>
+                </span>
             ))}
         </>
     )
@@ -63,11 +63,11 @@ function FechaCalendario(props) {
             <div className='basis-2/12'>
                 <button 
                     className={`${props.otroMes ? 'bg-gray-200' : ''}
-                                ${props.disabled ? 'text-gray-400' : ' text-gray-500 '}  
+                                ${props.disabled == true ? 'text-gray-400' : ' text-gray-500 '}  
                                 ${props.turnos ? 'calendario-dia-disponible' : ''} 
                                 ${props.seleccionado && 'calendario-dia-seleccionado'} 
                                 font-semibold text-sm p-1 leading-6 calendario-dia w-9`}
-                    onClick={() => props.select(props.fecha)}
+                    onClick={() =>(props.select && props.turnos) && props.select(props.fecha)}
                 >{props.dia}</button>
             </div>
         </>)
@@ -81,4 +81,4 @@ function Titulo(props) {
     )
 }
 
-export default Calendario
+export default Calendario;
