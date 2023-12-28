@@ -1,0 +1,81 @@
+.gd-item{
+  margin: 5px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.gd-item-title{
+  font-weight: 500;
+}
+
+.gd-item-text{
+  text-wrap: wrap;
+  word-wrap: break-word;
+  padding-right: 5px;
+  margin-bottom: 2px;
+}
+
+.gd-item-icon{
+  display: inline;
+  width: fit-content;
+  background-color: rgb(71, 53, 26);
+}
+
+.gd-copiar-link-boton{
+  color:rgb(255, 255, 255);
+  background-color: rgb(40, 117, 241);
+  border-radius: 5px;
+  height: fit-content;
+  width: fit-content;
+  padding: 2px 5px;
+  display: inline;
+  margin-top: 6px;
+  font-size: 15px;
+}
+
+.gd-descuento-box{
+  border-radius: 4px;
+  margin:5px;
+  min-height: 80px;
+  width: 50%;
+}
+
+.gd-descuento{
+  display:flex;
+  flex-direction: row;
+}
+
+.gd-descuento-porcent{
+  font-size: 55px;
+  width: 100%;
+  text-align: center;
+  color:rgb(77, 77, 77);
+  font-weight: 500;
+}
+
+.gd-descuento-descripcion{
+  font-weight: 400;
+}
+
+.gd-descuento-precio{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gd-precio-original{
+  width: fit-content;
+  text-align: center;
+  text-decoration:line-through;
+  font-size: 20px;
+  color:rgb(59, 59, 59);
+}
+
+.gd-precio-descuento{
+  width: fit-content;
+  text-align: center;
+  font-size: 34px;
+  font-weight: 500;
+  color:rgb(72, 72, 72);
+}

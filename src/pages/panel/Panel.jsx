@@ -34,11 +34,9 @@ function Panel() {
         setTurnoPaciente(response);
         const fromLogin = sessionStorage.getItem('fromLogin');
 
-        if(response.id  == 0 && fromLogin == 'true' && !growAdmin.idgrow){
+        if(response?.id  == 0 && fromLogin == 'true' && !growAdmin?.idgrow){
             return navigate('/turno');
         }
-        
-        setDatosCargados(true);
     }
 
     async function cancelarMiTurno() {
@@ -67,8 +65,9 @@ function Panel() {
                     llenarFormulario(resp.data, resp.patologias);
                 }
                 setPacienteCargado(true);
+                setDatosCargados(true);
             });
-        });      
+        }); 
     }
 
     useEffect(() => {
@@ -87,13 +86,12 @@ function Panel() {
 
         <>
         {(!DatosCargados && !pacienteCargado)?
-             <div className='panel-container'> <Spinner /></div>
+            <div className='panel-container'> <Spinner /></div>
         :
         <div className='panel-container'>
 
             <Card>
                 <h2 className="panel-titulo">Hola, {paciente.nombre}<span className='panel-titulo-icon'><GrFormNext style={{display:"inline",opacity:"70%"}}/></span></h2>
-
                 <div className="panel-description">
                     <h3 className="panel-description-subtitle">Tramitá tu Reprocann</h3>
                     <p className="panel-description-text">Fácil, seguro y sin moverte de tu casa.</p>
@@ -101,8 +99,14 @@ function Panel() {
             </Card>
 
            {(growAdmin?.idgrow !== undefined) && 
-                <LinkCard title="Ver pacientes" href={'/estadisticas/'+growAdmin.idgrow}>
+                <LinkCard title="Ver pacientes" href={'/estadisticas/'+growAdmin?.idgrow}>
                     <p>Ver pacientes registrados con tu URL.</p>
+                </LinkCard>
+            }
+
+            {(growAdmin?.idgrow !== undefined) && 
+                <LinkCard title="Detalles del Grow" href={'/detallesGrow/'+growAdmin?.idgrow}>
+                    <p>Consulta o edita los detalles de tu Grow.</p>
                 </LinkCard>
             }
              
@@ -117,7 +121,7 @@ function Panel() {
                         </h3> 
                         <p className="panel-turno-texto">{turnoPaciente.detalle}</p>
                         <div className='flex flex-row-reverse pt-1'>
-                            <MiniActionButtonRed onClick={() => cancelarMiTurno()} value="Cancelar" />
+                            <MiniActionButtonRed onClick={() => cancelarMiTurno()} value="Cancelar"/>
                         </div>
                     </Card>
                 </>
@@ -133,17 +137,15 @@ function Panel() {
             </div>
 
             {(turnoPaciente.id > 0 && formSuccess == false && false) && 
-
-            <div className="panel-info">
-                <InfoCard text={"Completa el formulario de Reprocann para iniciar o renovar el tramite."} />
-            </div>
-
+                <div className="panel-info">
+                    <InfoCard text={"Completa el formulario de Reprocann para iniciar o renovar el tramite."} />
+                </div>
             }
 
 
             <Card title={formSuccess ? 'Edita tus datos' : 'Completa tus datos'}>
                 <p className='pb-3'>{formSuccess ? 'Modifica o actualiza tus datos en caso de que sea necesario' : 'Completa los datos necesarios para realizar tu tramite'}</p>
-                <LinkButton icon={<FaWpforms/>}  disabled={turnoPaciente.id == 0} to="/formulario-1" value={"Formulario REPROCANN"} />
+                <LinkButton icon={<FaWpforms/>} disabled={turnoPaciente.id == 0} to="/formulario-1" value={"Formulario REPROCANN"} />
             </Card>
      
             {(turnoPaciente.id > 0 && formSuccess) && 
@@ -156,7 +158,7 @@ function Panel() {
                 <Contacto/>
             </div>
 
-           <div className='panel-button mx-auto p-3 text-center'>
+            <div className='panel-button mx-auto p-3 text-center'>
                 <button className="panel-cerrar-sesion" onClick={() => logout()} >Cerrar Sesión</button>
             </div>
 

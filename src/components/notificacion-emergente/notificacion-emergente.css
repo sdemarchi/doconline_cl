@@ -1,0 +1,87 @@
+.ne-window{
+  display:flex;
+  align-items: center;
+  flex-grow: 2;
+  flex-direction: row;
+  position:absolute;
+  left: 0;
+  right: 0;
+  bottom: 30px;
+  height:60px;
+  min-width:200px;
+  width:fit-content;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 2px 3px 5px 2px rgba(0, 0, 0, 0.445);
+  margin: auto;
+  text-align: center;
+  animation-name:notification;
+  animation-duration:2.5s;
+  z-index:5100;
+}
+
+.ne-text{
+   color:rgb(0, 0, 0);
+   margin:0;
+   font-size: 18px;
+   padding: 15px;
+   margin:auto;
+}
+
+.ne-button{
+  display: inline;
+  border-style: none;
+  background-color: rgba(0, 0, 255, 0);
+  font-weight: 600;
+  color:rgb(0, 0, 255);
+  padding:0;
+  margin:auto;
+  padding: 0px 20px 0px 7px;
+  cursor:pointer;
+}
+
+.ne-container{
+  position:fixed;
+  left:0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 5000;
+  animation-name:notification-background;
+  animation-duration:2.5s;
+}
+
+@keyframes notification{
+  0%{
+    opacity: 0%;
+    bottom: 0px;
+  }
+  25% {
+    opacity: 100%;
+    bottom: 30px;
+  }
+  86%{
+    opacity: 100%;
+    bottom: 30px;
+  }
+  100%{
+    opacity: 0%;
+    bottom: 0px;
+  }
+}
+
+@keyframes notification-background{
+  0%{
+    opacity: 0%;
+  }
+  25% {
+    opacity: 100%;
+  }
+  90%{
+    opacity: 100%;
+  }
+  100%{
+    opacity: 0%;
+  }
+}

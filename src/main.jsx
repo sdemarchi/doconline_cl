@@ -36,6 +36,7 @@ import GrowEstadisticas from './pages/grow-estadisticas/grow-estadisticas.jsx';
 import Restablecer from './pages/restablecer/restablecer.jsx';
 import FormPassword from './pages/restablecer/formPassword.jsx';
 import RePassLayout from './layouts/RePassLayout.jsx';
+import GrowDetalles from './pages/grow-detalles/growDetalles.jsx';
 
 const router = createBrowserRouter([
   {
@@ -151,6 +152,10 @@ const router = createBrowserRouter([
       {
         path: '/estadisticas/:id',
         element:<GrowEstadisticas/>
+      },
+      {
+        path: '/detallesGrow/:id',
+        element:<GrowDetalles/>
       }
     ]
   }
