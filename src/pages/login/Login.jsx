@@ -51,6 +51,9 @@ function Login() {
     }
 
     useEffect(() => {
+        sessionStorage.clear();
+        localStorage.clear();
+        
         sessionStorage.setItem('fromLogin', 'true');
         getGrow();
 

@@ -8,6 +8,7 @@ export default function Card(props){
 
 
     return(
+        
         <div className={props.animate && 'animation-card'} ref={cardRef}>
             <div className='card-container' style={{textAlign:'center !important'}}>
                 {props.title && <h2 className={titleClass}>{props.title}</h2>}

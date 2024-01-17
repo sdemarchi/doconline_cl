@@ -32,7 +32,7 @@ function Turnos() {
     const [buttonSelected , setButtonSelected] = useState();
     const [turnos , setTurnos] = useState([]);
     const [diaSeleccionado, setDiaSeleccionado] = useState();
-    const [descuento , setDescuento] = useState(); //eslint-disable-line
+    const [descuento , setDescuento] = useState();  //eslint-disable-line
     const elementRef = useRef(null);
     
     async function cargarPrestadores(){

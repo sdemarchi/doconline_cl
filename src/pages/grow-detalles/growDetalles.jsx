@@ -6,6 +6,7 @@ import { useState,useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getGrowById } from '../../data/grows';
 import { copyToClipboard } from '../../utils/utilFunctions';
+import { getPrecios } from '../../data/turnero';
 import NotificacionEmergente from '../../components/notificacion-emergente/notificacion-emergente';
 
 function GrowDetalles(){
@@ -14,19 +15,21 @@ function GrowDetalles(){
   const [ growDetails , setGrowDetails ] = useState(); // eslint-disable-line
   const [ mostrarNotificacion , setMostrarNotificacion ] = useState(false);
   const [ textoNotificacion , setTextoNotificacion ] = useState('');
+  const [ precioTransf, setPrecioTransf ] = useState(0);
+  
 
   const handleNotificacion = (mostrar,texto)=> {
     setMostrarNotificacion(mostrar);
-    setTextoNotificacion(texto);
+    setTextoNotificacion(texto + ' copiado al portapapeles.');
   }
   
   const copiarAlPortapapeles = (recurso,nombreDelRecurso) => {
-    handleNotificacion(true,nombreDelRecurso  + " copiado al portapapeles!");
+    handleNotificacion(true,nombreDelRecurso );
     copyToClipboard(recurso);
   }
 
   useEffect(()=>{
-    const getPacientes = () => {
+    const getGrow = () => {
       if(id){
         getGrowById(id).then((response)=>{
           setGrowDetails(response);
@@ -36,7 +39,14 @@ function GrowDetalles(){
       }
     }
 
-    getPacientes();
+    const cargarPrecio = () => {
+      getPrecios().then((response)=>{
+        setPrecioTransf(response.precioTransf)
+      }
+      );
+    }
+    cargarPrecio();
+    getGrow();
   },[id]); //eslint-disable-line
 
 
@@ -50,31 +60,30 @@ function GrowDetalles(){
 
 
       <Card title={'Detalles de contacto'}>
-        <div className="gd-item">
+       {growDetails?.nombre && <div className="gd-item">
           <span className="gd-item-title">Nombre</span>
           <span className="gd-item-text">{growDetails?.nombre}</span>
-        </div>
-        <div className="gd-item">
+        </div>}
+       {growDetails?.titular && <div className="gd-item">
           <span className="gd-item-title">Titular</span>
           <span>{growDetails?.titular}</span>
-        </div>
-        <div className="gd-item">
+        </div>}
+       {growDetails?.mail &&<div className="gd-item">
           <span className="gd-item-title">Email</span>
           <span className="gd-item-text">{growDetails?.mail}</span>
-        </div>
-        <div className="gd-item">
+        </div>}
+        {growDetails?.celular && <div className="gd-item">
           <span className="gd-item-title">Celular</span>
           <span className="gd-item-text">{growDetails?.celular}</span>
-        </div>
-        <div className="gd-item">
+        </div>}
+        {growDetails?.direccion &&<div className="gd-item">
           <span className="gd-item-title">Dirección</span>
           <span className="gd-item-text">{growDetails?.direccion}</span>
-        </div>  
+        </div>  }
       </Card>
 
-      <Card title="URL y cupon">
+      <Card title="cupon">
         <div className="gd-item">
-          <span className="gd-item-title mt-1">Cupón</span>
           <span  onClick={()=>copyToClipboard(growDetails?.cod_desc)} className="gd-item-text" >{growDetails?.cod_desc}</span>
           <span className="gd-item-title mt-1">Link personalizado</span>
 
@@ -83,19 +92,18 @@ function GrowDetalles(){
           </span>*/}
 
       <button className="gd-copiar-link-boton" onClick={()=>copiarAlPortapapeles('www.doconlineargentina.com/turnero/login/'+growDetails?.cod_desc,'Link')}>Copiar Link</button>
-
         </div>
       </Card>
 
       <Card title="Tu descuento">
         <div className="gd-descuento">
           <div className="gd-descuento-box">
-            <div className="gd-descuento-porcent">50%</div>
+            <div className="gd-descuento-porcent">{growDetails.descuento}%</div>
             <div className="gd-descuento-descripcion">Con tu cupón o link de descuento</div>
           </div>
           <div className="gd-descuento-box gd-descuento-precio">
-            <p className="gd-precio-original">$14.000</p>
-            <p className="gd-precio-descuento">$7.000</p>
+           {growDetails?.descuento !== 0 && <p className="gd-precio-original">${precioTransf}</p>}
+            <p className="gd-precio-descuento">${precioTransf * (1 - growDetails.descuento/100)}</p>
             <p></p>
           </div>
         </div>
@@ -103,12 +111,11 @@ function GrowDetalles(){
       </Card>
 
       <div style={{marginTop:'25px'}}>
-        <LinkButtonCenter value="Volver" to="/panel"></LinkButtonCenter>
+        <LinkButtonCenter value="Volver" to={"/tu-grow/"+id}></LinkButtonCenter>
       </div>
       <NotificacionEmergente show={mostrarNotificacion} setShow={setMostrarNotificacion} text={textoNotificacion}/>
     </div>:
     <div className="grow-estadisticas-container" style={{minHeight:'700px'}}><Spinner/></div>
-   
 
     }
     </>

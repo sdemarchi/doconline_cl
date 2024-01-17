@@ -1,30 +1,29 @@
 import {useState, useEffect } from 'react';
-import { ActionButton } from '../../components/Buttons';
-import { getDatosTransf/*, uploadComprobante*/ } from '../../data/turnero';
-import useAuth from '../../hooks/useAuth';
-import useTurno from '../../hooks/useTurno';
+import { ActionButton } from '../../../components/Buttons';
+import { getDatosTransf } from '../../../data/turnero';
+import useAuth from '../../../hooks/useAuth';
+import useTurno from '../../../hooks/useTurno';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-import { confirmarTurno } from '../../data/turnero';
-import { setGrowPaciente } from '../../data/pacientes';
-import Spinner from '../../components/Spinner';
+import { confirmarTurno } from '../../../data/turnero';
+import { setGrowPaciente } from '../../../data/pacientes';
+import Spinner from '../../../components/Spinner';
 import axios from 'axios';
-import copyIcon from '../../assets/copy-icon.ico';
-import '../../global-styles/form-styles.css';
-import Notificacion from '../../components/notificacion/Notificacion';
-import Contacto from '../../components/contacto/contacto';
-import './pagos.css';
-import Card from '../../components/card/card';
-import toBase64 from '../../utils/base64';
+import copyIcon from '../../../assets/copy-icon.ico';
+import '../../../global-styles/form-styles.css';
+import Notificacion from '../../../components/notificacion/Notificacion';
+import Contacto from '../../../components/contacto/contacto';
+import '../../pagos/pagos.css';
+import Card from '../../../components/card/card';
+import toBase64 from '../../../utils/base64';
 
 
-function PagoTransf() {
+function RegalarTransf() {
     const {importe} = useAuth();//eslint-disable-line
-    const { turno, cuponValidado, comprobante, setComprobante } = useTurno();//eslint-disable-line
- 
+
     //-- VARIABLES DE SESION PARA EVITAR PERDER DATOS AL ACTUALIZAR ---------
-        const importeSession = localStorage.getItem("precio_transf");
-        const turnoSession = JSON.parse(localStorage.getItem("turno"));
-        const cuponSession = JSON.parse(localStorage.getItem("cupon_validado"));
+    const importeSession = localStorage.getItem("precio_transf");
+    const turnoSession = JSON.parse(localStorage.getItem("turno"));
+    const cuponSession = JSON.parse(localStorage.getItem("cupon_validado"));
     //-----------------------------------------------------------------------
 
     const user = useOutletContext();
@@ -80,31 +79,25 @@ function PagoTransf() {
             setCbu(response.cbu);
             setAlias(response.alias);
             sessionStorage.setItem('datos-transf',JSON.stringify(response));
+
         }else{
             const datosTransf_session = JSON.parse(sessionStorage.getItem('datos-transf'));
             setCbu(datosTransf_session.cbu);
             setAlias(datosTransf_session.alias);
         }
+
         setDatosCargados(true);
     }
 
-    async function guardarTurno() {
+    async function enviarPago() {
         setDatosCargados(false);
 
         if(sessionStorage.getItem('growId') !== undefined && sessionStorage.getItem('growId') !== null){
             const idgrow = sessionStorage.getItem('growId');
-            setGrowPaciente(user.userId,idgrow)
+            setGrowPaciente(user.userId,idgrow);
         }
-        // SOLICITUD ORIGINAL: 
-        /* const response = await confirmarTurno(turno, cuponValidado, comprobante, importe, user.userId);*/
 
-        // SOLICITUD MODIFICADA:  31/08/23 para corregir problema de perdida de datos al actualizar
-        //alert(JSON.stringify(turnoSession) + JSON.stringify(cuponSession) || JSON.stringify(cuponValidado) + JSON.stringify(comprobante) + JSON.stringify(importeSession) + JSON.stringify(user.userId));
-        const response = await confirmarTurno(turnoSession, cuponSession || cuponValidado, comprobante, importeSession, user.userId);
-        console.log(response);
-        if (response.error == 0) {
-            return navigate('/turno-success');
-        } 
+        navigate('/regalar-finalizar/456851')
     }
 
     async function copiarAlPortapapeles(texto){
@@ -115,7 +108,6 @@ function PagoTransf() {
     useEffect(() => {
         sessionStorage.setItem('comprobante-enviado',false);
         cargarDatosTransf();
-
     }, []) 
 
     return (
@@ -192,9 +184,9 @@ function PagoTransf() {
             }
 
             <div className="mt-10">
-                <ActionButton value="Continuar" onClick={() => guardarTurno()}/>
+                <ActionButton value="Continuar" onClick={() => enviarPago()}/>
                 <div className='mb-0 mx-auto p-3 text-center'>
-                    <button className='text-gray-500' onClick={() => navigate('/pagos')} >Atrás</button>
+                    <button className='text-gray-500' onClick={() => navigate('/regalar-pago/dsdf/sdfsdf')} >Atrás</button>
                 </div>
             </div>
 
@@ -207,4 +199,4 @@ function PagoTransf() {
     )
 }
 
-export default PagoTransf;
+export default RegalarTransf;

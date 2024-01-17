@@ -1,0 +1,22 @@
+.tg-container{
+  position: relative;
+  margin-bottom: 0;
+  padding: 25px 16px;
+  font-family: 'Montserrat', sans-serif;
+  background-color:#f5f5f5ad;
+  min-height: calc(100vh - 80px);
+}
+
+.tg-grow-name{
+  color:white;
+  font-size: 26px;
+  text-align: start;
+  font-weight: 500;
+}
+
+.tg-grow-description{
+  color:white;
+  font-weight: 500;
+  text-align: start;
+
+}

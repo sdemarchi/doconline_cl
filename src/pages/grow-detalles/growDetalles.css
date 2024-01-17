@@ -46,15 +46,15 @@
 }
 
 .gd-descuento-porcent{
-  font-size: 55px;
+  font-size: 62px;
   width: 100%;
   text-align: center;
-  color:rgb(77, 77, 77);
-  font-weight: 500;
+  color:rgb(78, 78, 78);
+  font-weight: 600;
 }
 
 .gd-descuento-descripcion{
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .gd-descuento-precio{
@@ -68,14 +68,19 @@
   width: fit-content;
   text-align: center;
   text-decoration:line-through;
-  font-size: 20px;
-  color:rgb(59, 59, 59);
+  font-size: 22px;
+  color:rgb(98, 98, 98);
+  font-weight: 600;
 }
 
 .gd-precio-descuento{
   width: fit-content;
   text-align: center;
-  font-size: 34px;
-  font-weight: 500;
-  color:rgb(72, 72, 72);
+  font-size: 36px;
+  font-weight: 600;
+  color:rgb(83, 83, 83);
+}
+
+.grow-estadisticas-container{
+  min-height: 92vh;
 }

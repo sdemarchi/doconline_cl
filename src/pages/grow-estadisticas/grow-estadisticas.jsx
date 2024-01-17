@@ -7,12 +7,13 @@ import { useState,useEffect } from 'react';
 import Bubble from '../../components/bubble/bubble';
 import { useParams } from 'react-router-dom';
 import { getGrowPacientes } from '../../data/grows';
+import Nav from '../../components/nav/nav';
 
 function GrowEstadisticas(){
   const [ mesActual, setMesActual ] = useState(new Date().getMonth() + 1); 
   const { id } = useParams();
   const [ growPacientes , setGrowPacientes ] = useState({}); //eslint-disable-line
-  const [ datosCargados , setDatosCargados ] = useState(true);
+  const [ datosCargados , setDatosCargados ] = useState(false);
   const [ pagaron , setPagaron ] = useState(0);
   const [ pacientesMes, setPacientesMes ] = useState([]);
 
@@ -43,7 +44,7 @@ function GrowEstadisticas(){
   const filtrarPacientes = (pacientes,mes) => {
     var pagaronContador = 0;
     const pacientesMesSeleccionado = [];
-    pacientes.forEach((paciente) => {
+    pacientes?.forEach((paciente) => {
       const fechaPaciente = new Date(paciente.fecha);
       const mesPaciente = fechaPaciente.getMonth() + 1;
       const añoPaciente = fechaPaciente.getFullYear();
@@ -105,19 +106,20 @@ function GrowEstadisticas(){
 
       <Card title="Estadisticas del mes">
         <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around'}}>
-        <Bubble content={pacientesMes.length} description='Clientes'></Bubble>
-        <Bubble content={pagaron} description="Pagaron"></Bubble>
-        <Bubble content={pacientesMes.length - pagaron} description="No pagaron"></Bubble>
+          <Bubble content={pacientesMes.length} description='Clientes'></Bubble>
+          <Bubble content={pagaron} description="Pagaron"></Bubble>
+          <Bubble content={pacientesMes.length - pagaron} description="No pagaron"></Bubble>
         </div>
       </Card>
-      <div style={{marginTop:'25px'}}>
-        <LinkButtonCenter value="Volver" to="/panel"></LinkButtonCenter>
-      </div>
+      {false && <div style={{marginTop:'25px'}}>
+        <LinkButtonCenter value="Volver" to={"/tu-grow/"+id}></LinkButtonCenter>
+      </div>}
     </div>:
-    <div className="grow-estadisticas-container" style={{minHeight:'700px'}}> <Spinner/></div>
-   
-
+    <div className="grow-estadisticas-container"> <Spinner/></div>
     }
+    <div style={{minHeight:'50px'}}>
+      <Nav idgrow={id}/>
+    </div>
     </>
   );
 }

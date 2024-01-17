@@ -1,0 +1,21 @@
+.rf-container{
+  background-color: rgba(240, 240, 240, 0.119);
+  width: 100%;
+  padding:8px 15px;
+  min-height: calc(100vh - 75px);
+  margin:0;
+}
+
+.rf-codigo{
+  height: 60px;
+  width: 100%;
+  margin: 15px 0;
+  background-color: rgba(238, 238, 238, 0.711);
+  color:rgb(44, 44, 44);
+  font-weight: 600;
+  font-size: 18px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

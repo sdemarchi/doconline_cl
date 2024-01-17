@@ -92,26 +92,36 @@
 }
 
 .panel-turno-titulo{
-  display: flex;
+  display: inline;
   flex-direction: row;
   align-items: center;
-  color:rgb(40, 173, 23);
+  color:rgb(255, 255, 255);
   font-size: 20px;
   margin-bottom: 7px;
-  width: 100%;
+  width: fit-content;
   justify-content: flex-start;
   font-weight: 500;
 }
 
-.panel-turno-icon{
-  margin-right: 7px;
-  font-size: 24px;
+.panel-turno-texto{
+  text-align: start;
+  font-size: 16px;
+  color:white;
+}
+
+.panel-turno-head{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 @media screen and ( width > 768px ){
   .panel-container{
-    height: fit-content;
+    height: 600px;
     padding-bottom: 0px;
+    min-height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .panel-buttons-container{

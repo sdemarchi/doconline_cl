@@ -1,19 +1,18 @@
-import PagoCard from '../../components/PagoCard';
-import { FormInputState } from '../../components/FormInput';
+import PagoCard from '../../../components/PagoCard';
+import { FormInputState } from '../../../components/FormInput';
 import { useNavigate  } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import useTurno from '../../hooks/useTurno';
-import useAuth from '../../hooks/useAuth';
-import { getPrecios } from '../../data/turnero';
-import { aplicarCupon } from '../../data/turnero';
-import Chip from '../../components/Chip';
-import Spinner from '../../components/Spinner';
-import Contacto from '../../components/contacto/contacto';
-import { getGrowById , getGrowByCod } from '../../data/grows';
-import './pagos.css';
-import Card from '../../components/card/card';
-
-function Pagos() {
+import useTurno from '../../../hooks/useTurno';
+import useAuth from '../../../hooks/useAuth';
+import { getPrecios } from '../../../data/turnero';
+import { aplicarCupon } from '../../../data/turnero';
+import Chip from '../../../components/Chip';
+import Spinner from '../../../components/Spinner';
+import Contacto from '../../../components/contacto/contacto';
+import { getGrowById , getGrowByCod } from '../../../data/grows';
+import '../../pagos/pagos.css';
+import Card from '../../../components/card/card';
+function RegalarPago() {
     const {/* turno,*/ cuponValidado, setCuponValidado } = useTurno();
     const { setImporte } = useAuth();
 
@@ -122,7 +121,7 @@ function Pagos() {
     function pagar(precioFinal){
         localStorage.setItem('precio_transf',precioFinal);
         setImporte(precioTrans);
-        return navigate('/pagoTransf');
+        return navigate('/regalar-transf');
     }
         
     return (
@@ -177,7 +176,7 @@ function Pagos() {
             </Card>
 
             <div className='mb-0 mx-auto p-3 text-center'>
-                <button className='text-gray-500' onClick={() => navigate('/turno')} >Atrás</button>
+                <button className='text-gray-500' onClick={() => navigate('/regalar-a-un-amigo')} >Atrás</button>
             </div>
             </div>}
 
@@ -190,4 +189,4 @@ function Pagos() {
     )
 }
 
-export default Pagos
+export default RegalarPago;

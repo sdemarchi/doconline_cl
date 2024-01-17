@@ -22,6 +22,7 @@
   min-height: 500px;
   height:calc(100vh - 80px);
   background-color: white;
+ max-height: 800px;
 }
 
 

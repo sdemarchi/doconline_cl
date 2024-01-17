@@ -37,7 +37,12 @@ import Restablecer from './pages/restablecer/restablecer.jsx';
 import FormPassword from './pages/restablecer/formPassword.jsx';
 import RePassLayout from './layouts/RePassLayout.jsx';
 import GrowDetalles from './pages/grow-detalles/growDetalles.jsx';
-
+import TuGrow from './pages/tu-grow/tu-grow.jsx';
+import Regalar from './pages/regalar-tramite/regalar.jsx';
+import RegalarTransf from './pages/regalar-tramite/regalar-transf/regalar-transf.jsx';
+import RegalarPago from './pages/regalar-tramite/regalar-pago/regalar-pago.jsx';
+import RegalarFinalizar from './pages/regalar-tramite/regalar-finalizar/regalar-finalizar.jsx';
+ 
 const router = createBrowserRouter([
   {
     path: '/',
@@ -146,6 +151,22 @@ const router = createBrowserRouter([
         element: <TurnoSuccess />
       },
       {
+        path: '/regalar-a-un-amigo',
+        element: <Regalar/>
+      },      
+      {
+        path: '/regalar-transf',
+        element: <RegalarTransf/>
+      },      
+      {
+        path: '/regalar-pago/:nombre/:email',
+        element: <RegalarPago/>
+      },
+      {
+        path: '/regalar-finalizar/:codigo',
+        element: <RegalarFinalizar/>
+      },
+      {
         path: '/ayuda',
         element:<Ayuda/>
       },
@@ -156,6 +177,10 @@ const router = createBrowserRouter([
       {
         path: '/detallesGrow/:id',
         element:<GrowDetalles/>
+      },
+      {
+        path: '/tu-grow/:id',
+        element:<TuGrow/>
       }
     ]
   }

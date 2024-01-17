@@ -47,7 +47,8 @@ function LoginButton(props) {
 function MiniActionButtonRed(props) {
     return (
         <button
-            className="pl-2 pr-2 bg-red-500 text-white p-1 text-xs rounded-md cursor-pointer"
+        style={{maxHeight: '25px',fontFamily:" 'Montserrat', sans-serif", backgroundColor:'#EE4745'}}
+            className="pl-2 pr-2 text-white p-1 text-xs rounded-md cursor-pointer"
             onClick={props.onClick}
         >{props.value}</button>
     )

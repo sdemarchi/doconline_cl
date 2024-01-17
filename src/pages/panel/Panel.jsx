@@ -16,76 +16,87 @@ import {GrFormNext } from "react-icons/gr";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import Card from '../../components/card/card';
 import LinkCard from '../../components/link-card/link-card';
+import ColorCard from '../../components/color-card/color-card';
 
 function Panel() {
     const user = useOutletContext();
     const navigate = useNavigate();
     const [paciente, setPaciente] = useState({});
-    const [DatosCargados, setDatosCargados] = useState(false);
+    const [datosCargados, setDatosCargados] = useState(false);
     const [pacienteCargado, setPacienteCargado] = useState(false);
     const [growCargado, setGrowCargado] = useState(false); // eslint-disable-line
     const [turnoPaciente, setTurnoPaciente] = useState({});
     const [growAdmin, setGrowAdmin] = useState();
-    const {/* setFormCargado,*/ llenarFormulario } = useForm();
+    const {setFormCargado, llenarFormulario } = useForm(); // eslint-disable-line
     const formSuccess = JSON.parse(sessionStorage.getItem('form-success')) || false;
+    const fromLogin = sessionStorage.getItem('fromLogin') || false;
 
     async function cargarTurnoPaciente() {
         const response = await getTurnoPaciente(user.userId);
         setTurnoPaciente(response);
-        const fromLogin = sessionStorage.getItem('fromLogin');
-
-        if(response?.id  == 0 && fromLogin == 'true' && !growAdmin?.idgrow){
-            return navigate('/turno');
-        }
+        setPacienteCargado(true);
     }
 
     async function cancelarMiTurno() {
-        const response = await cancelarTurno(user.userId)
-        setTurnoPaciente(response)
+        const response = await cancelarTurno(user.userId);
+        setTurnoPaciente(response);
     }
 
     const subirScroll = () =>{
         window.scrollTo(0, 0);
     }
 
-    const getGrow = (email) => {
+    const getGrow = async (email) => {
         setGrowCargado(false);
         getGrowByEmail(email).then((resp)=>{
-            setGrowAdmin(resp);
             setGrowCargado(true);
-        });
+            sessionStorage.setItem('user-grow',JSON.stringify(resp) || 0);
+            sessionStorage.setItem('user-grow-id',JSON.stringify(resp));
+            cargarTurnoPaciente();
+            setGrowAdmin(resp);
+           });;
     }
 
     async function getPaciente() {
         perfil(user.userId).then((response)=>{
             setPaciente(response);
-            getGrow(response.email);
+            if(sessionStorage.getItem('user-grow-id') === null){
+               getGrow(response.email);
+            }else{
+                setGrowAdmin(JSON.parse(sessionStorage.getItem('user-grow')));
+                cargarTurnoPaciente();
+            }
             descargarFormulario(response.dni).then((resp)=>{
                 if(resp.error.code == 0){
                     llenarFormulario(resp.data, resp.patologias);
                 }
-                setPacienteCargado(true);
-                setDatosCargados(true);
             });
         }); 
     }
 
     useEffect(() => {
         subirScroll();
-        getPaciente()
-        cargarTurnoPaciente();
+        getPaciente();
     },[]) //eslint-disable-line
 
+    useEffect(() => {
+        const datosCargados_ = growCargado === true && pacienteCargado === true;
+        if(growAdmin?.idgrow && datosCargados_ === true){
+            return navigate('/tu-grow/'+growAdmin?.idgrow );
+        }else if(turnoPaciente?.id  == 0 && fromLogin == 'true' && !growAdmin?.idgrow && datosCargados_ === true){
+            return navigate('/turno');
+        };
+    },[growCargado,pacienteCargado]) //eslint-disable-line
+
     function logout() {
-        localStorage.removeItem('dc_userId')
-        localStorage.removeItem('dc_userName')
-        return navigate('/login')
+        localStorage.clear();
+        sessionStorage.clear();
+        return navigate('/login');
     }
 
     return (
-
         <>
-        {(!DatosCargados && !pacienteCargado)?
+        {!pacienteCargado && !datosCargados?
             <div className='panel-container'> <Spinner /></div>
         :
         <div className='panel-container'>
@@ -98,32 +109,28 @@ function Panel() {
                 </div>
             </Card>
 
-           {(growAdmin?.idgrow !== undefined) && 
-                <LinkCard title="Ver pacientes" href={'/estadisticas/'+growAdmin?.idgrow}>
-                    <p>Ver pacientes registrados con tu URL.</p>
+
+            {(growAdmin?.idgrow) && 
+                <LinkCard title="Tu Grow" href={'/tu-grow/'+growAdmin?.idgrow}>
+                    <p>Tienes un Grow vinculado a tu correo electronico.</p>
                 </LinkCard>
             }
 
-            {(growAdmin?.idgrow !== undefined) && 
-                <LinkCard title="Detalles del Grow" href={'/detallesGrow/'+growAdmin?.idgrow}>
-                    <p>Consulta o edita los detalles de tu Grow.</p>
-                </LinkCard>
-            }
+            <LinkCard title="Regalar a un amigo" href={'/regalar-a-un-amigo'}>
+                <p>Paga el tramite a un amigo o conocido.</p>
+            </LinkCard>
              
             <div className="turnos-container">
                 
             {turnoPaciente.id > 0 ?
                 <>
-                    <Card>
-                        <h3 className="panel-turno-titulo">
-                            <span className='panel-turno-icon'><IoIosCheckmarkCircle/></span> 
-                            Turno confirmado
-                        </h3> 
-                        <p className="panel-turno-texto">{turnoPaciente.detalle}</p>
-                        <div className='flex flex-row-reverse pt-1'>
+                    <ColorCard color1="#0E9FE1" color2="#45CFD4">
+                    <div className='panel-turno-head'>
+                            <h3 className="panel-turno-titulo">Turno confirmado</h3> 
                             <MiniActionButtonRed onClick={() => cancelarMiTurno()} value="Cancelar"/>
                         </div>
-                    </Card>
+                        <p className="panel-turno-texto">{turnoPaciente.detalle}</p>
+                    </ColorCard>
                 </>
                 :
                 <>
@@ -150,8 +157,14 @@ function Panel() {
      
             {(turnoPaciente.id > 0 && formSuccess) && 
                 <div className="panel-info">
-                    <InfoCard text={"El dia del turno nos pondremos en contacto mediante whatsapp."}/>
+                    <InfoCard text={"El dia del turno nos pondremos en contacto mediante WhatsApp."}/>
                 </div>
+            }
+
+            {(!growAdmin?.idgrow) && 
+                <LinkCard title='Registra tu Grow'>
+                    <p>Registra tu grow y recomienda a clientes que necesiten realizar el tramite.</p>
+                </LinkCard>
             }
 
             <div style={{display:"none"}} className="panel-contactanos-container">
@@ -162,13 +175,13 @@ function Panel() {
                 <button className="panel-cerrar-sesion" onClick={() => logout()} >Cerrar Sesión</button>
             </div>
 
-            <div className="main-contacto">
+         { !growAdmin?.idgrow &&  <div className="main-contacto">
                 <Contacto bottom='90px'/>
-            </div>
-
-            <Nav/>
-            
+            </div>}        
         </div>}
+        {growAdmin?.idgrow && <div style={{minHeight:'50px'}}>
+               <Nav idgrow={growAdmin?.idgrow}/>
+            </div>}
         </>
     )
 }

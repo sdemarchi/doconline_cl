@@ -5,10 +5,23 @@ input[type="text"], input[type="number"], input[type="date"], input[type="passwo
   font-family: 'Montserrat', sans-serif !important;
   height: 38px;
   border-width: 1px;
+  border-color:rgb(197, 194, 194);
+  border-radius: 4px;
 }
 
 input::placeholder {
   font-size: 14px !important;
+}
+
+.input-state{
+  margin: 21px 0;
+  margin-top:6px;
+  color:rgb(0, 0, 0) !important;
+  font-family: 'Montserrat', sans-serif !important;
+  height: 38px;
+  border:none;
+  border-radius: 4px;
+  background-color:rgb(239, 239, 239);
 }
 
 .input-label{

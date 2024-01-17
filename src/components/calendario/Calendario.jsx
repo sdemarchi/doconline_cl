@@ -48,7 +48,7 @@ function Calendario(props) {
                             dia={dia.dia} 
                             otroMes={!dia.enmes} 
                             disabled={!dia.activo } 
-                            turnos={(dia.fecha !== '2023-12-25' && dia.fecha !== '2024-01-01') ? dia.turnos : false}
+                            turnos={dia.turnos}
                             seleccionado={props.diaSeleccionado == dia.fecha}/>
                     ))}
                 </span>
