@@ -5,19 +5,22 @@ import { ActionButton } from '../../../components/Buttons';
 import NotificacionEmergente from '../../../components/notificacion-emergente/notificacion-emergente.jsx';
 import { InputState } from '../../../components/FormInput';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './regalar-finalizar.css';
+import { copyToClipboard } from '../../../utils/utilFunctions';
 import { FaRegCopy } from "react-icons/fa6";
 
 
 export default function RegalarSuccess(){
   const navigate = useNavigate();
+  const { codigo } = useParams();
   const [ notificacion, setNotificacion ] = useState(false);
-  const [ codigo , setCodigo ] = useState('#dFDF5G4');
 
   const copiarCodigo = () =>{
+    copyToClipboard(codigo);
     setNotificacion(true);
   }
+
 
   return (
     <div className="rf-container">

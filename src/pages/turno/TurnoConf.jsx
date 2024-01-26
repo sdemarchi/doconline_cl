@@ -1,25 +1,70 @@
-import { LinkButton } from '../../components/Buttons'
+import { ActionButton } from '../../components/Buttons';
+import ColorCard  from '../../components/color-card/color-card';
 import FormInput from '../../components/FormInput'
+import Title from '../../components/title/title';
+import { confirmarTurno } from '../../data/turnero';
+import { setGrowPaciente } from '../../data/pacientes';
+import PagosService from '../../data/pagos';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './turno.css';
 
 function TurnoConf() {
+    const turno = JSON.parse(sessionStorage.getItem('turno')) || JSON.parse(localStorage.getItem('turno'));
+    const pago = JSON.parse(sessionStorage.getItem('pago') || '{}');
+    const userData = JSON.parse(sessionStorage.getItem('user_data'));
+    const navigate = useNavigate();
+
+    const guardarTurno = () => {
+        const cuponSession = sessionStorage.getItem('cupon') || '';
+        const comprobante = sessionStorage.getItem('comprobante');
+
+        if(pago?.id){
+            
+            PagosService.setUtilizado(pago.id,true).then((resp)=>{
+                console.log(resp);
+                if(pago?.id_grow){
+                    setGrowPaciente(userData.id,pago.id_grow);
+                }
+            })
+        }
+    
+        confirmarTurno(turno, cuponSession, comprobante, pago.monto_final, userData.id).then((response)=>{
+            console.log(response);
+            if (response.error == 0) {
+                return navigate('/turno-success');
+            } 
+        });
+    }
+
+    useEffect(()=>{
+        if(pago?.comprobante){
+            sessionStorage.setItem('comprobante', pago.comprobante);
+        }
+    },[]);
+
     return (
-        <div className="turno-container">
-            {/*<img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>*/}
-            <h6 className="text-gray-500 text-xs font-semibold pt-10">Confirmación de Turno</h6>
-            <div className="block w-full p-2 my-1 border-input focus:border-input border-2 text-xs">
-                <strong>Lugar:</strong>Whatsapp<br/>
-                <strong>Turno:</strong>10:00<br/>
-                Miércoles 10 de Mayo - 2023
-                <strong>Dr. Joaquín Jozami</strong>
+        <div className="turno-conf-container">
+            <Title>Confirmar turno</Title>
+            <ColorCard color1='#6BDF5B' color2='#60E94D'>
+                <div className="turno-conf-pago">       
+                    <p>Este turno ya ha sido pagado.</p>
+                </div>
+            </ColorCard>
+        
+            <div className="turno-conf-info">
+                <p><strong>Prestador:</strong>Dr. Joaquin Jozami</p>
+                <p><strong>Fecha:</strong>{turno.fecha}</p>
+                <p><strong>Hora:</strong>{turno.hora}</p>
             </div>    
-            <h6 className="text-gray-500 text-xs font-semibold">Recibirás un e-mail con los
-            datos de tu formulario. Revisa que estén en orden. Cualquier modificación se podrá realizar
-            durante la consulta médica.</h6>
-            <div className='my-10'><FormInput label="Adjuntá tu comprobante de pago" placeholder="Seleccionar archivo" /></div>
-            <div className='pt-2'><LinkButton to="/turno-success" value="Enviar" /></div>
+
+            <h6 className="text-gray-500 text-xs font-semibold">
+                
+            </h6>
+            
+            <div className='pt-2'><ActionButton value="Confirmar Turno" onClick={()=>guardarTurno()} /></div>
         </div>
     )
 }
 
-export default TurnoConf
+export default TurnoConf;

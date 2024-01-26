@@ -1,5 +1,3 @@
-import Card from '../../components/card/card';
-import Title from '../../components/title/Title';
 import Nav from '../../components/nav/nav';
 import LinkCard from '../../components/link-card/link-card';
 import { useParams } from 'react-router-dom';

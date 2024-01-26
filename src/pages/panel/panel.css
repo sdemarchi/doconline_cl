@@ -26,6 +26,20 @@
   margin-top: 20px;
 }
 
+.panel-cancelar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color:rgba(202, 202, 202, 0.204);
+  height: 20px;  
+  width: 20px;
+  border:none;
+  border-radius:50%;
+  font-size: 18px;
+  color:rgb(255, 255, 255);
+  font-weight: 600;
+}
+
 .panel-titulo{
   font-size: 22px;
   font-weight: 600;

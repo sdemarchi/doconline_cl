@@ -7,7 +7,7 @@ const NotificacionEmergente = (props) => {
   if(props.show === true){
     const timer = setTimeout(() => {
       props.setShow(false);
-    }, 2500);
+    }, 3000);
 
     return () => {
       clearTimeout(timer);
@@ -17,10 +17,10 @@ const NotificacionEmergente = (props) => {
 
   return (
 <>
-{  props.show && <div className="ne-container"> 
+{ props.show && <div className="ne-container"> 
       <div className="ne-window">
         <p className="ne-text">{props.text}</p>
-        <button className="ne-button">Ok</button>
+        <button onClick={()=>props.setShow(false)} className="ne-button">Ok</button>
       </div>
     </div>}
 

@@ -15,6 +15,7 @@ import Contacto from '../../components/contacto/contacto';
 import './pagos.css';
 import Card from '../../components/card/card';
 import toBase64 from '../../utils/base64';
+import PagosService from '../../data/pagos';
 
 
 function PagoTransf() {
@@ -22,9 +23,9 @@ function PagoTransf() {
     const { turno, cuponValidado, comprobante, setComprobante } = useTurno();//eslint-disable-line
  
     //-- VARIABLES DE SESION PARA EVITAR PERDER DATOS AL ACTUALIZAR ---------
-        const importeSession = localStorage.getItem("precio_transf");
-        const turnoSession = JSON.parse(localStorage.getItem("turno"));
-        const cuponSession = JSON.parse(localStorage.getItem("cupon_validado"));
+    const importeSession = localStorage.getItem("precio_transf");
+    const turnoSession = JSON.parse(localStorage.getItem("turno"));
+    const cuponSession = JSON.parse(localStorage.getItem("cupon_validado"));
     //-----------------------------------------------------------------------
 
     const user = useOutletContext();
@@ -41,7 +42,7 @@ function PagoTransf() {
 
     const subirArchivo = async (e) => {
         setEnviando(true);
-        setFile(e.target.files[0])
+        setFile(e.target.files[0]);
         const url = `${import.meta.env.VITE_API_URL}/turnero.comprobante`;
         const data = new FormData();
         data.append("file", e.target.files[0]);
@@ -91,20 +92,39 @@ function PagoTransf() {
     async function guardarTurno() {
         setDatosCargados(false);
 
-        if(sessionStorage.getItem('growId') !== undefined && sessionStorage.getItem('growId') !== null){
-            const idgrow = sessionStorage.getItem('growId');
-            setGrowPaciente(user.userId,idgrow)
-        }
-        // SOLICITUD ORIGINAL: 
-        /* const response = await confirmarTurno(turno, cuponValidado, comprobante, importe, user.userId);*/
+        const pagoSession = JSON.parse(sessionStorage.getItem('pago'));
+        const userData = JSON.parse(sessionStorage.getItem('user_data'));
 
-        // SOLICITUD MODIFICADA:  31/08/23 para corregir problema de perdida de datos al actualizar
-        //alert(JSON.stringify(turnoSession) + JSON.stringify(cuponSession) || JSON.stringify(cuponValidado) + JSON.stringify(comprobante) + JSON.stringify(importeSession) + JSON.stringify(user.userId));
-        const response = await confirmarTurno(turnoSession, cuponSession || cuponValidado, comprobante, importeSession, user.userId);
-        console.log(response);
-        if (response.error == 0) {
-            return navigate('/turno-success');
-        } 
+        const pago = {
+            id_pagador: userData.id,
+            id_paciente: userData.id,
+            id_grow: pagoSession.grow.idgrow,
+            nombre_paciente: userData.nombre,
+            email_paciente: userData.email,
+            email_pagador: userData.email,
+            utilizado: true,
+            monto: pagoSession.precio,
+            descuento: pagoSession.descuento,
+            monto_final: pagoSession.precioFinal,
+            comprobante:comprobante
+        };
+
+        console.log(JSON.stringify(pago));
+
+        PagosService.crear(pago).then((resp)=>{
+            console.log(resp);
+            if(sessionStorage.getItem('growId') !== undefined && sessionStorage.getItem('growId') !== null){
+                const idgrow = sessionStorage.getItem('growId');
+                setGrowPaciente(user.userId,idgrow);
+            }
+
+            confirmarTurno(turnoSession, cuponSession || cuponValidado, comprobante, importeSession, user.userId,resp.id).then((response)=>{
+                console.log(response);
+                if (response.error == 0) {
+                    return navigate('/turno-success');
+                }}
+            );
+        })
     }
 
     async function copiarAlPortapapeles(texto){
@@ -115,7 +135,6 @@ function PagoTransf() {
     useEffect(() => {
         sessionStorage.setItem('comprobante-enviado',false);
         cargarDatosTransf();
-
     }, []) 
 
     return (
@@ -182,7 +201,8 @@ function PagoTransf() {
             </div>
            </Card> 
 
-            {uploadResult == 0 ? '' :
+            {
+            uploadResult == 0 ? '' :
                 <div className='pb-4'>
                     {uploadResult != 1 &&
                         <h6 className="text-red-600 text-sm font-bold text-center pb-2">

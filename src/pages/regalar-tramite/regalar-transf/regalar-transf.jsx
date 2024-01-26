@@ -15,15 +15,17 @@ import Contacto from '../../../components/contacto/contacto';
 import '../../pagos/pagos.css';
 import Card from '../../../components/card/card';
 import toBase64 from '../../../utils/base64';
+import PagosService from '../../../data/pagos';
+
 
 
 function RegalarTransf() {
     const {importe} = useAuth();//eslint-disable-line
 
     //-- VARIABLES DE SESION PARA EVITAR PERDER DATOS AL ACTUALIZAR ---------
-    const importeSession = localStorage.getItem("precio_transf");
-    const turnoSession = JSON.parse(localStorage.getItem("turno"));
-    const cuponSession = JSON.parse(localStorage.getItem("cupon_validado"));
+    const importeSession = sessionStorage.getItem("precio_transf");
+    const turnoSession = JSON.parse(sessionStorage.getItem("turno"));
+    const cuponSession = JSON.parse(sessionStorage.getItem("cupon_validado"));
     //-----------------------------------------------------------------------
 
     const user = useOutletContext();
@@ -37,6 +39,7 @@ function RegalarTransf() {
     const [mostrarNotification, setMostrarNotification] = useState(false);
     const [file , setFile] = useState(); //eslint-disable-line
     const [comprobanteImagen, setComprobanteImagen] = useState();
+
 
     const subirArchivo = async (e) => {
         setEnviando(true);
@@ -89,15 +92,28 @@ function RegalarTransf() {
         setDatosCargados(true);
     }
 
-    async function enviarPago() {
+    async function enviarPago(){
         setDatosCargados(false);
+        const pagoSession = JSON.parse(sessionStorage.getItem('pago'));
+        const userData = JSON.parse(sessionStorage.getItem('user_data'));
+       
+        const pago = {
+            id_pagador: userData.id,
+            id_grow:pagoSession.grow.idgrow,
+            nombre_paciente: sessionStorage.getItem('nombre_beneficiario'),
+            email_paciente: sessionStorage.getItem('email_beneficiario'),
+            email_pagador: userData.email,
+            utilizado:false,
+            monto: pagoSession.precio,
+            descuento: pagoSession.descuento,
+            monto_final:pagoSession.precioFinal,
+        };
 
-        if(sessionStorage.getItem('growId') !== undefined && sessionStorage.getItem('growId') !== null){
-            const idgrow = sessionStorage.getItem('growId');
-            setGrowPaciente(user.userId,idgrow);
-        }
+        console.log(JSON.stringify(pago));
 
-        navigate('/regalar-finalizar/456851')
+        PagosService.crear(pago).then((resp)=>{
+            navigate('/regalar-finalizar/' + resp.codigo)
+        })
     }
 
     async function copiarAlPortapapeles(texto){
@@ -153,7 +169,7 @@ function RegalarTransf() {
                             <span className="mt-2 text-base leading-normal" style={{fontSize:'18px',fontWeight:'600'}}>Adjuntar Comprobante</span>
                             <input type='file' className="hidden" onChange={subirArchivo} />
                         </label>}
-                        { !enviando && comprobanteImagen  &&
+                        { !enviando && comprobanteImagen &&
                         <>
                         <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around'}} >
                             <div>
@@ -186,7 +202,7 @@ function RegalarTransf() {
             <div className="mt-10">
                 <ActionButton value="Continuar" onClick={() => enviarPago()}/>
                 <div className='mb-0 mx-auto p-3 text-center'>
-                    <button className='text-gray-500' onClick={() => navigate('/regalar-pago/dsdf/sdfsdf')} >Atrás</button>
+                    <button className='text-gray-500' onClick={() => navigate('/regalar-pago')} >Atrás</button>
                 </div>
             </div>
 

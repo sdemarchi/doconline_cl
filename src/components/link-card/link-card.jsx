@@ -7,13 +7,14 @@ export default function LinkCard(props){
     const navigate = useNavigate();
 
     return(
-        <div className={props.animate && 'animation-card'} ref={props.ref}>
-            <div onClick={()=>navigate(props.href)} className='link-card-container' style={{textAlign:'center !important'}}>
+        <>
+      {props.show !== false &&  <div className={props.animate && 'animation-card'} ref={props.ref}>
+            <div onClick={props.href?()=>navigate(props.href):()=>props.onClick()} className='link-card-container' style={{textAlign:'center !important'}}>
             <div className="link-card-icon"><RiArrowRightSLine/></div>
                 {props.title && <h2 className={titleClass}>{props.title}</h2>}
                 {props.children}
             </div>
-        </div>
-
+        </div>}
+        </>
     )
 }

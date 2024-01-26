@@ -12,11 +12,13 @@ function TurnoSuccess() {
     const turnoSession = JSON.parse(localStorage.getItem("turno"));
     const comprobanteEnviado = JSON.parse(localStorage.getItem("comprobante-enviado"));
     const formularioCompletado = JSON.parse(localStorage.getItem("form-success"));
+    const pago = JSON.parse(sessionStorage.getItem("pago")|| {});
+
 
     return (
         <div className="turno-container">
             <Card>
-            {comprobanteEnviado ? 
+            {comprobanteEnviado || (pago.id && (pago.id_paciente !== pago.id_pagador)) ? 
             <>
                 {/*<img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>*/}
                 <h1 className='font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-grad-green to-grad-blue' style={{fontSize:'30px'}}>FELICITACIONES<br />TURNO CONFIRMADO</h1>
@@ -29,8 +31,8 @@ function TurnoSuccess() {
             <img className="mx-auto w-14 pt-8 opacity-90" src={icon}></img>
             </> 
             }
-            <div className="block w-full my-8 p-1 border-input focus:border-input border-2 text-center rounded-md ">
-                <h4 className="text-gray-500 text-sm font-bold pt-1">{turno.detalle || turnoSession.detalle}</h4>
+            <div className="turno-success-mensaje">
+                <h4 className="text-sm font-bold pt-1">{turno.detalle || turnoSession.detalle}</h4>
             </div>
             
             { formularioCompletado === true ?

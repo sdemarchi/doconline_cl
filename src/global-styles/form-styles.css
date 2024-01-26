@@ -5,8 +5,11 @@ input[type="text"], input[type="number"], input[type="date"], input[type="passwo
   font-family: 'Montserrat', sans-serif !important;
   height: 38px;
   border-width: 1px;
-  border-color:rgb(197, 194, 194);
   border-radius: 4px;
+}
+
+.grey-input{
+  border-color:rgb(197, 194, 194) !important;
 }
 
 input::placeholder {

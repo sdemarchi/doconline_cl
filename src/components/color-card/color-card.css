@@ -7,16 +7,21 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+.color-card-container *{
+  text-align: left;
+}
+
 .color-card-title{
   font-size: 16px;
   font-weight: 600;
   font-family: 'Montserrat', sans-serif;
-  color:rgba(0, 0, 0, 0.809);
+  color:inherit;
+  text-align: left;
 }
 
 .animation-card{
   animation-name: cardAnimation;
-  animation-duration: 0.3s;
+  animation-duration: 0.7s;
 }
 
 .color-card-title-center{
@@ -25,11 +30,9 @@
 
 @keyframes cardAnimation{
   0%{
-    height: 0;
-    opacity: 0;
+    opacity: 0%;
   }
   100%{
-    height: 70px;
     opacity: 100%;
   }
 }

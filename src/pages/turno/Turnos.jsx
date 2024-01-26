@@ -9,6 +9,7 @@ import useTurno from '../../hooks/useTurno';
 import Spinner from '../../components/Spinner';
 import Contacto from '../../components/contacto/contacto';
 import Card from '../../components/card/card';
+import PagosService from '../../data/pagos';
 import './turno.css';
 
 function Turnos() {
@@ -34,6 +35,9 @@ function Turnos() {
     const [diaSeleccionado, setDiaSeleccionado] = useState();
     const [descuento , setDescuento] = useState();  //eslint-disable-line
     const elementRef = useRef(null);
+    const [ pagado, setPagado] = useState(false);
+    const [pagoRegistrado, setPagoRegistrado] = useState();
+    
     
     async function cargarPrestadores(){
         const response = await getPrestadores();
@@ -120,7 +124,12 @@ function Turnos() {
 
         setTurno(turnoObject);
         localStorage.setItem('turno', JSON.stringify(turnoObject));
-        navigate('/pagos');
+
+        if(pagado){
+            navigate('/turno-conf');
+        }else{
+            navigate('/pagos');
+        }
     }
 
     const seleccionarTurno = (button,turno) => {
@@ -148,12 +157,24 @@ function Turnos() {
         window.scrollTo(0, 0);
     }
 
+    
+    const getPago = (email) => {
+        PagosService.buscarPorEmail(email).then((resp)=>{
+            setPagoRegistrado(resp);
+            
+            if(resp.utilizado === 0){
+                sessionStorage.setItem('pago',JSON.stringify(resp));
+                setPagado(true);
+            }
+        });
+    }
 
     useEffect(() => {
-        if(sessionStorage.getItem('fromLogin') == 'true'){
+        if(sessionStorage.getItem('fromLogin') === 'true'){
             sessionStorage.removeItem('fromLogin');
         }
 
+        getPago(sessionStorage.getItem('email'));
         subirScroll();
         cargarPrestadores().then((response)=>{
             if(prestador == 0){
@@ -164,7 +185,7 @@ function Turnos() {
           }
         );
 
-    }, [cargando])//eslint-disable-line
+    }, [])//eslint-disable-line
 
     return (
         <div className="turno-container">

@@ -1,5 +1,5 @@
 import PagoCard from '../../../components/PagoCard';
-import { FormInputState } from '../../../components/FormInput';
+import { InputState } from '../../../components/FormInput';
 import { useNavigate  } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useTurno from '../../../hooks/useTurno';
@@ -12,6 +12,8 @@ import Contacto from '../../../components/contacto/contacto';
 import { getGrowById , getGrowByCod } from '../../../data/grows';
 import '../../pagos/pagos.css';
 import Card from '../../../components/card/card';
+import './regalar-pago.css';
+
 function RegalarPago() {
     const {/* turno,*/ cuponValidado, setCuponValidado } = useTurno();
     const { setImporte } = useAuth();
@@ -22,35 +24,29 @@ function RegalarPago() {
     const [ precioMP, setPrecioMP ] = useState(0);
     const [ cupon, setCupon ] = useState('');
     const [ importeCupon, setImporteCupon ] = useState(0);
-    const [ cargando ] = useState(0);
     const [ datosCargados, setDatosCargados ] = useState(false);
     const [ showMsg , setShowMsg ] = useState(false);
     const [ grow , setGrow ] = useState();
-
     var cuponSession = {cupon: '', importe:0};
 
     async function cargarPrecios(){
         const response = await getPrecios();
 
-        if(localStorage.getItem("cupon_validado")){
-            cuponSession = JSON.parse(localStorage.getItem("cupon_validado"));
+        if(sessionStorage.getItem("cupon_validado")){
+            cuponSession = JSON.parse(sessionStorage.getItem("cupon_validado"));
         }
         
-        if(cuponSession.importe == 0){
-            //alert('no cupon')
+        if(cuponSession.importe === 0){ //no hay cupon
             setPrecioTrans(response.precioTransf);
-            localStorage.setItem("precio_transf", response.precioTransf);
-            setCuponValidado(cuponSession);
-
+            sessionStorage.setItem("precio_transf", response.precioTransf);
             setPrecioMP(response.precioMP);
-            localStorage.setItem("precio_mp", response.precioTransf);
+            sessionStorage.setItem("precio_mp", response.precioTransf);
             
         }else{
             setPrecioTrans(response.precioTransf - cuponValidado.importe);
-            localStorage.setItem("precio_transf", response.precioTransf - cuponValidado.importe);
-
+            sessionStorage.setItem("precio_transf", response.precioTransf - cuponValidado.importe);
             setPrecioMP(response.precioMP - cuponValidado.importe);
-            localStorage.setItem("precio_mp", response.precioTransf - cuponValidado.importe);
+            sessionStorage.setItem("precio_mp", response.precioTransf - cuponValidado.importe);
         }
 
         setDatosCargados(true);
@@ -66,17 +62,13 @@ function RegalarPago() {
 
             if(response.valido){
                 setImporteCupon(response.descuento);
-    
                 setPrecioMP(precioMP - response.descuento);
-                localStorage.setItem("precio_mp",precioMP - response.descuento); //modifica el precio de mercadopago en session storage también
-                
+                sessionStorage.setItem("precio_mp",precioMP - response.descuento); //modifica el precio de mercadopago en session storage también
                 setPrecioTrans(precioTrans - response.descuento);
-                localStorage.setItem("precio_transf", precioTrans - response.descuento); //modifica el precio de transferencia ...
-    
+                sessionStorage.setItem("precio_transf", precioTrans - response.descuento); //modifica el precio de transferencia ...
                 let cuponValidadoObject = {cupon: cupon, importe:response.descuento}; // guarda cupon en variable para usarse en las dos siguientes lineas
-                
                 setCuponValidado(cuponValidadoObject);
-                localStorage.setItem("cupon_validado",JSON.stringify(cuponValidadoObject)); //convierto el objeto en string para enviarlo al session storage sin modificar sus propiedades, pudiendo luego volverlo a convertir en el mismo objeto 
+                sessionStorage.setItem("cupon_validado",JSON.stringify(cuponValidadoObject)); //convierto el objeto en string para enviarlo al session storage sin modificar sus propiedades, pudiendo luego volverlo a convertir en el mismo objeto 
                 
                 setShowMsg(false);
     
@@ -85,7 +77,6 @@ function RegalarPago() {
             }
         }
     }
-
     
     async function getGrow(){
         if(sessionStorage.getItem('growId')){
@@ -99,7 +90,7 @@ function RegalarPago() {
         setDatosCargados(false);
         setImporteCupon(0)
         setCuponValidado({cupon: '', importe:0});
-        localStorage.setItem("cupon_validado",JSON.stringify({cupon: '', importe:0}));
+        sessionStorage.setItem("cupon_validado",JSON.stringify({cupon: '', importe:0}));
         cargarPrecios();
     }
 
@@ -110,16 +101,23 @@ function RegalarPago() {
         setImporteCupon(cuponValidado.importe);
         setPrecioMP(precioMP - cuponValidado.importe);
         setPrecioTrans(precioTrans - cuponValidado.importe);
-        localStorage.setItem("precio_transf", precioTrans - cuponValidado.importe);
+        sessionStorage.setItem("precio_transf", precioTrans - cuponValidado.importe);
         if(sessionStorage.getItem('growid') !== undefined && sessionStorage.getItem('growid') !== null){
             const idgrow = sessionStorage.getItem('growid');
             getGrow(idgrow);
         }
-    }, [cargando])//eslint-disable-line
+    }, [])//eslint-disable-line
     
 
     function pagar(precioFinal){
-        localStorage.setItem('precio_transf',precioFinal);
+        const pago = {
+            precioFinal:precioFinal,
+            precio:precioTrans,
+            descuento: precioTrans - precioFinal,
+            cupon:cupon,
+            grow:grow
+        }
+        sessionStorage.setItem('pago',JSON.stringify(pago));
         setImporte(precioTrans);
         return navigate('/regalar-transf');
     }
@@ -150,16 +148,15 @@ function RegalarPago() {
                         </>
                         :
                         <>
-                        <FormInputState 
+                        <InputState 
                             id="turno"
                             value={cupon}
-                            onChange={ e => setCupon(e.target.value)}
-                            placeholder="A-123456"
-                            rounded
+                            setState={setCupon}
+                            placeholder="Ingresa un cupón"
                         /> 
 
                         {showMsg && <p className="pagos-error-msg">El cupón ingresado no es válido</p>}
-                        <button onClick={() => cupon && validarCupon()} className='pagos-aplicar-button'>Aplicar Cupón</button>
+                        <button onClick={() => cupon && validarCupon()} className='regalar-cupon-button'>Aplicar Cupón</button>
                     </>
                     }
                 </>
@@ -167,7 +164,8 @@ function RegalarPago() {
             }
         
             <Card>
-                <PagoCard medio="Transferencia" 
+                <PagoCard 
+                    medio="Transferencia" 
                     importe={sessionStorage.getItem("precio_transf") || precioTrans} 
                     descuento={importeCupon}
                     descuentoPorc={grow?.descuento}

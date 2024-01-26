@@ -147,7 +147,7 @@ function InputState(props) {
                 id={ props.id }
                 type={ props.type || "text" }
                 maxLength={ props.maxLength }
-                className="block w-full p-2 bg-white border-input focus:border-input"
+                className="block w-full p-2 bg-white border-input focus:border-input grey-input"
                 placeholder={ props.placeholder }
                 defaultValue={ props.defaultValue }
                 onChange = {(e)=> props.setState(e.target.value)}

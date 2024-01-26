@@ -63,7 +63,7 @@ export async function excedeMargen(prestador){
     return result
 }
 
-export async function confirmarTurno(turno, cupon, comprobante, importe, usuarioId){
+export async function confirmarTurno(turno, cupon, comprobante, importe, usuarioId,pago_id){
     const url = `${import.meta.env.VITE_API_URL}/turnero.confirmar`;
     const data = {
         fecha:turno.fecha,
@@ -73,7 +73,8 @@ export async function confirmarTurno(turno, cupon, comprobante, importe, usuario
         cupon:cupon.cupon,
         importe:importe,
         descuento:cupon.importe,
-        comprobante: comprobante
+        comprobante: comprobante,
+        pago_id:pago_id
     }
     console.log(data)
 

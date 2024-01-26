@@ -8,6 +8,25 @@
   padding-top:20px;
 }
 
+.turno-conf-container{
+  padding: 15px;
+  font-family: 'Montserrat', sans-serif;
+  color:rgb(24, 24, 24);
+  font-family: 15px;
+  font-weight: 500;
+}
+
+.turno-conf-container strong{
+  padding-right:15px;
+}
+
+.turno-conf-pago{
+  text-align: start;
+  font-weight: 500;
+  color:white;
+  font-size: 17px;
+}
+
 .turno-contacto{
   position:fixed;
   bottom:30px;
@@ -64,6 +83,28 @@
   font-family: 'Montserrat', sans-serif;
   margin-top: 7px;
 }
+
+.turno-conf-info{
+  background-color:#e4e4e4b6;
+  padding:15px;
+  border-radius:8px;
+  margin-bottom:20px;
+}
+
+.turno-success-mensaje{
+  background-color: rgb(236, 236, 236);
+  border-radius: 8px;
+  padding:10px 15px;
+  margin:30px 0;
+}
+
+.turno-success-mensaje h4{
+  font-size: 16px;
+  color:rgb(23, 23, 23);
+  line-height: 25px;
+}
+
+
 
 @keyframes turnos {
   0%{

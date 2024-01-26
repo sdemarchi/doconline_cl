@@ -4,7 +4,7 @@ import Info from '../../components/info/Info';
 import Card from '../../components/card/card';
 import { ActionButton } from '../../components/Buttons';
 import { InputState } from '../../components/FormInput';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Regalar(){
@@ -13,16 +13,30 @@ export default function Regalar(){
   const [ nombre, setNombre ] = useState();
   const [ email, setEmail ] = useState();
 
+  const [ errorMensaje ,setErrorMensaje ] = useState();
   const [ showError, setShowError ] = useState();
 
   const continuar = () => {
     if((nombre && nombre !== '') && (email && email !== '') ){
-      navigate('/regalar-pago/' + nombre + '/' + email);
+      if(validarEmail(email)){
+        sessionStorage.setItem('nombre_beneficiario',nombre);
+        sessionStorage.setItem('email_beneficiario',email);
+
+        navigate('/regalar-pago');
+      }else{
+        setErrorMensaje('Ingresa un email valido.');
+        setShowError(true);
+      }
     }else{
+      setErrorMensaje('Los campos son obligatorios.');
       setShowError(true);
     }
   }
 
+  const validarEmail = (email) => {
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regexEmail.test(email);
+  };
 
   return (
     <div className='regalar-container'>
@@ -33,7 +47,7 @@ export default function Regalar(){
             <InputState setState={setNombre} label="Nombre del beneficiario"/>
             <InputState setState={setEmail} label="Email del beneficiario"/>
 
-            {showError && <p style={{fontSize:'14px',color:'red'}}>Los campos son obligatorios.</p>}
+            {showError && <p style={{fontSize:'14px',color:'red'}}>{errorMensaje}</p>}
           </Card>
         </div>
   

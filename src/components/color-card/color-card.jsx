@@ -6,16 +6,18 @@ export default function ColorCard(props) {
     const cardRef = useRef();
 
     const gradientStyle = {
-        background: `linear-gradient(to right, ${props.color1}, ${props.color2})`,
+        background: `linear-gradient(60deg, ${props.color1}, ${props.color2})`,
         textAlign: 'center',
     };
 
     return (
-        <div className={props.animate ? 'animation-card' : ''} ref={cardRef}>
-            <div className='color-card-container' style={gradientStyle}>
+        <>
+       {props.show !== false && <div className={props.animate ? 'animation-card' : ''} ref={cardRef}>
+            <div className='color-card-container' style={props.color?{...gradientStyle, color:props.color}:gradientStyle}>
                 {props.title && <h2 className={titleClass}>{props.title}</h2>}
                 {props.children}
             </div>
-        </div>
+        </div>}
+    </>    
     );
 }

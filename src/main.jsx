@@ -159,7 +159,7 @@ const router = createBrowserRouter([
         element: <RegalarTransf/>
       },      
       {
-        path: '/regalar-pago/:nombre/:email',
+        path: '/regalar-pago',
         element: <RegalarPago/>
       },
       {
