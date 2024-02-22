@@ -4,7 +4,7 @@ import { ActionButton } from '../../components/Buttons';
 import Calendario from '../../components/calendario/Calendario';
 import { getPrestadores, getCalendario, /*getTurno,*/ getTurnos, excedeMargen } from '../../data/turnero';
 import { useEffect,  useRef, useState } from 'react';
-import {CustomSelect} from '../../components/Select';
+import {CustomSelect} from '../../components/select/Select';
 import useTurno from '../../hooks/useTurno';
 import Spinner from '../../components/Spinner';
 import Contacto from '../../components/contacto/contacto';
@@ -188,85 +188,79 @@ function Turnos() {
     }, [])//eslint-disable-line
 
     return (
-        <div className="turno-container">
+        <div className="turno-container page">
 
         { !datosCargados && <Spinner />}
         { datosCargados &&
 
-        <div className="turnos-container">
+        <div>
             <div className='text-center' style={{textAlign:'center', paddingBottom:'15px'}}>
               <h2 className="black-title">Solicitar turno</h2>
             </div>
 
+            <div className="turno-content">
+                <div className="turno-row">
+                    <Card title='Seleccionar prestador' disabledBorder>
+                        <div className="turno-selector">
+                            <CustomSelect
+                                id="prestador" 
+                                datos={prestadores}
+                                value={1}
+                                placeholder='Seleccione un prestador' 
+                                onChange={(event) => prestadorSeleccionado(event.target.value)}
+                                responsive
+                            />
+                        </div>
+                    </Card>
 
-            <Card title='Seleccionar prestador'>
-                <div className="turno-selector">
-                    <CustomSelect
-                        id="prestador" 
-                        datos={prestadores}
-                        value={1}
-                        placeholder='Seleccione un prestador' 
-                        onChange={(event) => prestadorSeleccionado(event.target.value)}
-                    />
-                </div>
-            </Card>
+                    <Card title='Seleccionar día' disabledBorder>
+                        {/*<h6 className="text-green-500 font-semibold text-xs ps-3">En color verde los días disponibles</h6>*/}
+                        { !calendarioCargado && <div className="calendario-spinner-contenedor"> <Spinner/> </div>}
+                        { calendarioCargado &&
+                        
+                        <Calendario 
+                            calendario={ calendario } 
+                            mes={ mes } 
+                            anio={ anio } 
+                            sumar={ () => sumarMes() } 
+                            restar={ () => restarMes() }
+                            select={ (fecha) => selectDia(fecha) } 
+                            diaSeleccionado = { diaSeleccionado }
+                        /> 
+                        }
 
-            <Card title='Seleccionar día'>
-                {/*<h6 className="text-green-500 font-semibold text-xs ps-3">En color verde los días disponibles</h6>*/}
-                { !calendarioCargado && <div className="calendario-spinner-contenedor"> <Spinner/> </div>}
-                { calendarioCargado &&
-                
-                <Calendario 
-                    calendario={ calendario } 
-                    mes={ mes } 
-                    anio={ anio } 
-                    sumar={ () => sumarMes() } 
-                    restar={ () => restarMes() }
-                    select={ (fecha) => selectDia(fecha) } 
-                    diaSeleccionado = { diaSeleccionado }
-                /> 
-                }
+                    </Card>
 
-            </Card>
-
-            {turnos.length > 0 &&
-               <Card title='Seleccionar horario'>
-                    <div className="turno-horarios-container">
-                        {turnos?.map( (turno,key) => (
-                        turno.hora !== '00:00' && <button key={key} onClick={()=>seleccionarTurno(key,turno)} className={isSelectedClass(key)}>{turno.hora} hs</button>
-                        ))}
                     </div>
-                </Card>
-            }
+                    <div className="turno-row">
+                        <div className="turno-row-hours">
 
+                            {turnos.length == 0 && <p className="turno-row-msj display-pc">No has seleccionado una fecha.</p>} 
 
-                { turnoDesc && <Card ref={elementRef} title='Detalles del turno' animate>
-                    <p className='turno-detalles-text'>{ turnoDesc }</p>
-                </Card>}
+                            <Card show={turnos.length > 0} title='Seleccionar horario' disabledBorder>
+                                <div className="turno-horarios-container">
+                                    {turnos?.map( (turno,key) => (
+                                    turno.hora !== '00:00' && <button key={key} onClick={()=>seleccionarTurno(key,turno)} className={isSelectedClass(key)}>{turno.hora} hs</button>
+                                    ))}
+                                </div>
+                            </Card>
 
-            {/*<h6 className="input-label mt-5">Confirmar Turno</h6>
-            {!cargandoTurno ? 
-            <>
-            <textarea disabled
-                className="block w-full p-1 my-1 border-input focus:border-input border-2 text-xs text-gray-500"
-                value={ turnoDesc }
-            ></textarea> 
-            </>
-            : <div style={{height:"52px",width:"100%",display:"flex",color:"#4E4E4E",alignItems:"center",justifyContent:"center"}}>Cargando...</div>
-            }*/}
+                            <Card show={turnoDesc !=''} ref={elementRef} title='Detalles del turno' disabledBorder animate>
+                                <p className='turno-detalles-text'>{ turnoDesc }</p>
+                            </Card>
 
-            <div className='pt-4'>
+                        </div>
 
-                <ActionButton 
-                    onClick={() => turnoDesc != '' ? confirmarTurno() : {}} 
-                    value="Continuar" 
-                />
+                        <div className='pt-4' style={turnoDesc == '' ? {opacity:'20%'}:{}}>
+                            <ActionButton onClick={() => turnoDesc != '' ? confirmarTurno() : {}} value="Continuar" />
+                        </div>
 
-            </div>
-            <div className='mx-auto p-3 text-center'>
-                <button className='text-gray-500' onClick={() => navigate('/panel')}>Volver</button>
-            </div>
+                        <div className='mx-auto p-3 text-center'>
+                            <button className='text-gray-500' onClick={() => navigate('/panel')}>Volver</button>
+                        </div>
 
+                    </div>
+                </div>
             </div>
             }
 

@@ -64,11 +64,7 @@
 
 @media only screen and (width > 768px) {
   .nav-container{
-    position:relative;
-    height:60px;
-    box-shadow: 2px -2px 4px 3px rgba(0, 0, 0, 0.107);
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
+    display:none;
   }
   
 }

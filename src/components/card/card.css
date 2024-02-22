@@ -1,10 +1,11 @@
 .card-container{
-  box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.16);
-  border-radius: 8px;
   padding:15px 15px;
   background-color: white;
-  margin-bottom: 17px;
   font-family: 'Montserrat', sans-serif;
+  position:relative;  
+  box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.16);
+  border-radius: 8px;
+  margin-bottom: 17px;
 }
 
 .card-title{
@@ -34,3 +35,14 @@
   }
 }
 
+@media only screen and (width > 768px){
+  .card-container{
+    box-sizing: border-box;
+  }
+
+  .card-disabled-border{
+    box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0);
+    margin-bottom: 0px;
+    padding:9px;
+  }
+}

@@ -129,7 +129,7 @@ function Input(props) {
                 placeholder={ props.placeholder }
                 defaultValue={ props.defaultValue }
                 onChange = {(e)=> props.onChange(e)}
-                   { ...props.register }
+                { ...props.register }
             />
         </div>
     )
@@ -156,28 +156,51 @@ function InputState(props) {
     )
 }
 
+function SelectState(props) {
+    return (
+        <div className="input-container mt-1 mb-4">
+            <label
+                className="input-label text-gray-500 text-xs font-semibold inline-block"
+                htmlFor={ props.id }
+                style= {{ width: '100%',display:"flex"}}
+            ><span style={{minWidth:"max-content"}}>{ props.label }</span>{props.info && <InfoButton info={props.info}/>}</label>
+            <select
+                id={ props.id }
+                type={ props.type || "text" }
+                maxLength={ props.maxLength }
+                className="block w-full p-2 bg-white border-input focus:border-input grey-input"
+                placeholder={ props.placeholder }
+                defaultValue={ props.defaultValue }
+                onChange = {(e)=> props.setState(e.target.value)}
+            >
+                <option value='0'>Seleccione una provincia</option>
+                {props.values?.map((option,index)=><option key={index} value={option[props.keyName]}>{option[props.valueName]}</option>)}
+                </select>
+        </div>
+    )
+}
+
+
 function FormInputDate(props) {
     const  [dateValue, setDateValue] = useState('');
     return (
         <div className="input-container mt-1">
             <input style={{display:'none'}} name={props.id} value={dateValue}/>
-            
             <label
                 className="input-label text-gray-500 text-xs font-semibold inline-block"
                 htmlFor={ props.id }
             >{ props.label }</label>
-
-                <ReactInputDateMask  
-                    id={ props.id }  
-                    mask='dd/mm/yyyy'
-                    showMaskOnFocus={true}
-                    type="date"
-                    maxLength={ props.maxLength }
-                    className=" date-input w-full p-2 bg-white border-input focus:border-input border-2 text-xs text-gray-500 inline-flex"
-                    value={ props.value }
-                    onChange={props.onChange || setDateValue}
-                    placeholder={ props.placeholder }
-                />
+            <ReactInputDateMask  
+                id={ props.id }  
+                mask='dd/mm/yyyy'
+                showMaskOnFocus={true}
+                type="date"
+                maxLength={ props.maxLength }
+                className=" date-input w-full p-2 bg-white border-input focus:border-input border-2 text-xs text-gray-500 inline-flex"
+                value={ props.value }
+                onChange={props.onChange || setDateValue}
+                placeholder={ props.placeholder }
+            />
         </div>
     )
 }
@@ -216,4 +239,4 @@ function InputDate(props) {
   
 
 export default FormInput
-export {LoginInput, FormInput, FormInputState, FormInputHook, FormInputReadonly, FormInputDate, InputDate, Input , InputState}
+export {LoginInput, FormInput, FormInputState, FormInputHook, FormInputReadonly, FormInputDate, InputDate, Input , InputState, SelectState}

@@ -8,9 +8,10 @@ export default function LinkCard(props){
 
     return(
         <>
-      {props.show !== false &&  <div className={props.animate && 'animation-card'} ref={props.ref}>
-            <div onClick={props.href?()=>navigate(props.href):()=>props.onClick()} className='link-card-container' style={{textAlign:'center !important'}}>
-            <div className="link-card-icon"><RiArrowRightSLine/></div>
+      {props.show !== false &&  
+        <div className={`card ${props.animate ? 'animation-card' : ''} ${props.onlyCel ? 'display-cel' : ''} ${props.onlyPc ? 'display-pc' : ''} ${props.responsive ? 'card-resp' : ''}`} ref={props.ref}>
+            <div onClick={props.to?()=>navigate(props.to):()=>props.onClick()} className='link-card-container' style={{textAlign:'center !important'}}>
+            <div className="link-card-icon display-cel"><RiArrowRightSLine/></div>
                 {props.title && <h2 className={titleClass}>{props.title}</h2>}
                 {props.children}
             </div>

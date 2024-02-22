@@ -1,11 +1,5 @@
 .turno-container{
-  padding: 30px 15px;
-  max-width: 500px;
-  width: 100%;
-  margin: 0 auto;
-  background-color:#f5f5f5ec;
-  min-height: calc(100vh - 80px);
-  padding-top:20px;
+  padding-bottom:40px;
 }
 
 .turno-conf-container{
@@ -79,7 +73,6 @@
 }
 
 .turno-detalles-text{
-  font-size:'14px';
   font-family: 'Montserrat', sans-serif;
   margin-top: 7px;
 }
@@ -114,5 +107,94 @@
   100%{
     height: 70px;
     opacity: 100%;
+  }
+}
+
+@media only screen and (width > 768px){
+  .turno-conf-container{
+    background-color:rgba(202, 202, 202, 0.153) !important;
+    padding-top: 75px;
+  }
+
+  .turno-content{
+    width: 850px;
+    min-width: fit-content;
+    margin: 0 auto;
+    display:flex;
+    position:relative;
+    justify-content: space-around;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.16);
+    padding:1px;
+    box-sizing: border-box;
+  }
+
+  .turno-row{
+    margin: 27px auto;
+    box-sizing: border-box;
+    position:relative;
+    width: 47%;
+  }
+
+  .turno-row-hours{
+    height: 75%;
+  }
+
+  .turno-selector{
+    font-size: 15px !important;
+  }
+
+  .turno-detalles-text{
+    font-size: 14px;
+  }
+
+  .turno-horario{
+    font-size: 15px;
+    padding:11px 5px;
+  }
+  
+  .turno-horario-selected{
+    font-size: 15px;
+    padding:11px 5px;
+  }
+  
+  .turno-row-msj{
+    font-size: 15px;
+    text-align: center;
+    padding-top: 20px;
+    color:rgb(99, 99, 99);
+    font-weight: 500;
+  }
+  .turno-success-content{
+    max-width: 850px;
+    min-height: 70vh;
+    margin: 25px auto;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.16);
+    padding:25px;
+  }
+
+  .turno-conf-content{
+    max-width: 850px;
+    min-height: 70vh;
+    margin: 5px auto;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.16);
+    padding:25px;
+    position:relative;
+    box-sizing: border-box;
+  }
+
+  .turno-success-mensaje h4{
+    font-size: 15px !important;
+  }
+
+  .turno-conf-button{
+    position:absolute;
+    bottom:25px;
+    width: 800px;
   }
 }

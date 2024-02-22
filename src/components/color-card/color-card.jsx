@@ -12,7 +12,8 @@ export default function ColorCard(props) {
 
     return (
         <>
-       {props.show !== false && <div className={props.animate ? 'animation-card' : ''} ref={cardRef}>
+       {props.show !== false && 
+        <div className={`color-card ${props.animate ? 'animation-card' : ''} ${props.onlyCel ? 'display-cel' : ''} ${props.onlyPc ? 'display-pc' : ''}`} ref={cardRef}>
             <div className='color-card-container' style={props.color?{...gradientStyle, color:props.color}:gradientStyle}>
                 {props.title && <h2 className={titleClass}>{props.title}</h2>}
                 {props.children}

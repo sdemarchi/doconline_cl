@@ -8,7 +8,7 @@ function FormSuccess() {
     sessionStorage.setItem('form-success', 'true');
     
     return (
-        <div className="form-rep-container">
+        <div className="form-rep-container page">
             <img className="mx-auto mb-8 w-20 pb-10" src={logo}></img>
             <h1 className='text-xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-grad-green to-grad-blue'>DATOS INGRESADOS GUARDADOS CON EXITO</h1>
             <img className="mx-auto w-14 py-10" src={icon}></img>

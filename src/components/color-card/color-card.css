@@ -37,3 +37,15 @@
   }
 }
 
+
+@media screen and ( width > 768px ){
+  .color-card-container-resp{
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+
+  .color-card{
+    min-width: 100%;
+    max-height: fit-content;
+  }
+}

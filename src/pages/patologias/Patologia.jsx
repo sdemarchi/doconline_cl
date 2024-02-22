@@ -8,7 +8,7 @@ import Error, { ErrorMax, ErrorReq } from '../../components/Error';
 import useForm from '../../hooks/useForm';
 import { getDolencias } from '../../data/pacientes';
 import TextArea from '../../components/TextArea';
-import { SelectHook } from '../../components/Select';
+import { SelectHook } from '../../components/select/Select';
 import { numberValidator, selectValidator } from '../../data/validators';
 import RadioSiNo from '../../components/Radio';
 import { ErrorVal } from '../../components/Error';

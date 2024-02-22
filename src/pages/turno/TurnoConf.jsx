@@ -44,25 +44,30 @@ function TurnoConf() {
     },[]);
 
     return (
-        <div className="turno-conf-container">
-            <Title>Confirmar turno</Title>
-            <ColorCard color1='#6BDF5B' color2='#60E94D'>
-                <div className="turno-conf-pago">       
-                    <p>Este turno ya ha sido pagado.</p>
-                </div>
-            </ColorCard>
-        
-            <div className="turno-conf-info">
-                <p><strong>Prestador:</strong>Dr. Joaquin Jozami</p>
-                <p><strong>Fecha:</strong>{turno.fecha}</p>
-                <p><strong>Hora:</strong>{turno.hora}</p>
-            </div>    
+        <div className="turno-conf-container page">
+            <div>
+                <Title>Confirmar turno</Title>
+                <div className='turno-conf-content'>
+                    <ColorCard color1='#6BDF5B' color2='#60E94D'>
+                        <div className="turno-conf-pago">       
+                            <p>Este turno ya ha sido pagado.</p>
+                        </div>
+                    </ColorCard>
+                    <div className="turno-conf-info">
+                        <p><strong>Prestador:</strong>Dr. Joaquin Jozami</p>
+                        <p><strong>Fecha:</strong>{turno.fecha}</p>
+                        <p><strong>Hora:</strong>{turno.hora}</p>
+                    </div>    
 
-            <h6 className="text-gray-500 text-xs font-semibold">
-                
-            </h6>
-            
-            <div className='pt-2'><ActionButton value="Confirmar Turno" onClick={()=>guardarTurno()} /></div>
+                    <h6 className="text-gray-500 text-xs font-semibold">
+                        
+                    </h6>
+                    
+                    <div className='pt-2 turno-conf-button'>
+                        <ActionButton value="Confirmar Turno" onClick={()=>guardarTurno()} />
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

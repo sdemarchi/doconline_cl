@@ -1,13 +1,13 @@
-import {CustomSelect} from '../../components/Select';
+import {CustomSelect} from '../../../components/select/Select';
 import './grow-estadisticas.css';
-import Card from '../../components/card/card';
-import { LinkButtonCenter } from '../../components/Buttons';
-import Spinner from '../../components/Spinner';
+import Card from '../../../components/card/card';
+import { LinkButtonCenter } from '../../../components/Buttons';
+import Spinner from '../../../components/Spinner';
 import { useState,useEffect } from 'react';
-import Bubble from '../../components/bubble/bubble';
+import Bubble from '../../../components/bubble/bubble';
 import { useParams } from 'react-router-dom';
-import { getGrowPacientes } from '../../data/grows';
-import Nav from '../../components/nav/nav';
+import { getGrowPacientes } from '../../../data/grows';
+import Nav from '../../../components/nav/nav';
 
 function GrowEstadisticas(){
   const [ mesActual, setMesActual ] = useState(new Date().getMonth() + 1); 
@@ -83,7 +83,7 @@ function GrowEstadisticas(){
   return(
     <>
     { datosCargados ? 
-    <div className="grow-estadisticas-container">
+    <div className="grow-estadisticas-container page">
       <div className='mt-2' style={{textAlign:'center',paddingBottom:'15px'}}>
         <h2 className="black-title">Tus estadisticas</h2>
       </div>

@@ -1,0 +1,21 @@
+
+.tg-grow-name{
+  color:white;
+  font-size: 26px;
+  text-align: start;
+  font-weight: 500;
+}
+
+.tg-grow-description{
+  color:white;
+  font-weight: 500;
+  text-align: start;
+}
+
+@media only screen and (width > 768px){
+  .tg-content{
+    display: flex;
+    flex-wrap: wrap;
+    height: fit-content;
+  }
+}

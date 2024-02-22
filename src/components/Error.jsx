@@ -1,18 +1,36 @@
 import '../global-styles/error-styles.css';
 
-function Error({children}) {
+function Error({children,show}) {
   return (
+    <>
+    {show !== false &&  
     <h6 className="error-msg text-red-600 text-xs">
         {children}
-    </h6>
+    </h6>}
+    </>
   )
 }
 
-function ErrorGral({children}) {
+function ErrorGral({children,show}) {
   return (
+    <>
+    {show !== false &&  
     <h6 className="error-msg text-red-600 text-sm text-center py-2">
         {children}
-    </h6>
+    </h6>}
+    </>
+  )
+}
+
+
+function ErrorForm({children,show}) {
+  return (
+    <>
+    {show !== false &&  
+    <h6 className="text-red-600 text-center" style={{fontSize:'16px'}}>
+        {children}
+    </h6>}
+    </>
   )
 }
 
@@ -60,5 +78,5 @@ function CustomError({ mostrar, children }) {
 }
 
 
-export {CustomError, ErrorGral, ErrorReq, ErrorMax, ErrorVal, ErrorText};
+export {CustomError, ErrorGral, ErrorReq, ErrorMax, ErrorVal, ErrorText, ErrorForm};
 export default Error;

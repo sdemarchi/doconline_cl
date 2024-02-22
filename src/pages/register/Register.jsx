@@ -20,7 +20,7 @@ export async function action({request}) { //eslint-disable-line
 
     const resp = await registrar(datos);
 
-    if(resp.error.code == 0){
+    if(resp.error?.code == 0){
         return {userId: resp.user.id, userName: resp.user.name };
     } else {
         errores.push(resp.error?.message);
@@ -47,6 +47,12 @@ function validate(datos){
     }
     if(datos.telefono != datos.telefono_conf){
         errores.push('Los teléfonos no coinciden')
+    }
+    if(datos.dni.length > 10){
+        errores.push('El dni no debe superar los 10 digitos.')
+    }
+    if(datos.telefono.length > 20){
+        errores.push('Inserte un numero de telefono valido.')
     }
     if(datos.password != datos.password_conf){
         errores.push('Las contraseñas no coinciden')

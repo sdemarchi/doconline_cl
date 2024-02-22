@@ -51,7 +51,7 @@ function FormRep3() {
     }
     
     return (
-        <div className="form-rep-container">
+        <div className="form-rep-container page">
         {cargando ? <Spinner />:
             <> <form onSubmit={ handleSubmit(onSubmit) }>
                 {/*<RadioSiNo 

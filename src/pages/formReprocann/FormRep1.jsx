@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { FormInputDate, FormInputHook } from '../../components/FormInput';
+import Card from '../../components/card/card'
 import { SubmitButton } from '../../components/Buttons';
 import useForm from '../../hooks/useForm';
 import Error, { ErrorReq, ErrorMax,/* ErrorVal*/ } from '../../components/Error';
@@ -10,6 +11,7 @@ import { dateValidator, emailValidator, numberValidator } from '../../data/valid
 import './formReprocann.css';
 import Contacto from '../../components/contacto/contacto';
 import Info from '../../components/info/info';
+import Title from '../../components/title/title';
 
 
 function FormRep1() {
@@ -80,21 +82,15 @@ function FormRep1() {
     }
 
     return (
-        <div className="form-rep-container">
+        <div className="form-rep-container page">
            {/* <img className="mx-auto w-52 mb-8 pb-2" src={logo}></img> <h1>Formulario Reprocann</h1>*/}
-            
-           <div className='mb-4' style={{textAlign:'center',paddingBottom:'15px'}}>
-              <h2 className="black-title mb-3">Completa tus datos</h2>
-              
-            <Info text='Completa los siguientes datos para que el medico pueda llenar tu Declaracion Jurada y Consentinmiento Informado. 
-Muchas Gracias!'/>
 
-            </div>
-
+            <Title>Completa tus datos</Title>
+  
+            <Info style={{marginBottom:'18px'}} text='Completa los datos para que el médico llene tu Declaración Jurada y Consentimiento Informado.'/>
  
             <form onSubmit={handleSubmit(onSubmit)}>
-                
-
+     
                 <FormInputHook label="Nombre y Apellido*" id="nom_ape"
                     defaultValue={form1?.nom_ape?.length && form1?.nom_ape || sessionStorage.getItem('nombre')}
                     maxLength={255}
@@ -104,7 +100,6 @@ Muchas Gracias!'/>
                 {errors.nom_ape?.type == 'required' && <ErrorReq>Nombre y Apellido</ErrorReq>}
                 {errors.nom_ape?.type == 'maxLength' && <ErrorMax>255</ErrorMax>}
 
-                <div className="space"></div>
 
                 <FormInputDate label="Fecha de Nacimiento*" id=""
                     value={/*fechaNac*/ sessionStorage.getItem('fecha_nac')}
@@ -114,27 +109,21 @@ Muchas Gracias!'/>
 
                 {errorFechaNac && <Error>{errorFechaNac}</Error>}
 
-                <div className="space"></div>
-                        
                 <div className='flex flex-row'>
-
                     <div className='basis-1/2 pe-1'>
 
                         <FormInputHook label="DNI*" id="dni"
                             defaultValue={form1?.dni !== sessionStorage.getItem('dni') && sessionStorage.getItem('dni') || sessionStorage.getItem('dni')}
                             maxLength={8}
                             type={"number"} 
-                            register={register('dni', {
-                                required: true, maxLength: 8, validate: numberValidator})}
+                            register={register('dni', {required: true, maxLength: 8, validate: numberValidator})}
                         />
-
                         {errors.dni?.type == 'required' && <ErrorReq>DNI</ErrorReq>}
                         {errors.dni?.type == 'maxLength' && <ErrorMax>10</ErrorMax>}
                         {!(errors.dni?.type == 'required' || errors.dni?.type == 'maxLength') && errors.dni && <Error>DNI no válido</Error>}            
                     </div>
 
                     <div className='basis-1/2 ps-1'>
-
                         <FormInputHook  type={"number"}  label="Edad*" id="edad"
                             defaultValue={form1?.edad  !== sessionStorage.getItem('edad') && form1?.edad || '' }
                             maxLength={3}
@@ -144,11 +133,8 @@ Muchas Gracias!'/>
                         {errors.edad?.type == 'required' && <ErrorReq>Edad</ErrorReq>}
                         {!(errors.edad?.type == 'required') && errors.edad && <Error>Edad no valida</Error>} 
                         { /*errors.edad?.type == 'max' && <ErrorVal>100</ErrorVal>*/}
-
                     </div>
                 </div>
-
-                <div className="space"></div>
 
                 <FormInputHook label="E-Mail*" id="email"
                     defaultValue={form1?.email !== sessionStorage.getItem('email') && form1?.email || sessionStorage.getItem('email')}
@@ -159,8 +145,7 @@ Muchas Gracias!'/>
                 {errors.email?.type == 'maxLength' && <ErrorMax>150</ErrorMax>}
                 {!(errors.email?.type == 'maxLength' || errors.email?.type == 'required') && errors.email && <Error>E-Mail no válido</Error>}
 
-                <div className="space"></div>
-
+    
                 <FormInputHook type={"number"} label="Teléfono Celular*" id="celular"
                     defaultValue={form1?.celular !== sessionStorage.getItem('telefono') && form1?.celular || sessionStorage.getItem('telefono')}
                     maxLength={20}
@@ -171,7 +156,6 @@ Muchas Gracias!'/>
                 {errors.celular?.type == 'maxLength' && <ErrorMax>15</ErrorMax>}
                 {errors.celular?.pattern == 'maxLength' && <ErrorMax>15</ErrorMax>}
                 
-                <div className="space"></div>
 
                 <FormInputHook type={"number"} label="Repetir Teléfono Celular*"
                     defaultValue={form1?.celular !== sessionStorage.getItem('telefono') && form1?.celular || sessionStorage.getItem('telefono')}
@@ -188,16 +172,11 @@ Muchas Gracias!'/>
                 />
                 {errors.cod_vincu?.type == 'maxLength' && <ErrorMax>50</ErrorMax>}
 
-                <div className="space"></div>
-
-                <div className='pt-4'>
-                    <SubmitButton value="Continuar" />
-                </div>
-
+                <SubmitButton value="Continuar" />
             </form>
-            <div className=' mx-auto p-3 text-center'>
-                <button className='text-gray-500' onClick={() => navigate('/panel')} >Volver</button>
-            </div>
+   
+            <button className='form-rep-volver' onClick={() => navigate('/panel')} >Volver</button>
+
             
             <div className="form-rep-contacto">
                <Contacto />

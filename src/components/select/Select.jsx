@@ -1,3 +1,6 @@
+import './select.css';
+
+
 function Select(props) {
     return (
         <>
@@ -34,8 +37,9 @@ function CustomSelect(props) {
                 onChange={props.onChange}
                 value={props.value}
                 id={props.id}
+                className={props.responsive ? "custom-select-resp" : "custom-select"}
                 style={{borderRadius:'6px',backgroundColor:'#F0F0F0',width:'100%',border:'solid 1px #EAEAEA',marginBottom:'10px',marginTop:'10px',
-                fontSize:'18px' }}>
+                fontSize:props.fontSize? props.fontSize :'18px' }}>
                 <option value='0'>{props.placeholder}</option>
                 {props.datos?.map( dato =>(
                     <option 

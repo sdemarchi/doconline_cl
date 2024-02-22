@@ -10,7 +10,6 @@ function FormError() {
             <img className="mx-auto w-14 py-10" src={icon}></img>
             <div className='pb-2'><LinkButton to="/panel" value="Volver al Perfil" /></div>
 
-            
             <div className="form-rep-contacto">
                 <Contacto />
             </div>

@@ -8,7 +8,7 @@ import { useForm as useFormHook } from "react-hook-form";
 import Error, { ErrorMax, ErrorReq } from '../../components/Error';
 import useForm from '../../hooks/useForm';
 import { getProvincias } from '../../data/pacientes';
-import Select/*, { SelectHook }*/ from '../../components/Select';
+import Select/*, { SelectHook }*/ from '../../components/select/Select';
 import Contacto from '../../components/contacto/contacto';
 import './tutor.css';
 //import { selectValidator } from '../data/validators'

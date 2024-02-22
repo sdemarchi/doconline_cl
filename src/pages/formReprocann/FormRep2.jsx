@@ -5,7 +5,7 @@ import { SubmitButton } from '../../components/Buttons';
 import TextArea from '../../components/TextArea';
 import useForm from '../../hooks/useForm';
 import Error, { ErrorMax, ErrorReq } from '../../components/Error';
-import Select /*, { SelectHook }*/ from '../../components/Select';
+import Select /*, { SelectHook }*/ from '../../components/select/Select';
 import { getOcupaciones, getProvincias } from '../../data/pacientes';
 import { useForm as useFormHook } from "react-hook-form";
 import './formReprocann.css';
@@ -28,7 +28,6 @@ function FormRep2() {
         window.scrollTo(0, 0);
     }
 
-    
     useEffect(() => {
         subirScroll();
         async function cargarCombos(){
@@ -36,7 +35,7 @@ function FormRep2() {
             setProvincias(response);
             const response2 = await getOcupaciones();
             setOcupaciones(response2);
-            setCargando(false);        }
+            setCargando(false);}
         cargarCombos();
     }, [])
     
@@ -70,7 +69,7 @@ function FormRep2() {
     }
     
     return (
-        <div className="form-rep-container">
+        <div className="form-rep-container page">
            { cargando? <Spinner/>:
             <>
             <form onSubmit={ handleSubmit(onSubmit) }>

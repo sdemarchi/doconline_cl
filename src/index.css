@@ -2,19 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@media only screen and (width > 768px){
-  .display-cel{
-    display:none;
-  }
-}
-
-@media only screen and (width <= 768px){
-  .display-pc{
-    display:none;
-  }
-}
-
 .black-title{
   font-size:20px !important;
   color:rgba(31, 31, 31, 0.857)!important;
@@ -23,11 +10,73 @@
   text-align: start;
 }
 
-/* Fuentes:
+.page-container{
+  padding:10px 15px;
+  background-color:#f5f5f5ad;
+  font-family: 'Montserrat', sans-serif;
+  min-height: 85vh;
+}
+
+.page{
+  position: relative;
+  margin-bottom: 0;
+  padding: 25px 16px;
+  font-family: 'Montserrat', sans-serif;
+  background-color:#f5f5f5ad;
+  min-height: calc(100vh - 80px);
+  padding-top: 20px;
+}
+
+
+
+@media only screen and (width > 768px){
+  .display-cel{
+    display:none !important;
+  }
+
+  .page{
+    background-color:rgba(202, 202, 202, 0.153) !important;
+    padding-top: 75px;
+    height: fit-content;
+    min-height: 100vh;
+  }
+
+  .black-title{
+    font-size:17px !important;
+  }
+}
+
+@media only screen and (width <= 768px){
+  .display-pc{
+    display:none !important;
+  }
+}
+
+/* Estilos del scrollbar */
+::-webkit-scrollbar {
+  width: 8px; /* Ancho del scrollbar */
+  background-color: #ffffff; /* Color de fondo */
+  border-radius: 6px; /* Borde redondeado */
+}
+
+/* Estilo del scrollbar en su estado normal */
+::-webkit-scrollbar-thumb {
+  background-color: #a8a8a8; /* Color del scrollbar */
+  border-radius: 6px; /* Borde redondeado */
+}
+
+/* Estilo del scrollbar cuando se presiona */
+::-webkit-scrollbar-thumb:active {
+  background-color: #868686; /* Color del scrollbar al hacer clic */
+}
+
+
+/* Fuentes:s
 
   font-family: 'Inclusive Sans', sans-serif;
   font-family: 'Poppins', sans-serif;
   font-family: 'Montserrat', sans-serif;
+  font-family: "Roboto", sans-serif;
 
   responsive:
 

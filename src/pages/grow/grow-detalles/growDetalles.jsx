@@ -1,13 +1,13 @@
 import './growDetalles.css';
-import Card from '../../components/card/card';
-import { LinkButtonCenter } from '../../components/Buttons';
-import Spinner from '../../components/Spinner';
+import Card from '../../../components/card/card';
+import { LinkButtonCenter } from '../../../components/Buttons';
+import Spinner from '../../../components/Spinner';
 import { useState,useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getGrowById } from '../../data/grows';
-import { copyToClipboard } from '../../utils/utilFunctions';
-import { getPrecios } from '../../data/turnero';
-import NotificacionEmergente from '../../components/notificacion-emergente/notificacion-emergente';
+import { getGrowById } from '../../../data/grows';
+import { copyToClipboard } from '../../../utils/utilFunctions';
+import { getPrecios } from '../../../data/turnero';
+import NotificacionEmergente from '../../../components/notificacion-emergente/notificacion-emergente';
 
 function GrowDetalles(){
   const { id } = useParams();
@@ -53,7 +53,7 @@ function GrowDetalles(){
   return (
     <>
     { datosCargados ? 
-    <div className="grow-estadisticas-container">
+    <div className="grow-estadisticas-container page">
       <div className='mt-2' style={{textAlign:'center',paddingBottom:'15px'}}>
         <h2 className="black-title">Detalles del grow</h2>
       </div>
@@ -110,12 +110,12 @@ function GrowDetalles(){
 
       </Card>
 
-      <div style={{marginTop:'25px'}}>
+      <div style={{marginTop:'25px',marginBottom:'25px'}}>
         <LinkButtonCenter value="Volver" to={"/tu-grow/"+id}></LinkButtonCenter>
       </div>
       <NotificacionEmergente show={mostrarNotificacion} setShow={setMostrarNotificacion} text={textoNotificacion}/>
     </div>:
-    <div className="grow-estadisticas-container" style={{minHeight:'700px'}}><Spinner/></div>
+    <div className="grow-estadisticas-container page" style={{minHeight:'700px'}}><Spinner/></div>
 
     }
     </>

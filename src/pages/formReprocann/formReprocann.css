@@ -1,7 +1,6 @@
 .form-rep-container{
-  padding: 30px 16px;
-  padding-bottom: 30px;
-  min-height: calc(100vh - 80px);
+  background-color: white !important;
+  padding-bottom: 45px;
 }
 
 .form-rep-contacto{
@@ -29,4 +28,13 @@
   font-family: 'Poppins', sans-serif;
   margin-bottom: 20px;
 }
+
+.form-rep-volver{
+  margin-top:15px;
+  width: 100%;
+  text-align: center;
+  color:rgb(63, 63, 63);
+}
+
+
 

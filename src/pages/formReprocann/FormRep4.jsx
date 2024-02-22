@@ -46,7 +46,7 @@ function FormRep4() {
     }
     
     return (
-        <div className="form-rep-container">
+        <div className="form-rep-container page">
             { cargando ? <Spinner/> : 
             <>
             <h3 className='text-gray-500 text-s font-semibold'>Patologías</h3>

@@ -9,7 +9,7 @@ input[type="text"], input[type="number"], input[type="date"], input[type="passwo
 }
 
 .grey-input{
-  border-color:rgb(197, 194, 194) !important;
+  border-color:rgb(112, 112, 112) !important;
 }
 
 input::placeholder {

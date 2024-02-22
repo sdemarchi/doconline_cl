@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './pages/login/Login.jsx';
 import Register from './pages/register/Register.jsx';
 import Panel from './pages/panel/Panel.jsx';
+
 import FormRep1 from './pages/formReprocann/FormRep1';
 import FormRep2 from './pages/formReprocann/FormRep2';
 import FormRep3 from './pages/formReprocann/FormRep3';
@@ -14,6 +15,7 @@ import Patologia from './pages/patologias/Patologia';
 import FormTutor1 from './pages/tutor/FormTutor1';
 import FormTutor2 from './pages/tutor/FormTutor2';
 import FormSuccess from './pages/formReprocann/FormSuccess';
+
 import Turnos from './pages/turno/Turnos';
 import Pagos from './pages/pagos/Pagos';
 import TurnoConf from './pages/turno/TurnoConf';
@@ -32,17 +34,20 @@ import FormRep3b from './pages/formReprocann/FormRep3b';
 import FormError from './pages/formReprocann/FormError';
 import GoogleRegister from './pages/register/GoogleRegister';
 import Ayuda from './pages/ayuda/ayuda';
-import GrowEstadisticas from './pages/grow-estadisticas/grow-estadisticas.jsx';
 import Restablecer from './pages/restablecer/restablecer.jsx';
 import FormPassword from './pages/restablecer/formPassword.jsx';
 import RePassLayout from './layouts/RePassLayout.jsx';
-import GrowDetalles from './pages/grow-detalles/growDetalles.jsx';
-import TuGrow from './pages/tu-grow/tu-grow.jsx';
+
 import Regalar from './pages/regalar-tramite/regalar.jsx';
 import RegalarTransf from './pages/regalar-tramite/regalar-transf/regalar-transf.jsx';
 import RegalarPago from './pages/regalar-tramite/regalar-pago/regalar-pago.jsx';
 import RegalarFinalizar from './pages/regalar-tramite/regalar-finalizar/regalar-finalizar.jsx';
- 
+
+import RegistrarGrow from './pages/grow/registrar-grow/registrar-grow.jsx';
+import TuGrow from './pages/grow/tu-grow/tu-grow.jsx';
+import GrowDetalles from './pages/grow/grow-detalles/growDetalles.jsx';
+import GrowEstadisticas from './pages/grow/grow-estadisticas/grow-estadisticas.jsx';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -181,6 +186,10 @@ const router = createBrowserRouter([
       {
         path: '/tu-grow/:id',
         element:<TuGrow/>
+      },
+      {
+        path: '/registrar-grow',
+        element:<RegistrarGrow/>
       }
     ]
   }

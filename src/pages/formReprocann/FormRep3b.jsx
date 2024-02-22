@@ -9,7 +9,7 @@ import /*RadioSiNo,*/ {RadioSiNoAlt}  from '../../components/Radio';
 import { useForm as useFormHook } from "react-hook-form";
 import Error, { ErrorMax } from '../../components/Error';
 import { getContactos } from '../../data/pacientes';
-import Select from '../../components/Select';
+import Select from '../../components/select/Select';
 import './formReprocann.css';
 import Contacto from '../../components/contacto/contacto';
 import Spinner from '../../components/Spinner';
@@ -69,7 +69,7 @@ function FormRep3b() {
     }
 
     return (
-        <div className="form-rep-container">
+        <div className="form-rep-container page">
            {cargando ? <Spinner />:
             <> 
             <form onSubmit={ handleSubmit(onSubmit) }>

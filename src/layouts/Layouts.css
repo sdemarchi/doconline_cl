@@ -63,14 +63,12 @@
 }
 
 
-@media screen and (width > 768px) {
+@media only screen and (width > 768px) {
   .layout-main-container{
     padding: 0px 0px;
-    min-width: 370px;
-    margin:15px;
-    border-radius: 10px;
-    max-width: 370px;
+    width: 100%;
     height: fit-content;
+    min-height: 100vh;
   }
 
 }

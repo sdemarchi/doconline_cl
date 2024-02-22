@@ -19,7 +19,7 @@ import PagosService from '../../data/pagos';
 
 
 function PagoTransf() {
-    const {importe} = useAuth();//eslint-disable-line
+    const { importe } = useAuth();//eslint-disable-line
     const { turno, cuponValidado, comprobante, setComprobante } = useTurno();//eslint-disable-line
  
     //-- VARIABLES DE SESION PARA EVITAR PERDER DATOS AL ACTUALIZAR ---------
@@ -98,7 +98,7 @@ function PagoTransf() {
         const pago = {
             id_pagador: userData.id,
             id_paciente: userData.id,
-            id_grow: pagoSession.grow.idgrow,
+            id_grow: pagoSession.grow?.idgrow,
             nombre_paciente: userData.nombre,
             email_paciente: userData.email,
             email_pagador: userData.email,
@@ -138,91 +138,96 @@ function PagoTransf() {
     }, []) 
 
     return (
-        <div className="pagos-container">
-        {!datosCargados && <Spinner/>}{datosCargados && <div>
+        <div className="pagos-container page">
+        {!datosCargados ? <Spinner/>:
+         <div>
             {mostrarNotification && <Notificacion message="Texto copiado al portapapeles"/>}
   
-            <div className='mb-6 mt-4 mx-auto text-center'>
+            <div className='mb-6 mt-4 mx-auto pagos-transf-title-container'>
                 <span className='black-title'>Transferí a la siguiente cuenta</span>
             </div>
 
-            <Card center>
-                <div style={{textAlign:'center'}}>
-                    <h4 className="text-gray-600 pagos-transf-info-title">
-                        <strong>CBU:</strong> 
-                        <span className="pagos-transf-info"> {cbu}</span>
-                        <button className="icon-button" onClick={() => copiarAlPortapapeles(cbu)}><img title="Copiar CBU" className="icon" src={copyIcon}></img></button>
-                    </h4>
+            <div className="pagos-transf-content">
 
-                    <h4 className="text-gray-600 my-2 pt-1 pagos-transf-info-title">
-                        <strong>Alias:</strong> 
-                        <span className="pagos-transf-info-alias"> {alias}</span>
-                        <button className="icon-button" onClick={() => copiarAlPortapapeles(alias)}><img title="Copiar Alias" className="icon" src={copyIcon}></img></button>
-                    </h4>
+                <Card center disabledBorder>
+                    <div style={{textAlign:'center'}}>
+                        <h4 className="text-gray-600 pagos-transf-info-title">
+                            <strong>CBU:</strong> 
+                            <span className="pagos-transf-info"> {cbu}</span>
+                            <button className="icon-button" onClick={() => copiarAlPortapapeles(cbu)}><img title="Copiar CBU" className="icon" src={copyIcon}></img></button>
+                        </h4>
 
-                    <h4 className="text-green-600 mt-2 text-2xl font-bold pt-1">${importeSession}</h4>
-                </div>
-            </Card>
+                        <h4 className="text-gray-600 my-2 pt-1 pagos-transf-info-title">
+                            <strong>Alias:</strong> 
+                            <span className="pagos-transf-info-alias"> {alias}</span>
+                            <button className="icon-button" onClick={() => copiarAlPortapapeles(alias)}><img title="Copiar Alias" className="icon" src={copyIcon}></img></button>
+                        </h4>
 
-            <Card>
-            <div className='my-2'>
-                <div className='pt-2 pb-0'>
-                    {enviando &&
-                        <label className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer">
-                            <span className="mt-2 text-base leading-normal">Enviando...</span>
-                        </label>
-                    }   
-                    { !enviando && !comprobanteImagen &&
-                        <label className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer hover:bg-gradient-to-r hover:from-grad-green hover:to-grad-blue hover:text-white">
-                            <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-                            </svg>
-                            <span className="mt-2 text-base leading-normal" style={{fontSize:'18px',fontWeight:'600'}}>Adjuntar Comprobante</span>
-                            <input type='file' className="hidden" onChange={subirArchivo} />
-                        </label>}
-                        { !enviando && comprobanteImagen  &&
-                        <>
-                        <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around'}} >
-                            <div>
-                                <img src={comprobanteImagen} style={{height:'100px',maxWidth:'200px'}}></img>
-                            </div>
-                            <label className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer hover:bg-gradient-to-r hover:from-grad-green hover:to-grad-blue hover:text-white">
-                                <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-                                </svg>
-                                <span className="mt-2 text-base leading-normal" style={{fontSize:'18px',fontWeight:'600',margin:'0 15px'}}>Volver a subir</span>
-                                <input type='file' className="hidden" onChange={subirArchivo} />
-                            </label>
+                        <h4 className="text-green-600 mt-2 text-2xl font-bold pt-1">${importeSession}</h4>
+                    </div>
+                </Card>
+
+                <Card disabledBorder>
+                    <div className='my-2'>
+                        <div className='pt-2 pb-0'>
+                            {enviando &&
+                                <label className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer">
+                                    <span className="mt-2 text-base leading-normal">Enviando...</span>
+                                </label>
+                            }   
+                            { !enviando && !comprobanteImagen &&
+                                <label className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer hover:bg-gradient-to-r hover:from-grad-green hover:to-grad-blue hover:text-white">
+                                    <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                                    </svg>
+                                    <span className="mt-2 text-base leading-normal" style={{fontSize:'18px',fontWeight:'600'}}>Adjuntar Comprobante</span>
+                                    <input type='file' className="hidden" onChange={subirArchivo} />
+                                </label>}
+                                { !enviando && comprobanteImagen  &&
+                                <>
+                                <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around'}} >
+                                    <div>
+                                        <img src={comprobanteImagen} style={{height:'100px',maxWidth:'200px'}}></img>
+                                    </div>
+                                    <label className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer hover:bg-gradient-to-r hover:from-grad-green hover:to-grad-blue hover:text-white">
+                                        <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                                        </svg>
+                                        <span className="mt-2 text-base leading-normal" style={{fontSize:'18px',fontWeight:'600',margin:'0 15px'}}>Volver a subir</span>
+                                        <input type='file' className="hidden" onChange={subirArchivo} />
+                                    </label>
+                                </div>
+                                </> 
+                            }
+
                         </div>
-                        </> 
+                    </div>
+                </Card> 
+
+                    {
+                    uploadResult == 0 ? '' :
+                        <div className='pb-4'>
+                            {uploadResult != 1 &&
+                                <h6 className="text-red-600 text-sm font-bold text-center pb-2">
+                                    Error al subir el comprobante
+                                </h6>}
+                        </div>
                     }
-
                 </div>
+
+                    <div className="mt-10 pago-transf-buttons" >
+                        <ActionButton value="Continuar" onClick={() => guardarTurno()}/>
+                        <div className='mb-0 mx-auto p-3 text-center'>
+                            <button className='text-gray-500' onClick={() => navigate('/pagos')} >Atrás</button>
+                        </div>
+                    </div>
+
+                    <div className="pagos-contacto">
+                        <Contacto/>
+                    </div>
+
             </div>
-           </Card> 
-
-            {
-            uploadResult == 0 ? '' :
-                <div className='pb-4'>
-                    {uploadResult != 1 &&
-                        <h6 className="text-red-600 text-sm font-bold text-center pb-2">
-                            Error al subir el comprobante
-                        </h6>}
-                </div>
-            }
-
-            <div className="mt-10">
-                <ActionButton value="Continuar" onClick={() => guardarTurno()}/>
-                <div className='mb-0 mx-auto p-3 text-center'>
-                    <button className='text-gray-500' onClick={() => navigate('/pagos')} >Atrás</button>
-                </div>
-            </div>
-
-            <div className="pagos-contacto">
-                <Contacto/>
-            </div>
-
-        </div>}</div>
+        }</div>
 
     )
 }

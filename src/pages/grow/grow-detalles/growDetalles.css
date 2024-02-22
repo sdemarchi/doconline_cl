@@ -81,6 +81,11 @@
   color:rgb(83, 83, 83);
 }
 
-.grow-estadisticas-container{
-  min-height: 92vh;
+@media only screen and (width > 768px){
+  .grow-estadisticas-container{
+    padding-top: 70px !important;
+    padding-bottom: 40px !important;
+    min-height: fit-content;
+    box-sizing: border-box;
+  }
 }

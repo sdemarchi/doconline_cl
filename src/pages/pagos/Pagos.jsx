@@ -158,71 +158,80 @@ function Pagos() {
     }
         
     return (
-        <div className="pagos-container">
+        <div className="pagos-container page">
         {!datosCargados ? <Spinner/>:
 
-        <div>
-            {(grow?.descuento !== undefined && grow?.descuento !== 0 && !ingresarCodigo) &&
-                <div className="pagos-descuento">
-                    <h1>Tenés un descuento del {grow?.descuento}% por {grow?.nombre}.</h1>
+            <div>
+                {(grow?.descuento !== undefined && grow?.descuento !== 0 && !ingresarCodigo) &&
+                    <div className="pagos-descuento">
+                        <h1>Tenés un descuento del {grow?.descuento}% por {grow?.nombre}.</h1>
+                    </div>
+                }
+                
+                <div className='mt-2 mb-2' style={{textAlign:'center',paddingBottom:'15px'}}>
+                <h2 className="black-title">{ingresarCodigo ? "Registrar pago" : "Ir a pagar"}</h2>
                 </div>
-            }
-            
-            <div className='mt-2 mb-2' style={{textAlign:'center',paddingBottom:'15px'}}>
-              <h2 className="black-title">{ingresarCodigo ? "Registrar pago" : "Ir a pagar"}</h2>
-            </div>
-       
-            {(!grow?.descuento && !ingresarCodigo) &&
-                 <Card title="Cupón">
-                <>
-                    { cuponValidado.cupon ?
+
+                <div className='pagos-content'>
+                    {(!grow?.descuento && !ingresarCodigo) &&
+                        <Card title="Cupón" disabledBorder >
                         <>
-                            <h6 className="text-gray-500 text-xs my-4 font-semibold leading-3">Cupón Aplicado:</h6>
-                            <Chip value={cupon} onClick={ () => quitarCupon() } />
+                            { cuponValidado.cupon ?
+                                <>
+                                    <h6 className="text-gray-500 text-xs my-4 font-semibold leading-3">Cupón Aplicado:</h6>
+                                    <Chip value={cupon} onClick={ () => quitarCupon() } />
+                                </>
+                                :
+                                <>
+                                <FormInputState 
+                                    id="turno"
+                                    value={cupon}
+                                    onChange={ e => setCupon(e.target.value)}
+                                    placeholder="A-123456"
+                                    rounded
+                                /> 
+
+                                {showMsg && <p className="pagos-error-msg">El cupón ingresado no es válido</p>}
+                                <button onClick={() => cupon && validarCupon()} className='pagos-aplicar-button'>Aplicar Cupón</button>
+                            </>
+                            }
                         </>
-                        :
-                        <>
-                        <FormInputState 
-                            id="turno"
-                            value={cupon}
-                            onChange={ e => setCupon(e.target.value)}
-                            placeholder="A-123456"
-                            rounded
-                        /> 
-
-                        {showMsg && <p className="pagos-error-msg">El cupón ingresado no es válido</p>}
-                        <button onClick={() => cupon && validarCupon()} className='pagos-aplicar-button'>Aplicar Cupón</button>
-                    </>
+                        </Card>
                     }
-                </>
-                </Card>
-            }
-        
-            <Card show={!ingresarCodigo}>
-                <PagoCard medio="Transferencia" 
-                    importe={sessionStorage.getItem("precio_transf") || precioTrans} 
-                    descuento={importeCupon}
-                    descuentoPorc={grow?.descuento}
-                    mensaje="Desde cualquier banco físico o virtual" 
-                    onClick={ (precioFinal) => pagar(precioFinal) } />
-            </Card>
+                
+                    <Card show={!ingresarCodigo} disabledBorder >
+                        <PagoCard medio="Transferencia" 
+                            importe={sessionStorage.getItem("precio_transf") || precioTrans} 
+                            descuento={importeCupon}
+                            descuentoPorc={grow?.descuento}
+                            mensaje="Desde cualquier banco físico o virtual" 
+                            onClick={ (precioFinal) => pagar(precioFinal) } />
+                            <div className="pagos-pagado-container">
+                                <button className="display-pc pagos-pagado-button">Ya han pagado por mi</button>
+                            </div>
 
-            <LinkCard show={!ingresarCodigo} onClick={()=>setIngresarCodigo(true)} title="Ya han pagado por mi">Ingresar el codigo de pago.</LinkCard>
-            <Card show={ingresarCodigo} onClick={()=>setIngresarCodigo(true)} title="Ingresar codigo">
-                Solicita el codigo a quien realizo el pago.
-                <InputState 
-                    id="turno"
-                    state={codigo}
-                    setState={setCodigo}
-                    placeholder="A5BC56"
-                /> 
-                {codigoNoEncontrado && <div className="mt-8"><Error>{errorMsj}</Error></div>}
+                    </Card>
 
-                <ActionButton onClick={()=>comprobarCodigo()} value="Usar codigo"/>
-            </Card>
-            <div className='mb-0 mx-auto p-3 text-center'>
-                <button className='text-gray-500' onClick={() => navigate('/turno')} >Atrás</button>
-            </div>
+                    <LinkCard show={!ingresarCodigo} onClick={()=>setIngresarCodigo(true)} title="Ya han pagado por mi" onlyCel>Ingresar el codigo de pago.</LinkCard>
+                   
+                    <Card show={ingresarCodigo} onClick={()=>setIngresarCodigo(true)} title="Ingresar codigo">
+                        Solicita el codigo a quien realizo el pago.
+                        <InputState 
+                            id="turno"
+                            state={codigo}
+                            setState={setCodigo}
+                            placeholder="A5BC56"
+                        /> 
+                        {codigoNoEncontrado && <div className="mt-8"><Error>{errorMsj}</Error></div>}
+
+                        <ActionButton onClick={()=>comprobarCodigo()} value="Usar codigo"/>
+                    </Card>
+
+                </div>
+
+                <div className='mb-0 mx-auto p-3 text-center'>
+                    <button className='text-gray-500' onClick={() => navigate('/turno')} >Atrás</button>
+                </div>
             </div>}
 
             <div className="pagos-contacto">

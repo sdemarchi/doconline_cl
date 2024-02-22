@@ -32,3 +32,22 @@ export async function getGrowPacientes(id) {
   const result = await response.json()
   return result;
 }
+
+export async function addGrow(grow) {
+  const url = import.meta.env.VITE_API_URL + '/add-grow';
+  try {
+    const respuesta = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(grow),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    const resp = await respuesta.json()
+    console.log(resp)
+    return resp;
+
+} catch (error) {
+    console.log(error)
+}
+}

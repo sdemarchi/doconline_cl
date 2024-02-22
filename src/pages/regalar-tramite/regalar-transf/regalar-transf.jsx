@@ -26,6 +26,8 @@ function RegalarTransf() {
     const importeSession = sessionStorage.getItem("precio_transf");
     const turnoSession = JSON.parse(sessionStorage.getItem("turno"));
     const cuponSession = JSON.parse(sessionStorage.getItem("cupon_validado"));
+
+    const { turno, cuponValidado, comprobante, setComprobante } = useTurno();//eslint-disable-line
     //-----------------------------------------------------------------------
 
     const user = useOutletContext();
@@ -107,6 +109,7 @@ function RegalarTransf() {
             monto: pagoSession.precio,
             descuento: pagoSession.descuento,
             monto_final:pagoSession.precioFinal,
+            comprobante:comprobante
         };
 
         console.log(JSON.stringify(pago));

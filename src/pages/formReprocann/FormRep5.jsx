@@ -59,7 +59,7 @@ function FormRep5() {
     }
 
     return (
-        <div className="form-rep-container">
+        <div className="form-rep-container page">
            { cargando ? <Spinner/> :
             <>
             {error && <ErrorGral>{error}</ErrorGral>}
