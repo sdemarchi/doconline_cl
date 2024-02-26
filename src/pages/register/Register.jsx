@@ -9,7 +9,7 @@ import useAuth from '../../hooks/useAuth';
 import './register.css';
 
 
-export async function action({request}) { //eslint-disable-line
+export async function action({request}) { 
     const formData = await request.formData();
     const datos = Object.fromEntries(formData);
     const errores = validate(datos);
@@ -29,8 +29,6 @@ export async function action({request}) { //eslint-disable-line
 }
 
 function validate(datos){
-    //datos.fecha_nac = formatearFecha(datos.fecha_nac);
-
     const errores = []
     if (Object.keys(datos).some(key => key !== 'grow' && datos[key] === '')) {
         errores.push('Todos los campos son obligatorios');
@@ -60,29 +58,14 @@ function validate(datos){
 
     return errores;
 }
-/*
-function formatearFecha(cadenaFecha) {
-    if (cadenaFecha !== null && cadenaFecha !== undefined) {
-      const fechaISO = new Date(cadenaFecha);
-      const dia = fechaISO.getDate().toString().padStart(2, '0');
-      const mes = (fechaISO.getMonth() + 1).toString().padStart(2, '0');
-      const anio = fechaISO.getFullYear();
-  
-      const fechaFormateada = `${dia}/${mes}/${anio}`;
-      
-      alert(cadenaFecha + ' '+ fechaFormateada);
-      return fechaFormateada;
-    } else {
-      return cadenaFecha;
-    }
-  }
 
-*/
 function Register() {
     const { setUser } = useAuth();
     const navigate = useNavigate();
     const actionResult = useActionData();
     const errores = actionResult?.errores;
+    const [ submitted, setSubmitted ] = useState();
+
     const getGrow = () =>{
         if (sessionStorage.getItem('growId')) {
             return sessionStorage.getItem('growId');
@@ -107,15 +90,13 @@ function Register() {
     
     return (
         <div className="register-container">
-
-    {errores?.length && errores.map(( error, i ) => <Error key={i}>{error}</Error> )}
-
             <div className='mb-2' style={{textAlign:'center',paddingBottom:'15px'}}>
               <h2 className="black-title">Registrar usuario</h2>
             </div>
 
             <Form method='post' noValidate>
                 <FormInput  type={"text"} label="Nombre y Apellido*" id="nombre" maxlenght="150" placeholder="Nombre y Apellido" />
+
                 <div className='flex flex-row'>
                     <div className='basis-1/2 pe-1'>
                         <FormInputDate label="Fecha de Nacimiento*" maxLength={10} id="fecha_nac"/>
@@ -124,7 +105,9 @@ function Register() {
                         <FormInput type={"number"} label="DNI*" id="dni" maxlenght="10" placeholder="12345676" />
                     </div>
                 </div>
+                
                 <FormInput type={"text"} label="Domicilio*" id="direccion" placeholder="Calle y Número" />
+
                 <div className='flex flex-row'>
                     <div className='basis-1/2 pe-1'>
                         <FormInput type={"number"} label="Teléfono*" id="telefono" placeholder="342 4392819" />
@@ -144,7 +127,6 @@ function Register() {
                     </div>
                     <div className='basis-1/2 ps-1'>
                         <FormInput type={"password"} label="Repetir Contraseña*" id="password_conf"/>
-
                     </div>
                 </div>
 
@@ -152,13 +134,13 @@ function Register() {
                     <input type="number" id="grow" name="grow" value={grow}/>
                 </div>
 
-
+                {errores?.length && errores.map(( error, i ) => <Error key={i}>{error}</Error> )}
 
                 <div className='pt-4'><SubmitButton defaultValue="Registrarme"/></div>
             </Form>
 
             <div className='mb-0 mx-auto p-3 text-center'>
-                <button className='text-gray-500' onClick={() => navigate('/login')} >Volver</button>
+                <button className='text-gray-500' onClick={() => navigate('/login')}>Volver</button>
             </div>
         </div>
     )

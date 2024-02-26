@@ -60,14 +60,17 @@ function FormRep5() {
 
     return (
         <div className="form-rep-container page">
+           <h3 className='text-gray-500 mb-3 text-xl font-semibold'>Firmas</h3>
            { cargando ? <Spinner/> :
-            <>
+            <div className="form-rep-content form-rep-form">
             {error && <ErrorGral>{error}</ErrorGral>}
-
-            <h3 className='text-gray-500 mb-3 text-xl font-semibold'>Firmas</h3>
             <h6 className="text-gray-500 text-xm font-semibold pt-2">Firma</h6>
-            {firma != null ? <img src={firma} className='p-4' /> :
-                <div style={{width:"fit-content", margin:"15px auto"}} className='border-gray-300 border border-solid mt-2'>
+            {firma != null ?
+            <div className="form-rep-firma">
+                <img src={firma} className='p-4' /> 
+            </div>
+            :
+                <div style={{width:"fit-content", margin:"15px auto"}} className='border-gray-300 border border-solid mt-2 form-rep-firma'>
                     <SignatureCanvas
                         ref={data => setSignFirma(data)}
                         canvasProps={{ width: 270, height: 150, className: 'sigCanvas' }}
@@ -80,8 +83,12 @@ function FormRep5() {
             </div>
 
             <h6 className="text-gray-500 text-xm font-semibold pt-2">Aclaración</h6>
-            {aclaracion != null ? <img src={aclaracion} className='p-4' /> :
-                <div style={{width:"fit-content",margin:"15px auto"}} className='border-gray-300 border border-solid mt-2'>
+            {aclaracion != null ? 
+                <div className="form-rep-firma">
+                   <img src={aclaracion} className='p-4' /> 
+               </div>
+            :
+                <div style={{width:"fit-content",margin:"15px auto"}} className='border-gray-300 border border-solid mt-2 form-rep-firma' >
                     <SignatureCanvas
                         ref={data => setSignAclaracion(data)}
                         canvasProps={{ width: 270, height: 150, className: 'sigCanvas2' }}
@@ -105,7 +112,8 @@ function FormRep5() {
 
             <div className="form-rep-contacto">
                 <Contacto />
-            </div></>}
+            </div>
+            </div>}
         </div>
     )
 }

@@ -43,7 +43,7 @@ function Patologia() {
     }
 
     return (
-        <div className="patologias-container">
+        <div className="patologias-container page">
 
            {/* <img className="mx-auto w-52 pb-2" src={logo}></img> */}
 

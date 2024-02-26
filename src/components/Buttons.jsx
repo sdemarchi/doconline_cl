@@ -8,6 +8,7 @@ function SubmitButton(props) {
             type="submit"
             className="submit-button text-white w-full p-2 rounded-md cursor-pointer"
             value={props.value}
+            disabled={props.disabled}
         />
     )
 }

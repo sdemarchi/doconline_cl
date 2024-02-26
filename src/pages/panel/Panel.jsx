@@ -34,7 +34,7 @@ function Panel() {
     const [turnoPaciente, setTurnoPaciente] = useState({});
     const [growAdmin, setGrowAdmin] = useState();
     const {setFormCargado, llenarFormulario } = useForm(); // eslint-disable-line
-    const formSuccess = JSON.parse(sessionStorage.getItem('form-success')) || false;
+    const [ formSuccess, setFormSuccess ] = useState();
     const fromLogin = sessionStorage.getItem('fromLogin') || false;
 
     const [ pagoRegalado , setPagoRegalado] = useState();
@@ -79,8 +79,8 @@ function Panel() {
 
             cargarTurnoPaciente();
 
-            setGrowAdmin(resp).then((resp)=>{
-                setPago(resp);
+            setGrowAdmin(resp).then((response)=>{
+                setPago(response);
             });
 
            });;
@@ -100,8 +100,13 @@ function Panel() {
             }
 
             descargarFormulario(response.dni).then((resp)=>{
-                if(resp.error.code == 0){
+    
+                if(resp.error?.code == 0){
                     llenarFormulario(resp.data, resp.patologias);
+                    if(resp.data){
+                        setFormSuccess(true);
+                      
+                    }
                 }
             });
 
@@ -120,6 +125,8 @@ function Panel() {
     useEffect(() => {
         subirScroll();
         getPaciente();
+        
+       // setFormSuccess(JSON.parse(sessionStorage.getItem('form-success')) || false);
         
         if(sessionStorage.getItem('grow-success')){
             sessionStorage.removeItem('grow-success');
@@ -155,7 +162,6 @@ function Panel() {
         {datosCargados?
 
         <div className='panel-container page' >
-
             <div className="display-pc panel-bienvenido-container">
                 <div className="panel-bienvenido-pc">
                     <div className="panel-description">
@@ -164,7 +170,7 @@ function Panel() {
                         <p>facil, seguro y sin moverte</p>
                         <p>de tu casa.</p>
                         {!(turnoPaciente.id > 0) && <button onClick={()=>navigate('/turno')}>Solicitar Turno</button>}
-                        {turnoPaciente.id > 0 && !formSuccess == false && <button onClick={()=>navigate('/formulario-1')}>Completa tus datos</button>}
+                        {turnoPaciente.id > 0 && <button onClick={()=>navigate('/formulario-1')}>Completa tus datos</button>}
                     </div>
                 </div>
             </div>
@@ -184,6 +190,7 @@ function Panel() {
                 <ColorCard show={pago?.utilizado === 0} title="Tus pagos" color1="#009FD2" color2="#CE9CEE" color='white' animate onlyPc>
                     <p class="mt-1">Tenés un pago a tu favor. Podes usarlo en tu próximo turno.</p>
                 </ColorCard> 
+
     
 
                 <ColorCard show={turnoPaciente.id > 0} color1="#009FD2" color2="#34D29D">
@@ -194,17 +201,25 @@ function Panel() {
                     <p className="panel-turno-texto">{turnoPaciente.detalle}</p>
                 </ColorCard>
 
-                {(turnoPaciente.id > 0 && formSuccess) && 
+                {(turnoPaciente.id > 0 && formSuccess !== true && false) && 
                     <div className=" display-pc">
                         <InfoCard text={"No olvides completar el formulario con tus datos para poder realizar el tramite."}/>
                     </div>
                 }
 
+      
+                <LinkCard to={'/turno'} show={!(turnoPaciente.id > 0 )} title="Solicitar turno" onlyPc responsive>
+                    <p className='pb-3'>Solicita turno con nosotros para tramitar tu Reprocann</p>
+                </LinkCard>
 
-                <LinkCard show={growAdmin?.idgrow} title="Tu Grow" to={'/tu-grow/'+growAdmin?.idgrow} responsive>
+                <LinkCard to="/formulario-1" title={formSuccess ? 'Edita tus datos' : 'Completa tus datos'}  onlyPc responsive>
+                    <p className='pb-3'>{formSuccess ? 'Modifica o actualiza tus datos en caso de que sea necesario' : 'Completa los datos necesarios para realizar tu tramite'}</p>
+                </LinkCard>
+        
+
+                <LinkCard show={growAdmin?.idgrow !== undefined} title="Tu Grow" to={'/tu-grow/'+growAdmin?.idgrow} responsive>
                     <p>Tenés un Grow vinculado a tu correo electronico.</p>
                 </LinkCard>
-           
 
                 <LinkCard title="Regalar a un amigo" to={'/regalar-a-un-amigo'}  responsive>
                     { pagoRegalado?.utilizado === 0 ?
@@ -229,9 +244,6 @@ function Panel() {
                     <LinkButton icon={<BsCalendarWeek/>} to="/turno" value="Solicitar Turno" />
                 </Card>
 
-                <LinkCard to={'/turno'} show={!(turnoPaciente.id > 0 )} title="Solicitar turno" onlyPc responsive>
-                    <p className='pb-3'>Solicita turno con nosotros para tramitar tu Reprocann</p>
-                </LinkCard>
         
                 {(turnoPaciente.id > 0 && formSuccess == false && false) && 
                     <div className="panel-info">
@@ -245,9 +257,6 @@ function Panel() {
                     <LinkButton icon={<FaWpforms/>} disabled={turnoPaciente.id == 0} to="/formulario-1" value={"Formulario REPROCANN"} />
                 </Card>
 
-                <LinkCard to="/formulario-1" title={formSuccess ? 'Edita tus datos' : 'Completa tus datos'}  onlyPc>
-                    <p className='pb-3'>{formSuccess ? 'Modifica o actualiza tus datos en caso de que sea necesario' : 'Completa los datos necesarios para realizar tu tramite'}</p>
-                </LinkCard>
         
                 {(turnoPaciente.id > 0 && formSuccess) && 
                     <div className="panel-info display-cel">
@@ -272,7 +281,7 @@ function Panel() {
                 <NotificacionEmergente show={mostrarNotificacion} setShow={setMostrarNotificacion} text="Tu turno ha sido cancelado" />
                 <NotificacionEmergente show={notificacionGrow} setShow={setNotificacionGrow} text="Grow registrado correctamente" />
 
-            { !growAdmin?.idgrow &&  <div className="main-contacto">
+            { !growAdmin?.idgrow &&  <div className="main-contacto display-cel">
                     <Contacto bottom='90px'/>
                 </div>}    
             </div>    

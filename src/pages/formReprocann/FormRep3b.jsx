@@ -71,8 +71,8 @@ function FormRep3b() {
     return (
         <div className="form-rep-container page">
            {cargando ? <Spinner />:
-            <> 
-            <form onSubmit={ handleSubmit(onSubmit) }>
+            <div className="form-rep-content"> 
+            <form className='form-rep-form' onSubmit={ handleSubmit(onSubmit) }>
                 <Select 
                     label="¿Cómo nos contactó?*"
                     onChange={e => changeContacto(e)}
@@ -121,7 +121,7 @@ function FormRep3b() {
             <div className="form-rep-contacto">
                 <Contacto />
             </div>
-            </>}
+            </div>}
         </div>
     )
 }

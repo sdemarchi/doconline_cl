@@ -48,7 +48,7 @@ function FormRep4() {
     return (
         <div className="form-rep-container page">
             { cargando ? <Spinner/> : 
-            <>
+            <div className="form-rep-content form-rep-form">
             <h3 className='text-gray-500 text-s font-semibold'>Patologías</h3>
             { patolog.map( (p, index) => (
                 <Chip 
@@ -71,7 +71,7 @@ function FormRep4() {
             <div className="form-rep-contacto">
                 <Contacto />
             </div>
-            </>
+            </div>
             }
         </div>
     )

@@ -53,7 +53,8 @@ function FormRep3() {
     return (
         <div className="form-rep-container page">
         {cargando ? <Spinner />:
-            <> <form onSubmit={ handleSubmit(onSubmit) }>
+            <div className="form-rep-content"> 
+            <form className="form-rep-form" onSubmit={ handleSubmit(onSubmit) }>
                 {/*<RadioSiNo 
                     label="¿Tiene arritmias en actividad?" 
                     id="arritmia" 
@@ -114,7 +115,9 @@ function FormRep3() {
 
             <div className="form-rep-contacto">
                 <Contacto />
-            </div></>}
+            </div>
+            
+            </div>}
         </div>
     )
 }

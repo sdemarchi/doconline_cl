@@ -102,10 +102,6 @@ function RegalarPago() {
         setPrecioMP(precioMP - cuponValidado.importe);
         setPrecioTrans(precioTrans - cuponValidado.importe);
         sessionStorage.setItem("precio_transf", precioTrans - cuponValidado.importe);
-        if(sessionStorage.getItem('growid') !== undefined && sessionStorage.getItem('growid') !== null){
-            const idgrow = sessionStorage.getItem('growid');
-            getGrow(idgrow);
-        }
     }, [])//eslint-disable-line
     
 
@@ -123,7 +119,7 @@ function RegalarPago() {
     }
         
     return (
-        <div className="pagos-container">
+        <div className="pagos-container page">
 
         {!datosCargados ? <Spinner/>:
 
@@ -137,46 +133,50 @@ function RegalarPago() {
             <div className='mt-2 mb-2' style={{textAlign:'center',paddingBottom:'15px'}}>
               <h2 className="black-title">Ir a pagar</h2>
             </div>
-       
-            {(!grow?.descuento) &&
-                 <Card title="Cupón">
-                <>
-                    { cuponValidado.cupon ?
-                        <>
-                            <h6 className="text-gray-500 text-xs my-4 font-semibold leading-3">Cupón Aplicado:</h6>
-                            <Chip value={cupon} onClick={ () => quitarCupon() } />
+
+            <div className="regalar-content">
+                {(!grow?.descuento) &&
+                    <Card title="Cupón">
+                    <>
+                        { cuponValidado.cupon ?
+                            <>
+                                <h6 className="text-gray-500 text-xs my-4 font-semibold leading-3">Cupón Aplicado:</h6>
+                                <Chip value={cupon} onClick={ () => quitarCupon() } />
+                            </>
+                            :
+                            <>
+                            <InputState 
+                                id="turno"
+                                value={cupon}
+                                setState={setCupon}
+                                placeholder="Ingresa un cupón"
+                            /> 
+
+                            {showMsg && <p className="pagos-error-msg">El cupón ingresado no es válido</p>}
+                            <button onClick={() => cupon && validarCupon()} className='regalar-cupon-button'>Aplicar Cupón</button>
                         </>
-                        :
-                        <>
-                        <InputState 
-                            id="turno"
-                            value={cupon}
-                            setState={setCupon}
-                            placeholder="Ingresa un cupón"
-                        /> 
-
-                        {showMsg && <p className="pagos-error-msg">El cupón ingresado no es válido</p>}
-                        <button onClick={() => cupon && validarCupon()} className='regalar-cupon-button'>Aplicar Cupón</button>
+                        }
                     </>
-                    }
-                </>
+                    </Card>
+                }
+            
+                <Card>
+                    <PagoCard 
+                        medio="Transferencia" 
+                        importe={sessionStorage.getItem("precio_transf") || precioTrans} 
+                        descuento={importeCupon}
+                        descuentoPorc={grow?.descuento}
+                        mensaje="Desde cualquier banco físico o virtual" 
+                        onClick={ (precioFinal) => pagar(precioFinal) } />
                 </Card>
-            }
-        
-            <Card>
-                <PagoCard 
-                    medio="Transferencia" 
-                    importe={sessionStorage.getItem("precio_transf") || precioTrans} 
-                    descuento={importeCupon}
-                    descuentoPorc={grow?.descuento}
-                    mensaje="Desde cualquier banco físico o virtual" 
-                    onClick={ (precioFinal) => pagar(precioFinal) } />
-            </Card>
 
-            <div className='mb-0 mx-auto p-3 text-center'>
-                <button className='text-gray-500' onClick={() => navigate('/regalar-a-un-amigo')} >Atrás</button>
+                <div className='mb-0 mx-auto p-3 text-center'>
+                    <button className='text-gray-500' onClick={() => navigate('/regalar-a-un-amigo')} >Atrás</button>
+                </div>
+                
+                </div>
             </div>
-            </div>}
+            }
 
             <div className="pagos-contacto">
                 <Contacto/>

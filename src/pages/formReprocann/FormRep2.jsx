@@ -71,9 +71,9 @@ function FormRep2() {
     return (
         <div className="form-rep-container page">
            { cargando? <Spinner/>:
-            <>
-            <form onSubmit={ handleSubmit(onSubmit) }>
-            <label className="input-label">Provincia*</label>
+            <div className="form-rep-content">
+            <form className="form-rep-form" onSubmit={ handleSubmit(onSubmit) }>
+                <label className="input-label">Provincia*</label>
                 <Select 
                     onChange={e => changeProvincia(e)}
                     value={provActual}
@@ -153,6 +153,7 @@ function FormRep2() {
                 </div>
                 
             </form>
+
             <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/formulario-1')} >Atrás</button>
             </div>
@@ -160,7 +161,7 @@ function FormRep2() {
             <div className="form-rep-contacto">
                 <Contacto />
             </div>
-            </>}
+            </div>}
         </div>
     )
 }

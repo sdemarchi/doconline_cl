@@ -23,20 +23,21 @@ export default function RegalarSuccess(){
 
 
   return (
-    <div className="rf-container">
+    <div className="rf-container page">
       <Title>Finalizar</Title>
-      <Info text="El beneficiario debera registrarse con el email proporcionado o utilizar el siguiente codigo."/>
-      
-      <div onClick={()=>copiarCodigo()} className="mt-6 mb-10">
-        <Card title="Comparte este código con el beneficiario.">
-          <div className="rf-codigo">
-            <span>{codigo}</span><span className="ml-3" style={{opacity:"70%"}}><FaRegCopy /></span>
-          </div>
-        </Card>
+      <div className="regalar-content white-content">
+        <Info text="El beneficiario debera registrarse con el email proporcionado o utilizar el siguiente codigo."/>
+        
+        <div onClick={()=>copiarCodigo()} className="mt-6 mb-10">
+          <Card title="Comparte este código con el beneficiario." disabledBorder>
+            <div className="rf-codigo">
+              <span>{codigo}</span><span className="ml-3" style={{opacity:"70%"}}><FaRegCopy /></span>
+            </div>
+          </Card>
+        </div>
+        <NotificacionEmergente text="Codigo copiado al portapapeles" show={notificacion} setShow={setNotificacion}/>
+        <ActionButton onClick={() => navigate('/panel')} value="Finalizar"/>
       </div>
-      <NotificacionEmergente text="Codigo copiado al portapapeles" show={notificacion} setShow={setNotificacion}/>
-      <ActionButton onClick={() => navigate('/panel')} value="Finalizar"/>
- 
     </div>
   )
 }

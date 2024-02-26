@@ -5,14 +5,17 @@ import './formReprocann.css';
 
 function FormError() {
     return (
-        <div className="form-rep-container">
-            <h1 className='text-xl font-extrabold text-center text-red-500'>OCURRIÓ UN ERROR AL ENVIAR EL FORMULARIO</h1>
-            <img className="mx-auto w-14 py-10" src={icon}></img>
+        <div className="form-rep-container page">
+            <div className="form-rep-content form-rep-form">
+                <h1 className='text-xl font-extrabold text-center text-red-500'>OCURRIÓ UN ERROR AL ENVIAR EL FORMULARIO</h1>
+                <img className="mx-auto w-14 py-10" src={icon}></img>
             <div className='pb-2'><LinkButton to="/panel" value="Volver al Perfil" /></div>
 
             <div className="form-rep-contacto">
                 <Contacto />
             </div>
+            </div>
+
         </div>
     )
 }

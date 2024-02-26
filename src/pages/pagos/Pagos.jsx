@@ -163,7 +163,7 @@ function Pagos() {
 
             <div>
                 {(grow?.descuento !== undefined && grow?.descuento !== 0 && !ingresarCodigo) &&
-                    <div className="pagos-descuento">
+                    <div className="pagos-descuento display-cel">
                         <h1>Tenés un descuento del {grow?.descuento}% por {grow?.nombre}.</h1>
                     </div>
                 }
@@ -173,6 +173,11 @@ function Pagos() {
                 </div>
 
                 <div className='pagos-content'>
+                {(grow?.descuento !== undefined && grow?.descuento !== 0 && !ingresarCodigo) &&
+                    <div className="pagos-descuento display-pc">
+                        <h1>Tenés un descuento del {grow?.descuento}% por {grow?.nombre}.</h1>
+                    </div>
+                }
                     {(!grow?.descuento && !ingresarCodigo) &&
                         <Card title="Cupón" disabledBorder >
                         <>
@@ -207,14 +212,14 @@ function Pagos() {
                             mensaje="Desde cualquier banco físico o virtual" 
                             onClick={ (precioFinal) => pagar(precioFinal) } />
                             <div className="pagos-pagado-container">
-                                <button className="display-pc pagos-pagado-button">Ya han pagado por mi</button>
+                                <button onClick={()=>setIngresarCodigo(true)} className="display-pc pagos-pagado-button">Ya han pagado por mi</button>
                             </div>
 
                     </Card>
 
                     <LinkCard show={!ingresarCodigo} onClick={()=>setIngresarCodigo(true)} title="Ya han pagado por mi" onlyCel>Ingresar el codigo de pago.</LinkCard>
                    
-                    <Card show={ingresarCodigo} onClick={()=>setIngresarCodigo(true)} title="Ingresar codigo">
+                    <Card show={ingresarCodigo} onClick={()=>setIngresarCodigo(true)} title="Ingresar codigo" disabledBorder>
                         Solicita el codigo a quien realizo el pago.
                         <InputState 
                             id="turno"

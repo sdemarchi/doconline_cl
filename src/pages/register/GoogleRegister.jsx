@@ -139,4 +139,4 @@ function GoogleRegister() {
     )
 }
 
-export default GoogleRegister
+export default GoogleRegister;

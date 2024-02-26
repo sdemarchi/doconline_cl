@@ -9,3 +9,9 @@
   bottom:30px;
   right: 20px;
 }
+
+@media screen and (width > 768px){
+  .patologias-container{
+    padding-top: 70px;
+  }
+}

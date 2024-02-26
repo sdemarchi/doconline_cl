@@ -36,5 +36,32 @@
   color:rgb(63, 63, 63);
 }
 
+@media screen and (width > 768px) {
+  .form-rep-container{
+    background-color:rgba(202, 202, 202, 0.153) !important;
+    padding-bottom: 45px;
+  }
+
+  .form-rep-content{
+    width: 800px;
+    margin:0 auto;
+    margin-top: 10px;
+  }
+
+  .form-rep-form{
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.16);
+    padding:25px;
+  }
+
+  .form-rep-firma{
+    margin: 0 auto;
+    width: fit-content;
+    background-color: rgba(235, 235, 235, 0.32);
+    border-radius: 8px;
+  }
+
+}
 
 

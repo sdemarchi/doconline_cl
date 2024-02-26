@@ -24,7 +24,7 @@ import { AuthProvider } from './context/AuthProvider';
 import GuestLayout from './layouts/GuestLayout';
 import MainLayout from './layouts/MainLayout.jsx';
 import { action as registerAction } from './pages/register/Register';
-import { action as gRegisterAction } from './pages/register/GoogleRegister';
+import { action as googleRegisterAction } from './pages/register/GoogleRegister';
 import { TurnoProvider } from './context/TurnoProvider';
 import PagoMl from './pages/pagos/PagoMl';
 import PagoTransf from './pages/pagos/PagoTransf';
@@ -72,10 +72,9 @@ const router = createBrowserRouter([
       },
       {
         path: '/g-perfil',
-        action: gRegisterAction,
+        action: googleRegisterAction,
         element: <GoogleRegister />
-      }
-      
+      }  
     ],
 
   },
