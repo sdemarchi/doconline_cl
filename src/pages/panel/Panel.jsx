@@ -187,7 +187,7 @@ function Panel() {
                 </Card>
 
 
-                <ColorCard show={pago?.utilizado === 0} title="Tus pagos" color1="#009FD2" color2="#CE9CEE" color='white' animate onlyPc>
+                <ColorCard show={pago?.utilizado === 0 && pago?.verificado === 1} title="Tus pagos" color1="#009FD2" color2="#CE9CEE" color='white' animate onlyPc>
                     <p class="mt-1">Tenés un pago a tu favor. Podes usarlo en tu próximo turno.</p>
                 </ColorCard> 
 
@@ -234,7 +234,7 @@ function Panel() {
                 </LinkCard>
 
 
-                <ColorCard show={pago?.utilizado === 0} title="Tus pagos" color1="#009FD2" color2="#CE9CEE" color='white' animate onlyCel responsive>
+                <ColorCard show={pago?.utilizado === 0 && pago?.verificado === 1} title="Tus pagos" color1="#009FD2" color2="#CE9CEE" color='white' animate onlyCel responsive>
                     <p class="mt-1">Tenés un pago a tu favor. Podes usarlo en tu próximo turno.</p>
                 </ColorCard>
                     

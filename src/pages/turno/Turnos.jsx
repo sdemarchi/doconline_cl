@@ -162,7 +162,7 @@ function Turnos() {
         PagosService.buscarPorEmail(email).then((resp)=>{
             setPagoRegistrado(resp);
             
-            if(resp.utilizado === 0){
+            if(resp.utilizado === 0 && resp.verificado === 1){
                 sessionStorage.setItem('pago',JSON.stringify(resp));
                 setPagado(true);
             }

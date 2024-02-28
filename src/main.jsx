@@ -23,8 +23,8 @@ import TurnoSuccess from './pages/turno/TurnoSuccess';
 import { AuthProvider } from './context/AuthProvider';
 import GuestLayout from './layouts/GuestLayout';
 import MainLayout from './layouts/MainLayout.jsx';
-import { action as registerAction } from './pages/register/Register';
-import { action as googleRegisterAction } from './pages/register/GoogleRegister';
+//import { action as registerAction } from './pages/register/Register';
+//import { action as googleRegisterAction } from './pages/register/GoogleRegister';
 import { TurnoProvider } from './context/TurnoProvider';
 import PagoMl from './pages/pagos/PagoMl';
 import PagoTransf from './pages/pagos/PagoTransf';
@@ -67,12 +67,12 @@ const router = createBrowserRouter([
       },
       {
         path: '/registrarme',
-        action: registerAction,
+       // action: registerAction,
         element: <Register />
       },
       {
         path: '/g-perfil',
-        action: googleRegisterAction,
+      //  action: googleRegisterAction,
         element: <GoogleRegister />
       }  
     ],

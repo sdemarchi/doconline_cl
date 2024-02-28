@@ -92,7 +92,7 @@ export default function RegistrarGrow(){
   return(
     <div className="registrar-grow-container page">
      { inSubmit? <Spinner/> :
-      <>
+      <div className="registrar-grow-content">
         <Title>Registrar Grow</Title>
         
         <Card>
@@ -109,7 +109,7 @@ export default function RegistrarGrow(){
 
         <ActionButton onClick={()=>submit()} value="Registrar Grow" />
         <button className="registrar-grow-volver" onClick={()=>navigate('/panel')}>Volver</button>
-        </>
+        </div>
       }
     </div>
   );

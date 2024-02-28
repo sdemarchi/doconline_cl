@@ -5,6 +5,16 @@
   font-weight: 500;
 }
 
-.registrar-grow-container{
-  padding:10px 15px;  
+
+@media screen and (width > 768px) {
+  .registrar-grow-container{
+    background-color:rgba(202, 202, 202, 0.153) !important;
+    padding-bottom: 45px;
+  }
+
+  .registrar-grow-content{
+    width: 800px;
+    margin:0 auto;
+    margin-top: 10px;
+  }
 }

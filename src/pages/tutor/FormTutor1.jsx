@@ -6,7 +6,8 @@ import { SubmitButton } from '../../components/Buttons';
 import { useForm as useFormHook } from "react-hook-form";
 import Error, { ErrorMax, ErrorReq } from '../../components/Error';
 import useForm from '../../hooks/useForm';
-import { dateValidator, emailValidator } from '../../data/validators';
+import { emailValidator } from '../../data/validators';
+import { esFechaValida } from '../../utils/validation';
 import Contacto from '../../components/contacto/contacto';
 import './tutor.css';
 
@@ -24,23 +25,23 @@ function FormTutor1() {
 
 
     const onSubmit = (data) => {
-        if(dateValidator(fechaNac)){
-            setErrorFechaNac('')
+        if(esFechaValida(fechaNac)){
+            setErrorFechaNac('');
         } else {
-            setErrorFechaNac('Fecha no válida')
-            return
+            setErrorFechaNac('Fecha no válida');
+            return;
         }
-        setTut1(data)
+        setTut1(data);
         setTut1(data => ({
             ...data,
             ...{tut_fe_nacim:fechaNac}
-          }))
+          }));
+
         return navigate('/tutor-2')
     }
     
     return (
         <div className="tutor-container">
-            {/*<img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>*/}
             <h3 className='text-gray-500 text-s font-semibold'>DATOS DEL TUTOR</h3>
             <form onSubmit={ handleSubmit(onSubmit) }>
                 <FormInputHook label="Nombre y Apellido*" id="tut_apeynom" placeholder="Nombre y Apellido" 
@@ -54,7 +55,7 @@ function FormTutor1() {
                 <FormInputDate label="Fecha de Nacimiento*" id=""
                     value={fechaNac}
                     maxLength={10}
-                    onChange={(e) => setFechaNac(e)}
+                    setState={setFechaNac}
                 />
                 {errorFechaNac && <Error>{errorFechaNac}</Error>}
                 
@@ -69,7 +70,7 @@ function FormTutor1() {
                 <FormInputHook label="E-Mail*" id="tut_mail" placeholder="nombre@mail.com" 
                     defaultValue={tut1?.tut_mail}
                     maxLength={150}
-                    register={ register('tut_mail', {required:true, maxLength:150, validate:emailValidator })}
+                    register={ register('tut_mail', {required:true, maxLength:150, validate:emailValidator})}
                 />
                 { errors.tut_mail?.type == 'required' && <ErrorReq>E-Mail</ErrorReq> }
                 { errors.tut_mail?.type == 'maxLength' && <ErrorMax>150</ErrorMax> }

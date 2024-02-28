@@ -1,6 +1,7 @@
 .register-container{
   position: relative;
-  padding-top: 40px;
+  padding-top: 20px;
+  min-height: 100vh;
 }
 
 .register-title{
