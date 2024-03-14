@@ -10,12 +10,18 @@
   color:white;
   font-weight: 500;
   text-align: start;
+
+}
+
+.tg-content{
+  padding-top: 10px;
 }
 
 @media only screen and (width > 768px){
   .tg-content{
     display: flex;
     flex-wrap: wrap;
+    padding-top: 0px;
     height: fit-content;
   }
 }

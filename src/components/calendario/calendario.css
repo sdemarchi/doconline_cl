@@ -12,3 +12,21 @@
   border-radius: 100% !important;
   width: 33px;
 }
+
+.calendario-header{
+  padding: 6px 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (width > 768px){
+  .calendario-dia{
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3px auto;
+    font-size: 12px;
+  }
+}

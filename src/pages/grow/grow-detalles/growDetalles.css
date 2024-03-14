@@ -81,11 +81,47 @@
   color:rgb(83, 83, 83);
 }
 
+.gd-button{
+  margin: 25px 0;
+}
+
 @media only screen and (width > 768px){
   .grow-estadisticas-container{
     padding-top: 70px !important;
     padding-bottom: 40px !important;
     min-height: fit-content;
     box-sizing: border-box;
+  }
+
+  .gd-item{
+    font-size: 14px;
+  }
+  
+  .gd-item-title{
+    font-weight: 500;
+  }
+
+  .gd-descuento-porcent{
+    font-size: 42px;
+    text-align: start;
+  }
+  
+  .gd-descuento-descripcion{
+    font-size: 14.5px;
+    color: rgb(48, 48, 48);
+  }
+  .gd-copiar-link-boton{
+    margin-bottom: 3.8px;
+  }
+
+  .gd-button{
+    margin: 5px 0;
+  }
+
+  .grow-estadisticas-items{
+    width: fit-content;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 150px;
   }
 }

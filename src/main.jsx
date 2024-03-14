@@ -23,11 +23,10 @@ import TurnoSuccess from './pages/turno/TurnoSuccess';
 import { AuthProvider } from './context/AuthProvider';
 import GuestLayout from './layouts/GuestLayout';
 import MainLayout from './layouts/MainLayout.jsx';
-//import { action as registerAction } from './pages/register/Register';
-//import { action as googleRegisterAction } from './pages/register/GoogleRegister';
+
 import { TurnoProvider } from './context/TurnoProvider';
-import PagoMl from './pages/pagos/PagoMl';
 import PagoTransf from './pages/pagos/PagoTransf';
+import FinalizarPago from './pages/pagos/finalizarPago/finalizarPago';
 import { FormProvider } from './context/FormProvider';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import FormRep3b from './pages/formReprocann/FormRep3b';
@@ -139,16 +138,15 @@ const router = createBrowserRouter([
         element: <Pagos />
       },
       {
-        path: '/pagoMl',
-        element: <PagoMl />
-      },
-      {
         path: '/pagoTransf',
         element: <PagoTransf />
       },
       {
         path: '/turno-conf',
         element: <TurnoConf />
+      },      {
+        path: '/finalizar-pago',
+        element: <FinalizarPago />
       },
       {
         path: '/turno-success',

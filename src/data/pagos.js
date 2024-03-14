@@ -44,6 +44,19 @@ class PagosService {
     return data;
   }
 
+  async editar(nuevoPago,id) {
+    const response = await fetch(`${this.apiUrl}/pagos/editar/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(nuevoPago),
+    });
+
+    const data = await response.json();
+    return data;
+  }
+
   async setUtilizado(id,estado) {
     const nuevoEstado = {id:id,utilizado:estado === true ? 1 : 0};
 

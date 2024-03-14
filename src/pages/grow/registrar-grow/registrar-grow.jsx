@@ -9,6 +9,7 @@ import Error, { ErrorForm } from '../../../components/Error';
 import { addGrow } from '../../../data/grows';
 import Spinner from '../../../components/Spinner';
 import { useNavigate } from 'react-router-dom';
+import NotificacionEmergente from '../../../components/notificacion-emergente/notificacion-emergente';
 
 export default function RegistrarGrow(){
   const email = sessionStorage.getItem('email');
@@ -20,6 +21,7 @@ export default function RegistrarGrow(){
   const [ provincias, setProvincias ] = useState();
   const [ requiredError, setRequiredError ] = useState(false);
   const [ provinceError, setProvinceError ] = useState(false);
+  const [ error, setError ] = useState(false);
   const [ inSubmit, setInSubmit ] = useState(false);
 
   const [provincia, setProvincia ] = useState();
@@ -65,21 +67,25 @@ export default function RegistrarGrow(){
       localidad: localidad,
       direccion: direccion,
       cp: cp,
+      descuento:18
     }    
     
 
     if(formularioValido === true){
       addGrow(grow).then((resp)=>{
-        setInSubmit(false);
-        if(resp.id){
+        if(resp.idgrow){
           sessionStorage.setItem('grow-success', resp.id);
           sessionStorage.setItem('growId',resp.id)
           sessionStorage.setItem('user-grow',JSON.stringify(resp));
           sessionStorage.setItem('user-grow-id',JSON.stringify(resp));
 
-          navigate('/');
+          window.location.href="/turnero/panel";
+        }else{
+          setInSubmit(false);
         }
       });
+    }else{
+      setInSubmit(false);
     }
   }
 
@@ -111,6 +117,7 @@ export default function RegistrarGrow(){
         <button className="registrar-grow-volver" onClick={()=>navigate('/panel')}>Volver</button>
         </div>
       }
+      <NotificacionEmergente show={error} setShow={setError} text="Ha ocurrido un error" />
     </div>
   );
 };

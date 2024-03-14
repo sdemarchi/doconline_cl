@@ -2,17 +2,21 @@ import { Outlet, Navigate } from "react-router-dom";
 import useAuth from '../hooks/useAuth';
 import Spinner from "../components/Spinner";
 import Header from "../components/header/header";
+import { useEffect } from "react";
 
 
 function MainLayout() {
+    const { user, cargando } = useAuth();
+    
+    useEffect(()=>{
+        console.log(JSON.stringify(user));
+    },[]);
 
-    const { user, cargando } = useAuth()
+
     if(cargando){
         return(
-            <div className="min-h-screen bg-gradient-to-bl from-grad-blue to-grad-green">
-                    <div className="layout-main-container">
-                    <Spinner/>
-                    </div>
+            <div className="layout-main-container page" style={{backgroundColor:'white'}}>
+               <Spinner/>
             </div>
         )
         

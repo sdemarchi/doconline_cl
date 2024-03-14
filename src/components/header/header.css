@@ -99,11 +99,9 @@
     justify-content: flex-start;
     width: 100%;
     font-size: 15px;
-    font-weight: 500;
     color:rgb(82, 82, 82);
     margin-left: 110px;
-    font-weight: 600 !important;
-    font-size: 14.5px;
+    font-weight: 500 !important;
     font-family: 'Montserrat', sans-serif;
   }
 

@@ -16,7 +16,7 @@ import './pagos.css';
 import Card from '../../components/card/card';
 import toBase64 from '../../utils/base64';
 import PagosService from '../../data/pagos';
-
+import Title from '../../components/title/title';
 
 function PagoTransf() {
     const { importe } = useAuth();//eslint-disable-line
@@ -142,13 +142,10 @@ function PagoTransf() {
         {!datosCargados ? <Spinner/>:
          <div>
             {mostrarNotification && <Notificacion message="Texto copiado al portapapeles"/>}
-  
-            <div className='mb-6 mt-4 mx-auto pagos-transf-title-container'>
-                <span className='black-title'>Transferí a la siguiente cuenta</span>
-            </div>
+
+            <Title>Transferí a la siguiente cuenta</Title>
 
             <div className="pagos-transf-content">
-
                 <Card center disabledBorder>
                     <div style={{textAlign:'center'}}>
                         <h4 className="text-gray-600 pagos-transf-info-title">
@@ -185,7 +182,7 @@ function PagoTransf() {
                                 </label>}
                                 { !enviando && comprobanteImagen  &&
                                 <>
-                                <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around'}} >
+                                <div className="pagos-comprobante-preview-container" >
                                     <div>
                                         <img src={comprobanteImagen} style={{height:'100px',maxWidth:'200px'}}></img>
                                     </div>

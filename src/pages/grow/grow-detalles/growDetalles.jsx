@@ -8,6 +8,7 @@ import { getGrowById } from '../../../data/grows';
 import { copyToClipboard } from '../../../utils/utilFunctions';
 import { getPrecios } from '../../../data/turnero';
 import NotificacionEmergente from '../../../components/notificacion-emergente/notificacion-emergente';
+import Title from '../../../components/title/title';
 
 function GrowDetalles(){
   const { id } = useParams();
@@ -54,44 +55,44 @@ function GrowDetalles(){
     <>
     { datosCargados ? 
     <div className="grow-estadisticas-container page">
-      <div className='mt-2' style={{textAlign:'center',paddingBottom:'15px'}}>
-        <h2 className="black-title">Detalles del grow</h2>
-      </div>
+      <Title>Detalles del grow</Title>
 
 
       <Card title={'Detalles de contacto'}>
-       {growDetails?.nombre && <div className="gd-item">
-          <span className="gd-item-title">Nombre</span>
-          <span className="gd-item-text">{growDetails?.nombre}</span>
-        </div>}
-       {growDetails?.titular && <div className="gd-item">
-          <span className="gd-item-title">Titular</span>
-          <span>{growDetails?.titular}</span>
-        </div>}
-       {growDetails?.mail &&<div className="gd-item">
-          <span className="gd-item-title">Email</span>
-          <span className="gd-item-text">{growDetails?.mail}</span>
-        </div>}
-        {growDetails?.celular && <div className="gd-item">
-          <span className="gd-item-title">Celular</span>
-          <span className="gd-item-text">{growDetails?.celular}</span>
-        </div>}
-        {growDetails?.direccion &&<div className="gd-item">
-          <span className="gd-item-title">Dirección</span>
-          <span className="gd-item-text">{growDetails?.direccion}</span>
-        </div>  }
+        <div className="grow-estadisticas-items">
+          {growDetails?.nombre && <div className="gd-item">
+            <span className="gd-item-title">Nombre</span>
+            <span className="gd-item-text">{growDetails?.nombre}</span>
+          </div>}
+          {growDetails?.titular && <div className="gd-item">
+            <span className="gd-item-title">Titular</span>
+            <span>{growDetails?.titular}</span>
+          </div>}
+          </div>
+          <div className="grow-estadisticas-items">
+          {growDetails?.mail &&<div className="gd-item">
+            <span className="gd-item-title">Email</span>
+            <span className="gd-item-text">{growDetails?.mail}</span>
+          </div>}
+          {growDetails?.celular && <div className="gd-item">
+            <span className="gd-item-title">Celular</span>
+            <span className="gd-item-text">{growDetails?.celular}</span>
+          </div>}
+          </div>
+          <div className="grow-estadisticas-items">
+          {growDetails?.direccion &&<div className="gd-item">
+            <span className="gd-item-title">Dirección</span>
+            <span className="gd-item-text">{growDetails?.direccion}</span>
+          </div>  }
+        </div>
+ 
       </Card>
 
       <Card title="cupon">
         <div className="gd-item">
           <span  onClick={()=>copyToClipboard(growDetails?.cod_desc)} className="gd-item-text" >{growDetails?.cod_desc}</span>
           <span className="gd-item-title mt-1">Link personalizado</span>
-
-          {/*<span onClick={()=>copyToClipboard('www.doconlineargentina.com/turnero/'+growDetails?.cod_desc)} 
-                className="gd-item-text">{'www.doconlineargentina.com/turnero/'+growDetails?.cod_desc}
-          </span>*/}
-
-      <button className="gd-copiar-link-boton" onClick={()=>copiarAlPortapapeles('www.doconlineargentina.com/turnero/login/'+growDetails?.cod_desc,'Link')}>Copiar Link</button>
+          <button className="gd-copiar-link-boton" onClick={()=>copiarAlPortapapeles('www.doconlineargentina.com/turnero/login/'+growDetails?.cod_desc,'Link')}>Copiar Link</button>
         </div>
       </Card>
 
@@ -102,17 +103,18 @@ function GrowDetalles(){
             <div className="gd-descuento-descripcion">Con tu cupón o link de descuento</div>
           </div>
           <div className="gd-descuento-box gd-descuento-precio">
-           {growDetails?.descuento !== 0 && <p className="gd-precio-original">${precioTransf}</p>}
-            <p className="gd-precio-descuento">${precioTransf * (1 - growDetails.descuento/100)}</p>
+          {growDetails?.descuento !== 0 && <p className="gd-precio-original">${precioTransf}</p>}
+            <p className="gd-precio-descuento">${Math.round(precioTransf * (1 - growDetails.descuento/100))}</p>
             <p></p>
           </div>
         </div>
 
       </Card>
 
-      <div style={{marginTop:'25px',marginBottom:'25px'}}>
+      <div className="gd-button">
         <LinkButtonCenter value="Volver" to={"/tu-grow/"+id}></LinkButtonCenter>
       </div>
+
       <NotificacionEmergente show={mostrarNotificacion} setShow={setMostrarNotificacion} text={textoNotificacion}/>
     </div>:
     <div className="grow-estadisticas-container page" style={{minHeight:'700px'}}><Spinner/></div>

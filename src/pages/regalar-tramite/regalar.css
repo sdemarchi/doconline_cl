@@ -1,4 +1,6 @@
-
+.regalar-container{
+  margin-top:0px;
+}
 
 @media screen and (width > 768px){
   .regalar-content{

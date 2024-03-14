@@ -53,6 +53,12 @@
   animation-duration:3s;
 }
 
+@media screen and (width > 768px){
+  .ne-text{
+    font-size: 15px;
+ }
+}
+
 @keyframes notification{
   0%{
     opacity: 0%;

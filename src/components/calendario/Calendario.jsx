@@ -7,24 +7,18 @@ function Calendario(props) {
 
     return (
         <>
-            <div className='flex flex-row py-2'>
-                <div className='basis-2/12'>
-                    <button 
-                        className=" text-gray-600 font-bold text-md w-full p-1 rounded-md"
-                        onClick={ props.restar }
-                    ><span><IoMdArrowDropleft/></span></button>
-                </div>
-                <div className='flex-auto px-1'>
-                    <button className=" text-gray-600 font-semibold text-md w-full p-1 rounded-md">
-                        { meses[props.mes - 1] } { props.anio }
-                    </button>
-                </div>
-                <div className='basis-2/12'>
-                    <button 
-                        className=" text-gray-600 font-bold text-md w-full p-1 rounded-md"
-                        onClick={ props.sumar }
-                    ><span><IoMdArrowDropright/></span></button>
-                </div>
+            <div className='calendario-header'>
+                <button 
+                    className="text-gray-600 font-bold text-md"
+                    onClick={ props.restar }
+                ><span><IoMdArrowDropleft/></span></button>
+                <button className="text-gray-600 font-semibold">
+                    { meses[props.mes - 1] } { props.anio }
+                </button>
+                <button 
+                    className=" text-gray-600 font-bold text-md"
+                    onClick={ props.sumar }
+                ><span><IoMdArrowDropright/></span></button>
             </div>
             
             <div className='flex flex-row gap-1'>
@@ -41,15 +35,15 @@ function Calendario(props) {
                 <span key={linea.key} className='flex flex-row gap-1 mb-2'>
                     {linea.linea?.map((dia,key)=> (
                         <FechaCalendario
-                            id={key} 
-                            select={dia.turnos ? props.select : ''} 
-                            fecha={dia.fecha}
-                            key={dia.key} 
-                            dia={dia.dia} 
-                            otroMes={!dia.enmes} 
-                            disabled={!dia.activo } 
-                            turnos={dia.turnos}
-                            seleccionado={props.diaSeleccionado == dia.fecha}/>
+                        id={key} 
+                        select={dia.turnos ? props.select : ''} 
+                        fecha={dia.fecha}
+                        key={dia.key} 
+                        dia={dia.dia} 
+                        otroMes={!dia.enmes} 
+                        disabled={!dia.activo } 
+                        turnos={dia.turnos}
+                        seleccionado={props.diaSeleccionado == dia.fecha}/>
                     ))}
                 </span>
             ))}

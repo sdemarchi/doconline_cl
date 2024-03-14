@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Form, useActionData, useNavigate } from 'react-router-dom';
+import { useActionData, useNavigate } from 'react-router-dom';
 import { FormInput , FormInputDate } /*,{ FormInputReadonly }*/ from '../../components/FormInput';
 import { SubmitButton } from '../../components/Buttons';
 import { esFechaValida } from '../../utils/validation';
@@ -31,6 +31,10 @@ function GoogleRegister() {
     const setUserSession = (user) => { //ejecutar al recibir respuesta
         localStorage.setItem('dc_userId',user.userId);
         localStorage.setItem('dc_userName',user.userName);
+        if(user.adminGrow){
+            sessionStorage.setItem('user-grow',JSON.stringify({idgrow:user.adminGrow}));
+        }
+        JSON.stringify(user);
         setUser({ userId: user.userId, userName: user.userName });
     }
 
@@ -107,7 +111,8 @@ function GoogleRegister() {
     
     return (
         <div className="register-container">
-            { inSubmit ? <Spinner /> :
+            { inSubmit ?
+            <div class="page"> <Spinner /> </div>:
             <>
             <div className='mb-2' style={{textAlign:'center',paddingBottom:'15px',paddingTop:'20px'}}>
               <h2 className="black-title">Registrar usuario</h2>

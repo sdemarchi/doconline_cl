@@ -45,7 +45,7 @@ function Register() {
     const setUserSession = (user) => {
         localStorage.setItem('dc_userId',user.userId);
         localStorage.setItem('dc_userName',user.userName);
-        setUser({ userId: user.userId, userName: user.userName });
+        setUser({ userId: user.userId, userName: user.userName, growAdmin:user.growAdmin });
     }
         
     const validate = (datos) => {

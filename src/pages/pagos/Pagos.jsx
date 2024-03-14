@@ -17,6 +17,7 @@ import LinkCard from '../../components/link-card/link-card';
 import PagosService from '../../data/pagos';
 import { ActionButton } from '../../components/Buttons';
 import Error from '../../components/Error';
+import Title from '../../components/title/title';
 
 function Pagos() {
     const {/* turno,*/ cuponValidado, setCuponValidado } = useTurno();
@@ -112,6 +113,16 @@ function Pagos() {
             }
         });
     }
+
+    const estoyRenovando = async () => {
+        const grow_ = await getGrowByCod('renovacion');
+
+        if(grow_?.idgrow){
+            setGrow(grow_);
+            sessionStorage.setItem('growId',grow_.idgrow);
+
+        }
+    }
     
     async function getGrow(){
         if(sessionStorage.getItem('growId')){
@@ -167,25 +178,21 @@ function Pagos() {
                         <h1>Tenés un descuento del {grow?.descuento}% por {grow?.nombre}.</h1>
                     </div>
                 }
-                
-                <div className='mt-2 mb-2' style={{textAlign:'center',paddingBottom:'15px'}}>
-                <h2 className="black-title">{ingresarCodigo ? "Registrar pago" : "Ir a pagar"}</h2>
-                </div>
 
-                <div className='pagos-content'>
+                <div>
+
+                <Title>{ingresarCodigo ? "Registrar pago" : "Ir a pagar"}</Title>
                 {(grow?.descuento !== undefined && grow?.descuento !== 0 && !ingresarCodigo) &&
                     <div className="pagos-descuento display-pc">
                         <h1>Tenés un descuento del {grow?.descuento}% por {grow?.nombre}.</h1>
                     </div>
                 }
+                <div className='pagos-content'>
                     {(!grow?.descuento && !ingresarCodigo) &&
                         <Card title="Cupón" disabledBorder >
                         <>
                             { cuponValidado.cupon ?
-                                <>
-                                    <h6 className="text-gray-500 text-xs my-4 font-semibold leading-3">Cupón Aplicado:</h6>
-                                    <Chip value={cupon} onClick={ () => quitarCupon() } />
-                                </>
+                                <Chip value={cupon} onClick={ () => quitarCupon() } />
                                 :
                                 <>
                                 <FormInputState 
@@ -212,15 +219,18 @@ function Pagos() {
                             mensaje="Desde cualquier banco físico o virtual" 
                             onClick={ (precioFinal) => pagar(precioFinal) } />
                             <div className="pagos-pagado-container">
-                                <button onClick={()=>setIngresarCodigo(true)} className="display-pc pagos-pagado-button">Ya han pagado por mi</button>
+                                <button onClick={()=>setIngresarCodigo(true)} className="display-pc pagos-pagado-button"> Ya han pagado por tí?</button>
                             </div>
+                            { !ingresarCodigo  && !grow?.descuento && <div className="pagos-pagado-container">
+                                <button onClick={()=>estoyRenovando()}  className="display-pc pagos-pagado-button"> Click aqui si estás renovando el trámite</button>
+                            </div>}
 
                     </Card>
 
-                    <LinkCard show={!ingresarCodigo} onClick={()=>setIngresarCodigo(true)} title="Ya han pagado por mi" onlyCel>Ingresar el codigo de pago.</LinkCard>
+                    <LinkCard show={!ingresarCodigo} onClick={()=>setIngresarCodigo(true)} title="Ya han pagado por mí" onlyCel>Ingresar el codigo de pago.</LinkCard>
                    
-                    <Card show={ingresarCodigo} onClick={()=>setIngresarCodigo(true)} title="Ingresar codigo" disabledBorder>
-                        Solicita el codigo a quien realizo el pago.
+                    <Card show={ingresarCodigo} onClick={()=>setIngresarCodigo(true)} title="Ingresar código" disabledBorder>
+                        <p className="pagos-codigo-label">{"(Solicita el código a quien realizó el pago)"}</p>
                         <InputState 
                             id="turno"
                             state={codigo}
@@ -232,11 +242,17 @@ function Pagos() {
                         <ActionButton onClick={()=>comprobarCodigo()} value="Usar codigo"/>
                     </Card>
 
+                    <LinkCard onClick={()=>estoyRenovando()} show={!ingresarCodigo  && !grow?.descuento } onlyCel title='Estoy renovando'>
+                        Click aquí si estás renovando el tramite.
+                    </LinkCard>
+
                 </div>
 
                 <div className='mb-0 mx-auto p-3 text-center'>
                     <button className='text-gray-500' onClick={() => navigate('/turno')} >Atrás</button>
                 </div>
+            </div>
+            
             </div>}
 
             <div className="pagos-contacto">

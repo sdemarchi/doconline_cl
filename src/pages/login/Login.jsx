@@ -38,6 +38,7 @@ function Login() {
     });
 
     const growRoute = routeParams.grow;
+
     const getGrow = () => {
         if(growRoute !== undefined){
             getGrowByRoute(growRoute).then((resp)=>{
@@ -80,16 +81,14 @@ function Login() {
     async function login() {
 
         if([userid, password].includes('')) {
-            setAlerta({
-                msg: 'Todos los campos son obligatorios',
-                error: true
-            });
+            setAlerta({ msg: 'Todos los campos son obligatorios',error: true });
             return
         }
 
         setContenidoCargado(false);
 
         let url = import.meta.env.VITE_API_URL + '/turnero.loginUser';
+
         if(regex_mail.test(userid)) { //Verifica si es un e-mail
             url = import.meta.env.VITE_API_URL + '/turnero.loginEmail';
         }
@@ -102,15 +101,24 @@ function Login() {
                     'Content-Type': 'application/json'
                 }
             })
+            
             const resp = await respuesta.json()
+            
             if(resp.error.code == 0){
-                localStorage.setItem('dc_userId',resp.user.id)
-                localStorage.setItem('dc_userName',resp.user.userName)
+                localStorage.setItem('dc_userId',resp.user.id);
+                localStorage.setItem('dc_userName',resp.user?.userName);
+
+                if(resp.user.growAdmin > 0){
+                    const growid = JSON.stringify({idgrow:resp.user.growAdmin});
+                    sessionStorage.setItem('user-grow',growid);
+                }
+   
                 setUser({
                     userId:resp.user.id,
                     userName: resp.user.userName
                 })
                 return navigate('/panel')
+
             } else {
                 setContenidoCargado(true);
                 setAlerta({
@@ -126,45 +134,49 @@ function Login() {
 
     async function loginConGoogle(email) {
         setContenidoCargado(false);
-        let url = import.meta.env.VITE_API_URL + '/turnero.loginGoogle'
+        let url = import.meta.env.VITE_API_URL + '/turnero.loginGoogle';
         
         try {
             const respuesta = await fetch(url, {
                 method: 'POST',
                 body: JSON.stringify({email:email}),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: {'Content-Type':'application/json'}
             })
+
             const resp = await respuesta.json()
+            
             if(resp.error.code == 0){
-                localStorage.setItem('dc_userId',resp.user.id)
-                localStorage.setItem('dc_userName',resp.user.userName)
-                setUser({
-                    userId:resp.user.id,
-                    userName: resp.user.userName
-                })
-                return navigate('/panel')
+                localStorage.setItem('dc_userId',resp.user.id);
+                localStorage.setItem('dc_userName',resp.user.userName);
+
+                if(resp.user.growAdmin > 0){
+                    const growid = JSON.stringify({idgrow:resp.user.growAdmin});
+                    sessionStorage.setItem('user-grow',growid);
+                }
+
+                setUser({userId:resp.user.id,userName: resp.user.userName});
+
+                return navigate('/panel');
+
             } else {
-                return navigate('/g-perfil')
+                return navigate('/g-perfil');
             }
             //console.log(resp)
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
 
-    const { msg } = alerta
+    const { msg } = alerta;
 
     return (
-        <> { !contenidoCargado && <Spinner />}{ contenidoCargado && 
+        <> { !contenidoCargado && 
+            <div class="page"> <Spinner /> </div>}{ contenidoCargado && 
 
         <div className="login-container">
             <div className="login-form">
 
                 <div className="login-logo-container">
-                    {/*<span className="login-logo-text">Cuida tu salud estés donde estés</span>*/}
-                    
                     <img className="login-logo mx-auto pb-4" src={ logo }></img>
                 </div>
     

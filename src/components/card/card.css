@@ -45,4 +45,10 @@
     margin-bottom: 0px;
     padding:9px;
   }
+  .card-title{
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    color:rgba(0, 0, 0, 0.809);
+  }
 }

@@ -27,13 +27,13 @@ function Panel() {
 
     const [datosCargados, setDatosCargados] = useState(false);
     const [pacienteCargado, setPacienteCargado] = useState(false);
-    const [growCargado, setGrowCargado] = useState(false); // eslint-disable-line
+    const [growCargado, setGrowCargado] = useState(false); //eslint-disable-line
     const [pagoCargado, setPagoCargado] = useState(false);
     const [pagoRegaladoCargado, setPagoRegaladoCargado] = useState(false);
 
     const [turnoPaciente, setTurnoPaciente] = useState({});
     const [growAdmin, setGrowAdmin] = useState();
-    const {setFormCargado, llenarFormulario } = useForm(); // eslint-disable-line
+    const {setFormCargado, llenarFormulario} = useForm(); //eslint-disable-line
     const [ formSuccess, setFormSuccess ] = useState();
     const fromLogin = sessionStorage.getItem('fromLogin') || false;
 
@@ -82,8 +82,7 @@ function Panel() {
             setGrowAdmin(resp).then((response)=>{
                 setPago(response);
             });
-
-           });;
+        });;
     }
 
     async function getPaciente() {
@@ -100,12 +99,10 @@ function Panel() {
             }
 
             descargarFormulario(response.dni).then((resp)=>{
-    
                 if(resp.error?.code == 0){
                     llenarFormulario(resp.data, resp.patologias);
                     if(resp.data){
                         setFormSuccess(true);
-                      
                     }
                 }
             });
@@ -125,20 +122,19 @@ function Panel() {
     useEffect(() => {
         subirScroll();
         getPaciente();
-        
-       // setFormSuccess(JSON.parse(sessionStorage.getItem('form-success')) || false);
+    
         
         if(sessionStorage.getItem('grow-success')){
             sessionStorage.removeItem('grow-success');
             setNotificacionGrow(true);
         }
+
     },[]) //eslint-disable-line
 
     useEffect(()=>{
         const cargado = pagoCargado && growCargado && pacienteCargado && pagoRegaladoCargado;
         setDatosCargados(cargado);
-
-  },[pagoCargado,growCargado,pacienteCargado,pagoRegaladoCargado]);
+    },[pagoCargado,growCargado,pacienteCargado,pagoRegaladoCargado]);
 
     useEffect(() => {
         const datosCargados_ = growCargado === true && pacienteCargado === true;
@@ -161,7 +157,7 @@ function Panel() {
         <>
         {datosCargados?
 
-        <div className='panel-container page' >
+        <div className='panel-container page'>
             <div className="display-pc panel-bienvenido-container">
                 <div className="panel-bienvenido-pc">
                     <div className="panel-description">
@@ -170,7 +166,8 @@ function Panel() {
                         <p>facil, seguro y sin moverte</p>
                         <p>de tu casa.</p>
                         {!(turnoPaciente.id > 0) && <button onClick={()=>navigate('/turno')}>Solicitar Turno</button>}
-                        {turnoPaciente.id > 0 && <button onClick={()=>navigate('/formulario-1')}>Completa tus datos</button>}
+                        {turnoPaciente.id > 0 && !formSuccess && <button onClick={()=>navigate('/formulario-1')}>Completa tus datos</button>}
+                        {turnoPaciente.id > 0 && formSuccess && <button onClick={()=>navigate('/formulario-1')}>Edita tus datos</button>}
                     </div>
                 </div>
             </div>
@@ -191,7 +188,6 @@ function Panel() {
                     <p class="mt-1">Tenés un pago a tu favor. Podes usarlo en tu próximo turno.</p>
                 </ColorCard> 
 
-    
 
                 <ColorCard show={turnoPaciente.id > 0} color1="#009FD2" color2="#34D29D">
                     <div className='panel-turno-head'>
@@ -203,17 +199,22 @@ function Panel() {
 
                 {(turnoPaciente.id > 0 && formSuccess !== true && false) && 
                     <div className=" display-pc">
-                        <InfoCard text={"No olvides completar el formulario con tus datos para poder realizar el tramite."}/>
+                        <InfoCard text={"No olvides completar el formulario con tus datos para poder realizar el trámite."}/>
                     </div>
                 }
 
+                <LinkCard show={turnoPaciente.id > 0 && pago && !pago?.comprobante} title="Finaliza tu pago" to='/finalizar-pago' alert responsive>
+                    <p>Adjuntá el comprobante de pago para evitar la cancelacion del turno.</p>
+                </LinkCard>
       
+
                 <LinkCard to={'/turno'} show={!(turnoPaciente.id > 0 )} title="Solicitar turno" onlyPc responsive>
-                    <p className='pb-3'>Solicita turno con nosotros para tramitar tu Reprocann</p>
+                    <p className='pb-3'>Solicitá turno con nosotros para tramitar tu Reprocann</p>
                 </LinkCard>
 
+
                 <LinkCard to="/formulario-1" title={formSuccess ? 'Edita tus datos' : 'Completa tus datos'}  onlyPc responsive>
-                    <p className='pb-3'>{formSuccess ? 'Modifica o actualiza tus datos en caso de que sea necesario' : 'Completa los datos necesarios para realizar tu tramite'}</p>
+                    <p className='pb-3'>{formSuccess ? 'Modificá o actualizá tus datos en caso de ser necesario.' : 'Completa los datos necesarios para realizar tu trámite'}</p>
                 </LinkCard>
         
 
@@ -244,23 +245,21 @@ function Panel() {
                     <LinkButton icon={<BsCalendarWeek/>} to="/turno" value="Solicitar Turno" />
                 </Card>
 
-        
                 {(turnoPaciente.id > 0 && formSuccess == false && false) && 
                     <div className="panel-info">
-                        <InfoCard text={"Completa el formulario de Reprocann para iniciar o renovar el tramite."} />
+                        <InfoCard text={"Completa el formulario de Reprocann para iniciar o renovar el trámite."} />
                     </div>
                 }
 
-
-                <Card title={formSuccess ? 'Edita tus datos' : 'Completa tus datos'}  onlyCel>
-                    <p className='pb-3'>{formSuccess ? 'Modifica o actualiza tus datos en caso de que sea necesario' : 'Completa los datos necesarios para realizar tu tramite'}</p>
+                <Card title={formSuccess ? 'Editá tus datos' : 'Completa tus datos'}  onlyCel>
+                    <p className='pb-3'>{formSuccess ? 'Modificá o actualizá tus datos en caso de ser necesario.' : 'Completa los datos necesarios para realizar tu trámite'}</p>
                     <LinkButton icon={<FaWpforms/>} disabled={turnoPaciente.id == 0} to="/formulario-1" value={"Formulario REPROCANN"} />
                 </Card>
 
         
                 {(turnoPaciente.id > 0 && formSuccess) && 
                     <div className="panel-info display-cel">
-                        <InfoCard text={"El dia del turno nos pondremos en contacto mediante WhatsApp."}/>
+                        <InfoCard text={"El día del turno nos pondremos en contacto mediante WhatsApp."}/>
                     </div>
                 }
 
@@ -284,10 +283,12 @@ function Panel() {
             { !growAdmin?.idgrow &&  <div className="main-contacto display-cel">
                     <Contacto bottom='90px'/>
                 </div>}    
-            </div>    
+            </div>   
+
         </div>:
         <div className=' page'> <Spinner /></div>
         }
+
         {growAdmin?.idgrow && 
             <div style={{minHeight:'50px'}}>
                <Nav idgrow={growAdmin?.idgrow}/>

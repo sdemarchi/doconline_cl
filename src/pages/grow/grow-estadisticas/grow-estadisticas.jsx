@@ -8,6 +8,7 @@ import Bubble from '../../../components/bubble/bubble';
 import { useParams } from 'react-router-dom';
 import { getGrowPacientes } from '../../../data/grows';
 import Nav from '../../../components/nav/nav';
+import Title from '../../../components/title/title';
 
 function GrowEstadisticas(){
   const [ mesActual, setMesActual ] = useState(new Date().getMonth() + 1); 
@@ -84,9 +85,8 @@ function GrowEstadisticas(){
     <>
     { datosCargados ? 
     <div className="grow-estadisticas-container page">
-      <div className='mt-2' style={{textAlign:'center',paddingBottom:'15px'}}>
-        <h2 className="black-title">Tus estadisticas</h2>
-      </div>
+      <Title>Tus estadisticas</Title>
+      
 
       <Card title="Seleccionar mes">
         <CustomSelect value={mesActual} datos={datos} onChange={(e)=>seleccionarMes(e)}></CustomSelect>

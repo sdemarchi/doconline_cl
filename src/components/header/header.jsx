@@ -46,7 +46,7 @@ function Header(props){
       <div className="header-nav">
         <Link to='/panel' className="header-nav-button">Inicio</Link>
         {grow?.idgrow && <Link to={'/tu-grow/'+ grow?.idgrow} className="header-nav-button">Tu Grow</Link>}
-        <button onClick={() => {window.open(wspLink)}} className="header-nav-button" style={{fontWeight:'600'}}>Contactanos</button>
+        <button onClick={() => {window.open(wspLink)}} className="header-nav-button" style={{fontWeight:'500',fontSize:'15px'}}>Contactanos</button>
       </div>
 
       <Link to='/login' className="header-salir-button display-pc">Salir</Link>

@@ -6,6 +6,7 @@ import { getPrestadores, getCalendario, /*getTurno,*/ getTurnos, excedeMargen } 
 import { useEffect,  useRef, useState } from 'react';
 import {CustomSelect} from '../../components/select/Select';
 import useTurno from '../../hooks/useTurno';
+import Title from '../../components/title/title';
 import Spinner from '../../components/Spinner';
 import Contacto from '../../components/contacto/contacto';
 import Card from '../../components/card/card';
@@ -194,10 +195,7 @@ function Turnos() {
         { datosCargados &&
 
         <div>
-            <div className='text-center' style={{textAlign:'center', paddingBottom:'15px'}}>
-              <h2 className="black-title">Solicitar turno</h2>
-            </div>
-
+            <Title>Solicitar turno</Title>
             <div className="turno-content">
                 <div className="turno-row">
                     <Card title='Seleccionar prestador' disabledBorder>
