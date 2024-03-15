@@ -7,4 +7,4 @@ function DataBox(props) {
     )
 }
 
-export default DataBox
+export default DataBox;
