@@ -85,6 +85,10 @@
   margin: 25px 0;
 }
 
+.gd-qr{
+  height:80px;
+}
+
 @media only screen and (width > 768px){
   .grow-estadisticas-container{
     padding-top: 70px !important;

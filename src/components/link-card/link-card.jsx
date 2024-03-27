@@ -7,10 +7,12 @@ export default function LinkCard(props){
     let titleClass = props.center ? "link-card-title link-card-title-center" : "link-card-title";
     const navigate = useNavigate();
 
+    
+
     return(
         <>
       {props.show !== false &&  
-        <div className={`card ${props.animate ? 'animation-card' : ''} ${props.onlyCel ? 'display-cel' : ''} ${props.onlyPc ? 'display-pc' : ''} ${props.responsive ? 'card-resp' : ''}`} ref={props.ref}>
+        <a href={props.link} target='_blank' className={`card ${props.animate ? 'animation-card' : ''} ${props.onlyCel ? 'display-cel' : ''} ${props.onlyPc ? 'display-pc' : ''} ${props.responsive ? 'card-resp' : ''}`} ref={props.ref}>
 
             <div onClick={props.to?()=>navigate(props.to):()=>props.onClick()} className='link-card-container' style={{textAlign:'center !important'}}>
  
@@ -23,7 +25,7 @@ export default function LinkCard(props){
 
                 {props.children}
             </div>
-        </div>}
+        </a>}
         </> 
     )
 }

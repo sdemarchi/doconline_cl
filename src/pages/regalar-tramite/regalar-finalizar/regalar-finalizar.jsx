@@ -1,4 +1,4 @@
-import Title from '../../../components/title/Title';
+import Title from '../../../components/title/title';
 import Info from '../../../components/info/Info';
 import Card from '../../../components/card/card';
 import { ActionButton } from '../../../components/Buttons';

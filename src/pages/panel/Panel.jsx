@@ -218,7 +218,7 @@ function Panel() {
                 </LinkCard>
         
 
-                <LinkCard show={growAdmin?.idgrow !== undefined} title="Tu Grow" to={'/tu-grow/'+growAdmin?.idgrow} responsive>
+                <LinkCard show={growAdmin?.idgrow !== undefined && false /*Eliminar '&& false' para activar */} title="Tu Grow" to={'/tu-grow/'+growAdmin?.idgrow} responsive>
                     <p>Tenés un Grow vinculado a tu correo electronico.</p>
                 </LinkCard>
 
@@ -273,9 +273,14 @@ function Panel() {
                     <Contacto/>
                 </div>
 
-                <div className='panel-button mx-auto p-3 text-center'>
-                    <button className="panel-cerrar-sesion display-cel" onClick={() => logout()} >Cerrar Sesión</button>
-                </div>
+                {
+                    !growAdmin?.idgrow && 
+
+                    <div className='panel-button mx-auto p-3 text-center'>
+                        <button className="panel-cerrar-sesion display-cel" onClick={() => logout()} >Cerrar Sesión</button>
+                    </div>
+                }
+          
 
                 <NotificacionEmergente show={mostrarNotificacion} setShow={setMostrarNotificacion} text="Tu turno ha sido cancelado" />
                 <NotificacionEmergente show={notificacionGrow} setShow={setNotificacionGrow} text="Grow registrado correctamente" />
