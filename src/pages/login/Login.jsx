@@ -171,7 +171,7 @@ function Login() {
 
     return (
         <> { !contenidoCargado && 
-            <div class="page"> <Spinner /> </div>}{ contenidoCargado && 
+            <div> <Spinner /> </div>}{ contenidoCargado && 
 
         <div className="login-container">
             <div className="login-form">

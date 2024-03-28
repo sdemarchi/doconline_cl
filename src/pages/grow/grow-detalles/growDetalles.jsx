@@ -30,10 +30,12 @@ function GrowDetalles(){
     setTextoNotificacion(texto + ' copiado al portapapeles.');
   }
   
+  
   const copiarAlPortapapeles = (recurso,nombreDelRecurso) => {
     handleNotificacion(true,nombreDelRecurso );
     copyToClipboard(recurso);
   }
+
 
   const copiarQR = () => {
     const canvas = document.getElementById("qr-code-logo");
@@ -46,10 +48,9 @@ function GrowDetalles(){
           })
           .catch((error) => console.error("Error al copiar el código QR:", error));
       });
-
-
     }
   };
+
 
   const descargarQR = () => {
     const canvas = document.getElementById("qr-code-logo");
@@ -65,6 +66,7 @@ function GrowDetalles(){
       document.body.removeChild(downloadLink);
     };
   }
+  
   
   useEffect(()=>{
     const getGrow = () => {
@@ -118,16 +120,12 @@ function GrowDetalles(){
     { datosCargados ? 
     <div className="grow-estadisticas-container page">
 
-        {/* ELEMENTO DE QR OCULTO PARA COPIAR Y DESCARGAR */}
-          <div style={{display:'none'}}>
-            <QRCodeLogo
-              value={'www.doconlineargentina.com/turnero/login/'+growDetails?.cod_desc}          
-              size={500}
-  
-              enableCORS={true}     
-              id={"qr-code-logo"}
-            />
-          </div>
+
+        {/* QR OCULTO PARA COPIAR Y DESCARGAR */}
+        <div style={{display:'none'}}>
+          <QRCodeLogo value={'www.doconlineargentina.com/turnero/login/'+growDetails?.cod_desc} size={500} enableCORS={true} id={"qr-code-logo"}/>
+        </div>
+
 
       <Title>Detalles del grow</Title>
 
@@ -175,6 +173,7 @@ function GrowDetalles(){
         </div>
       </Card>
 
+
       <Card title="Link QR">
         <div style={{display:'flex',justifyContent:"space-around",alignItems:'center',padding:'10px 0'}}>
           <QuickActionButton onClick={()=>descargarQR()} icon={<LuDownload />} text={"Descargar QR"}/>
@@ -182,6 +181,7 @@ function GrowDetalles(){
           <QRCode style={{width:'130px'}} className='gd-qr' value={'www.doconlineargentina.com/turnero/login/'+growDetails?.cod_desc} />
         </div>
       </Card>
+
       
       <Card title="Tu descuento">
         <div className="gd-descuento">
@@ -200,11 +200,13 @@ function GrowDetalles(){
         </div>
       </Card>
 
+
       <div className="gd-button">
         <LinkButtonCenter value="Volver" to={"/tu-grow/"+id}></LinkButtonCenter>
       </div>
 
       <NotificacionEmergente show={mostrarNotificacion} setShow={setMostrarNotificacion} text={textoNotificacion}/>
+
     </div>:
     <div className="grow-estadisticas-container page" style={{minHeight:'700px'}}><Spinner/></div>
 

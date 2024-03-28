@@ -15,6 +15,10 @@
   right: 15px;
 }
 
+.guest-container{
+  background-color: rgb(240, 240, 240);
+}
+
 .layout-main-container{
   position: relative;
   padding: 0px 0px;

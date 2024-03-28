@@ -7,7 +7,7 @@ const NotificacionEmergente = (props) => {
   if(props.show === true){
     const timer = setTimeout(() => {
       props.setShow(false);
-    }, 3000);
+    }, 2800);
 
     return () => {
       clearTimeout(timer);
