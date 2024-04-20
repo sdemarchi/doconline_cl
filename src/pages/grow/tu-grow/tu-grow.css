@@ -17,6 +17,10 @@
   padding-top: 10px;
 }
 
+.button-cerrar-sesion{
+  font-size: 15px;
+}
+
 @media only screen and (width > 768px){
   .tg-content{
     display: flex;

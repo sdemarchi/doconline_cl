@@ -139,5 +139,9 @@
   .pagos-comprobante-preview-container > *{
     margin: 0 15px;
   }
+
+  .pagos-aplicar-button{
+    font-size: 14px;
+  }
   
 }

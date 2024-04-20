@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { FormInputDate, FormInputHook } from '../../components/FormInput';
-import Card from '../../components/card/card'
 import { SubmitButton } from '../../components/Buttons';
 import useForm from '../../hooks/useForm';
 import Error, { ErrorReq, ErrorMax,/* ErrorVal*/ } from '../../components/Error';
@@ -142,6 +141,7 @@ function FormRep1() {
                         maxLength={150}
                         register={register('email', { required: true, maxLength: 150, validate: emailValidator })}
                     />
+
                     {errors.email?.type == 'required' && <ErrorReq>E-Mail</ErrorReq>}
                     {errors.email?.type == 'maxLength' && <ErrorMax>150</ErrorMax>}
                     {!(errors.email?.type == 'maxLength' || errors.email?.type == 'required') && errors.email && <Error>E-Mail no válido</Error>}

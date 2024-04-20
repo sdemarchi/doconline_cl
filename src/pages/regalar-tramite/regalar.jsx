@@ -1,6 +1,6 @@
 import './regalar.css';
 import Title from '../../components/title/title';
-import Info from '../../components/info/Info';
+import Info from '../../components/info/info';
 import Card from '../../components/card/card';
 import { ActionButton } from '../../components/Buttons';
 import { InputState } from '../../components/FormInput';
@@ -40,7 +40,7 @@ export default function Regalar(){
 
   return (
     <div className='regalar-container page'>
-        <Title>Paga el tramite a un amigo</Title>
+        <Title>Pagá el tramite a un amigo</Title>
         <div className='regalar-content'>
         <Info fontSize='15.5px' text="Te daremos un código con el cual tu amigo podrá acceder a realizar el trámite." />
           <div className="mt-4 pb-3">

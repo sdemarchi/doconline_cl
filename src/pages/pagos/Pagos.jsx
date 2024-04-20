@@ -129,7 +129,7 @@ function Pagos() {
             let id = sessionStorage.getItem('growId');
             let grow_ =  await getGrowById(id);
             setGrow(grow_);
-        }        
+        }
     }
 
     async function quitarCupon(){

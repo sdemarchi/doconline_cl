@@ -104,7 +104,7 @@ export default function TuGrow(){
         </ColorCard>
 
 
-        <div className="flex my-6 space-around bg-blue display-cel">
+        <div className="flex my-6 mb-8 space-around bg-blue display-cel">
           <QuickActionButton width='25%' paddingText="5px" onClick={()=>descargarQR()} icon={<LuDownload />} text={"Descargar QR"}/>
           <QuickActionButton width='25%' paddingText="5px" onClick={()=>copiarQR()} icon={<AiOutlineQrcode />} text={"Copiar QR"}/>
           <QuickActionButton width='25%' paddingText="5px" onClick={()=>copiarAlPortapapeles('www.doconlineargentina.com/turnero/login/'+grow?.cod_desc,'Link')} icon={<IoMdLink />} text={"Link de descuento"}/>
@@ -136,7 +136,7 @@ export default function TuGrow(){
 
 
       <div className='panel-button mx-auto p-3 text-center'>
-          <button className="panel-cerrar-sesion display-cel" onClick={() => logout()} >Cerrar Sesión</button>
+          <button className="button-cerrar-sesion display-cel" onClick={() => logout()} >Cerrar Sesión</button>
       </div>
       
       <NotificacionEmergente show={mostrarNotificacion} setShow={setMostrarNotificacion} text={textoNotificacion}/>

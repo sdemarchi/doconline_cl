@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {/* Form,*/ Link/*, redirect*/, useNavigate } from 'react-router-dom';
+import {/* Form,*/ Link/*, redirect*/, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo-doconline.jpg';
 import { LoginInput } from '../../components/FormInput';
 import {LoginButton } from '../../components/Buttons';
@@ -13,6 +13,7 @@ import minImage from '../../assets/min_salud.png';
 import reproImage from '../../assets/reprocan.png';
 import { useParams } from 'react-router-dom';
 import { getGrowByRoute } from '../../data/grows';
+import Storage from '../../utils/Storage/Storage';
 
 function Login() {
     const { setUser, googleProfile, setGoogleProfile } = useAuth();//eslint-disable-line no-unused-vars
@@ -24,20 +25,30 @@ function Login() {
     const navigate = useNavigate();
     const loginButton = document.getElementById('login-button');
     const routeParams = useParams();
+    const { msg } = alerta;
+    const growRoute = routeParams.grow;
+    const location = useLocation();
     // eslint-disable-next-line
     const regex_mail = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+   
+   
     const gLogin = useGoogleLogin({
         onSuccess: (codeResponse) => setGoogleUser(codeResponse),
         onError: (error) => console.log('Login Failed:', error)
     });
+
+    const setRedirect = () => {  //Busca como parametro del a url, una ruta interna para redireccionar despues de iniciar sesión.
+        const queryParams = new URLSearchParams(location.search);
+        const route = queryParams.get('redirect');
+
+        if(route) sessionStorage.setItem('redirect',route);
+    }
     
     document.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
             loginButton.click();
         }
     });
-
-    const growRoute = routeParams.grow;
 
     const getGrow = () => {
         if(growRoute !== undefined){
@@ -52,8 +63,9 @@ function Login() {
     }
 
     useEffect(() => {
-        sessionStorage.clear();
-        localStorage.clear();
+        Storage.clear();
+
+        setRedirect();
         
         sessionStorage.setItem('fromLogin', 'true');
         getGrow();
@@ -79,10 +91,8 @@ function Login() {
 
 
     async function login() {
-
         if([userid, password].includes('')) {
-            setAlerta({ msg: 'Todos los campos son obligatorios',error: true });
-            return
+            return setAlerta({ msg: 'Todos los campos son obligatorios',error: true });
         }
 
         setContenidoCargado(false);
@@ -126,9 +136,8 @@ function Login() {
                     error: true
                 })
             }
-            //console.log(resp)
         } catch (error) {
-           // console.log(error)
+           console.log(error)
         }
     }
 
@@ -161,13 +170,12 @@ function Login() {
             } else {
                 return navigate('/g-perfil');
             }
-            //console.log(resp)
+            
         } catch (error) {
             console.log(error);
         }
     }
 
-    const { msg } = alerta;
 
     return (
         <> { !contenidoCargado && 

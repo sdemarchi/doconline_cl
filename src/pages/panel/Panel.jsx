@@ -35,7 +35,6 @@ function Panel() {
     const [growAdmin, setGrowAdmin] = useState();
     const {setFormCargado, llenarFormulario} = useForm(); //eslint-disable-line
     const [ formSuccess, setFormSuccess ] = useState();
-    const fromLogin = sessionStorage.getItem('fromLogin') || false;
 
     const [ pagoRegalado , setPagoRegalado] = useState();
     const [ pago , setPago ] = useState();
@@ -50,48 +49,31 @@ function Panel() {
         setPacienteCargado(true);
     }
 
+
+
     async function cancelarMiTurno() {
         const response = await cancelarTurno(user.userId);
         setMostrarNotificacion(true);
    
         PagosService.setUtilizado(pago.id,false).then((resp) => {
-            console.log(resp);
-      
             setPago({...pago, utilizado:0});
-            console.log(pago);
         });
+
         setTurnoPaciente(response);
     }
 
-    const subirScroll = () =>{
-        window.scrollTo(0, 0);
-    }
 
-    const getGrow = async (email) => {
-        getGrowByEmail(email).then((resp)=>{
-            setGrowCargado(true);
-            sessionStorage.setItem('user-grow',JSON.stringify(resp) || 0);
-            sessionStorage.setItem('user-grow-id',JSON.stringify(resp));
-
-            if(!sessionStorage.getItem('growId') && resp.idgrow){
-                sessionStorage.setItem('growId',resp.idgrow);
-            }
-
-            cargarTurnoPaciente();
-
-            setGrowAdmin(resp).then((response)=>{
-                setPago(response);
-            });
-        });;
-    }
 
     async function getPaciente() {
         perfil(user.userId).then((response)=>{
             setPaciente(response);
             sessionStorage.setItem('user_data', JSON.stringify(response));
 
+            if(response.grow) sessionStorage.setItem('growId',response.grow);
+            
             if(sessionStorage.getItem('user-grow-id') === null){
                getGrow(response.email);
+
             }else{
                 setGrowAdmin(JSON.parse(sessionStorage.getItem('user-grow')));
                 cargarTurnoPaciente();
@@ -101,9 +83,8 @@ function Panel() {
             descargarFormulario(response.dni).then((resp)=>{
                 if(resp.error?.code == 0){
                     llenarFormulario(resp.data, resp.patologias);
-                    if(resp.data){
-                        setFormSuccess(true);
-                    }
+
+                    if(resp.data) setFormSuccess(true); 
                 }
             });
 
@@ -119,10 +100,71 @@ function Panel() {
         }); 
     }
 
+
+
+    const subirScroll = () => window.scrollTo(0, 0);
+    
+
+
+    const getGrow = async (email) => {
+        getGrowByEmail(email).then((resp)=>{
+            setGrowCargado(true);
+            sessionStorage.setItem('user-grow',JSON.stringify(resp) || 0);
+            sessionStorage.setItem('user-grow-id',JSON.stringify(resp));
+
+            if(!sessionStorage.getItem('growId') && resp.idgrow)
+               sessionStorage.setItem('growId',resp.idgrow);
+            
+            cargarTurnoPaciente();
+
+            setGrowAdmin(resp).then((response)=>{
+                setPago(response);
+            });
+        });;
+    }
+
+
+
+    const redireccionar = () => { // Redirecciona a url interna si esta esta especificada y si los datos estan cargados
+        const fromLogin = sessionStorage.getItem('fromLogin') || false;
+        const urlRedirect = sessionStorage.getItem('redirect') || false;
+        
+        console.log('redireccion');
+
+        if(growAdmin?.idgrow && growCargado && pacienteCargado && fromLogin){
+            sessionStorage.removeItem('fromLogin');
+
+            if(urlRedirect){
+                sessionStorage.removeItem('redirect');
+                return navigate('/'+urlRedirect );
+            }
+
+            return navigate('/tu-grow/'+growAdmin?.idgrow );
+
+        }else if(turnoPaciente?.id == 0 && fromLogin && growCargado && pacienteCargado && !growAdmin?.idgrow){
+            if(urlRedirect){
+                sessionStorage.removeItem('fromLogin');
+                sessionStorage.removeItem('redirect');
+                return navigate('/'+urlRedirect );
+            }
+
+            return navigate('/turno');
+        };
+    }
+
+
+
+    function logout() {
+        localStorage.clear();
+        sessionStorage.clear();
+        return navigate('/login');
+    }
+
+
+
     useEffect(() => {
         subirScroll();
         getPaciente();
-    
         
         if(sessionStorage.getItem('grow-success')){
             sessionStorage.removeItem('grow-success');
@@ -131,27 +173,16 @@ function Panel() {
 
     },[]) //eslint-disable-line
 
+
+
     useEffect(()=>{
         const cargado = pagoCargado && growCargado && pacienteCargado && pagoRegaladoCargado;
         setDatosCargados(cargado);
+        redireccionar();
+
     },[pagoCargado,growCargado,pacienteCargado,pagoRegaladoCargado]);
 
-    useEffect(() => {
-        const datosCargados_ = growCargado === true && pacienteCargado === true;
 
-        if(growAdmin?.idgrow && datosCargados_ === true && fromLogin == 'true'){
-            sessionStorage.setItem('fromLogin',false);
-            return navigate('/tu-grow/'+growAdmin?.idgrow );
-        }else if(turnoPaciente?.id == 0 && fromLogin == 'true' && !growAdmin?.idgrow && datosCargados_ === true){
-            return navigate('/turno');
-        };
-    },[growCargado,pacienteCargado]) //eslint-disable-line
-
-    function logout() {
-        localStorage.clear();
-        sessionStorage.clear();
-        return navigate('/login');
-    }
 
     return (
         <>
@@ -197,12 +228,7 @@ function Panel() {
                     <p className="panel-turno-texto">{turnoPaciente.detalle}</p>
                 </ColorCard>
 
-                {(turnoPaciente.id > 0 && formSuccess !== true && false) && 
-                    <div className=" display-pc">
-                        <InfoCard text={"No olvides completar el formulario con tus datos para poder realizar el trámite."}/>
-                    </div>
-                }
-
+    
                 <LinkCard show={turnoPaciente.id > 0 && pago && !pago?.comprobante} title="Finaliza tu pago" to='/finalizar-pago' alert responsive>
                     <p>Adjuntá el comprobante de pago para evitar la cancelacion del turno.</p>
                 </LinkCard>
@@ -273,9 +299,7 @@ function Panel() {
                     <Contacto/>
                 </div>
 
-                {
-                    !growAdmin?.idgrow && 
-
+                { !growAdmin?.idgrow && 
                     <div className='panel-button mx-auto p-3 text-center'>
                         <button className="panel-cerrar-sesion display-cel" onClick={() => logout()} >Cerrar Sesión</button>
                     </div>
@@ -285,9 +309,8 @@ function Panel() {
                 <NotificacionEmergente show={mostrarNotificacion} setShow={setMostrarNotificacion} text="Tu turno ha sido cancelado" />
                 <NotificacionEmergente show={notificacionGrow} setShow={setNotificacionGrow} text="Grow registrado correctamente" />
 
-            { !growAdmin?.idgrow &&  <div className="main-contacto display-cel">
-                    <Contacto bottom='90px'/>
-                </div>}    
+            { !growAdmin?.idgrow &&  <div className="main-contacto display-cel"><Contacto bottom='90px'/></div>}    
+
             </div>   
 
         </div>:

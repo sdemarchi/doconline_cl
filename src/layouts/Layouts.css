@@ -74,4 +74,8 @@
     height: fit-content;
   }
 
+  .layout-login-container{
+    box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, 0.064);
+  }
+
 }

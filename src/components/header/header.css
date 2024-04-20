@@ -37,6 +37,27 @@
   display: none;
 }
 
+@media only screen and (width < 768px){
+  .header-container{
+    height:56px;
+    padding: 15px;
+  }
+
+  .header-help-icon{
+    font-size: 22px;
+  }
+  
+  .header-logo-image{
+  max-width:67%;
+  max-height: 85%;
+  max-height: 68px;
+}
+
+  .header-help-content{
+    font-size: 16px;
+  }
+}
+
 @media only screen and (width > 768px){
   .header-container{
     position:fixed;

@@ -10,7 +10,7 @@
 }
 
 .link-card-title{
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   font-family: 'Montserrat', sans-serif;
   color:rgba(0, 0, 0, 0.809);
@@ -78,5 +78,12 @@
     font-family: 'Montserrat', sans-serif;
     color:rgba(0, 0, 0, 0.809);
     margin-bottom: 3px;
+  }
+}
+
+
+@media screen and ( width < 768px ){
+  .link-card-content{
+    font-size: 14px;
   }
 }
