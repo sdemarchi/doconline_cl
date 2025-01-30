@@ -127,7 +127,7 @@ export default function TuGrow(){
         </LinkCard>
 
 
-        <LinkCard title="Contenido para tus redes" link={grow?.meta_inf.link_contenido}>
+        <LinkCard title="Contenido para tus redes" show={grow?.meta_inf?.link_contenido} link={grow?.meta_inf?.link_contenido}>
           <p>Comparte contenido junto a tu Link</p>
         </LinkCard>
 

@@ -16,7 +16,6 @@ import './turno.css';
 function Turnos() {
     const navigate = useNavigate();
     const { setTurno } = useTurno();
-    const user = useOutletContext(); //eslint-disable-line
     const now = new Date();
     const botones = document.querySelectorAll("button");
     const [calendarioCargado,setCalendarioCargado] = useState(false);
@@ -34,7 +33,6 @@ function Turnos() {
     const [buttonSelected , setButtonSelected] = useState();
     const [turnos , setTurnos] = useState([]);
     const [diaSeleccionado, setDiaSeleccionado] = useState();
-    const [descuento , setDescuento] = useState();  //eslint-disable-line
     const elementRef = useRef(null);
     const [ pagado, setPagado] = useState(false);
     const [pagoRegistrado, setPagoRegistrado] = useState();
@@ -51,6 +49,7 @@ function Turnos() {
         setCalendarioCargado(false);
         var mesCal = mes
         const resp = await excedeMargen(prestador);
+
         console.log(resp);
         if(resp.excede == 1){
             SetMes(mes + 1);
@@ -81,7 +80,7 @@ function Turnos() {
 
     function cambiarCursor(estado){
        if(estado =="cargando"){
-            document.body.style.cursor = "progress";
+            document.body.style.cursor = "progres";
             botones.forEach((boton) => {
             boton.style.cursor = "progress";});
        }else{
@@ -94,7 +93,6 @@ function Turnos() {
     async function selectDia(dia){
         cambiarCursor("cargando");
         setCargandoTurno(true);
-        /*const turno = await getTurno(dia, prestador);*/
         const turnos_ = await getTurnos(dia,prestador);
 
         setTurnoDesc('');
@@ -187,6 +185,14 @@ function Turnos() {
         );
 
     }, [])//eslint-disable-line
+
+    useEffect(() => {
+            if(prestador == 0){
+                cargarCalendario(mes,anio,response[0].id)
+            }else{
+                cargarCalendario(mes,anio,prestador)
+            }
+    }, [mes])//eslint-disable-line
 
     return (
         <div className="turno-container page">
