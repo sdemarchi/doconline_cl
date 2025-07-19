@@ -125,7 +125,7 @@ function Login() {
    
                 setUser({
                     userId:resp.user.id,
-                    userName: resp.user.userName
+                    userName:resp.user.userName
                 })
                 return navigate('/panel')
 

@@ -1,5 +1,4 @@
 import { useNavigate, useOutletContext } from 'react-router-dom';
-//import logo from '../assets/logo-doconline-reprocann-500.png';
 import { ActionButton } from '../../components/Buttons';
 import Calendario from '../../components/calendario/Calendario';
 import { getPrestadores, getCalendario, /*getTurno,*/ getTurnos, excedeMargen } from '../../data/turnero';
@@ -240,19 +239,24 @@ function Turnos() {
                         <div className="turno-row-hours">
 
                             {turnos.length == 0 && <p className="turno-row-msj display-pc">No has seleccionado una fecha.</p>} 
-
                             <Card show={turnos.length > 0} title='Seleccionar horario' disabledBorder>
                                 <div className="turno-horarios-container">
-                                    {turnos?.map( (turno,key) => (
-                                    turno.hora !== '00:00' && <button key={key} onClick={()=>seleccionarTurno(key,turno)} className={isSelectedClass(key)}>{turno.hora} hs</button>
+                                    {turnos?.map((turno, key) => (
+                                        (turno?.hora && turno.hora !== '00:00') && (
+                                        <button 
+                                            key={key} 
+                                            onClick={() => seleccionarTurno(key, turno)} 
+                                            className={isSelectedClass(key)}
+                                        >
+                                            {turno.hora} hs
+                                        </button>
+                                        )
                                     ))}
                                 </div>
                             </Card>
-
                             <Card show={turnoDesc !=''} ref={elementRef} title='Detalles del turno' disabledBorder animate>
                                 <p className='turno-detalles-text'>{ turnoDesc }</p>
                             </Card>
-
                         </div>
 
                         <div className='pt-4' style={turnoDesc == '' ? {opacity:'20%'}:{}}>

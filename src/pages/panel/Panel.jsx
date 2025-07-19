@@ -69,7 +69,9 @@ function Panel() {
             setPaciente(response);
             sessionStorage.setItem('user_data', JSON.stringify(response));
 
-            if(response.grow) sessionStorage.setItem('growId',response.grow);
+            if(response.grow && !sessionStorage.getItem("growId")){
+                sessionStorage.setItem('growId',response.grow);
+            } 
             
             if(sessionStorage.getItem('user-grow-id') === null){
                getGrow(response.email);
