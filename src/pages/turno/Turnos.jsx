@@ -50,13 +50,13 @@ function Turnos() {
         setCalendarioCargado(false);
         var mesCal = mes
         const resp = await excedeMargen(prestador);
-
-        console.log(resp);
+    
         if(resp.excede == 1 && !margenActualizado){
             SetMes(mes + 1);
             mesCal++;
-            setMargenActualizado(true);
+            setMargenActualizado(true); // Actualiza el mes solo una vez si no hay turnos disponibles en el mes actual
         } 
+        
         const response = await getCalendario(mesCal, anio, prestador);
         setCalendario(response);
         setCalendarioCargado(true);
