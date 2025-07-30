@@ -11,6 +11,7 @@ import Contacto from '../../components/contacto/contacto';
 import Card from '../../components/card/card';
 import PagosService from '../../data/pagos';
 import './turno.css';
+import { set } from 'react-hook-form';
 
 function Turnos() {
     const navigate = useNavigate();
@@ -35,6 +36,7 @@ function Turnos() {
     const elementRef = useRef(null);
     const [ pagado, setPagado] = useState(false);
     const [pagoRegistrado, setPagoRegistrado] = useState();
+    const [margenActualizado, setMargenActualizado] = useState(false);
     
     
     async function cargarPrestadores(){
@@ -50,9 +52,10 @@ function Turnos() {
         const resp = await excedeMargen(prestador);
 
         console.log(resp);
-        if(resp.excede == 1){
+        if(resp.excede == 1 && !margenActualizado){
             SetMes(mes + 1);
             mesCal++;
+            setMargenActualizado(true);
         } 
         const response = await getCalendario(mesCal, anio, prestador);
         setCalendario(response);
