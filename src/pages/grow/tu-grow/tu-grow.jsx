@@ -117,8 +117,8 @@ export default function TuGrow(){
         </LinkCard>
 
       
-        <LinkCard show={(grow !== undefined)} title="Detalles del Grow" to={'/detallesGrow/'+grow?.idgrow}>
-          <p>Consulta los detalles de tu Grow.</p>
+        <LinkCard show={(grow !== undefined)} title={grow?.tipo_id == 2? "Detalles de la ONG": "Detalles del Grow"} to={'/detallesGrow/'+grow?.idgrow}>
+          <p>Consulta los detalles de tu {grow?.tipo_id == 2 ? "ONG":"Grow"}.</p>
         </LinkCard>
         
 
@@ -131,12 +131,17 @@ export default function TuGrow(){
           <p>Comparte contenido junto a tu Link</p>
         </LinkCard>
 
+        { grow?.tipo_id == 2 &&
+          <LinkCard title="Registra un paciente" show={grow?.meta_inf?.link_contenido} to="/registrar-paciente-ong">
+            <p>Registra un paciente para que pueda acceder al trámite.</p>
+          </LinkCard>
+        }
 
       </div>     
 
 
       <div className='panel-button mx-auto p-3 text-center'>
-          <button className="button-cerrar-sesion display-cel" onClick={() => logout()} >Cerrar Sesión</button>
+          <button className="button-cerrar-sesion display-cel" onClick={() => logout()}>Cerrar Sesión</button>
       </div>
       
       <NotificacionEmergente show={mostrarNotificacion} setShow={setMostrarNotificacion} text={textoNotificacion}/>

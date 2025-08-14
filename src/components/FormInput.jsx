@@ -174,7 +174,7 @@ function SelectState(props) {
                 defaultValue={ props.defaultValue }
                 onChange = {(e)=> props.setState(e.target.value)}
             >
-                <option value='0'>Seleccione una provincia</option>
+                <option value='0' styleName="color:grey">Seleccione una opción</option>
                 {props.values?.map((option,index)=><option key={index} value={option[props.keyName]}>{option[props.valueName]}</option>)}
                 </select>
         </div>

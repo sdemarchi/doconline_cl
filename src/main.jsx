@@ -43,6 +43,7 @@ import RegalarPago from './pages/regalar-tramite/regalar-pago/regalar-pago.jsx';
 import RegalarFinalizar from './pages/regalar-tramite/regalar-finalizar/regalar-finalizar.jsx';
 
 import RegistrarGrow from './pages/grow/registrar-grow/registrar-grow.jsx';
+import RegistrarPacienteOng from './pages/grow/registrar-paciente-ong/registrar-paciente-ong.jsx';
 import TuGrow from './pages/grow/tu-grow/tu-grow.jsx';
 import GrowDetalles from './pages/grow/grow-detalles/growDetalles.jsx';
 import GrowEstadisticas from './pages/grow/grow-estadisticas/grow-estadisticas.jsx';
@@ -190,6 +191,10 @@ const router = createBrowserRouter([
       {
         path: '/registrar-grow',
         element:<RegistrarGrow/>
+      },
+     {
+        path: '/registrar-paciente-ong',
+        element:<RegistrarPacienteOng/>
       }
     ]
   }

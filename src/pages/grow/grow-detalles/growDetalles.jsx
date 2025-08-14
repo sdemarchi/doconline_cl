@@ -127,7 +127,7 @@ function GrowDetalles(){
         </div>
 
 
-      <Title>Detalles del grow</Title>
+      <Title>{growDetails.tipo_id == 2 ? "Detalles de la ONG" : "Detalles del Grow"}</Title>
 
       <Card title={'Detalles de contacto'}>
         <div className="grow-estadisticas-items">

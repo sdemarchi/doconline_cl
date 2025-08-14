@@ -24,6 +24,7 @@ export default function RegistrarGrow(){
   const [ error, setError ] = useState(false);
   const [ inSubmit, setInSubmit ] = useState(false);
 
+  const [tipo, setTipo ] = useState();
   const [provincia, setProvincia ] = useState();
   const [nombreGrow, setNombreGrow ] = useState();
   const [cbu, setCbu ] = useState();
@@ -33,12 +34,11 @@ export default function RegistrarGrow(){
   const [direccion, setDireccion ] = useState();
 
   const validar = () => {
-
-      if(!provincia || !nombreGrow || !cbu || !alias || !localidad || !cp || !direccion){
-        setRequiredError(true);
-        setProvinceError(false);
-        return false;
-      };
+    if(!provincia || !nombreGrow || !cbu || !alias || !localidad || !cp || !direccion || tipo == 0){
+      setRequiredError(true);
+      setProvinceError(false);
+      return false;
+    };
 
     if(provincia === 0){
       setProvinceError(true);
@@ -57,6 +57,7 @@ export default function RegistrarGrow(){
 
     const grow = {
       nombre: nombreGrow,
+      tipo: tipo,
       cbu: cbu,
       alias: alias,
       titular: titular,
@@ -67,7 +68,7 @@ export default function RegistrarGrow(){
       localidad: localidad,
       direccion: direccion,
       cp: cp,
-      descuento:18
+      descuento: 18
     }    
     
 
@@ -99,10 +100,19 @@ export default function RegistrarGrow(){
     <div className="registrar-grow-container page">
      { inSubmit? <Spinner/> :
       <div className="registrar-grow-content">
-        <Title>Registrar Grow</Title>
+        <Title>Registrar Grow / ONG</Title>
         
         <Card>
-          <InputState label='Nombre del Grow' setState={setNombreGrow}/>
+          <InputState label='Nombre de la Entidad' setState={setNombreGrow}/>
+          <SelectState
+              id='tipoEntidad'
+              label='Tipo de Entidad'
+              placeholder='Seleccione un tipo de entidad'
+              keyName='id'
+              valueName='descripcion'
+              setState={setTipo}
+              values={[{id:2,descripcion:"ONG"}, {id:1,descripcion:"Grow"}]}
+          />
           <InputState label='CBU' setState={setCbu} />
           <InputState label='Alias'  setState={setAlias}/>
           <SelectState label='Provincia' values={provincias} keyName='id' valueName='nombre' setState={setProvincia}/>

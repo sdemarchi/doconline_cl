@@ -13,7 +13,6 @@ import { FaWpforms } from "react-icons/fa";
 import Contacto from '../../components/contacto/contacto';
 import Nav from '../../components/nav/nav';
 import {GrFormNext } from "react-icons/gr";
-import { IoIosCheckmarkCircle } from "react-icons/io";
 import Card from '../../components/card/card';
 import LinkCard from '../../components/link-card/link-card';
 import ColorCard from '../../components/color-card/color-card';
@@ -292,8 +291,8 @@ function Panel() {
                 }
 
                 {(!growAdmin?.idgrow) && 
-                    <LinkCard title='Registra tu Grow' to={'/registrar-grow'}  responsive>
-                        <p>Recomienda el servicio a clientes que necesiten realizar el tramite.</p>
+                    <LinkCard title='Registra tu Grow / ONG' to={'/registrar-grow'}  responsive>
+                        <p>Recomienda el servicio a quienes necesiten realizar el tramite.</p>
                     </LinkCard>
                 }
 

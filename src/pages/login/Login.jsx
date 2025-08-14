@@ -12,6 +12,7 @@ import './login.css';
 import minImage from '../../assets/min_salud.png';
 import reproImage from '../../assets/reprocan.png';
 import { useParams } from 'react-router-dom';
+import { getGrowById } from '../../data/grows';
 import { getGrowByRoute } from '../../data/grows';
 import Storage from '../../utils/Storage/Storage';
 
@@ -50,7 +51,9 @@ function Login() {
         }
     });
 
-    const getGrow = () => {
+    // Guardo los datos del grow extraido de la URL el cual se usa para el codigo de descuento.
+    // No confundir con con el grow propiedad de los usuarios dueños de un Grow. (user-grow)
+    const getGrowDeURL = () => {
         if(growRoute !== undefined){
             getGrowByRoute(growRoute).then((resp)=>{
                 sessionStorage.setItem('growId',resp.idgrow);
@@ -58,7 +61,7 @@ function Login() {
         }else{
             if (sessionStorage.getItem('growId')) {
                 sessionStorage.removeItem('growId');
-              }
+            }
         }
     }
 
@@ -68,7 +71,7 @@ function Login() {
         setRedirect();
         
         sessionStorage.setItem('fromLogin', 'true');
-        getGrow();
+        getGrowDeURL();
 
         if (googleUser) {
             axios
@@ -118,15 +121,18 @@ function Login() {
                 localStorage.setItem('dc_userId',resp.user.id);
                 localStorage.setItem('dc_userName',resp.user?.userName);
 
-                if(resp.user.growAdmin > 0){
-                    const growid = JSON.stringify({idgrow:resp.user.growAdmin});
-                    sessionStorage.setItem('user-grow',growid);
+                // Guardo los datos del Grow del usuario en caso de que sea propietario de un Grow
+                // No confundir con el grow extraido de la URL el cual se usa para el codigo de descuento.
+                  if(resp.user.growAdmin > 0){
+                    const grow = JSON.stringify({idgrow:resp.user.growAdmin,tipo_id:resp.user.tipoGrow});
+                    sessionStorage.setItem('user-grow',grow);
                 }
    
                 setUser({
                     userId:resp.user.id,
                     userName:resp.user.userName
                 })
+
                 return navigate('/panel')
 
             } else {
@@ -159,8 +165,8 @@ function Login() {
                 localStorage.setItem('dc_userName',resp.user.userName);
 
                 if(resp.user.growAdmin > 0){
-                    const growid = JSON.stringify({idgrow:resp.user.growAdmin});
-                    sessionStorage.setItem('user-grow',growid);
+                    const grow = JSON.stringify({idgrow:resp.user.growAdmin,tipo_id:resp.user.tipoGrow});
+                    sessionStorage.setItem('user-grow',grow);
                 }
 
                 setUser({userId:resp.user.id,userName: resp.user.userName});

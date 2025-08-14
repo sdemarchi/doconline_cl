@@ -9,7 +9,6 @@ function MainLayout() {
     const { user, cargando } = useAuth();
     
     useEffect(()=>{
-        console.log(JSON.stringify(user));
     },[]);
 
 
@@ -27,7 +26,7 @@ function MainLayout() {
 
     return (
         <div className="layout-main-container">
-            <Header/>
+            <Header user={user} />
             <Outlet context={user}/>
         </div>
     )
