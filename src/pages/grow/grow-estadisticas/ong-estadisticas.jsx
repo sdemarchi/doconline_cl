@@ -3,36 +3,37 @@ import Card from '../../../components/card/card';
 import { LinkButtonCenter } from '../../../components/Buttons';
 import Spinner from '../../../components/Spinner';
 import { useState,useEffect } from 'react';
-import { getGrowPacientes } from '../../../data/grows';
+import { ONGService } from '../../../data/grows';
 import Nav from '../../../components/nav/nav';
 import Title from '../../../components/title/title';
 import TableCard from '../../../components/table-card/table-card';
 
 function EstadisticasONG(){
-  const [ mesActual, setMesActual ] = useState(new Date().getMonth() + 1); 
-  const [ growPacientes , setGrowPacientes ] = useState({}); //eslint-disablse-line
+  const [ pacientesONG , setPacientesONG ] = useState([]); //eslint-disablse-line
   const [ datosCargados , setDatosCargados ] = useState(true);
-
-  const datosEjemplo = [
-    ["Nombre", "Edad", "Ciudad", "Ocupación", "Email", "Teléfono", "País", "Estado", "Código Postal", "Comentarios"], // encabezado
-    ["Agu", 28, "Santa Fe", "Programador", "agu@mail.com", "342-5419964", "Argentina", "Santa Fe", "3000", "Sin comentarios"],
-    ["Juan", 35, "Rosario", "Diseñador", "juan@mail.com", "341-1234567", "Argentina", "Santa Fe", "2000", "Prueba"],
-    ["María", 22, "Buenos Aires", "Estudiante", "maria@mail.com", "11-7654321", "Argentina", "Buenos Aires", "1000", "Ninguno"],
-    ["Lucía", 40, "Córdoba", "Abogada", "lucia@mail.com", "351-9876543", "Argentina", "Córdoba", "5000", "Observación"],
-    ["Pedro", 30, "Mendoza", "Ingeniero", "pedro@mail.com", "261-1234567", "Argentina", "Mendoza", "5500", "Test de scroll"]
-  ];
 
   const grow = JSON.parse(sessionStorage.getItem('user-grow'));
 
+const prepararDatosParaTabla = (json) => {
+  if (!json || json.length === 0) return [[]]; // vacío pero no rompe
+  const headers = Object.keys(json[0]);
+  const rows = json.map(item => headers.map(h => item[h]));
+  return [headers, ...rows];
+};
+
   const getPacientes = () => {
     if(grow.idgrow){
-      getGrowPacientes(grow.idgrow).then((response)=>{
-        setGrowPacientes(response.pacientes);
-        filtrarPacientes(response.pacientes,mesActual);
+      ONGService.getPacientesONG(149)
+      .then((resp)=>{
+        setPacientesONG(prepararDatosParaTabla(resp));
+        console.log(JSON.stringify(resp));
         setDatosCargados(true);
+      }).catch(()=>{
+        setDatosCargados(false);
       });
     }
   }
+
 
   useEffect(()=>{
     getPacientes();
@@ -45,7 +46,7 @@ function EstadisticasONG(){
     <div className="grow-estadisticas-container page">
       <Title>Tus pacientes</Title>
       <TableCard
-              data={datosEjemplo}
+              data={pacientesONG}
               responsive={true}
               animate={true}
             />

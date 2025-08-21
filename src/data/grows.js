@@ -33,6 +33,8 @@ export async function getGrowPacientes(id) {
   return result;
 }
 
+
+
 export async function addGrow(grow) {
   const url = import.meta.env.VITE_API_URL + '/add-grow';
   try {
@@ -51,7 +53,7 @@ export async function addGrow(grow) {
   }
 }
 
-export async function agregarPacienteONG(growId, paciente) {
+async function agregarPacienteONG(growId, paciente) {
   const url = import.meta.env.VITE_API_URL + '/grow.agregar-paciente-ong/' + growId;
 
   try {
@@ -68,5 +70,41 @@ export async function agregarPacienteONG(growId, paciente) {
 
   } catch (error) {
       console.error(error)
+  }
+}
+
+async function obtenerPacientesONG(growId) {
+  const url = import.meta.env.VITE_API_URL + '/pacientes-ong/' + growId;
+
+  try {
+    const respuesta = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!respuesta.ok) {
+      throw new Error(`Error HTTP: ${respuesta.status}`);
+    }
+
+    const resp = await respuesta.json();
+    console.log(resp);
+    return resp;
+
+  } catch (error) {
+    console.error('Error al obtener pacientes:', error);
+    return null;
+  }
+}
+
+
+export class ONGService{
+  static async getPacientesONG(growId) {
+    return obtenerPacientesONG(growId);
+  }
+
+  static async agregarPacienteONG(growId, paciente) {
+    return agregarPacienteONG(growId, paciente);
   }
 }

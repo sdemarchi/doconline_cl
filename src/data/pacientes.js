@@ -2,8 +2,7 @@
 export async function perfil(id) {
     const url = import.meta.env.VITE_API_URL + '/profile/' + id
     const response = await fetch(url)
-    const result = await response.json()
-    //const jsonString = JSON.stringify(result);
+    const result = await response.json();
 
     sessionStorage.setItem('dni',result.dni);
     sessionStorage.setItem('fecha_nac',result.fecha_nac);
@@ -27,9 +26,7 @@ export async function registrar(paciente) {
             }
         })
         const resp = await respuesta.json()
-        console.log(resp)
         return resp
-        //console.log(resp)
     } catch (error) {
         console.log(error)
     }

@@ -8,8 +8,8 @@ import { ErrorForm } from '../../../components/Error';
 import Spinner from '../../../components/Spinner';
 import { useNavigate } from 'react-router-dom';
 import NotificacionEmergente from '../../../components/notificacion-emergente/notificacion-emergente';
-import { agregarPacienteONG } from '../../../data/grows';
 import Info from '../../../components/info/info';
+import { ONGService } from '../../../data/grows';
 
 export default function RegistrarPacienteOng(){
   const navigate = useNavigate();
@@ -28,7 +28,6 @@ export default function RegistrarPacienteOng(){
       return false;
     }
 
-    // Expresión regular que verifica que solo haya dígitos del 0 al 9
     const dniValido = /^\d+$/.test(dni);
     if(!dniValido){
       setDniError(true);
@@ -45,7 +44,7 @@ export default function RegistrarPacienteOng(){
     const formularioValido = validar();
 
     if(formularioValido === true){
-      agregarPacienteONG(grow.idgrow, { nombre, apellido, dni })
+      ONGService.agregarPacienteONG(grow.idgrow, { nombre, apellido, dni })
       .then(() => {
         setInSubmit(false);
         navigate("/tu-grow/"+grow.idgrow);
