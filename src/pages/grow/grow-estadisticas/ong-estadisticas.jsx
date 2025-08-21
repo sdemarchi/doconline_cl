@@ -14,7 +14,7 @@ function EstadisticasONG(){
 
   const grow = JSON.parse(sessionStorage.getItem('user-grow'));
 
-const prepararDatosParaTabla = (json) => {
+const prepararDatosParaTabla = (json) => { 
   if (!json || json.length === 0) return [[]]; // vacío pero no rompe
   const headers = Object.keys(json[0]);
   const rows = json.map(item => headers.map(h => item[h]));
