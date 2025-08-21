@@ -14,7 +14,6 @@ import { IoMdLink } from "react-icons/io";
 import { IoTicketOutline } from "react-icons/io5";
 import { LuDownload } from "react-icons/lu";
 
-
 export default function TuGrow(){
   const [ mostrarNotificacion , setMostrarNotificacion ] = useState(false);
   const [ textoNotificacion , setTextoNotificacion ] = useState('');
@@ -97,7 +96,7 @@ export default function TuGrow(){
 
         <ColorCard color1="#009FD2" color2="#CE9CEE">
           <h2 className="tg-grow-name">{grow?.nombre}</h2>
-          <p className="tg-grow-description">Puedes ver los datos y estadisticas de tu grow</p>
+          <p className="tg-grow-description">Puedes ver los datos y beneficiarios de tu {grow?.tipo_id == 2? "ONG": "Grow"} </p>
         </ColorCard>
 
 
@@ -133,7 +132,7 @@ export default function TuGrow(){
         </LinkCard>
 
         { grow?.tipo_id == 2 &&
-          <LinkCard title="Registra un paciente" show={grow?.meta_inf?.link_contenido} to="/registrar-paciente-ong">
+          <LinkCard title="Registra un paciente"  to="/registrar-paciente-ong">
             <p>Registra un paciente para que pueda acceder al trámite.</p>
           </LinkCard>
         }

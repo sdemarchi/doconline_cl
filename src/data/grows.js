@@ -98,6 +98,31 @@ async function obtenerPacientesONG(growId) {
   }
 }
 
+async function obtenerONGPorPaciente(dni) {
+  const url = import.meta.env.VITE_API_URL + '/ong-paciente/' + dni;
+
+  try {
+    const respuesta = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!respuesta.ok) {
+      throw new Error(`Error HTTP: ${respuesta.status}`);
+    }
+
+    const resp = await respuesta.json();
+    console.log(resp);
+    return resp;
+
+  } catch (error) {
+    console.error('Error al obtener ONG por paciente:', error);
+    return null;
+  }
+}
+
 
 export class ONGService{
   static async getPacientesONG(growId) {
@@ -106,5 +131,9 @@ export class ONGService{
 
   static async agregarPacienteONG(growId, paciente) {
     return agregarPacienteONG(growId, paciente);
+  }
+
+  static async getONGPorPaciente(dni) {
+    return obtenerONGPorPaciente(dni);
   }
 }

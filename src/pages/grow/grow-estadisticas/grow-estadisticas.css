@@ -18,3 +18,18 @@
   display: flex;
   justify-content: space-between;
 }
+
+.grow-estadisticas-add-paciente{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  padding:10px;
+  cursor: pointer;
+  background-color: rgb(0, 155, 244);
+  border-radius: 50%;
+  width: fit-content;
+  color:white;
+  height: fit-content;
+  box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.16);
+}

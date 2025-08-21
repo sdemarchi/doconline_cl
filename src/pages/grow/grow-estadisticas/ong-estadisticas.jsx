@@ -4,9 +4,10 @@ import { LinkButtonCenter } from '../../../components/Buttons';
 import Spinner from '../../../components/Spinner';
 import { useState,useEffect } from 'react';
 import { ONGService } from '../../../data/grows';
-import Nav from '../../../components/nav/nav'; 
+import Nav from '../../../components/nav/nav';
 import Title from '../../../components/title/title';
 import TableCard from '../../../components/table-card/table-card';
+import LinkCard from '../../../components/link-card/link-card';
 
 function EstadisticasONG(){
   const [ pacientesONG , setPacientesONG ] = useState([]); //eslint-disablse-line
@@ -14,19 +15,23 @@ function EstadisticasONG(){
 
   const grow = JSON.parse(sessionStorage.getItem('user-grow'));
 
-const prepararDatosParaTabla = (json) => { 
-  if (!json || json.length === 0) return [[]]; // vacío pero no rompe
-  const headers = Object.keys(json[0]);
-  const rows = json.map(item => headers.map(h => item[h]));
-  return [headers, ...rows];
-};
+  const prepararDatosParaTabla = (json) => {
+    if (!json || json.length === 0) return [[]]; // vacío pero no rompe
+    const headers = Object.keys(json[0]);
+    const rows = json.map(item => headers.map(h => item[h]));
+    return [headers, ...rows];
+  };
 
   const getPacientes = () => {
     if(grow.idgrow){
-      ONGService.getPacientesONG(149)
+      ONGService.getPacientesONG(grow.idgrow)
       .then((resp)=>{
+        if(!resp || resp.length == 1){
+          setPacientesONG([['No hay pacientes registrados']]);
+          setDatosCargados(true);
+          return;
+        }
         setPacientesONG(prepararDatosParaTabla(resp));
-        console.log(JSON.stringify(resp));
         setDatosCargados(true);
       }).catch(()=>{
         setDatosCargados(false);
@@ -53,6 +58,10 @@ const prepararDatosParaTabla = (json) => {
       {false && <div style={{marginTop:'25px'}}>
         <LinkButtonCenter value="Volver" to={"/tu-grow/"+grow.idgrow}></LinkButtonCenter>
       </div>}
+  
+      <LinkCard show={datosCargados} title="Registra un paciente" to="/registrar-paciente-ong">
+        <p>Registra un paciente para que pueda acceder al trámite.</p>
+      </LinkCard>
     </div>:
     <div className="grow-estadisticas-container"><Spinner/></div>
     }

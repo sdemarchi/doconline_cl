@@ -24,7 +24,7 @@ function Nav(props){
         <IoStorefront className="nav-icon-center"/>{grow?.tipo_id == 2 ? "Tu ONG":"Tu grow"}
       </Link>
 
-      <Link to={'/estadisticas/'+props.idgrow} className="nav-button"><HiUsers className="nav-icon"/>Pacien</Link>
+      <Link to={grow?.tipo_id == 1 ? '/estadisticas/'+props.idgrow: '/estadisticas-ong'} className="nav-button"><HiUsers className="nav-icon"/>Pacien</Link>
     </div>
   );
 }
