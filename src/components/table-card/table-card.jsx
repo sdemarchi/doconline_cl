@@ -1,6 +1,6 @@
 import Card from '../card/card';
 import './table-card.css';
-
+ 
 export default function CardTable({data, style, responsive, animate, onlyCel, onlyPc }) {
   if (!data || data.length === 0) return null;
 

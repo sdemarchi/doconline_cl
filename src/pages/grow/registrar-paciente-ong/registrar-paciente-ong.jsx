@@ -18,9 +18,9 @@ export default function RegistrarPacienteOng(){
   const [ error, setError ] = useState(false);
   const [ inSubmit, setInSubmit ] = useState(false);
   const [nombre, setNombre ] = useState();
-  const [apellido, setApellido ] = useState();
+  const [apellido, setApellido ] = useState(); 
   const [dni, setDni ] = useState(); 
-  const [dniError, setDniError] = useState(false);
+  const [dniError, setDniError] = useState(false); 
 
   const validar = () => {
     if (!nombre || !apellido || !dni) {
