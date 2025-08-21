@@ -13,14 +13,14 @@ function EstadisticasONG(){
   const [ growPacientes , setGrowPacientes ] = useState({}); //eslint-disablse-line
   const [ datosCargados , setDatosCargados ] = useState(true);
 
-  const datosEjemplo =[
-  ["Nombre", "Edad", "Ciudad", "Ocupación", "Email", "Teléfono", "País", "Estado", "Código Postal", "Comentarios"], // encabezado
-  ["Agu", 28, "Santa Fe", "Programador", "agu@mail.com", "342-5419964", "Argentina", "Santa Fe", "3000", "Sin comentarios"],
-  ["Juan", 35, "Rosario", "Diseñador", "juan@mail.com", "341-1234567", "Argentina", "Santa Fe", "2000", "Prueba"],
-  ["María", 22, "Buenos Aires", "Estudiante", "maria@mail.com", "11-7654321", "Argentina", "Buenos Aires", "1000", "Ninguno"],
-  ["Lucía", 40, "Córdoba", "Abogada", "lucia@mail.com", "351-9876543", "Argentina", "Córdoba", "5000", "Observación"],
-  ["Pedro", 30, "Mendoza", "Ingeniero", "pedro@mail.com", "261-1234567", "Argentina", "Mendoza", "5500", "Test de scroll"]
-];
+  const datosEjemplo = [
+    ["Nombre", "Edad", "Ciudad", "Ocupación", "Email", "Teléfono", "País", "Estado", "Código Postal", "Comentarios"], // encabezado
+    ["Agu", 28, "Santa Fe", "Programador", "agu@mail.com", "342-5419964", "Argentina", "Santa Fe", "3000", "Sin comentarios"],
+    ["Juan", 35, "Rosario", "Diseñador", "juan@mail.com", "341-1234567", "Argentina", "Santa Fe", "2000", "Prueba"],
+    ["María", 22, "Buenos Aires", "Estudiante", "maria@mail.com", "11-7654321", "Argentina", "Buenos Aires", "1000", "Ninguno"],
+    ["Lucía", 40, "Córdoba", "Abogada", "lucia@mail.com", "351-9876543", "Argentina", "Córdoba", "5000", "Observación"],
+    ["Pedro", 30, "Mendoza", "Ingeniero", "pedro@mail.com", "261-1234567", "Argentina", "Mendoza", "5500", "Test de scroll"]
+  ];
 
   const grow = JSON.parse(sessionStorage.getItem('user-grow'));
 
@@ -49,9 +49,6 @@ function EstadisticasONG(){
               responsive={true}
               animate={true}
             />
-      <Card title="">
-
-      </Card>
       {false && <div style={{marginTop:'25px'}}>
         <LinkButtonCenter value="Volver" to={"/tu-grow/"+grow.idgrow}></LinkButtonCenter>
       </div>}
