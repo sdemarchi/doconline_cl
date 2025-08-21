@@ -1,6 +1,5 @@
 import Nav from '../../../components/nav/nav';
 import LinkCard from '../../../components/link-card/link-card';
-import { useParams } from 'react-router-dom';
 import ColorCard from '../../../components/color-card/color-card';
 import './tu-grow.css';
 import { useEffect } from 'react';
@@ -19,7 +18,6 @@ import { LuDownload } from "react-icons/lu";
 export default function TuGrow(){
   const [ mostrarNotificacion , setMostrarNotificacion ] = useState(false);
   const [ textoNotificacion , setTextoNotificacion ] = useState('');
-  const idgrow = useParams('id');
   const [ grow , setGrow ] = useState();
   const navigate = useNavigate();
   const [ growDetails , setGrowDetails ] = useState(); // eslint-disable-line
@@ -79,12 +77,11 @@ export default function TuGrow(){
   useEffect(()=>{
     const grow_ = JSON.parse(sessionStorage.getItem('user-grow'));
 
-    const getGrow = () => {
+    () => {
       if(id){
         getGrowById(id).then((response)=>{
           setGrowDetails(response);
           setDatosCargados(true);
-          console.log(JSON.stringify(response));
         });
       }
     }
@@ -112,8 +109,12 @@ export default function TuGrow(){
         </div>
 
 
-        <LinkCard show={grow !== undefined} title="Ver pacientes" to={'/estadisticas/'+grow?.idgrow}>
-          <p>Ver pacientes registrados con tu URL.</p>
+        <LinkCard show={grow !== undefined && grow?.tipo_id == 1} title="Ver pacientes" to={'/estadisticas/'+grow?.idgrow}>
+          <p>Ver estadisticas de los pacientes registrados con tu URL.</p>
+        </LinkCard>
+
+        <LinkCard show={grow !== undefined && grow?.tipo_id == 2} title="Ver pacientes" to={'/estadisticas-ong'}>
+          <p>Ver detalles del tramite de los pacientes vinculados a la ONG.</p>
         </LinkCard>
 
       
@@ -157,7 +158,7 @@ export default function TuGrow(){
   <div style={{display:'none'}}>
 
     <QRCodeLogo
-      value={'www.doconlineargentina.com/turnero/login/'+growDetails?.cod_desc}          
+      value={'www.doconlineargentina.com/turnero/login/' + growDetails?.cod_desc}          
       size={500}
       enableCORS={true}     
       id={"qr-code-logo"}

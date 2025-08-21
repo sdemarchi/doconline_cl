@@ -1,0 +1,57 @@
+.card-table-wrapper {
+  overflow-x: auto; /* scroll horizontal si es necesario */
+  margin: 0; /* eliminar márgenes superior e inferior */
+}
+
+.card-table {
+  width: 100vw; /* ocupar todo el ancho de la pantalla */
+  max-width: 100%;
+  border-collapse: collapse; /* no mostrar líneas entre celdas */
+  font-family: 'Montserrat', sans-serif;
+}
+
+.card-table th, .card-table td {
+  padding: 14px 12px; /* espacio vertical más generoso */
+  text-align: left;
+}
+
+.card-table th {
+  background-color: transparent; /* sin fondo */
+  color: rgba(0, 0, 0, 0.722); /* gris oscuro claro */
+  font-weight: 600;
+}
+
+.card-table tbody tr:nth-child(odd) {
+  background-color: #ffffff; /* filas impares blancas */
+}
+
+.card-table tbody tr:nth-child(even) {
+  background-color: #f0f0f0; /* filas pares gris muy claro */
+}
+
+.card-table td {
+  font-size: 14px;
+  line-height: 1.6; /* altura de filas mayor */
+}
+
+.card-table tr:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.card-table th{
+  font-size: 14px; /* tamaño de fuente más grande */
+  font-weight: 600; /* negrita */
+}
+
+/* Scroll horizontal fino */
+.card-table-wrapper::-webkit-scrollbar {
+  height: 6px; /* altura de la barra horizontal */
+}
+
+
+@media only screen and (max-width: 768px){
+  .card-table th, .card-table td {
+    font-size: 12px;
+    padding: 10px 8px;
+  }
+}

@@ -47,6 +47,7 @@ import RegistrarPacienteOng from './pages/grow/registrar-paciente-ong/registrar-
 import TuGrow from './pages/grow/tu-grow/tu-grow.jsx';
 import GrowDetalles from './pages/grow/grow-detalles/growDetalles.jsx';
 import GrowEstadisticas from './pages/grow/grow-estadisticas/grow-estadisticas.jsx';
+import EstadisticasONG from './pages/grow/grow-estadisticas/ong-estadisticas.jsx';
 
 const router = createBrowserRouter([
   {
@@ -67,17 +68,13 @@ const router = createBrowserRouter([
       },
       {
         path: '/registrarme',
-       // action: registerAction,
         element: <Register />
       },
       {
         path: '/g-perfil',
-      //  action: googleRegisterAction,
         element: <GoogleRegister />
-      }  
-    ],
-
-  },
+      }],
+    },
   {
     path: '/',
     element: <MainLayout />,
@@ -176,6 +173,9 @@ const router = createBrowserRouter([
       {
         path: '/estadisticas/:id',
         element:<GrowEstadisticas/>
+      },      {
+        path: '/estadisticas-ong',
+        element:<EstadisticasONG/>
       },
       {
         path: '/detallesGrow/:id',

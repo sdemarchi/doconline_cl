@@ -44,10 +44,29 @@ export async function addGrow(grow) {
         }
     })
     const resp = await respuesta.json()
+    return resp;
+
+  } catch (error) {
+      console.error(error)
+  }
+}
+
+export async function agregarPacienteONG(growId, paciente) {
+  const url = import.meta.env.VITE_API_URL + '/grow.agregar-paciente-ong/' + growId;
+
+  try {
+    const respuesta = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(paciente),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    const resp = await respuesta.json()
     console.log(resp)
     return resp;
 
-} catch (error) {
-    console.log(error)
-}
+  } catch (error) {
+      console.error(error)
+  }
 }
