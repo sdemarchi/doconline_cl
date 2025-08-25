@@ -66,7 +66,7 @@ export default function RegistrarPacienteOng(){
         <Title>Registrar paciente</Title>
         
         <Card>
-          <Info text="Al registrar un paciente el mismo tendrá acceso al beneficio de tu ONG. El paciente aparecera en tus estadisticas una vez se registre y saque su turno." />
+          <Info text="Registra a un paciente para que pueda acceder al beneficio de tu ONG. El mismo deberá registrarse con el mismo DNI y reservar un turno para acceder al beneficio." />
           <InputState label='Nombre del paciente' setState={setNombre}/>
           <InputState label='Apellido del paciente' setState={setApellido}/>
           <InputState label='DNI del paciente' setState={setDni} />

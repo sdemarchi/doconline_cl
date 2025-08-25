@@ -11,7 +11,7 @@ import LinkCard from '../../../components/link-card/link-card';
 
 function EstadisticasONG(){
   const [ pacientesONG , setPacientesONG ] = useState([]); //eslint-disablse-line
-  const [ datosCargados , setDatosCargados ] = useState(true);
+  const [ datosCargados , setDatosCargados ] = useState(false);
 
   const grow = JSON.parse(sessionStorage.getItem('user-grow'));
 
