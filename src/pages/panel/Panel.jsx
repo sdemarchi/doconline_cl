@@ -25,6 +25,7 @@ function Panel() {
     const [paciente, setPaciente] = useState({});
 
     const [datosCargados, setDatosCargados] = useState(false);
+    const [beneficiarioONG, setBeneficiarioONG] = useState(false);
     const [pacienteCargado, setPacienteCargado] = useState(false);
     const [growCargado, setGrowCargado] = useState(false); //eslint-disable-line
     const [pagoCargado, setPagoCargado] = useState(false);
@@ -70,6 +71,7 @@ function Panel() {
 
             if(response.grow && !sessionStorage.getItem("growId")){
                 sessionStorage.setItem('growId',response.grow);
+                sessionStorage.setItem('beneficiarioONG',response.pacienteONG);
             } 
             
             if(sessionStorage.getItem('user-grow-id') === null){
@@ -166,7 +168,9 @@ function Panel() {
     useEffect(() => {
         subirScroll();
         getPaciente();
-        
+        const beneficiarioONG = sessionStorage.getItem('beneficiarioONG') || false;
+        setBeneficiarioONG(beneficiarioONG);
+
         if(sessionStorage.getItem('grow-success')){
             sessionStorage.removeItem('grow-success');
             setNotificacionGrow(true);
@@ -177,6 +181,8 @@ function Panel() {
 
 
     useEffect(()=>{
+        const beneficiarioONG = sessionStorage.getItem('beneficiarioONG') || false;
+        setBeneficiarioONG(beneficiarioONG);
         const cargado = pagoCargado && growCargado && pacienteCargado && pagoRegaladoCargado;
         setDatosCargados(cargado);
         redireccionar();
@@ -230,9 +236,9 @@ function Panel() {
                 </ColorCard>
 
     
-                <LinkCard show={turnoPaciente.id > 0 && pago && !pago?.comprobante} title="Finaliza tu pago" to='/finalizar-pago' alert responsive>
+                {<LinkCard show={(turnoPaciente.id) > 0 && pago && !pago?.comprobante && !beneficiarioONG} title="Finaliza tu pago" to='/finalizar-pago' alert responsive>
                     <p>Adjuntá el comprobante de pago para evitar la cancelacion del turno.</p>
-                </LinkCard>
+                </LinkCard> }
       
 
                 <LinkCard to={'/turno'} show={!(turnoPaciente.id > 0 )} title="Solicitar turno" onlyPc responsive>
@@ -245,7 +251,7 @@ function Panel() {
                 </LinkCard>
         
 
-                <LinkCard show={growAdmin?.idgrow !== undefined && false /*Eliminar '&& false' para activar */} title="Tu Grow" to={'/tu-grow/'+growAdmin?.idgrow} responsive>
+                <LinkCard show={growAdmin?.idgrow !== undefined && false} title="Tu Grow" to={'/tu-grow/'+growAdmin?.idgrow} responsive>
                     <p>Tenés un Grow vinculado a tu correo electronico.</p>
                 </LinkCard>
 
