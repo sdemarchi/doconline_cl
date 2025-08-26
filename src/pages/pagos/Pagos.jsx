@@ -10,7 +10,7 @@ import { aplicarCupon } from '../../data/turnero';
 import Chip from '../../components/Chip';
 import Spinner from '../../components/Spinner';
 import Contacto from '../../components/contacto/contacto';
-import { getGrowById , getGrowByCod } from '../../data/grows';
+import { getGrowById , getGrowByCod, ONGService } from '../../data/grows';
 import './pagos.css';
 import Card from '../../components/card/card';
 import LinkCard from '../../components/link-card/link-card';
@@ -20,7 +20,7 @@ import Error from '../../components/Error';
 import Title from '../../components/title/title';
 
 function Pagos() {
-    const {/* turno,*/ cuponValidado, setCuponValidado } = useTurno();
+    const { cuponValidado, setCuponValidado } = useTurno(); 
     const { setImporte } = useAuth();
 
     const navigate = useNavigate();
@@ -29,27 +29,41 @@ function Pagos() {
     const [ precioMP, setPrecioMP ] = useState(0);
     const [ cupon, setCupon ] = useState('');
     const [ importeCupon, setImporteCupon ] = useState(0);
-    const [ cargando ] = useState(0);
-    const [ datosCargados, setDatosCargados ] = useState(false);
+    const [ growCargado, setGrowCargado ] = useState(false);
+    const [ precioCargado, setPrecioCargado ] = useState(false);
     const [ showMsg , setShowMsg ] = useState(false);
     const [ grow , setGrow ] = useState();
-    const [ pagoRegistrado, setPagoRegistrado ] = useState();
     const [ ingresarCodigo, setIngresarCodigo ] = useState(false);
     const [ codigo, setCodigo ] = useState();
     const [ codigoNoEncontrado, setCodigoNoEncontrado ] = useState(false);
     const [ errorMsj, setErrorMsj ] = useState();
+    const [ bonificadoONG, setBonificadoONG ] = useState(false);
+    const [ nombreONG, setNombreONG ] = useState('');
 
     var cuponSession = {cupon: '', importe:0};
 
     async function cargarPrecios(){
+        setPrecioCargado(false);
+
+        if(bonificadoONG){
+            setPrecioTrans(0);
+            setPrecioMP(0);
+
+            localStorage.setItem("precio_mp", 0);
+            localStorage.setItem("precio_transf", 0);
+
+            setPrecioCargado(true);
+
+            return;
+        }
+
         const response = await getPrecios();
+
 
         if(localStorage.getItem("cupon_validado")){
             cuponSession = JSON.parse(localStorage.getItem("cupon_validado"));
-        }
-        
-        if(cuponSession.importe == 0){
-            //alert('no cupon')
+            
+        } else if(cuponSession.importe == 0){ 
             setPrecioTrans(response.precioTransf);
             setCuponValidado(cuponSession);
             setPrecioMP(response.precioMP);
@@ -65,14 +79,20 @@ function Pagos() {
             localStorage.setItem("precio_mp", response.precioTransf - cuponValidado.importe);
         }
 
-        setDatosCargados(true);
+        setPrecioCargado(true);
     }
 
-
+    /**
+     * Se valida que el cupón ingresado sea válido y pertenezca a un grow.
+     * En caso de ser así, se aplica el descuento correspondiente y se guarda el grow en session storage
+     * para ser enviado junto con la información del pago. El pago se vinculará al grow correspondiente.
+     */
     async function validarCupon(){
         const grow_ = await getGrowByCod(cupon);
 
-        if(grow_?.idgrow){
+        if(grow_?.tipo_id == 2){
+            setShowMsg(true);
+        }else if(grow_?.idgrow){
             setGrow(grow_);
             sessionStorage.setItem('growId',grow_.idgrow);
 
@@ -96,6 +116,13 @@ function Pagos() {
         }
     }
 
+
+    
+    /**
+     * Esta función está destinada a comprobar si el pago ya fue utilizado o no.
+     * El codigo corresponde a un pago realizado por otra persona como regalo para el usuario actual.
+     * El pago podrá utilizarse solo una vez.
+     */
     const comprobarCodigo = () =>{
         PagosService.buscarPorCodigo(codigo).then((resp)=>{
             if(resp.id){
@@ -114,6 +141,9 @@ function Pagos() {
         });
     }
 
+    /**
+     * Los usuarios que esten renovando podrán acceder a un descuento especial.
+     */
     const estoyRenovando = async () => {
         const grow_ = await getGrowByCod('renovacion');
 
@@ -123,17 +153,67 @@ function Pagos() {
 
         }
     }
-    
-    async function getGrow(){
-        if(sessionStorage.getItem('growId')){
-            let id = sessionStorage.getItem('growId');
-            let grow_ =  await getGrowById(id);
-            setGrow(grow_);
+        
+
+    // Auxiliar: obtiene el grow de una ONG si existe para el paciente
+    async function getGrowFromONG(dniPaciente) {
+        const resp = await ONGService.getONGPorPaciente(dniPaciente);
+
+        if (resp.tieneONG) {
+            setBonificadoONG(true);
+            setNombreONG(resp.nombreONG);
+
+            return await getGrowById(resp.idgrow);
         }
+
+        return null; // No pertenece a una ONG
     }
 
+
+    /**
+     * Obtiene el Grow actual para el paciente:
+     * 1. Si hay un growId en sessionStorage, lo carga.
+     * 2. Si el grow es de tipo 2, verifica si el paciente pertenece a una ONG y, de ser así, carga el grow asociado a la ONG.
+     * 3. Si no hay growId, intenta obtener el grow a partir de la ONG del paciente.
+     * Finalmente, actualiza el estado con el grow encontrado y los datos de la ONG si aplica.
+     */
+    async function getGrow() {
+        const userData = JSON.parse(sessionStorage.getItem('user_data'));
+        const dniPaciente = userData?.dni;
+        const growId = sessionStorage.getItem('growId');
+
+        let grow = null;
+
+        if (growId) {  // Si hay un grow guardado en sessionStorage
+
+            const grow_ = await getGrowById(growId);
+
+            // Si es tipo 2, verificamos si está asociado a una ONG
+            if (grow_?.tipo_id === 2 && dniPaciente) {
+                const ongGrow = await getGrowFromONG(dniPaciente);
+
+                if (ongGrow){
+                    grow = ongGrow;
+                } 
+            }
+            
+        } else if (dniPaciente) {
+            // Si no hay grow en sessionStorage, intentamos con ONG
+            const ongGrow = await getGrowFromONG(dniPaciente);
+            if (ongGrow) grow = ongGrow;
+        }
+
+        // Si encontramos un grow válido, lo seteamos
+        if (grow) setGrow(grow);
+
+        setGrowCargado(true);
+    }
+
+
+    
+
     async function quitarCupon(){
-        setDatosCargados(false);
+        setPrecioCargado(false);
         setImporteCupon(0)
         setCuponValidado({cupon: '', importe:0});
 
@@ -143,15 +223,14 @@ function Pagos() {
     }
 
     useEffect(() => {
-        getGrow();
-        cargarPrecios();
         setCupon(cuponValidado.cupon);
         setImporteCupon(cuponValidado.importe);
-        setPrecioMP(precioMP - cuponValidado.importe);
-        setPrecioTrans(precioTrans - cuponValidado.importe);
-
-        localStorage.setItem("precio_transf", precioTrans - cuponValidado.importe);
+        getGrow();
     }, [])//eslint-disable-line
+
+    useEffect(() => {
+        cargarPrecios(); 
+    }, [grow,bonificadoONG])
     
     function pagar(precioFinal){
         const pago = {
@@ -164,32 +243,46 @@ function Pagos() {
 
         sessionStorage.setItem('pago',JSON.stringify(pago));
         localStorage.setItem('precio_transf',precioFinal);
+
         setImporte(precioTrans);
         return navigate('/pagoTransf');
     }
         
     return (
         <div className="pagos-container page">
-        {!datosCargados ? <Spinner/>:
+        {!growCargado || !precioCargado? <Spinner/>:
 
             <div>
-                {(grow?.descuento !== undefined && grow?.descuento !== 0 && !ingresarCodigo) &&
+                {
+                ( bonificadoONG && grow?.descuento !== undefined && grow?.descuento !== 0 && !ingresarCodigo) &&
                     <div className="pagos-descuento display-cel">
                         <h1>Tenés un descuento del {grow?.descuento}% por {grow?.nombre}.</h1>
+                    </div>
+                }
+                {
+                bonificadoONG  &&
+                    <div className="pagos-descuento display-cel">
+                        <h1>{"Tu trámite se encuentra bonificado por " + nombreONG}.</h1>
                     </div>
                 }
 
                 <div>
 
                 <Title>{ingresarCodigo ? "Registrar pago" : "Ir a pagar"}</Title>
-                {(grow?.descuento !== undefined && grow?.descuento !== 0 && !ingresarCodigo) &&
+                {!bonificadoONG && (grow?.descuento !== undefined && grow?.descuento !== 0 && !ingresarCodigo) &&
                     <div className="pagos-descuento display-pc">
                         <h1>Tenés un descuento del {grow?.descuento}% por {grow?.nombre}.</h1>
                     </div>
                 }
+                {
+                bonificadoONG  &&
+                    <div className="pagos-descuento display-pc">
+                        <h1>{"Tu trámite se encuentra bonificado por " + nombreONG}.</h1>
+                    </div>
+                }
                 <div className='pagos-content'>
                     {(!grow?.descuento && !ingresarCodigo) &&
-                        <Card title="Cupón" disabledBorder >
+                        <Card show={!bonificadoONG} title="Cupón" disabledBorder >
                         <>
                             { cuponValidado.cupon ?
                                 <Chip value={cupon} onClick={ () => quitarCupon() } />
@@ -212,20 +305,24 @@ function Pagos() {
                     }
                 
                     <Card show={!ingresarCodigo} disabledBorder >
-                        <PagoCard medio="Transferencia" 
+                        
+                        <PagoCard 
+                            medio="Transferencia" 
                             importe={sessionStorage.getItem("precio_transf") || precioTrans} 
                             descuento={importeCupon}
                             descuentoPorc={grow?.descuento}
+                            textoBoton={bonificadoONG ? "Continuar" : "Ir a Pagar"}
                             mensaje="Desde cualquier banco físico o virtual" 
                             onClick={ (precioFinal) => pagar(precioFinal) } />
+
                             <div className="pagos-pagado-container">
                                 <button onClick={()=>setIngresarCodigo(true)} className="display-pc pagos-pagado-button"> Ya han pagado por tí?</button>
                             </div>
                             { !ingresarCodigo  && !grow?.descuento && <div className="pagos-pagado-container">
                                 <button onClick={()=>estoyRenovando()}  className="display-pc pagos-pagado-button"> Click aqui si estás renovando el trámite</button>
                             </div>}
-
                     </Card>
+
 
                     <LinkCard show={!ingresarCodigo} onClick={()=>setIngresarCodigo(true)} title="Ya han pagado por mí" onlyCel>Ingresar el codigo de pago.</LinkCard>
                    
@@ -237,6 +334,7 @@ function Pagos() {
                             setState={setCodigo}
                             placeholder="A5BC56"
                         /> 
+
                         {codigoNoEncontrado && <div className="mt-8"><Error>{errorMsj}</Error></div>}
 
                         <ActionButton onClick={()=>comprobarCodigo()} value="Usar codigo"/>

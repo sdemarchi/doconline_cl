@@ -5,7 +5,7 @@ export default function CardTable({data, style, responsive, animate, onlyCel, on
   if (!data || data.length === 0) return null;
 
   const header = data[0];
-  const rows = data.slice(1);
+  const rows = data.slice(1).reverse();
 
   return (
     <Card

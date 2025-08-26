@@ -220,7 +220,6 @@ function Turnos() {
                     </Card>
 
                     <Card title='Seleccionar día' disabledBorder>
-                        {/*<h6 className="text-green-500 font-semibold text-xs ps-3">En color verde los días disponibles</h6>*/}
                         { !calendarioCargado && <div className="calendario-spinner-contenedor"> <Spinner/> </div>}
                         { calendarioCargado &&
                         

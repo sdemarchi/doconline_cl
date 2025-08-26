@@ -17,6 +17,7 @@ import Card from '../../components/card/card';
 import toBase64 from '../../utils/base64';
 import PagosService from '../../data/pagos';
 import Title from '../../components/title/title';
+import { ONGService } from '../../data/grows';
 
 function PagoTransf() {
     const { importe } = useAuth();//eslint-disable-line
@@ -86,7 +87,7 @@ function PagoTransf() {
             setCbu(datosTransf_session.cbu);
             setAlias(datosTransf_session.alias);
         }
-        setDatosCargados(true);
+    
     }
 
     async function guardarTurno() {
@@ -109,8 +110,6 @@ function PagoTransf() {
             comprobante:comprobante
         };
 
-        console.log(JSON.stringify(pago));
-
         PagosService.crear(pago).then((resp)=>{
             console.log(resp);
             if(sessionStorage.getItem('growId') !== undefined && sessionStorage.getItem('growId') !== null){
@@ -132,10 +131,28 @@ function PagoTransf() {
         handleMostrarNotification();
     }
 
+
     useEffect(() => {
-        sessionStorage.setItem('comprobante-enviado',false);
-        cargarDatosTransf();
-    }, []) 
+        const init = async () => {
+            setDatosCargados(false);
+
+            sessionStorage.setItem('comprobante-enviado', false);
+
+            const dni = JSON.parse(sessionStorage.getItem('user_data'))?.dni;
+
+            await cargarDatosTransf(); // espera que termine
+
+            const res = await ONGService.getONGPorPaciente(dni);
+
+            if (res && res.tieneONG) {
+               await guardarTurno();
+            }else{
+                setDatosCargados(true);
+            }
+        };
+
+        init();
+    }, []);
 
     return (
         <div className="pagos-container page">

@@ -1,5 +1,4 @@
 import './grow-estadisticas.css';
-import Card from '../../../components/card/card';
 import { LinkButtonCenter } from '../../../components/Buttons';
 import Spinner from '../../../components/Spinner';
 import { useState,useEffect } from 'react';
