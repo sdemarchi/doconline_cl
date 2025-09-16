@@ -13,6 +13,8 @@ import { copyToClipboard } from '../../../utils/utilFunctions';
 import { IoMdLink } from "react-icons/io";
 import { IoTicketOutline } from "react-icons/io5";
 import { LuDownload } from "react-icons/lu";
+import CifradoHelper from '../../../utils/CifradoHelper';
+
 
 export default function TuGrow(){
   const [ mostrarNotificacion , setMostrarNotificacion ] = useState(false);
@@ -45,6 +47,7 @@ export default function TuGrow(){
 
   const descargarQR = () => {
     const canvas = document.getElementById("qr-code-logo");
+    
     if(canvas) {
       const pngUrl = canvas
         .toDataURL("image/png")
@@ -108,7 +111,7 @@ export default function TuGrow(){
         </div>
 
 
-        <LinkCard show={grow !== undefined && grow?.tipo_id == 1} title="Ver pacientes" to={'/estadisticas/'+grow?.idgrow}>
+        <LinkCard show={grow !== undefined && grow?.tipo_id == 1} title="Ver pacientes" to={'/estadisticas/'+CifradoHelper.cifrar(grow?.idgrow)}>
           <p>Ver estadisticas de los pacientes registrados con tu URL.</p>
         </LinkCard>
 
@@ -117,7 +120,7 @@ export default function TuGrow(){
         </LinkCard>
 
       
-        <LinkCard show={(grow !== undefined)} title={grow?.tipo_id == 2? "Detalles de la ONG": "Detalles del Grow"} to={'/detallesGrow/'+grow?.idgrow}>
+        <LinkCard show={(grow !== undefined)} title={grow?.tipo_id == 2? "Detalles de la ONG": "Detalles del Grow"} to={'/detallesGrow/'+CifradoHelper.cifrar(grow?.idgrow)}>
           <p>Consulta los detalles de tu {grow?.tipo_id == 2 ? "ONG":"Grow"}.</p>
         </LinkCard>
         

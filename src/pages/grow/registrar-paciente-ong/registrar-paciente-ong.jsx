@@ -47,7 +47,7 @@ export default function RegistrarPacienteOng(){
       ONGService.agregarPacienteONG(grow.idgrow, { nombre, apellido, dni })
       .then(() => {
         setInSubmit(false);
-        navigate("/tu-grow/"+grow.idgrow);
+        navigate("/tu-grow/");
 
     }).catch(() => {
       setInSubmit(false);
@@ -75,7 +75,7 @@ export default function RegistrarPacienteOng(){
         </Card>
 
         <ActionButton onClick={()=>submit()} value="Registrar Paciente" />
-        <button className="registrar-paciente-volver" onClick={()=>navigate('/tu-grow/'+grow.idgrow)}>Volver</button>
+        <button className="registrar-paciente-volver" onClick={()=>navigate('/tu-grow/')}>Volver</button>
         </div>
       }
       <NotificacionEmergente show={error} setShow={setError} text="Ha ocurrido un error" />

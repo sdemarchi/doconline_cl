@@ -15,6 +15,7 @@ import QRCode from 'react-qr-code';
 import { FaRegCopy } from "react-icons/fa6";
 import { LuDownload } from "react-icons/lu";
 import { QRCode as QRCodeLogo } from 'react-qrcode-logo';
+import CifradoHelper from '../../../utils/CifradoHelper';
 
 function GrowDetalles(){
   const { id } = useParams();
@@ -69,14 +70,15 @@ function GrowDetalles(){
   
   
   useEffect(()=>{
+    const idDescifrado =  CifradoHelper.descifrar(id);
+
     const getGrow = () => {
-      if(id){
-        getGrowById(id).then((response)=>{
+      if(idDescifrado){
+        getGrowById(idDescifrado).then((response)=>{
           setGrowDetails(response);
           setDatosCargados(true);
         }).catch(()=>{
-          console.log('grow - Reintentando la solicitud');
-            getGrowById(id).then((response)=>{
+            getGrowById(idDescifrado).then((response)=>{
               setGrowDetails(response);
               setDatosCargados(true);
           }).catch(()=>{
@@ -157,7 +159,6 @@ function GrowDetalles(){
 
           </div>
           <div className="grow-estadisticas-items">
-
             {growDetails?.direccion &&<div className="gd-item">
               <span className="gd-item-title">Dirección</span>
               <span className="gd-item-text">{growDetails?.direccion}</span>
@@ -202,15 +203,13 @@ function GrowDetalles(){
 
 
       <div className="gd-button">
-        <LinkButtonCenter value="Volver" to={"/tu-grow/"+id}></LinkButtonCenter>
+        <LinkButtonCenter value="Volver" to={"/tu-grow/"}></LinkButtonCenter>
       </div>
 
       <NotificacionEmergente show={mostrarNotificacion} setShow={setMostrarNotificacion} text={textoNotificacion}/>
 
     </div>:
-    <div className="grow-estadisticas-container page" style={{minHeight:'700px'}}><Spinner/></div>
-
-    }
+    <div className="grow-estadisticas-container page" style={{minHeight:'700px'}}><Spinner/></div>}
     </>
   );
 }

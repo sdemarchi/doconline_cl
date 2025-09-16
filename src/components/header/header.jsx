@@ -41,7 +41,7 @@ function Header(props){
       </div>
       
       <div className="header-nav">
-        {grow?.idgrow && <Link to={'/tu-grow/'+ grow?.idgrow} className="header-nav-button">{textoGrow}</Link>}
+        {grow?.idgrow && <Link to={'/tu-grow/'} className="header-nav-button">{textoGrow}</Link>}
         <Link to='/panel' className="header-nav-button">{grow?.idgrow ?"Turno" : "Inicio"}</Link>
         <button onClick={() => {window.open(wspLink)}} className="header-nav-button" style={{fontWeight:'500',fontSize:'15px'}}>Contactanos</button>
       </div>

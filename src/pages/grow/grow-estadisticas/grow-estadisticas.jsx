@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import { getGrowPacientes } from '../../../data/grows';
 import Nav from '../../../components/nav/nav';
 import Title from '../../../components/title/title';
+import CifradoHelper from '../../../utils/CifradoHelper';
 
 function GrowEstadisticas(){
   const [ mesActual, setMesActual ] = useState(new Date().getMonth() + 1); 
@@ -67,9 +68,11 @@ function GrowEstadisticas(){
   };
 
   useEffect(()=>{
+    const idDescifrado = CifradoHelper.descifrar(id);
+    
     const getPacientes = () => {
-      if(id){
-        getGrowPacientes(id).then((response)=>{
+      if(idDescifrado){
+        getGrowPacientes(idDescifrado).then((response)=>{
           setGrowPacientes(response.pacientes);
           filtrarPacientes(response.pacientes,mesActual);
           setDatosCargados(true);

@@ -185,7 +185,7 @@ const router = createBrowserRouter([
         element:<GrowDetalles/>
       },
       {
-        path: '/tu-grow/:id',
+        path: '/tu-grow',
         element:<TuGrow/>
       },
       {

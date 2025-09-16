@@ -142,7 +142,7 @@ function Panel() {
                 return navigate('/'+urlRedirect );
             }
 
-            return navigate('/tu-grow/'+growAdmin?.idgrow );
+            return navigate('/tu-grow ');
 
         }else if(turnoPaciente?.id == 0 && fromLogin && growCargado && pacienteCargado && !growAdmin?.idgrow){
             if(urlRedirect){
@@ -251,7 +251,7 @@ function Panel() {
                 </LinkCard>
         
 
-                <LinkCard show={growAdmin?.idgrow !== undefined && false} title="Tu Grow" to={'/tu-grow/'+growAdmin?.idgrow} responsive>
+                <LinkCard show={growAdmin?.idgrow !== undefined && false} title="Tu Grow" to={'/tu-grow/'} responsive>
                     <p>Tenés un Grow vinculado a tu correo electronico.</p>
                 </LinkCard>
 
