@@ -23,7 +23,7 @@ export default function LinkCard(props){
                     {props.title}
                 </h2>}
 
-                <div class="link-card-content">{props.children}</div>
+                <div className="link-card-content">{props.children}</div>
             </div>
         </a>}
         </> 

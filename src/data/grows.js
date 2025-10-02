@@ -73,6 +73,33 @@ async function agregarPacienteONG(growId, paciente) {
   }
 }
 
+
+async function editarPacienteONG(idPaciente,paciente) {
+  const url = import.meta.env.VITE_API_URL + '/pacientes-ong/' + idPaciente;
+
+  try {
+    const respuesta = await fetch(url, {
+      method: 'PUT', // actualización completa
+      body: JSON.stringify({
+        nombre: paciente.nombre,
+        apellido: paciente.apellido,
+        dni: paciente.dni
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const resp = await respuesta.json();
+    console.log(resp);
+    return resp;
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
 async function obtenerPacientesONG(growId) {
   const url = import.meta.env.VITE_API_URL + '/pacientes-ong/' + growId;
 
@@ -123,17 +150,71 @@ async function obtenerONGPorPaciente(dni) {
   }
 }
 
+async function obtenerPacienteONG(pacienteId) {
+  const url = import.meta.env.VITE_API_URL + '/paciente-ong/' + pacienteId;
+
+  try {
+    const respuesta = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const resp = await respuesta.json();
+    return resp.paciente;
+
+  } catch (error) {
+    console.error("Error al obtener paciente:", error);
+    return null;
+  }
+}
+
+
 
 export class ONGService{
   static async getPacientesONG(growId) {
     return obtenerPacientesONG(growId);
   }
 
+  static async getPacienteONG(idPaciente){
+    return obtenerPacienteONG(idPaciente);
+  }
+
   static async agregarPacienteONG(growId, paciente) {
     return agregarPacienteONG(growId, paciente);
+  }
+
+  static async editarPacienteONG(idPaciente,paciente) {
+    return editarPacienteONG(idPaciente,paciente);
   }
 
   static async getONGPorPaciente(dni) {
     return obtenerONGPorPaciente(dni);
   }
+
+  static async getONG(growId) {
+    return getGrowById(growId);
+  }
+
+  static async editarDatosONG(growId, datos) {
+    const url = import.meta.env.VITE_API_URL + '/ong/editar-datos-titular/' + growId;
+
+    try {
+      const respuesta = await fetch(url, {
+          method: 'PUT',
+          body: JSON.stringify(datos),
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      })
+      
+      const resp = await respuesta.json()
+      return resp;
+
+    } catch (error) {
+        console.error(error)
+    } 
+  }
+
 }

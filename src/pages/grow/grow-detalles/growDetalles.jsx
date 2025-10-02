@@ -16,6 +16,9 @@ import { FaRegCopy } from "react-icons/fa6";
 import { LuDownload } from "react-icons/lu";
 import { QRCode as QRCodeLogo } from 'react-qrcode-logo';
 import CifradoHelper from '../../../utils/CifradoHelper';
+import { set } from 'react-hook-form';
+import Session from '../../../utils/Storage/Session';
+import RolUsuario from '../../../enum/RolUsuario';
 
 function GrowDetalles(){
   const { id } = useParams();
@@ -24,9 +27,10 @@ function GrowDetalles(){
   const [ mostrarNotificacion , setMostrarNotificacion ] = useState(false);
   const [ textoNotificacion , setTextoNotificacion ] = useState('');
   const [ precioTransf, setPrecioTransf ] = useState(0);
+  const [ rolUsuario, setRolUsuario ] = useState(null);
   
 
-  const handleNotificacion = (mostrar,texto)=> {
+  const handleNotificacion = (mostrar,texto) => {
     setMostrarNotificacion(mostrar);
     setTextoNotificacion(texto + ' copiado al portapapeles.');
   }
@@ -68,9 +72,26 @@ function GrowDetalles(){
     };
   }
   
-  
+  /**
+   * Función para cargar el precio con reintentos en caso de fallo
+   */
+  const cargarPrecio = async (intentos = 3) => {
+    for (let i = 0; i < intentos; i++) {
+      try {
+        const response = await getPrecios();
+        setPrecioTransf(response.precioTransf);
+        return; // éxito → salimos de la función
+      } catch (error) {
+          if (i === intentos - 1) {
+            console.error("Error al obtener precios después de varios intentos", error);
+          }
+      }
+    }
+  };
+    
   useEffect(()=>{
     const idDescifrado =  CifradoHelper.descifrar(id);
+    setRolUsuario(Session.getRol());
 
     const getGrow = () => {
       if(idDescifrado){
@@ -98,21 +119,10 @@ function GrowDetalles(){
       }
     }
 
-    const cargarPrecio = () => {
-      getPrecios().then((response)=>{
-        setPrecioTransf(response.precioTransf)
-      }).catch(()=>{
-        console.log('precios - Reintentando la solicitud.');
-        getPrecios().then((response)=>{
-          setPrecioTransf(response.precioTransf)
-        }).catch(()=>{
-          getPrecios().then((response)=>{
-            setPrecioTransf(response.precioTransf)
-          })
-        });
-      });
+    if(rolUsuario == RolUsuario.Grow){
+      cargarPrecio();
     }
-    cargarPrecio();
+   
     getGrow();
   },[id]); //eslint-disable-line
 
@@ -166,7 +176,7 @@ function GrowDetalles(){
         </div>
       </Card>
 
-      <Card title="cupon">
+      <Card show={growDetails.tipo_id == 1} title="cupon">
         <div className="gd-item">
           <span  onClick={()=>copyToClipboard(growDetails?.cod_desc)} className="gd-item-text" >{growDetails?.cod_desc}</span>
           <span className="gd-item-title mt-1">Link personalizado</span>
@@ -184,7 +194,7 @@ function GrowDetalles(){
       </Card>
 
       
-      <Card title="Tu descuento">
+      <Card show={growDetails.tipo_id == 1} title="Tu descuento">
         <div className="gd-descuento">
 
           <div className="gd-descuento-box">

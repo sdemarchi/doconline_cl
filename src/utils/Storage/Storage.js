@@ -1,4 +1,4 @@
-export default Storage = {
+const Storage = {
   clear: () => clear()
 }
 
@@ -7,3 +7,5 @@ const clear = () =>{
   localStorage.clear();
   console.log('Storage: CLEAR');
 }
+
+export default Storage;

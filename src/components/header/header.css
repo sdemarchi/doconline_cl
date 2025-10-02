@@ -14,7 +14,7 @@
 .header-help-content{
   display: flex;
   flex-direction: row;
-  align-items: end;
+  align-items: flex-end;
   justify-content: flex-end;
   font-size: 18px;
   font-weight: 500;

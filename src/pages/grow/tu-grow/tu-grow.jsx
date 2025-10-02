@@ -14,7 +14,8 @@ import { IoMdLink } from "react-icons/io";
 import { IoTicketOutline } from "react-icons/io5";
 import { LuDownload } from "react-icons/lu";
 import CifradoHelper from '../../../utils/CifradoHelper';
-
+import Session from '../../../utils/Storage/Session';
+import RolUsuario from '../../../enum/RolUsuario';
 
 export default function TuGrow(){
   const [ mostrarNotificacion , setMostrarNotificacion ] = useState(false);
@@ -22,6 +23,7 @@ export default function TuGrow(){
   const [ grow , setGrow ] = useState();
   const navigate = useNavigate();
   const [ growDetails , setGrowDetails ] = useState(); // eslint-disable-line
+  const rolUsuario = Session.getRol()
 
 
   const handleNotificacion = (mostrar,texto)=> {
@@ -99,7 +101,7 @@ export default function TuGrow(){
 
         <ColorCard color1="#009FD2" color2="#CE9CEE">
           <h2 className="tg-grow-name">{grow?.nombre}</h2>
-          <p className="tg-grow-description">Puedes ver los datos y beneficiarios de tu {grow?.tipo_id == 2? "ONG": "Grow"} </p>
+          <p className="tg-grow-description">Puedes ver los datos y beneficiarios de tu {rolUsuario == RolUsuario.ONG ? "ONG": "Grow"} </p>
         </ColorCard>
 
 
@@ -111,16 +113,16 @@ export default function TuGrow(){
         </div>
 
 
-        <LinkCard show={grow !== undefined && grow?.tipo_id == 1} title="Ver pacientes" to={'/estadisticas/'+CifradoHelper.cifrar(grow?.idgrow)}>
+        <LinkCard show={rolUsuario == RolUsuario.Grow} title="Ver pacientes" to={'/estadisticas/'+CifradoHelper.cifrar(grow?.idgrow)}>
           <p>Ver estadisticas de los pacientes registrados con tu URL.</p>
         </LinkCard>
 
-        <LinkCard show={grow !== undefined && grow?.tipo_id == 2} title="Ver pacientes" to={'/estadisticas-ong'}>
+        <LinkCard show={rolUsuario == RolUsuario.ONG} title="Ver pacientes" to={'/estadisticas-ong'}>
           <p>Ver detalles del tramite de los pacientes vinculados a la ONG.</p>
         </LinkCard>
 
       
-        <LinkCard show={(grow !== undefined)} title={grow?.tipo_id == 2? "Detalles de la ONG": "Detalles del Grow"} to={'/detallesGrow/'+CifradoHelper.cifrar(grow?.idgrow)}>
+        <LinkCard show={(grow !== undefined)} title={rolUsuario == RolUsuario.ONG ? "Detalles de la ONG": "Detalles del Grow"} to={'/detallesGrow/'+CifradoHelper.cifrar(grow?.idgrow)}>
           <p>Consulta los detalles de tu {grow?.tipo_id == 2 ? "ONG":"Grow"}.</p>
         </LinkCard>
         
@@ -134,9 +136,19 @@ export default function TuGrow(){
           <p>Comparte contenido junto a tu Link</p>
         </LinkCard>
 
-        { grow?.tipo_id == 2 &&
+        { rolUsuario == RolUsuario.ONG &&
           <LinkCard title="Registra un paciente"  to="/registrar-paciente-ong">
             <p>Registra un paciente para que pueda acceder al trámite.</p>
+          </LinkCard>
+        }
+
+        {
+        /**
+         * Se mantiene oculto por ahora, en el futuro se modificará para editar los datos del grow.
+         */
+        (rolUsuario == RolUsuario.ONG && false) &&
+          <LinkCard title="Modificar datos del titular"  to="/editar-datos-ong">
+            <p>Modifica los datos del titular de la ONG.</p>
           </LinkCard>
         }
 

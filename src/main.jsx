@@ -43,11 +43,13 @@ import RegalarPago from './pages/regalar-tramite/regalar-pago/regalar-pago.jsx';
 import RegalarFinalizar from './pages/regalar-tramite/regalar-finalizar/regalar-finalizar.jsx';
 
 import RegistrarGrow from './pages/grow/registrar-grow/registrar-grow.jsx';
-import RegistrarPacienteOng from './pages/grow/registrar-paciente-ong/registrar-paciente-ong.jsx';
 import TuGrow from './pages/grow/tu-grow/tu-grow.jsx';
 import GrowDetalles from './pages/grow/grow-detalles/growDetalles.jsx';
 import GrowEstadisticas from './pages/grow/grow-estadisticas/grow-estadisticas.jsx';
 import EstadisticasONG from './pages/grow/grow-estadisticas/ong-estadisticas.jsx';
+import EditarDatosONG from './pages/grow/editar-datos-ong/editar-datos-ong.jsx';
+import RegistrarPacienteOng from './pages/grow/registrar-paciente-ong/registrar-paciente-ong.jsx';
+import EditarPacienteOng from './pages/grow/editar-paciente-ong/editar-paciente-ong.jsx';
 
 const router = createBrowserRouter([
   {
@@ -192,9 +194,16 @@ const router = createBrowserRouter([
         path: '/registrar-grow',
         element:<RegistrarGrow/>
       },
-     {
+      {
         path: '/registrar-paciente-ong',
         element:<RegistrarPacienteOng/>
+      },
+      { path: '/editar-paciente-ong/:idPaciente',
+        element:<EditarPacienteOng/>
+      },
+      {
+        path: '/editar-datos-ong',
+        element:<EditarDatosONG/>
       }
     ]
   }

@@ -33,3 +33,17 @@
   height: fit-content;
   box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.16);
 }
+
+.ong-estadisticas-editar{
+  background: rgb(234, 234, 234);
+  border: none;
+  color: rgb(21, 21, 21);
+  font-weight: 500;
+  font-size: 14px;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 6px;
+  border-radius: 10px;
+}

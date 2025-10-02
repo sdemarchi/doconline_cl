@@ -15,6 +15,8 @@ import { useParams } from 'react-router-dom';
 import { getGrowById } from '../../data/grows';
 import { getGrowByRoute } from '../../data/grows';
 import Storage from '../../utils/Storage/Storage';
+import Session from '../../utils/Storage/Session';
+import RolUsuario from '../../enum/RolUsuario';
 
 function Login() {
     const { setUser, googleProfile, setGoogleProfile } = useAuth();//eslint-disable-line no-unused-vars
@@ -38,7 +40,7 @@ function Login() {
         onError: (error) => console.log('Login Failed:', error)
     });
 
-    const setRedirect = () => {  //Busca como parametro del a url, una ruta interna para redireccionar despues de iniciar sesión.
+    const setRedirect = () => {  //Busca como parametro de la url, una ruta interna para redireccionar despues de iniciar sesión.
         const queryParams = new URLSearchParams(location.search);
         const route = queryParams.get('redirect');
 
@@ -67,9 +69,7 @@ function Login() {
 
     useEffect(() => {
         Storage.clear();
-
         setRedirect();
-        
         sessionStorage.setItem('fromLogin', 'true');
         getGrowDeURL();
 
@@ -82,7 +82,6 @@ function Login() {
                     }
                 })
                 .then((res) => {
-                    console.log(res.data)
                     setGoogleProfile(res.data)
                     loginConGoogle(res.data.email);
                 })
@@ -125,7 +124,18 @@ function Login() {
                 // No confundir con el grow extraido de la URL el cual se usa para el codigo de descuento.
                   if(resp.user.growAdmin > 0){
                     const grow = JSON.stringify({idgrow:resp.user.growAdmin,tipo_id:resp.user.tipoGrow});
+
+                    if(resp.user.tipoGrow == RolUsuario.Grow){
+                        Session.setRol(RolUsuario.Grow); // Seteo el rol como Grow
+
+                    }else if(resp.user.tipoGrow == RolUsuario.ONG){
+                        Session.setRol(RolUsuario.ONG); // Seteo el rol como ONG
+                    }
+
                     sessionStorage.setItem('user-grow',grow);
+
+                }else{
+                    Session.setRol(RolUsuario.Paciente); // Seteo el rol como Paciente
                 }
    
                 setUser({
@@ -166,7 +176,17 @@ function Login() {
 
                 if(resp.user.growAdmin > 0){
                     const grow = JSON.stringify({idgrow:resp.user.growAdmin,tipo_id:resp.user.tipoGrow});
+
+                    if(resp.user.tipoGrow == RolUsuario.Grow){
+                        Session.setRol(RolUsuario.Grow); // Seteo el rol como Grow
+
+                    }else if(resp.user.tipoGrow == RolUsuario.ONG){
+                        Session.setRol(RolUsuario.ONG); // Seteo el rol como ONG
+                    }
+
                     sessionStorage.setItem('user-grow',grow);
+                }else{
+                    Session.setRol(RolUsuario.Paciente); // Seteo el rol como Paciente
                 }
 
                 setUser({userId:resp.user.id,userName: resp.user.userName});

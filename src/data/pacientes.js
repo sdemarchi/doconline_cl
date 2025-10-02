@@ -175,3 +175,26 @@ export async function setGrowPaciente(idpaciente,idgrow){
         console.log(error)
     }
 }
+
+export async function eliminarPacienteONG(idPaciente) {
+  const url = import.meta.env.VITE_API_URL + `/pacientes-ong/${idPaciente}`;
+
+  try {
+    const respuesta = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json", 
+      },
+    });
+
+    if (!respuesta.ok) {
+      throw new Error(`Error al eliminar paciente: ${respuesta.status}`);
+    }
+
+    const resp = await respuesta.json();
+    return resp; // lo que devuelva tu backend (ej: { success: true })
+  } catch (error) {
+    console.error("Error en eliminarPaciente:", error);
+    throw error;
+  }
+}

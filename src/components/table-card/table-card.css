@@ -1,6 +1,7 @@
 .card-table-wrapper {
   overflow-x: auto; /* scroll horizontal si es necesario */
   margin: 0; /* eliminar márgenes superior e inferior */
+  padding-bottom: 5px; /* eliminar padding */
 }
 
 .card-table {
@@ -14,6 +15,11 @@
   padding: 14px 12px; /* espacio vertical más generoso */
   text-align: left;
 }
+
+.action-padding-0 {
+  padding: 0 !important;
+}
+
 
 .card-table th {
   background-color: transparent; /* sin fondo */

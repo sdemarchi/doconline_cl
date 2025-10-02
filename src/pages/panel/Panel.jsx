@@ -119,10 +119,11 @@ function Panel() {
                sessionStorage.setItem('growId',resp.idgrow);
             
             cargarTurnoPaciente();
-
-            setGrowAdmin(resp).then((response)=>{
+            setGrowAdmin(resp);
+            
+            /*.then((response)=>{ todo: que paso aca
                 setPago(response);
-            });
+            });*/
         });;
     }
 
@@ -132,8 +133,6 @@ function Panel() {
         const fromLogin = sessionStorage.getItem('fromLogin') || false;
         const urlRedirect = sessionStorage.getItem('redirect') || false;
         
-        console.log('redireccion');
-
         if(growAdmin?.idgrow && growCargado && pacienteCargado && fromLogin){
             sessionStorage.removeItem('fromLogin');
 

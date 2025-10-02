@@ -1,5 +1,6 @@
 import Card from '../card/card';
 import './table-card.css';
+import React from 'react';
 
 export default function CardTable({
   data,
@@ -12,18 +13,18 @@ export default function CardTable({
   ocultarColumnas = [],
   mensajeTablaVacia = "No existen registros.",
 }) {
-  const hayDatos = data && data.length > 1 ; // > 1 porque la primera fila son headers
+  const hayDatos = data && data.length > 1; // >1 porque la primera fila son headers
   if (!hayDatos) {
     return (
       <Card style={style} responsive={responsive} animate={animate} onlyCel={onlyCel} onlyPc={onlyPc}>
         <div className="card-table-wrapper">
-          <p className="tabla-vacia" >{mensajeTablaVacia}</p>
+          <p className="tabla-vacia">{mensajeTablaVacia}</p>
         </div>
       </Card>
     );
   }
 
-  const headerOriginal = [...data[0]]; // para convertir filas a objetos
+  const headerOriginal = [...data[0]];
   let header = [...headerOriginal];
   let rows = data.slice(1).reverse();
 
@@ -55,7 +56,7 @@ export default function CardTable({
             {rows.map((row, rowIndex) => {
               let newRow = [...row];
 
-              acciones.forEach(({ icono, accion, mostrar, posicion }) => {
+              acciones.forEach(({ icono, accion, mostrar, posicion, padding }) => {
                 const filaObjeto = headerOriginal.reduce((obj, key, i) => {
                   obj[key] = row[i];
                   return obj;
@@ -67,13 +68,17 @@ export default function CardTable({
                   posicion,
                   0,
                   shouldShow ? (
-                    <button
+                    <td
                       key={`action-${rowIndex}-${posicion}`}
-                      className="action-btn"
-                      onClick={() => accion(filaObjeto)}
+                      style={padding ? {padding:padding} : {}}
                     >
-                      {icono}
-                    </button>
+                      <button
+                        className="action-btn"
+                        onClick={() => accion(filaObjeto)}
+                      >
+                        {icono}
+                      </button>
+                    </td>
                   ) : null
                 );
               });
@@ -82,9 +87,11 @@ export default function CardTable({
 
               return (
                 <tr key={rowIndex}>
-                  {newRow.map((cell, cellIndex) => (
-                    <td key={cellIndex}>{cell}</td>
-                  ))}
+                  {newRow.map((cell, cellIndex) => {
+                    // Si la celda ya es un <td> (acción) la devolvemos tal cual
+                    if (React.isValidElement(cell)) return cell;
+                    return <td key={cellIndex}>{cell}</td>;
+                  })}
                 </tr>
               );
             })}

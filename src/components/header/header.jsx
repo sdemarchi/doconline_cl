@@ -5,19 +5,19 @@ import { Link } from 'react-router-dom';
 import logoAzul from '../../assets/logo-azul.webp';
 import { useEffect } from 'react';
 import { useState} from 'react';
+import Session from '../../utils/Storage/Session';
+import RolUsuario from '../../enum/RolUsuario';
 
 
 function Header(props){
   const wspLink = "https://api.whatsapp.com/send/?phone=5493425319488&text&type=phone_number&app_absent=0";
   const [ grow , setGrow ] = useState();
-  const [ textoGrow, setTextoGrow ] = useState("Tu Grow");
-
+  const rolUsuario = Session.getRol();
+  const textoGrow = rolUsuario == RolUsuario.Grow ? "Tu Grow": "Tu ONG";
 
   useEffect(()=>{
     const grow_ = JSON.parse(sessionStorage.getItem('user-grow')); 
     setGrow(grow_);
-    setTextoGrow(grow_?.tipo_id == 2 ? "Tu ONG": "Tu Grow" );
-    console.log('grow',grow_);
   },[props.user]);
 
 
