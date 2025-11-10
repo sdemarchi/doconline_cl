@@ -11,7 +11,7 @@ function TurnoSuccess() {
    // const [ formularioCompletado, setFormularioCompletado ] = useState(false);
     const { turno } = useTurno()
     const turnoSession = JSON.parse(localStorage.getItem("turno"));
-    const comprobanteEnviado = JSON.parse(localStorage.getItem("comprobante-enviado"));
+    const comprobanteEnviado = JSON.parse(sessionStorage.getItem("comprobante-enviado"));
     const formularioCompletado = JSON.parse(localStorage.getItem("form-success"));
     const pago = JSON.parse(sessionStorage.getItem("pago")|| {});
     const navigate = useNavigate();
@@ -23,19 +23,17 @@ function TurnoSuccess() {
                 <Card disabledBorder>
                 {comprobanteEnviado || (pago.id && (pago.id_paciente !== pago.id_pagador)) ? 
                 <>
-                    {/*<img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>*/}
                     <h1 className='font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-grad-green to-grad-blue' style={{fontSize:'30px'}}>FELICITACIONES<br />TURNO CONFIRMADO</h1>
                     <img className="mx-auto w-14 pt-8" src={icon}></img>
                 </> :
                 <>
-                {/*<img className="mx-auto mb-8 w-52 pb-2" src={logo}></img>*/}
                 <h1 className='font-extrabold mb-5 text-center text-transparent bg-clip-text bg-gradient-to-r from-grad-green to-grad-blue' style={{fontSize:'30px'}}>FELICITACIONES</h1>
                 <h3 className='text-lg font-semibold text-center bg-clip-text' style={{color:"#343434"}}>Envianos el comprobante de pago por Whatsapp para evitar la cancelacion del turno.</h3>
                 <img className="mx-auto w-14 pt-8 opacity-90" src={icon}></img>
                 </> 
                 }
                 <div className="turno-success-mensaje">
-                    <h4 className="text-sm font-bold pt-1">{turno.detalle || turnoSession.detalle}</h4>
+                    <h4 className="text-sm font-bold pt-1 text-center">{turno.detalle || turnoSession.detalle}</h4>
                 </div>
                 
                 { formularioCompletado === true ?

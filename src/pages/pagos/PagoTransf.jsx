@@ -41,32 +41,38 @@ function PagoTransf() {
     const [file , setFile] = useState(); //eslint-disable-line
     const [comprobanteImagen, setComprobanteImagen] = useState();
 
+
     const subirArchivo = async (e) => {
         setEnviando(true);
-        setFile(e.target.files[0]);
+        const file = e.target.files[0];
+        setFile(file);
+
         const url = `${import.meta.env.VITE_API_URL}/turnero.comprobante`;
         const data = new FormData();
-        data.append("file", e.target.files[0]);
-        setComprobante(e.target.files[0], data);
+        data.append("file", file);
+        setComprobante(file, data);
 
-        toBase64(e.target.files[0],'jpg').then((image)=>{
-            setComprobanteImagen(image);
-        });
+        if (file.type.startsWith('image/')) {
+            toBase64(file, 'jpg').then((image) => {
+                setComprobanteImagen({ tipo: 'imagen', src: image });
+            });
+        } else if (file.type === 'application/pdf') {
+            setComprobanteImagen({ tipo: 'pdf', nombre: file.name });
+        } else {
+            setComprobanteImagen({ tipo: 'otro', nombre: file.name });
+        }
 
-        axios
-            .post(url, data)
-            .then(res => {
-                setUploadResult(1);
-                console.log(res.data.filename);
-                setComprobante(res.data.filename);
-                setEnviando(false);
-                sessionStorage.setItem("comprobante-enviado",true);
-            })
-            .catch(err => {
-                setUploadResult(2);
-                console.log(err);
-            })
-    }
+        try {
+            const res = await axios.post(url, data);
+            setUploadResult(1);
+            setComprobante(res.data.filename);
+            setEnviando(false);
+            sessionStorage.setItem("comprobante-enviado", true);
+        } catch (err) {
+            setUploadResult(2);
+            console.error(err);
+        }
+    };
 
     const handleMostrarNotification = () => {
         setMostrarNotification(true);
@@ -182,40 +188,74 @@ function PagoTransf() {
                 </Card>
 
                 <Card disabledBorder>
-                    <div className='my-2'>
-                        <div className='pt-2 pb-0'>
-                            {enviando &&
-                                <label className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer">
-                                    <span className="mt-2 text-base leading-normal">Enviando...</span>
-                                </label>
-                            }   
-                            { !enviando && !comprobanteImagen &&
-                                <label className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer hover:bg-gradient-to-r hover:from-grad-green hover:to-grad-blue hover:text-white">
-                                    <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-                                    </svg>
-                                    <span className="mt-2 text-base leading-normal" style={{fontSize:'18px',fontWeight:'600'}}>Adjuntar Comprobante</span>
-                                    <input type='file' className="hidden" onChange={subirArchivo} />
-                                </label>}
-                                { !enviando && comprobanteImagen  &&
-                                <>
-                                <div className="pagos-comprobante-preview-container" >
-                                    <div>
-                                        <img src={comprobanteImagen} style={{height:'100px',maxWidth:'200px'}}></img>
-                                    </div>
-                                    <label className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer hover:bg-gradient-to-r hover:from-grad-green hover:to-grad-blue hover:text-white">
-                                        <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-                                        </svg>
-                                        <span className="mt-2 text-base leading-normal" style={{fontSize:'18px',fontWeight:'600',margin:'0 15px'}}>Volver a subir</span>
-                                        <input type='file' className="hidden" onChange={subirArchivo} />
-                                    </label>
-                                </div>
-                                </> 
-                            }
+                        <div className='my-2'>
+                    <div className='pt-2 pb-0'>
 
+                        {/* Mostramos "Enviando..." mientras sube */}
+                        {enviando && (
+                        <label className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer">
+                            <span className="mt-2 text-base leading-normal">Enviando...</span>
+                        </label>
+                        )}
+
+                        {/* Si no se está enviando y aún no hay archivo */}
+                        {!enviando && !comprobanteImagen && (
+                        <label className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer hover:bg-gradient-to-r hover:from-grad-green hover:to-grad-blue hover:text-white">
+                            <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                            </svg>
+                            <span className="mt-2 text-base leading-normal" style={{ fontSize: '18px', fontWeight: '600' }}>
+                            Adjuntar Comprobante
+                            </span>
+                            <input type='file' className="hidden" onChange={subirArchivo} />
+                        </label>
+                        )}
+
+                        {/* Si hay archivo seleccionado */}
+                        {!enviando && comprobanteImagen && (
+                        <div className="pagos-comprobante-preview-container">
+
+                            {/* Vista previa condicional */}
+                            {comprobanteImagen.tipo === 'imagen' && (
+                            <div>
+                                <img
+                                src={comprobanteImagen.src}
+                                alt="Comprobante"
+                                style={{ height: '100px', maxWidth: '200px' }}
+                                />
+                            </div>
+                            )}
+
+                            {comprobanteImagen.tipo === 'pdf' && (
+                            <div className="flex flex-col items-center justify-center bg-white rounded-2xl shadow-md p-4 border border-gray-200 w-full max-w-sm mx-auto">
+                                <p className="font-semibold text-gray-800 mb-1">{comprobanteImagen.nombre}</p>
+                                <p className="text-gray-500 text-sm mb-3">(PDF seleccionado)</p>
+                            </div>
+
+                            )}
+
+                            {comprobanteImagen.tipo === 'otro' && (
+                            <div style={{ textAlign: 'center' }}>
+                                <p><strong>{comprobanteImagen.nombre}</strong></p>
+                                <p className="text-gray-600">(Archivo adjunto)</p>
+                            </div>
+                            )}
+
+                            {/* Botón para volver a subir */}
+                            <label className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer hover:bg-gradient-to-r hover:from-grad-green hover:to-grad-blue hover:text-white">
+                            <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                            </svg>
+                            <span className="mt-2 text-base leading-normal" style={{ fontSize: '18px', fontWeight: '600', margin: '0 15px' }}>
+                                Volver a subir
+                            </span>
+                            <input type='file' className="hidden" onChange={subirArchivo} />
+                            </label>
                         </div>
+                        )}
                     </div>
+                    </div>
+
                 </Card> 
 
                     {
