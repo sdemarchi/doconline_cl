@@ -1,6 +1,6 @@
 import icon from '../../assets/icon-success.png';
 //import { useState } from 'react';
-import {/* SubmitButton,*/ ActionButton, LinkButtonCenter } from '../../components/Buttons';
+import { ActionButton, LinkButtonCenter } from '../../components/Buttons';
 import useTurno from '../../hooks/useTurno';
 import Contacto from '../../components/contacto/contacto';
 import './turno.css';
@@ -8,7 +8,6 @@ import Card from '../../components/card/card';
 import { useNavigate } from 'react-router-dom';
 
 function TurnoSuccess() {
-   // const [ formularioCompletado, setFormularioCompletado ] = useState(false);
     const { turno } = useTurno()
     const turnoSession = JSON.parse(localStorage.getItem("turno"));
     const comprobanteEnviado = JSON.parse(sessionStorage.getItem("comprobante-enviado"));
