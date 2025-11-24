@@ -159,6 +159,19 @@ function Turnos() {
     }
 
     
+    const hayTurnosDisponibles = (turnosArray) => {
+        if (!turnosArray || turnosArray.length === 0) {
+            return false;
+        }
+
+        const hayTurnoNoVacio = turnosArray.some(turno => {
+            return turno.fecha !== "" || turno.hora !== "" || turno.detalle !== "";
+        });
+
+        return hayTurnoNoVacio;
+    }
+
+
     const getPago = (email) => {
         PagosService.buscarPorEmail(email).then((resp)=>{
             setPagoRegistrado(resp);
@@ -243,7 +256,8 @@ function Turnos() {
                             {turnos.length == 0 && <p className="turno-row-msj display-pc">No has seleccionado una fecha.</p>} 
                             <Card show={turnos.length > 0} title='Seleccionar horario' disabledBorder>
                                 <div className="turno-horarios-container">
-                                    {turnos?.map((turno, key) => (
+                                   {
+                                    hayTurnosDisponibles(turnos) ? turnos?.map((turno, key) => (
                                         (turno?.hora && turno.hora !== '00:00') && (
                                         <button 
                                             key={key} 
@@ -253,7 +267,8 @@ function Turnos() {
                                             {turno.hora} hs
                                         </button>
                                         )
-                                    ))}
+                                    )):
+                                    <p style={{fontSize:"15px",color:"#1E293B"}}>No hay turnos disponibles para la fecha seleccionada.</p>}
                                 </div>
                             </Card>
                             <Card show={turnoDesc !=''} ref={elementRef} title='Detalles del turno' disabledBorder animate>
