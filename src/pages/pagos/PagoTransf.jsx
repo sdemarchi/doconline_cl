@@ -18,6 +18,7 @@ import toBase64 from '../../utils/base64';
 import PagosService from '../../data/pagos';
 import Title from '../../components/title/title';
 import { ONGService } from '../../data/grows';
+import MensajeConfirmacion from '../../components/mensajeConfirmacion/mensajeConfirmacion';
 
 function PagoTransf() {
     const { importe } = useAuth();//eslint-disable-line
@@ -40,7 +41,7 @@ function PagoTransf() {
     const [mostrarNotification, setMostrarNotification] = useState(false);
     const [file , setFile] = useState(); //eslint-disable-line
     const [comprobanteImagen, setComprobanteImagen] = useState();
-
+    const [mostrarMensajeError, setMostrarMensajeError] = useState(false);
 
     const subirArchivo = async (e) => {
         setEnviando(true);
@@ -97,7 +98,13 @@ function PagoTransf() {
     }
 
     async function guardarTurno() {
+        if(enviando){
+            alert('Por favor, espere a que termine de subir el comprobante.');
+            return;
+        }
+
         setDatosCargados(false);
+
 
         const pagoSession = JSON.parse(sessionStorage.getItem('pago'));
         const userData = JSON.parse(sessionStorage.getItem('user_data'));
@@ -115,21 +122,32 @@ function PagoTransf() {
             monto_final: pagoSession.precioFinal,
             comprobante:comprobante
         };
+        
 
         PagosService.crear(pago).then((resp)=>{
-            console.log(resp);
             if(sessionStorage.getItem('growId') !== undefined && sessionStorage.getItem('growId') !== null){
                 const idgrow = sessionStorage.getItem('growId');
                 setGrowPaciente(user.userId,idgrow);
             }
 
             confirmarTurno(turnoSession, cuponSession || cuponValidado, comprobante, importeSession, user.userId,resp.id).then((response)=>{
-                console.log(response);
                 if (response.error == 0) {
                     return navigate('/turno-success');
+                }else{ //reintento una vez mas
+                    confirmarTurno(turnoSession, cuponSession || cuponValidado, comprobante, importeSession, user.userId,resp.id).then((response)=>{
+                        if (response.error == 0) {
+                            return navigate('/turno-success');
+                        }else{ // si vuelve a fallar muestro mensaje al usuario
+                            setDatosCargados(true);
+                            setMostrarMensajeError(true)
+                        }}
+                    );
                 }}
             );
-        })
+        }).catch(()=>{
+            setDatosCargados(true);
+            setMostrarMensajeError(true)
+        });
     }
 
     async function copiarAlPortapapeles(texto){
@@ -165,6 +183,11 @@ function PagoTransf() {
         {!datosCargados ? <Spinner/>:
          <div>
             {mostrarNotification && <Notificacion message="Texto copiado al portapapeles"/>}
+            <MensajeConfirmacion mostrarSi={mostrarMensajeError}
+                mensaje="Hubo un error al confirmar el turno. Por favor, intentelo nuevamente."
+                onAceptar={() => setMostrarMensajeError(false)}
+                mostrarCancelar={false}
+            />
 
             <Title>Transferí a la siguiente cuenta</Title>
 
@@ -188,8 +211,8 @@ function PagoTransf() {
                 </Card>
 
                 <Card disabledBorder>
-                        <div className='my-2'>
-                    <div className='pt-2 pb-0'>
+                        <div className='my-1'>
+                    <div className='pt-0 pb-0'>
 
                         {/* Mostramos "Enviando..." mientras sube */}
                         {enviando && (
@@ -221,13 +244,13 @@ function PagoTransf() {
                                 <img
                                 src={comprobanteImagen.src}
                                 alt="Comprobante"
-                                style={{ height: '100px', maxWidth: '200px' }}
+                                style={{ height: '100px', maxWidth: '200px',marginBottom:"10px"  }}
                                 />
                             </div>
                             )}
 
                             {comprobanteImagen.tipo === 'pdf' && (
-                            <div className="flex flex-col items-center justify-center bg-white rounded-2xl shadow-md p-4 border border-gray-200 w-full max-w-sm mx-auto">
+                            <div  style={{minWidth:"250px",marginBottom:"10px"}} className="flex flex-col items-center justify-center bg-white rounded-2xl shadow-md p-4 border border-gray-200 w-full max-w-sm mx-auto">
                                 <p className="font-semibold text-gray-800 mb-1">{comprobanteImagen.nombre}</p>
                                 <p className="text-gray-500 text-sm mb-3">(PDF seleccionado)</p>
                             </div>
@@ -235,14 +258,14 @@ function PagoTransf() {
                             )}
 
                             {comprobanteImagen.tipo === 'otro' && (
-                            <div style={{ textAlign: 'center' }}>
+                            <div style={{ textAlign: 'center', minWidth:"250px",marginBottom:"10px" }}>
                                 <p><strong>{comprobanteImagen.nombre}</strong></p>
                                 <p className="text-gray-600">(Archivo adjunto)</p>
                             </div>
                             )}
 
                             {/* Botón para volver a subir */}
-                            <label className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer hover:bg-gradient-to-r hover:from-grad-green hover:to-grad-blue hover:text-white">
+                            <label style={{minWidth:"250px",marginBottom:"10px"}} className="flex flex-col items-center py-6 bg-white text-input rounded-lg tracking-wide border border-input cursor-pointer hover:bg-gradient-to-r hover:from-grad-green hover:to-grad-blue hover:text-white">
                             <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                 <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
                             </svg>

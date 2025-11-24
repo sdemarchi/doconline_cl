@@ -18,6 +18,7 @@ import LinkCard from '../../components/link-card/link-card';
 import ColorCard from '../../components/color-card/color-card';
 import PagosService from '../../data/pagos';
 import NotificacionEmergente from '../../components/notificacion-emergente/notificacion-emergente';
+import MensajeConfirmacion from '../../components/mensajeConfirmacion/mensajeConfirmacion';
 
 function Panel() {
     const user = useOutletContext();
@@ -42,6 +43,8 @@ function Panel() {
     const [ mostrarNotificacion, setMostrarNotificacion ] = useState();
     const [ notificacionGrow, setNotificacionGrow ] = useState();
 
+    const [mostrarCancelarTurno, setMostrarCancelarTurno] = useState(false);
+
 
     async function cargarTurnoPaciente() {
         const response = await getTurnoPaciente(user.userId);
@@ -53,12 +56,14 @@ function Panel() {
 
     async function cancelarMiTurno() {
         const response = await cancelarTurno(user.userId);
-        setMostrarNotificacion(true);
-   
+
         PagosService.setUtilizado(pago.id,false).then((resp) => {
             setPago({...pago, utilizado:0});
         });
-
+        
+        setMostrarCancelarTurno(false);
+        setMostrarNotificacion(true);
+   
         setTurnoPaciente(response);
     }
 
@@ -195,6 +200,15 @@ function Panel() {
         {datosCargados?
 
         <div className='panel-container page'>
+
+            <MensajeConfirmacion 
+            mostrarSi={mostrarCancelarTurno} 
+            setMostrarSi={setMostrarCancelarTurno} 
+            titulo={"Cancelar Turno"} 
+            mensaje={"¿Está seguro que desea cancelar el turno?"} 
+            onAceptar={()=>cancelarMiTurno()} 
+            onCancelar={()=>setMostrarCancelarTurno(false)}/>
+
             <div className="display-pc panel-bienvenido-container">
                 <div className="panel-bienvenido-pc">
                     <div className="panel-description">
@@ -229,7 +243,7 @@ function Panel() {
                 <ColorCard show={turnoPaciente.id > 0} color1="#009FD2" color2="#34D29D">
                     <div className='panel-turno-head'>
                         <h3 className="panel-turno-titulo">Turno confirmado</h3> 
-                        <button className="panel-cancelar" onClick={() => cancelarMiTurno()}>x</button>
+                        <button className="panel-cancelar" onClick={() => setMostrarCancelarTurno(true)}>x</button>
                     </div>
                     <p className="panel-turno-texto">{turnoPaciente.detalle}</p>
                 </ColorCard>
