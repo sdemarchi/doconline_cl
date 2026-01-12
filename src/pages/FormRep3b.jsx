@@ -5,7 +5,7 @@ import { FormInputHook } from '../components/FormInput'
 import { SubmitButton } from '../components/Buttons'
 import useForm from '../hooks/useForm'
 import TextArea from '../components/TextArea'
-import RadioSiNo, {RadioSiNoAlt}  from '../components/Radio'
+import /*RadioSiNo,*/ {RadioSiNoAlt}  from '../components/Radio'
 import { useForm as useFormHook } from "react-hook-form"
 import Error, { ErrorMax } from '../components/Error'
 import { getContactos } from '../data/pacientes'
@@ -90,14 +90,14 @@ function FormRep3b() {
                 />
                 
                 
-                <h6 className="text-gray-500 text-xs leading-3 pb-1 pt-2">Si la respuesta es "Sí", ingrese a continuación los datos del tutor</h6>
+                <h6 className="text-gray-500 text-xs leading-3 pb-1 pt-2">Si la respuesta es Sí, ingrese a continuación los datos del tutor</h6>
                 
                 <div className='pt-4'>
                     <SubmitButton value="Continuar" />
                 </div>
                 
             </form>
-            <div className='mb-6 mx-auto p-3 text-center'>
+            <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/formulario-3')} >Atrás</button>
             </div>
         </>

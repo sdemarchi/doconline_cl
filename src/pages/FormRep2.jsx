@@ -6,10 +6,10 @@ import { SubmitButton } from '../components/Buttons'
 import TextArea from '../components/TextArea'
 import useForm from '../hooks/useForm'
 import Error, { ErrorMax, ErrorReq } from '../components/Error'
-import Select, { SelectHook } from '../components/Select'
+import Select /*, { SelectHook }*/ from '../components/Select'
 import { getOcupaciones, getProvincias } from '../data/pacientes'
 import { useForm as useFormHook } from "react-hook-form"
-import { selectValidator } from '../data/validators'
+//import { selectValidator } from '../data/validators'
 
 function FormRep2() {
 
@@ -147,7 +147,7 @@ function FormRep2() {
                 </div>
                 
             </form>
-            <div className='mb-6 mx-auto p-3 text-center'>
+            <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/formulario-1')} >Atrás</button>
             </div>
         </>

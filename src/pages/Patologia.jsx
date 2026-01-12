@@ -11,6 +11,7 @@ import TextArea from '../components/TextArea'
 import { SelectHook } from '../components/Select'
 import { numberValidator, selectValidator } from '../data/validators'
 import RadioSiNo from '../components/Radio'
+import { ErrorVal } from '../components/Error'
 
 function Patologia() {
 

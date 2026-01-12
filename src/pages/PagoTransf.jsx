@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { ActionButton } from '../components/Buttons'
-import { getDatosTransf, uploadComprobante } from '../data/turnero'
+import { getDatosTransf/*, uploadComprobante*/ } from '../data/turnero'
 import useAuth from '../hooks/useAuth'
 import useTurno from '../hooks/useTurno'
 import { useNavigate, useOutletContext } from 'react-router-dom'
@@ -24,7 +24,7 @@ function PagoTransf() {
     const [enviando, setEnviando] = useState(false)
     const [uploadResult, setUploadResult] = useState(0)
 
-    const [file, setFile] = useState()
+    const [/*file,*/ setFile] = useState()
 
     
     const subirArchivo = async (e) => {
@@ -114,7 +114,7 @@ function PagoTransf() {
 
 
             <ActionButton value="Confirmar Turno" onClick={() => guardarTurno()} />
-            <div className='mb-6 mx-auto p-3 text-center'>
+            <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/pagos')} >Atrás</button>
             </div>
         </>

@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom'
+//import { Link } from 'react-router-dom'
 import logo from '../assets/logo-doconline-vert.png'
 import icon from '../assets/icon-success.png'
-import FormInput from '../components/FormInput'
-import { SubmitButton, LinkButton } from '../components/Buttons'
+//import FormInput from '../components/FormInput'
+import {/* SubmitButton,*/ LinkButton } from '../components/Buttons'
 
 function FormSuccess() {
     return (

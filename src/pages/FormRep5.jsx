@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState/*, useEffect, useCallback */} from 'react'
 import { useNavigate } from 'react-router-dom'
 import logo from '../assets/logo-doconline-reprocann-500.png'
 import { ActionButton, MiniActionButtonRed } from '../components/Buttons'
@@ -96,7 +96,7 @@ function FormRep5() {
                 <ActionButton onClick={() => finalizar()} value="Finalizar y Enviar" />
             </div>
 
-            <div className='mb-6 mx-auto p-3 text-center'>
+            <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/formulario-4')} >Atrás</button>
             </div>
 

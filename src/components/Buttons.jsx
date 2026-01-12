@@ -4,7 +4,7 @@ function SubmitButton(props) {
     return (
         <input
             type="submit"
-            className="bg-gradient-to-r from-grad-green to-grad-blue text-white w-full p-2 rounded-md"
+            className="bg-gradient-to-r from-grad-green to-grad-blue text-white w-full p-2 rounded-md cursor-pointer"
             value={props.value}
         />
     )
@@ -13,7 +13,7 @@ function SubmitButton(props) {
 function ActionButton(props) {
     return (
         <button
-            className="bg-gradient-to-r from-grad-green to-grad-blue text-white w-full p-2 rounded-md"
+            className="bg-gradient-to-r from-grad-green to-grad-blue text-white w-full p-2 rounded-md cursor-pointer"
             onClick={props.onClick}
         >{props.value}</button>
     )
@@ -22,7 +22,7 @@ function ActionButton(props) {
 function MiniActionButtonRed(props) {
     return (
         <button
-            className="bg-gradient-to-b from-red-600 to-red-800 text-white p-1 text-xs rounded-md"
+            className="bg-gradient-to-b from-red-600 to-red-800 text-white p-1 text-xs rounded-md cursor-pointer"
             onClick={props.onClick}
         >{props.value}</button>
     )

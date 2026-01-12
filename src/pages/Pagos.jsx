@@ -12,7 +12,7 @@ import Chip from '../components/Chip'
 
 function Pagos() {
 
-    const { turno, cuponValidado, setCuponValidado } = useTurno()
+    const { /*turno,*/ cuponValidado, setCuponValidado } = useTurno()
     const { setImporte } = useAuth()
 
     const navigate = useNavigate()
@@ -61,7 +61,7 @@ function Pagos() {
             
     }, [cargando])
 
-    const { msg } = alerta
+    const { msg } = alerta
     
     function pagar(){
         setImporte(precioTrans)
@@ -102,7 +102,7 @@ function Pagos() {
                 mensaje="Desde cualquier banco físico o virtual" 
                 onClick={ () => pagar() } />
             
-            <div className='mb-6 mx-auto p-3 text-center'>
+            <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/turno')} >Atrás</button>
             </div>
             

@@ -1,6 +1,6 @@
 import logo from '../assets/logo-doconline-vert.png'
 import icon from '../assets/icon-success.png'
-import { SubmitButton, LinkButton } from '../components/Buttons'
+import {/* SubmitButton,*/ LinkButton } from '../components/Buttons'
 import useTurno from '../hooks/useTurno'
 
 function TurnoSuccess() {

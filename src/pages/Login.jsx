@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react'
-import { Form, Link, redirect, useNavigate } from 'react-router-dom'
+import {/* Form,*/ Link/*, redirect*/, useNavigate } from 'react-router-dom'
 import logo from '../assets/logo-doconline-vert.png'
 import { FormInputState } from '../components/FormInput'
 import { ActionButton } from '../components/Buttons'
 import useAuth from '../hooks/useAuth'
 import Alerta from '../components/Alerta'
-import { GoogleLogin, googleLogout, useGoogleLogin } from '@react-oauth/google';
+import {/* GoogleLogin, googleLogout,*/ useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 
 function Login() {
 
-    const { setUser, googleProfile, setGoogleProfile } = useAuth()
+    const { setUser, /*googleProfile,*/ setGoogleProfile } = useAuth()
 
     const [userid, setUserid] = useState('')
     const [password, setPassword] = useState('')
@@ -20,6 +20,8 @@ function Login() {
     
     const navigate = useNavigate()
 
+    /*
+
     const responseMessage = (response) => {
         console.log(response);
     };
@@ -27,6 +29,8 @@ function Login() {
     const errorMessage = (error) => {
         console.log(error);
     };
+
+    */
 
     const gLogin = useGoogleLogin({
         onSuccess: (codeResponse) => setGoogleUser(codeResponse),
@@ -129,7 +133,7 @@ function Login() {
         }
     }
 
-    const { msg } = alerta
+    const { msg } = alerta
 
     return (
         <>

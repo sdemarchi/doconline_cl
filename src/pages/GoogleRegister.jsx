@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import {/* useState,*/ useEffect } from 'react'
 import { Form, useActionData, useNavigate } from 'react-router-dom'
-import FormInput, { FormInputReadonly } from '../components/FormInput'
+import FormInput /*,{ FormInputReadonly }*/ from '../components/FormInput'
 import { SubmitButton } from '../components/Buttons'
 import Error from '../components/Error'
 import { esFechaValida } from '../utils/validation'
@@ -41,7 +41,7 @@ function validate(datos){
 }
 
 function GoogleRegister() {
-    const { setUser, googleProfile, setGoogleProfile } = useAuth()
+    const { setUser, googleProfile/*, setGoogleProfile*/ } = useAuth()
 
     const navigate = useNavigate()
     const actionResult = useActionData()
@@ -91,7 +91,7 @@ function GoogleRegister() {
                 <div className='pt-4'><SubmitButton value="Enviar" /></div>
                 
             </Form>
-            <div className='mb-6 mx-auto p-3 text-center'>
+            <div className='mb-0 mx-auto p-3 text-center'>
                 <button className='text-gray-500' onClick={() => navigate('/login')} >Volver</button>
             </div>
         </>
