@@ -21,11 +21,11 @@ function FormRep1() {
     const [/*paciente*/, setPaciente] = useState({});
     var [fechaNac, setFechaNac] = useState('');
     const [errorFechaNac, setErrorFechaNac] = useState('');
-    fechaNac = sessionStorage.getItem('fecha_nac');
+    fechaNac = localStorage.getItem('fecha_nac');
     const [cargando] = useState(0);
     const [confimCelError , setConfimCelError] = useState('');
     var celValue;
-    var [confirmarCelular, setConfirmarCelular] = useState(form1?.celular || sessionStorage.getItem('telefono') );
+    var [confirmarCelular, setConfirmarCelular] = useState(form1?.celular || localStorage.getItem('telefono') );
 
     const handleConfirmarCelularChange = (event) => {
         setConfirmarCelular(event.target.value);
@@ -92,7 +92,7 @@ function FormRep1() {
                 <form className="form-rep-form" onSubmit={handleSubmit(onSubmit)}>
         
                     <FormInputHook label="Nombre y Apellido*" id="nom_ape"
-                        defaultValue={form1?.nom_ape?.length && form1?.nom_ape || sessionStorage.getItem('nombre')}
+                        defaultValue={form1?.nom_ape?.length && form1?.nom_ape || localStorage.getItem('nombre')}
                         maxLength={255}
                         register={register('nom_ape', { required: true, maxLength: 255 })}
                     />
@@ -102,7 +102,7 @@ function FormRep1() {
 
 
                     <FormInputDate label="Fecha de Nacimiento*" id=""
-                        value={/*fechaNac*/ sessionStorage.getItem('fecha_nac')}
+                        value={localStorage.getItem('fecha_nac')}
                         maxLength={10}
                         onChange={(e) => setFechaNac(e)}
                     />
@@ -113,7 +113,7 @@ function FormRep1() {
                         <div className='basis-1/2 pe-1'>
 
                             <FormInputHook label="DNI*" id="dni"
-                                defaultValue={form1?.dni !== sessionStorage.getItem('dni') && sessionStorage.getItem('dni') || sessionStorage.getItem('dni')}
+                                defaultValue={form1?.dni !== localStorage.getItem('dni') && localStorage.getItem('dni') || localStorage.getItem('dni')}
                                 maxLength={8}
                                 type={"number"} 
                                 register={register('dni', {required: true, maxLength: 8, validate: numberValidator})}
@@ -125,7 +125,7 @@ function FormRep1() {
 
                         <div className='basis-1/2 ps-1'>
                             <FormInputHook  type={"number"}  label="Edad*" id="edad"
-                                defaultValue={form1?.edad  !== sessionStorage.getItem('edad') && form1?.edad || '' }
+                                defaultValue={form1?.edad  !== localStorage.getItem('edad') && form1?.edad || '' }
                                 maxLength={3}
                                 register={register('edad', { required: true, max: 100, validate: numberValidator })}
                             />
@@ -137,7 +137,7 @@ function FormRep1() {
                     </div>
 
                     <FormInputHook label="E-Mail*" id="email"
-                        defaultValue={form1?.email !== sessionStorage.getItem('email') && form1?.email || sessionStorage.getItem('email')}
+                        defaultValue={form1?.email !== localStorage.getItem('email') && form1?.email || localStorage.getItem('email')}
                         maxLength={150}
                         register={register('email', { required: true, maxLength: 150, validate: emailValidator })}
                     />
@@ -148,7 +148,7 @@ function FormRep1() {
 
         
                     <FormInputHook type={"number"} label="Teléfono Celular*" id="celular"
-                        defaultValue={form1?.celular !== sessionStorage.getItem('telefono') && form1?.celular || sessionStorage.getItem('telefono')}
+                        defaultValue={form1?.celular !== localStorage.getItem('telefono') && form1?.celular || localStorage.getItem('telefono')}
                         maxLength={20}
                         register={ register('celular', { required: true, maxLength: 15})}
                     />
@@ -159,7 +159,7 @@ function FormRep1() {
                     
 
                     <FormInputHook type={"number"} label="Repetir Teléfono Celular*"
-                        defaultValue={form1?.celular !== sessionStorage.getItem('telefono') && form1?.celular || sessionStorage.getItem('telefono')}
+                        defaultValue={form1?.celular !== localStorage.getItem('telefono') && form1?.celular || localStorage.getItem('telefono')}
                         maxLength={20}
                         onChange={handleConfirmarCelularChange} 
                     />
@@ -178,7 +178,7 @@ function FormRep1() {
     
                 <button className='form-rep-volver' onClick={() => navigate('/panel')} >Volver</button>
             </div>
-            <div className="form-rep-contacto">
+            <div className="form-rep-contacto">     
                <Contacto />
             </div>
         </div>

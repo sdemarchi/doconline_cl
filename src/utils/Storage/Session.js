@@ -5,7 +5,7 @@ const Session = {
 }
 
 const clear = () => {
-  sessionStorage.clear();
+  localStorage.clear();
 }
 
 const setRol = (rol) => {
@@ -15,11 +15,11 @@ const setRol = (rol) => {
   console.log('Setting role:', rol);
 
   const encoded = btoa(rol.toString());
-  sessionStorage.setItem("rol", encoded);
+  localStorage.setItem("rol", encoded);
 }
 
 const getRol = () => {
-  const encoded = sessionStorage.getItem("rol");
+  const encoded = localStorage.getItem("rol");
   if (!encoded) return null;
 
   try {
@@ -30,5 +30,6 @@ const getRol = () => {
     return null;
   }
 }
+
 
 export default Session;

@@ -1,38 +1,41 @@
+import FetchHelper from "../utils/fetchHelper";
+
+
 class PagosService {
   apiUrl = import.meta.env.VITE_API_URL;
 
   async listarPagos() {
-    const response = await fetch(this.apiUrl);
+    const response = await FetchHelper.fetchWithRetry(this.apiUrl);
     const data = await response.json();
     return data;
   }
 
   async obtenerDetallesPago(id) {
-    const response = await fetch(`${this.apiUrl}/${id}`);
+    const response = await FetchHelper.fetchWithRetry(`${this.apiUrl}/${id}`);
     const data = await response.json();
     return data;
   }
 
   async buscarPorEmail(email) {
-    const response = await fetch(`${this.apiUrl}/pagos/buscar-por-email/${email}`);
+    const response = await FetchHelper.fetchWithRetry(`${this.apiUrl}/pagos/buscar-por-email/${email}`);
     const data = await response.json();
     return data;
   }
 
   async ultimoRegalado(id) {
-    const response = await fetch(`${this.apiUrl}/pagos/ultimo-regalado/${id}`);
+    const response = await FetchHelper.fetchWithRetry(`${this.apiUrl}/pagos/ultimo-regalado/${id}`);
     const data = await response.json();
     return data;
   }
 
   async buscarPorCodigo(codigo) {
-    const response = await fetch(`${this.apiUrl}/pagos/buscar-por-codigo/${codigo}`);
+    const response = await FetchHelper.fetchWithRetry(`${this.apiUrl}/pagos/buscar-por-codigo/${codigo}`);
     const data = await response.json();
     return data;
   }
 
   async crear(nuevoPago) {
-    const response = await fetch(`${this.apiUrl}/pagos/crear`, {
+    const response = await FetchHelper.fetchWithRetry(`${this.apiUrl}/pagos/crear`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +48,7 @@ class PagosService {
   }
 
   async editar(nuevoPago,id) {
-    const response = await fetch(`${this.apiUrl}/pagos/editar/${id}`, {
+    const response = await FetchHelper.fetchWithRetry(`${this.apiUrl}/pagos/editar/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -60,7 +63,7 @@ class PagosService {
   async setUtilizado(id,estado) {
     const nuevoEstado = {id:id,utilizado:estado === true ? 1 : 0};
 
-    const response = await fetch(`${this.apiUrl}/pagos/utilizado`, {
+    const response = await FetchHelper.fetchWithRetry(`${this.apiUrl}/pagos/utilizado`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

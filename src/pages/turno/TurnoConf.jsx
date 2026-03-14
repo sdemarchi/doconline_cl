@@ -10,14 +10,14 @@ import { useNavigate } from 'react-router-dom';
 import './turno.css';
 
 function TurnoConf() {
-    const turno = JSON.parse(sessionStorage.getItem('turno')) || JSON.parse(localStorage.getItem('turno'));
-    const pago = JSON.parse(sessionStorage.getItem('pago') || '{}');
-    const userData = JSON.parse(sessionStorage.getItem('user_data'));
+    const turno = JSON.parse(localStorage.getItem('turno')) || JSON.parse(localStorage.getItem('turno'));
+    const pago = JSON.parse(localStorage.getItem('pago') || '{}');
+    const userData = JSON.parse(localStorage.getItem('user_data'));
     const navigate = useNavigate();
 
     const guardarTurno = () => {
-        const cuponSession = sessionStorage.getItem('cupon') || '';
-        const comprobante = sessionStorage.getItem('comprobante');
+        const cuponSession = localStorage.getItem('cupon') || '';
+        const comprobante = localStorage.getItem('comprobante');
 
         if(pago?.id){
             
@@ -32,14 +32,14 @@ function TurnoConf() {
         confirmarTurno(turno, cuponSession, comprobante, pago.monto_final, userData.id).then((response)=>{
             console.log(response);
             if (response.error == 0) {
-                return navigate('/turno-success');
+                return navigate('/formulario-1');
             } 
         });
     }
 
     useEffect(()=>{
         if(pago?.comprobante){
-            sessionStorage.setItem('comprobante', pago.comprobante);
+            localStorage.setItem('comprobante', pago.comprobante);
         }
     },[]);
 

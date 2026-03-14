@@ -23,7 +23,7 @@ function EstadisticasONG(){
   const [ pacienteSeleccionado , setPacienteSeleccionado ] = useState(null);
   const navigate = useNavigate();
 
-  const grow = JSON.parse(sessionStorage.getItem('user-grow'));
+  const grow = JSON.parse(localStorage.getItem('user-grow'));
   const urlApi = import.meta.env.VITE_API_URL; 
 
   const abrirConsentimiento = paciente => {

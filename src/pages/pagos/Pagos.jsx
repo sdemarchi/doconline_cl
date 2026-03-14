@@ -94,7 +94,7 @@ function Pagos() {
             setShowMsg(true);
         }else if(grow_?.idgrow){
             setGrow(grow_);
-            sessionStorage.setItem('growId',grow_.idgrow);
+            localStorage.setItem('growId',grow_.idgrow);
 
         }else{
             const response = await aplicarCupon(cupon);
@@ -127,7 +127,7 @@ function Pagos() {
         PagosService.buscarPorCodigo(codigo).then((resp)=>{
             if(resp.id){
                 if(resp.utilizado === 0){
-                    sessionStorage.setItem('pago',JSON.stringify(resp));
+                    localStorage.setItem('pago',JSON.stringify(resp));
                     navigate('/turno-conf');
                 }else{
                     setErrorMsj('El codigo ya se ha utilizado');
@@ -149,7 +149,7 @@ function Pagos() {
 
         if(grow_?.idgrow){
             setGrow(grow_);
-            sessionStorage.setItem('growId',grow_.idgrow);
+            localStorage.setItem('growId',grow_.idgrow);
 
         }
     }
@@ -172,19 +172,19 @@ function Pagos() {
 
     /**
      * Obtiene el Grow actual para el paciente:
-     * 1. Si hay un growId en sessionStorage, lo carga.
+     * 1. Si hay un growId en localStorage, lo carga.
      * 2. Si el grow es de tipo 2, verifica si el paciente pertenece a una ONG y, de ser así, carga el grow asociado a la ONG.
      * 3. Si no hay growId, intenta obtener el grow a partir de la ONG del paciente.
      * Finalmente, actualiza el estado con el grow encontrado y los datos de la ONG si aplica.
      */
     async function getGrow() {
-        const userData = JSON.parse(sessionStorage.getItem('user_data'));
+        const userData = JSON.parse(localStorage.getItem('user_data'));
         const dniPaciente = userData?.dni;
-        const growId = sessionStorage.getItem('growId');
+        const growId = localStorage.getItem('growId');
 
         let grow = null;
 
-        if (growId) {  // Si hay un grow guardado en sessionStorage
+        if (growId) {  // Si hay un grow guardado en localStorage
 
             const grow_ = await getGrowById(growId);
 
@@ -198,7 +198,7 @@ function Pagos() {
             }
             
         } else if (dniPaciente) {
-            // Si no hay grow en sessionStorage, intentamos con ONG
+            // Si no hay grow en localStorage, intentamos con ONG
             const ongGrow = await getGrowFromONG(dniPaciente);
             if (ongGrow) grow = ongGrow;
         }
@@ -241,7 +241,7 @@ function Pagos() {
             grow:grow
         }
 
-        sessionStorage.setItem('pago',JSON.stringify(pago));
+        localStorage.setItem('pago',JSON.stringify(pago));
         localStorage.setItem('precio_transf',precioFinal);
 
         setImporte(precioTrans);
@@ -308,7 +308,7 @@ function Pagos() {
                         
                         <PagoCard 
                             medio="Transferencia" 
-                            importe={sessionStorage.getItem("precio_transf") || precioTrans} 
+                            importe={localStorage.getItem("precio_transf") || precioTrans} 
                             descuento={importeCupon}
                             descuentoPorc={grow?.descuento}
                             textoBoton={bonificadoONG ? "Continuar" : "Ir a Pagar"}

@@ -19,8 +19,8 @@ export default function Regalar(){
   const continuar = () => {
     if((nombre && nombre !== '') && (email && email !== '') ){
       if(validarEmail(email)){
-        sessionStorage.setItem('nombre_beneficiario',nombre);
-        sessionStorage.setItem('email_beneficiario',email);
+        localStorage.setItem('nombre_beneficiario',nombre);
+        localStorage.setItem('email_beneficiario',email);
 
         navigate('/regalar-pago');
       }else{

@@ -10,9 +10,9 @@ import { useNavigate } from 'react-router-dom';
 function TurnoSuccess() {
     const { turno } = useTurno()
     const turnoSession = JSON.parse(localStorage.getItem("turno"));
-    const comprobanteEnviado = JSON.parse(sessionStorage.getItem("comprobante-enviado"));
+    const comprobanteEnviado = JSON.parse(localStorage.getItem("comprobante-enviado"));
     const formularioCompletado = JSON.parse(localStorage.getItem("form-success"));
-    const pago = JSON.parse(sessionStorage.getItem("pago")|| {});
+    const pago = JSON.parse(localStorage.getItem("pago")|| {});
     const navigate = useNavigate();
 
 

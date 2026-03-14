@@ -16,9 +16,8 @@ import { FaRegCopy } from "react-icons/fa6";
 import { LuDownload } from "react-icons/lu";
 import { QRCode as QRCodeLogo } from 'react-qrcode-logo';
 import CifradoHelper from '../../../utils/CifradoHelper';
-import { set } from 'react-hook-form';
-import Session from '../../../utils/Storage/Session';
 import RolUsuario from '../../../enum/RolUsuario';
+import Storage from '../../../utils/Storage/Storage';
 
 function GrowDetalles(){
   const { id } = useParams();
@@ -38,7 +37,7 @@ function GrowDetalles(){
   
   const copiarAlPortapapeles = (recurso,nombreDelRecurso) => {
     handleNotificacion(true,nombreDelRecurso );
-    copyToClipboard(recurso);
+    copyToClipboard(recurso); 
   }
 
 
@@ -80,7 +79,7 @@ function GrowDetalles(){
       try {
         const response = await getPrecios();
         setPrecioTransf(response.precioTransf);
-        return; // éxito → salimos de la función
+        return; // éxito → salimos de la 
       } catch (error) {
           if (i === intentos - 1) {
             console.error("Error al obtener precios después de varios intentos", error);
@@ -91,7 +90,7 @@ function GrowDetalles(){
     
   useEffect(()=>{
     const idDescifrado =  CifradoHelper.descifrar(id);
-    setRolUsuario(Session.getRol());
+    setRolUsuario(Storage.getRol());
 
     const getGrow = () => {
       if(idDescifrado){
@@ -103,16 +102,16 @@ function GrowDetalles(){
               setGrowDetails(response);
               setDatosCargados(true);
           }).catch(()=>{
-            if(sessionStorage.getItem('user-grow')){
-              const grow_ = JSON.parse(sessionStorage.getItem('user-grow'));
+            if(localStorage.getItem('user-grow')){
+              const grow_ = JSON.parse(localStorage.getItem('user-grow'));
               setGrowDetails(grow_);
               setDatosCargados(true);
             }
           });
         });
       }else{
-        if(sessionStorage.getItem('user-grow')){
-          const grow_ = JSON.parse(sessionStorage.getItem('user-grow'));
+        if(localStorage.getItem('user-grow')){
+          const grow_ = JSON.parse(localStorage.getItem('user-grow'));
           setGrowDetails(grow_);
           setDatosCargados(true);
         }

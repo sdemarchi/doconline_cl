@@ -32,21 +32,21 @@ function RegalarPago() {
     async function cargarPrecios(){
         const response = await getPrecios();
 
-        if(sessionStorage.getItem("cupon_validado")){
-            cuponSession = JSON.parse(sessionStorage.getItem("cupon_validado"));
+        if(localStorage.getItem("cupon_validado")){
+            cuponSession = JSON.parse(localStorage.getItem("cupon_validado"));
         }
         
         if(cuponSession.importe === 0){ //no hay cupon
             setPrecioTrans(response.precioTransf);
-            sessionStorage.setItem("precio_transf", response.precioTransf);
+            localStorage.setItem("precio_transf", response.precioTransf);
             setPrecioMP(response.precioMP);
-            sessionStorage.setItem("precio_mp", response.precioTransf);
+            localStorage.setItem("precio_mp", response.precioTransf);
             
         }else{
             setPrecioTrans(response.precioTransf - cuponValidado.importe);
-            sessionStorage.setItem("precio_transf", response.precioTransf - cuponValidado.importe);
+            localStorage.setItem("precio_transf", response.precioTransf - cuponValidado.importe);
             setPrecioMP(response.precioMP - cuponValidado.importe);
-            sessionStorage.setItem("precio_mp", response.precioTransf - cuponValidado.importe);
+            localStorage.setItem("precio_mp", response.precioTransf - cuponValidado.importe);
         }
 
         setDatosCargados(true);
@@ -56,19 +56,19 @@ function RegalarPago() {
         const grow_ = await getGrowByCod(cupon);
         if(grow_?.idgrow){
             setGrow(grow_);
-            sessionStorage.setItem('growId',grow_.idgrow);
+            localStorage.setItem('growId',grow_.idgrow);
         }else{
             const response = await aplicarCupon(cupon);
 
             if(response.valido){
                 setImporteCupon(response.descuento);
                 setPrecioMP(precioMP - response.descuento);
-                sessionStorage.setItem("precio_mp",precioMP - response.descuento); //modifica el precio de mercadopago en session storage también
+                localStorage.setItem("precio_mp",precioMP - response.descuento); //modifica el precio de mercadopago en session storage también
                 setPrecioTrans(precioTrans - response.descuento);
-                sessionStorage.setItem("precio_transf", precioTrans - response.descuento); //modifica el precio de transferencia ...
+                localStorage.setItem("precio_transf", precioTrans - response.descuento); //modifica el precio de transferencia ...
                 let cuponValidadoObject = {cupon: cupon, importe:response.descuento}; // guarda cupon en variable para usarse en las dos siguientes lineas
                 setCuponValidado(cuponValidadoObject);
-                sessionStorage.setItem("cupon_validado",JSON.stringify(cuponValidadoObject)); //convierto el objeto en string para enviarlo al session storage sin modificar sus propiedades, pudiendo luego volverlo a convertir en el mismo objeto 
+                localStorage.setItem("cupon_validado",JSON.stringify(cuponValidadoObject)); //convierto el objeto en string para enviarlo al session storage sin modificar sus propiedades, pudiendo luego volverlo a convertir en el mismo objeto 
                 
                 setShowMsg(false);
     
@@ -79,8 +79,8 @@ function RegalarPago() {
     }
     
     async function getGrow(){
-        if(sessionStorage.getItem('growId')){
-            let id = sessionStorage.getItem('growId');
+        if(localStorage.getItem('growId')){
+            let id = localStorage.getItem('growId');
             let grow_ =  await getGrowById(id);
             setGrow(grow_);
         }        
@@ -90,7 +90,7 @@ function RegalarPago() {
         setDatosCargados(false);
         setImporteCupon(0)
         setCuponValidado({cupon: '', importe:0});
-        sessionStorage.setItem("cupon_validado",JSON.stringify({cupon: '', importe:0}));
+        localStorage.setItem("cupon_validado",JSON.stringify({cupon: '', importe:0}));
         cargarPrecios();
     }
 
@@ -101,7 +101,7 @@ function RegalarPago() {
         setImporteCupon(cuponValidado.importe);
         setPrecioMP(precioMP - cuponValidado.importe);
         setPrecioTrans(precioTrans - cuponValidado.importe);
-        sessionStorage.setItem("precio_transf", precioTrans - cuponValidado.importe);
+        localStorage.setItem("precio_transf", precioTrans - cuponValidado.importe);
     }, [])//eslint-disable-line
     
 
@@ -113,7 +113,7 @@ function RegalarPago() {
             cupon:cupon,
             grow:grow
         }
-        sessionStorage.setItem('pago',JSON.stringify(pago));
+        localStorage.setItem('pago',JSON.stringify(pago));
         setImporte(precioTrans);
         return navigate('/regalar-transf');
     }
@@ -163,7 +163,7 @@ function RegalarPago() {
                 <Card>
                     <PagoCard 
                         medio="Transferencia" 
-                        importe={sessionStorage.getItem("precio_transf") || precioTrans} 
+                        importe={localStorage.getItem("precio_transf") || precioTrans} 
                         descuento={importeCupon}
                         descuentoPorc={grow?.descuento}
                         mensaje="Desde cualquier banco físico o virtual" 

@@ -1,11 +1,9 @@
-//import { Link } from 'react-router-dom'
 import logo from '../../assets/logo-doconline-vert.png'
 import icon from '../../assets/icon-success.png'
-//import FormInput from '../components/FormInput'
-import {/* SubmitButton,*/ LinkButton } from '../../components/Buttons'
+import {LinkButton } from '../../components/Buttons'
 
 function FormSuccess() {
-    sessionStorage.setItem('form-success', 'true');
+    localStorage.setItem('form-success', 'true');
     
     return (
         <div className="form-rep-container page">

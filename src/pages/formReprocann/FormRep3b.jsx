@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import logo from '../../assets/logo-doconline-reprocann-500.png';
 import { FormInputHook } from '../../components/FormInput';
 import { SubmitButton } from '../../components/Buttons';
 import useForm from '../../hooks/useForm';
 import TextArea from '../../components/TextArea';
-import /*RadioSiNo,*/ {RadioSiNoAlt}  from '../../components/Radio';
+import {RadioSiNoAlt}  from '../../components/Radio';
 import { useForm as useFormHook } from "react-hook-form";
 import Error, { ErrorMax } from '../../components/Error';
 import { getContactos } from '../../data/pacientes';
@@ -13,7 +12,6 @@ import Select from '../../components/select/Select';
 import './formReprocann.css';
 import Contacto from '../../components/contacto/contacto';
 import Spinner from '../../components/Spinner';
-
 
 function FormRep3b() {
     const { register, formState: { errors }, handleSubmit } = useFormHook();
@@ -42,7 +40,7 @@ function FormRep3b() {
     
 
     const contactoGrow = () => {
-        if(sessionStorage.getItem('growId')){
+        if(localStorage.getItem('growId')){
             setContactoActual(38);
         }
     }

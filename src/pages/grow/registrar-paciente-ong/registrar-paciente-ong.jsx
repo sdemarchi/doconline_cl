@@ -13,7 +13,7 @@ import { ONGService } from '../../../data/grows';
 
 export default function RegistrarPacienteOng(){
   const navigate = useNavigate();
-  const grow = JSON.parse(sessionStorage.getItem('user-grow'));
+  const grow = JSON.parse(localStorage.getItem('user-grow'));
   const [ requiredError, setRequiredError ] = useState(false);
   const [ error, setError ] = useState(false);
   const [ inSubmit, setInSubmit ] = useState(false);

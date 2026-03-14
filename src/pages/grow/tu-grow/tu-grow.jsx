@@ -14,7 +14,7 @@ import { IoMdLink } from "react-icons/io";
 import { IoTicketOutline } from "react-icons/io5";
 import { LuDownload } from "react-icons/lu";
 import CifradoHelper from '../../../utils/CifradoHelper';
-import Session from '../../../utils/Storage/Session';
+import Storage from '../../../utils/Storage/Storage';
 import RolUsuario from '../../../enum/RolUsuario';
 
 export default function TuGrow(){
@@ -23,7 +23,7 @@ export default function TuGrow(){
   const [ grow , setGrow ] = useState();
   const navigate = useNavigate();
   const [ growDetails , setGrowDetails ] = useState(); // eslint-disable-line
-  const rolUsuario = Session.getRol()
+  const rolUsuario = Storage.getRol()
 
 
   const handleNotificacion = (mostrar,texto)=> {
@@ -73,13 +73,13 @@ export default function TuGrow(){
 
   const logout = () => {
     localStorage.clear();
-    sessionStorage.clear();
+    localStorage.clear();
     return navigate('/login');
   }
 
 
   useEffect(()=>{
-    const grow_ = JSON.parse(sessionStorage.getItem('user-grow'));
+    const grow_ = JSON.parse(localStorage.getItem('user-grow'));
 
     () => {
       if(id){

@@ -15,7 +15,6 @@ import { useParams } from 'react-router-dom';
 import { getGrowById } from '../../data/grows';
 import { getGrowByRoute } from '../../data/grows';
 import Storage from '../../utils/Storage/Storage';
-import Session from '../../utils/Storage/Session';
 import RolUsuario from '../../enum/RolUsuario';
 
 function Login() {
@@ -44,7 +43,7 @@ function Login() {
         const queryParams = new URLSearchParams(location.search);
         const route = queryParams.get('redirect');
 
-        if(route) sessionStorage.setItem('redirect',route);
+        if(route) localStorage.setItem('redirect',route);
     }
     
     document.addEventListener("keydown", function(event) {
@@ -58,11 +57,11 @@ function Login() {
     const getGrowDeURL = () => {
         if(growRoute !== undefined){
             getGrowByRoute(growRoute).then((resp)=>{
-                sessionStorage.setItem('growId',resp.idgrow);
+                localStorage.setItem('growId',resp.idgrow);
             });
         }else{
-            if (sessionStorage.getItem('growId')) {
-                sessionStorage.removeItem('growId');
+            if (localStorage.getItem('growId')) {
+                localStorage.removeItem('growId');
             }
         }
     }
@@ -70,7 +69,7 @@ function Login() {
     useEffect(() => {
         Storage.clear();
         setRedirect();
-        sessionStorage.setItem('fromLogin', 'true');
+        localStorage.setItem('fromLogin', 'true');
         getGrowDeURL();
 
         if (googleUser) {
@@ -126,16 +125,16 @@ function Login() {
                     const grow = JSON.stringify({idgrow:resp.user.growAdmin,tipo_id:resp.user.tipoGrow});
 
                     if(resp.user.tipoGrow == RolUsuario.Grow){
-                        Session.setRol(RolUsuario.Grow); // Seteo el rol como Grow
+                        Storage.setRol(RolUsuario.Grow); // Seteo el rol como Grow
 
                     }else if(resp.user.tipoGrow == RolUsuario.ONG){
-                        Session.setRol(RolUsuario.ONG); // Seteo el rol como ONG
+                        Storage.setRol(RolUsuario.ONG); // Seteo el rol como ONG
                     }
 
-                    sessionStorage.setItem('user-grow',grow);
+                    localStorage.setItem('user-grow',grow);
 
                 }else{
-                    Session.setRol(RolUsuario.Paciente); // Seteo el rol como Paciente
+                    Storage.setRol(RolUsuario.Paciente); // Seteo el rol como Paciente
                 }
    
                 setUser({
@@ -178,15 +177,15 @@ function Login() {
                     const grow = JSON.stringify({idgrow:resp.user.growAdmin,tipo_id:resp.user.tipoGrow});
 
                     if(resp.user.tipoGrow == RolUsuario.Grow){
-                        Session.setRol(RolUsuario.Grow); // Seteo el rol como Grow
+                        Storage.setRol(RolUsuario.Grow); // Seteo el rol como Grow
 
                     }else if(resp.user.tipoGrow == RolUsuario.ONG){
-                        Session.setRol(RolUsuario.ONG); // Seteo el rol como ONG
+                        Storage.setRol(RolUsuario.ONG); // Seteo el rol como ONG
                     }
 
-                    sessionStorage.setItem('user-grow',grow);
+                    localStorage.setItem('user-grow',grow);
                 }else{
-                    Session.setRol(RolUsuario.Paciente); // Seteo el rol como Paciente
+                    Storage.setRol(RolUsuario.Paciente); // Seteo el rol como Paciente
                 }
 
                 setUser({userId:resp.user.id,userName: resp.user.userName});

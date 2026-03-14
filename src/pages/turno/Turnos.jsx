@@ -11,7 +11,6 @@ import Contacto from '../../components/contacto/contacto';
 import Card from '../../components/card/card';
 import PagosService from '../../data/pagos';
 import './turno.css';
-import { set } from 'react-hook-form';
 
 function Turnos() {
     const navigate = useNavigate();
@@ -177,18 +176,18 @@ function Turnos() {
             setPagoRegistrado(resp);
             
             if(resp.utilizado === 0 && resp.verificado === 1){
-                sessionStorage.setItem('pago',JSON.stringify(resp));
+                localStorage.setItem('pago',JSON.stringify(resp));
                 setPagado(true);
             }
         });
     }
 
     useEffect(() => {
-        if(sessionStorage.getItem('fromLogin') === 'true'){
-            sessionStorage.removeItem('fromLogin');
+        if(localStorage.getItem('fromLogin') === 'true'){
+            localStorage.removeItem('fromLogin');
         }
 
-        getPago(sessionStorage.getItem('email'));
+        getPago(localStorage.getItem('email'));
         subirScroll();
         cargarPrestadores().then((response)=>{
             if(prestador == 0){

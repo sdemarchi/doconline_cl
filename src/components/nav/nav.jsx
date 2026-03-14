@@ -1,6 +1,5 @@
 import './nav.css';
 import { AiFillHome } from "react-icons/ai";
-import { BsFillPersonFill } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 import { IoStorefront } from "react-icons/io5";
 import { HiUsers } from "react-icons/hi";
@@ -12,7 +11,7 @@ function Nav(props){
     const [ grow , setGrow ] = useState();
 
     useEffect(()=>{
-      const grow_ = JSON.parse(sessionStorage.getItem('user-grow')); 
+      const grow_ = JSON.parse(localStorage.getItem('user-grow')); 
       setGrow(grow_);
     },[props.user]);
 

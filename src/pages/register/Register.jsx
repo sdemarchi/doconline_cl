@@ -34,8 +34,8 @@ function Register() {
     const [ inSubmit, setInSubmit ] = useState();
 
     const getGrow = () =>{
-        if (sessionStorage.getItem('growId')) {
-            const growId_ = sessionStorage.getItem('growId');
+        if (localStorage.getItem('growId')) {
+            const growId_ = localStorage.getItem('growId');
             setGrow(growId_);
         }else{
             setGrow(null);

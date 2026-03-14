@@ -11,10 +11,11 @@ import { ONGService } from '../../../data/grows';
 import MensajeConfirmacion from '../../../components/mensajeConfirmacion/mensajeConfirmacion';
 import { useState,useEffect } from 'react';
 
+
 export default function EditarDatosONG() {
     const navigate = useNavigate();
-    const grow = JSON.parse(sessionStorage.getItem('user-grow'));
-    const userData = JSON.parse(sessionStorage.getItem('user_data'));
+    const grow = JSON.parse(localStorage.getItem('user-grow'));
+    const userData = JSON.parse(localStorage.getItem('user_data'));
     const [ requiredError, setRequiredError ] = useState(false);
     const [ error, setError ] = useState(false);
     const [ cargando, setCargando ] = useState(false);

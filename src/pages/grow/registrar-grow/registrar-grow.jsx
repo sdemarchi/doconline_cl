@@ -12,9 +12,9 @@ import { useNavigate } from 'react-router-dom';
 import NotificacionEmergente from '../../../components/notificacion-emergente/notificacion-emergente';
 
 export default function RegistrarGrow(){
-  const email = sessionStorage.getItem('email');
-  const titular = sessionStorage.getItem('nombre');
-  const celular = sessionStorage.getItem('telefono');
+  const email = localStorage.getItem('email');
+  const titular = localStorage.getItem('nombre');
+  const celular = localStorage.getItem('telefono');
 
   const navigate = useNavigate();
 
@@ -75,10 +75,10 @@ export default function RegistrarGrow(){
     if(formularioValido === true){
       addGrow(grow).then((resp)=>{
         if(resp.idgrow){
-          sessionStorage.setItem('grow-success', resp.id);
-          sessionStorage.setItem('growId',resp.id)
-          sessionStorage.setItem('user-grow',JSON.stringify(resp));
-          sessionStorage.setItem('user-grow-id',JSON.stringify(resp));
+          localStorage.setItem('grow-success', resp.id);
+          localStorage.setItem('growId',resp.id)
+          localStorage.setItem('user-grow',JSON.stringify(resp));
+          localStorage.setItem('user-grow-id',JSON.stringify(resp));
 
           window.location.href="/turnero/panel";
         }else{

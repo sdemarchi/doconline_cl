@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import logo from '../assets/logo-doconline-reprocann-500.png'
 import { FormInputHook } from '../../components/FormInput';
 import { SubmitButton } from '../../components/Buttons';
 import { useForm as useFormHook } from "react-hook-form";

@@ -16,7 +16,7 @@ export default function EditarPacienteOng(){
   const { idPaciente } = useParams();
   const idPacienteDescifrado = CifradoHelper.descifrar(idPaciente);
   const navigate = useNavigate();
-  const grow = JSON.parse(sessionStorage.getItem('user-grow'));
+  const grow = JSON.parse(localStorage.getItem('user-grow'));
   const [ requiredError, setRequiredError ] = useState(false);
   const [ error, setError ] = useState(false);
   const [ cargando , setCargando ] = useState(true);

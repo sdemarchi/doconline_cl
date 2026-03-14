@@ -68,7 +68,7 @@ function PagoTransf() {
             setUploadResult(1);
             setComprobante(res.data.filename);
             setEnviando(false);
-            sessionStorage.setItem("comprobante-enviado", true);
+            localStorage.setItem("comprobante-enviado", true);
         } catch (err) {
             setUploadResult(2);
             console.error(err);
@@ -84,13 +84,13 @@ function PagoTransf() {
       };
 
     async function cargarDatosTransf() {
-        if(sessionStorage.getItem('datos-transf') === null){
+        if(localStorage.getItem('datos-transf') === null){
             const response = await getDatosTransf();
             setCbu(response.cbu);
             setAlias(response.alias);
-            sessionStorage.setItem('datos-transf',JSON.stringify(response));
+            localStorage.setItem('datos-transf',JSON.stringify(response));
         }else{
-            const datosTransf_session = JSON.parse(sessionStorage.getItem('datos-transf'));
+            const datosTransf_session = JSON.parse(localStorage.getItem('datos-transf'));
             setCbu(datosTransf_session.cbu);
             setAlias(datosTransf_session.alias);
         }
@@ -106,8 +106,8 @@ function PagoTransf() {
         setDatosCargados(false);
 
 
-        const pagoSession = JSON.parse(sessionStorage.getItem('pago'));
-        const userData = JSON.parse(sessionStorage.getItem('user_data'));
+        const pagoSession = JSON.parse(localStorage.getItem('pago'));
+        const userData = JSON.parse(localStorage.getItem('user_data'));
 
         const pago = {
             id_pagador: userData.id,
@@ -125,18 +125,18 @@ function PagoTransf() {
         
 
         PagosService.crear(pago).then((resp)=>{
-            if(sessionStorage.getItem('growId') !== undefined && sessionStorage.getItem('growId') !== null){
-                const idgrow = sessionStorage.getItem('growId');
+            if(localStorage.getItem('growId') !== undefined && localStorage.getItem('growId') !== null){
+                const idgrow = localStorage.getItem('growId');
                 setGrowPaciente(user.userId,idgrow);
             }
 
             confirmarTurno(turnoSession, cuponSession || cuponValidado, comprobante, importeSession, user.userId,resp.id).then((response)=>{
                 if (response.error == 0) {
-                    return navigate('/turno-success');
+                    return navigate('/formulario-1');
                 }else{ //reintento una vez mas
                     confirmarTurno(turnoSession, cuponSession || cuponValidado, comprobante, importeSession, user.userId,resp.id).then((response)=>{
                         if (response.error == 0) {
-                            return navigate('/turno-success');
+                            return navigate('/formulario-1');
                         }else{ // si vuelve a fallar muestro mensaje al usuario
                             setDatosCargados(true);
                             setMostrarMensajeError(true)
@@ -160,9 +160,9 @@ function PagoTransf() {
         const init = async () => {
             setDatosCargados(false);
 
-            sessionStorage.setItem('comprobante-enviado', false);
+            localStorage.setItem('comprobante-enviado', false);
 
-            const dni = JSON.parse(sessionStorage.getItem('user_data'))?.dni;
+            const dni = JSON.parse(localStorage.getItem('user_data'))?.dni;
 
             await cargarDatosTransf(); // espera que termine
 

@@ -32,15 +32,15 @@ function GoogleRegister() {
         localStorage.setItem('dc_userId',user.userId);
         localStorage.setItem('dc_userName',user.userName);
         if(user.adminGrow){
-            sessionStorage.setItem('user-grow',JSON.stringify({idgrow:user.adminGrow}));
+            localStorage.setItem('user-grow',JSON.stringify({idgrow:user.adminGrow}));
         }
         JSON.stringify(user);
         setUser({ userId: user.userId, userName: user.userName });
     }
 
     const getGrow = () =>{
-        if (sessionStorage.getItem('growId')) {
-            const growId_ = sessionStorage.getItem('growId');
+        if (localStorage.getItem('growId')) {
+            const growId_ = localStorage.getItem('growId');
             setGrow(growId_);
         }else{
             setGrow(null);

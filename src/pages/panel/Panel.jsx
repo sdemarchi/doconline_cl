@@ -72,18 +72,18 @@ function Panel() {
     async function getPaciente() {
         perfil(user.userId).then((response)=>{
             setPaciente(response);
-            sessionStorage.setItem('user_data', JSON.stringify(response));
+            localStorage.setItem('user_data', JSON.stringify(response));
 
-            if(response.grow && !sessionStorage.getItem("growId")){
-                sessionStorage.setItem('growId',response.grow);
-                sessionStorage.setItem('beneficiarioONG',response.pacienteONG);
+            if(response.grow && !localStorage.getItem("growId")){
+                localStorage.setItem('growId',response.grow);
+                localStorage.setItem('beneficiarioONG',response.pacienteONG);
             } 
             
-            if(sessionStorage.getItem('user-grow-id') === null){
+            if(localStorage.getItem('user-grow-id') === null){
                getGrow(response.email);
 
             }else{
-                setGrowAdmin(JSON.parse(sessionStorage.getItem('user-grow')));
+                setGrowAdmin(JSON.parse(localStorage.getItem('user-grow')));
                 cargarTurnoPaciente();
                 setGrowCargado(true);
             }
@@ -117,11 +117,11 @@ function Panel() {
     const getGrow = async (email) => {
         getGrowByEmail(email).then((resp)=>{
             setGrowCargado(true);
-            sessionStorage.setItem('user-grow',JSON.stringify(resp) || 0);
-            sessionStorage.setItem('user-grow-id',JSON.stringify(resp));
+            localStorage.setItem('user-grow',JSON.stringify(resp) || 0);
+            localStorage.setItem('user-grow-id',JSON.stringify(resp));
 
-            if(!sessionStorage.getItem('growId') && resp.idgrow)
-               sessionStorage.setItem('growId',resp.idgrow);
+            if(!localStorage.getItem('growId') && resp.idgrow)
+               localStorage.setItem('growId',resp.idgrow);
             
             cargarTurnoPaciente();
             setGrowAdmin(resp);
@@ -135,14 +135,14 @@ function Panel() {
 
 
     const redireccionar = () => { // Redirecciona a url interna si esta esta especificada y si los datos estan cargados
-        const fromLogin = sessionStorage.getItem('fromLogin') || false;
-        const urlRedirect = sessionStorage.getItem('redirect') || false;
+        const fromLogin = localStorage.getItem('fromLogin') || false;
+        const urlRedirect = localStorage.getItem('redirect') || false;
         
         if(growAdmin?.idgrow && growCargado && pacienteCargado && fromLogin){
-            sessionStorage.removeItem('fromLogin');
+            localStorage.removeItem('fromLogin');
 
             if(urlRedirect){
-                sessionStorage.removeItem('redirect');
+                localStorage.removeItem('redirect');
                 return navigate('/'+urlRedirect );
             }
 
@@ -150,8 +150,8 @@ function Panel() {
 
         }else if(turnoPaciente?.id == 0 && fromLogin && growCargado && pacienteCargado && !growAdmin?.idgrow){
             if(urlRedirect){
-                sessionStorage.removeItem('fromLogin');
-                sessionStorage.removeItem('redirect');
+                localStorage.removeItem('fromLogin');
+                localStorage.removeItem('redirect');
                 return navigate('/'+urlRedirect );
             }
 
@@ -163,7 +163,7 @@ function Panel() {
 
     function logout() {
         localStorage.clear();
-        sessionStorage.clear();
+        localStorage.clear();
         return navigate('/login');
     }
 
@@ -172,11 +172,11 @@ function Panel() {
     useEffect(() => {
         subirScroll();
         getPaciente();
-        const beneficiarioONG = sessionStorage.getItem('beneficiarioONG') || false;
+        const beneficiarioONG = localStorage.getItem('beneficiarioONG') || false;
         setBeneficiarioONG(beneficiarioONG);
 
-        if(sessionStorage.getItem('grow-success')){
-            sessionStorage.removeItem('grow-success');
+        if(localStorage.getItem('grow-success')){
+            localStorage.removeItem('grow-success');
             setNotificacionGrow(true);
         }
 
@@ -185,7 +185,7 @@ function Panel() {
 
 
     useEffect(()=>{
-        const beneficiarioONG = sessionStorage.getItem('beneficiarioONG') || false;
+        const beneficiarioONG = localStorage.getItem('beneficiarioONG') || false;
         setBeneficiarioONG(beneficiarioONG);
         const cargado = pagoCargado && growCargado && pacienteCargado && pagoRegaladoCargado;
         setDatosCargados(cargado);
@@ -240,7 +240,7 @@ function Panel() {
                 </ColorCard> 
 
 
-                <ColorCard show={turnoPaciente.id > 0} color1="#009FD2" color2="#34D29D">
+                <ColorCard show={turnoPaciente.id > 0} color1="#009FD2" color2="#29b5d4">
                     <div className='panel-turno-head'>
                         <h3 className="panel-turno-titulo">Turno confirmado</h3> 
                         <button className="panel-cancelar" onClick={() => setMostrarCancelarTurno(true)}>x</button>

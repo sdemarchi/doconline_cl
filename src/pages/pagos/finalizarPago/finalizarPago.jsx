@@ -26,20 +26,20 @@ export default function FinalizarPago(){
   const navigate = useNavigate();
 
   const cargarDatosTransf = async() => {
-    if(sessionStorage.getItem('datos-transf') === null){
+    if(localStorage.getItem('datos-transf') === null){
         const response = await getDatosTransf();
         setCbu(response.cbu);
         setAlias(response.alias);
-        sessionStorage.setItem('datos-transf',JSON.stringify(response));
+        localStorage.setItem('datos-transf',JSON.stringify(response));
     }else{
-        const datosTransf_session = JSON.parse(sessionStorage.getItem('datos-transf'));
+        const datosTransf_session = JSON.parse(localStorage.getItem('datos-transf'));
         setCbu(datosTransf_session.cbu);
         setAlias(datosTransf_session.alias);
     }
 }
 
   const getPago = () =>{
-    const userDataString = sessionStorage.getItem('user_data');
+    const userDataString = localStorage.getItem('user_data');
     const userDataObject = JSON.parse(userDataString);
 
     PagosService.buscarPorEmail(userDataObject?.email).then((resp)=>{
@@ -67,7 +67,7 @@ export default function FinalizarPago(){
         setComprobante(res.data.filename);
         PagosService.editar({...pago, comprobante:res.data.filename},pago.id).then(()=>{
           setEnviando(false);
-          sessionStorage.setItem("comprobante-enviado",true);
+          localStorage.setItem("comprobante-enviado",true);
         }
         );
 

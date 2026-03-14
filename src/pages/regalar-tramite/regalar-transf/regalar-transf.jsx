@@ -23,9 +23,9 @@ function RegalarTransf() {
     const {importe} = useAuth();//eslint-disable-line
 
     //-- VARIABLES DE SESION PARA EVITAR PERDER DATOS AL ACTUALIZAR ---------
-    const importeSession = sessionStorage.getItem("precio_transf");
-    const turnoSession = JSON.parse(sessionStorage.getItem("turno"));
-    const cuponSession = JSON.parse(sessionStorage.getItem("cupon_validado"));
+    const importeSession = localStorage.getItem("precio_transf");
+    const turnoSession = JSON.parse(localStorage.getItem("turno"));
+    const cuponSession = JSON.parse(localStorage.getItem("cupon_validado"));
 
     const { turno, cuponValidado, comprobante, setComprobante } = useTurno();//eslint-disable-line
     //-----------------------------------------------------------------------
@@ -62,7 +62,7 @@ function RegalarTransf() {
                 console.log(res.data.filename);
                 setComprobante(res.data.filename);
                 setEnviando(false);
-                sessionStorage.setItem("comprobante-enviado",true);
+                localStorage.setItem("comprobante-enviado",true);
             })
             .catch(err => {
                 setUploadResult(2);
@@ -79,14 +79,14 @@ function RegalarTransf() {
       };
 
     async function cargarDatosTransf() {
-        if(sessionStorage.getItem('datos-transf') === null){
+        if(localStorage.getItem('datos-transf') === null){
             const response = await getDatosTransf();
             setCbu(response.cbu);
             setAlias(response.alias);
-            sessionStorage.setItem('datos-transf',JSON.stringify(response));
+            localStorage.setItem('datos-transf',JSON.stringify(response));
 
         }else{
-            const datosTransf_session = JSON.parse(sessionStorage.getItem('datos-transf'));
+            const datosTransf_session = JSON.parse(localStorage.getItem('datos-transf'));
             setCbu(datosTransf_session.cbu);
             setAlias(datosTransf_session.alias);
         }
@@ -96,14 +96,14 @@ function RegalarTransf() {
 
     async function enviarPago(){
         setDatosCargados(false);
-        const pagoSession = JSON.parse(sessionStorage.getItem('pago'));
-        const userData = JSON.parse(sessionStorage.getItem('user_data'));
+        const pagoSession = JSON.parse(localStorage.getItem('pago'));
+        const userData = JSON.parse(localStorage.getItem('user_data'));
        
         const pago = {
             id_pagador: userData.id,
             id_grow:pagoSession.grow.idgrow,
-            nombre_paciente: sessionStorage.getItem('nombre_beneficiario'),
-            email_paciente: sessionStorage.getItem('email_beneficiario'),
+            nombre_paciente: localStorage.getItem('nombre_beneficiario'),
+            email_paciente: localStorage.getItem('email_beneficiario'),
             email_pagador: userData.email,
             utilizado:false,
             monto: pagoSession.precio,
@@ -125,7 +125,7 @@ function RegalarTransf() {
     }
 
     useEffect(() => {
-        sessionStorage.setItem('comprobante-enviado',false);
+        localStorage.setItem('comprobante-enviado',false);
         cargarDatosTransf();
     }, []) 
 
