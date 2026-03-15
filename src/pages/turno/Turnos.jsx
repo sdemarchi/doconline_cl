@@ -189,6 +189,7 @@ function Turnos() {
 
         getPago(localStorage.getItem('email'));
         subirScroll();
+        
         cargarPrestadores().then((response)=>{
             if(prestador == 0){
                 cargarCalendario(mes,anio,response[0].id)
@@ -201,11 +202,15 @@ function Turnos() {
     }, [])//eslint-disable-line
 
     useEffect(() => {
+        cargarPrestadores().then((response)=>{
             if(prestador == 0){
                 cargarCalendario(mes,anio,response[0].id)
             }else{
                 cargarCalendario(mes,anio,prestador)
             }
+          }
+        );
+
     }, [mes])//eslint-disable-line
 
     return (
