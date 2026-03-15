@@ -12,7 +12,6 @@ const setRol = (rol) => {
   if (typeof rol !== "number") {
     throw new Error("El rol debe ser un número entero");
   }
-  console.log('Setting role:', rol);
 
   const encoded = btoa(rol.toString());
   localStorage.setItem("rol", encoded);

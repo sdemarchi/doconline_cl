@@ -16,7 +16,6 @@ export async function perfil(id) {
 } 
 
 export async function registrar(paciente) {
-    console.log('post: perfil');
     const url = import.meta.env.VITE_API_URL + '/turnero.register'
     try {
         const respuesta = await FetchHelper.fetchWithRetry(url, {
@@ -28,13 +27,15 @@ export async function registrar(paciente) {
         })
         const resp = await respuesta.json()
         return resp
+
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 }
 
 export async function registrarGoogle(paciente) {
-    const url = import.meta.env.VITE_API_URL + '/turnero.registerGoogle'
+    const url = import.meta.env.VITE_API_URL + '/turnero.registerGoogle';
+
     try {
         const respuesta = await fetch(url, {
             method: 'POST',
@@ -43,24 +44,25 @@ export async function registrarGoogle(paciente) {
                 'Content-Type': 'application/json'
             }
         })
+
         const resp = await respuesta.json()
-        console.log(resp)
         return resp
-        //console.log(resp)
+
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 }
 
 export async function descargarFormulario(dni){
     const url = import.meta.env.VITE_API_URL + '/formulario/' + dni
-    console.log(url)
+
     try {
         const respuesta = await FetchHelper.fetchWithRetry(url)
         const resp = await respuesta.json()
         return resp
+
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 }
 
@@ -74,16 +76,21 @@ export async function guardarFormulario(form) {
                 'Content-Type': 'application/json'
             }
         })
+
         const status = respuesta.status
+
         if(status == 500) return 'error 500'
         const resp = await respuesta.json()
+
         if(resp.code == 0){
-            return ''
+            return '';
+
         } else {
             return resp.message
         }
+
     } catch (error) {
-        console.log(error)
+        console.error(error);
     }
 }
 
@@ -97,27 +104,34 @@ export async function actualizarFormulario(id, form) {
                 'Content-Type': 'application/json'
             }
         })
-        const status = respuesta.status
-        if(status == 500) return 'error 500'
-        const resp = await respuesta.json()
+
+        const status = respuesta.status;
+
+        if(status == 500) return 'error 500';
+
+        const resp = await respuesta.json();
+
         if(resp.code == 0){
             return ''
         } else {
             return resp.message
         }
+
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 }
 
 export async function getProvincias(){
-    const url = import.meta.env.VITE_API_URL + '/provincias'
+    const url = import.meta.env.VITE_API_URL + '/provincias';
+
     try {
         const respuesta = await FetchHelper.fetchWithRetry(url)
         const resp = await respuesta.json()
-        return resp
+        return resp;
+
     } catch (error) {
-        console.log(error)
+        console.error(error);
     }
 }
 
@@ -127,53 +141,62 @@ export async function getContactos(){
         const respuesta = await FetchHelper.fetchWithRetry(url)
         const resp = await respuesta.json()
         return resp
+
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 }
 
 export async function getOcupaciones(){
-    const url = import.meta.env.VITE_API_URL + '/ocupaciones'
+    const url = import.meta.env.VITE_API_URL + '/ocupaciones';
+
     try {
-        const respuesta = await FetchHelper.fetchWithRetry(url)
-        const resp = await respuesta.json()
-        return resp
+        const respuesta = await FetchHelper.fetchWithRetry(url);
+        const resp = await respuesta.json();
+        return resp;
+
     } catch (error) {
-        console.log(error)
+        console.error(error);
     }
 }
 
 export async function getDolencias(){
-    const url = import.meta.env.VITE_API_URL + '/dolencias'
+    const url = import.meta.env.VITE_API_URL + '/dolencias';
+
     try {
-        const respuesta = await FetchHelper.fetchWithRetry(url)
-        const resp = await respuesta.json()
-        return resp
+        const respuesta = await FetchHelper.fetchWithRetry(url);
+        const resp = await respuesta.json();
+        return resp;
+
     } catch (error) {
-        console.log(error)
+        console.error(error);
     }
 }
 
 export async function getTurnoPaciente(id){
-    const url = `${import.meta.env.VITE_API_URL}/paciente.turno/${id}`
+    const url = `${import.meta.env.VITE_API_URL}/paciente.turno/${id}`;
+
     try {
-        const respuesta = await FetchHelper.fetchWithRetry(url)
-        const resp = await respuesta.json()
-        return resp
+        const respuesta = await FetchHelper.fetchWithRetry(url);
+        const resp = await respuesta.json();
+        return resp;
+
     } catch (error) {
-        console.log(error)
+        console.error(error);
     }  
 }
 
 
 export async function setGrowPaciente(idpaciente,idgrow){
-    const url = `${import.meta.env.VITE_API_URL}/paciente/${idpaciente}/setGrow/${idgrow}`
+    const url = `${import.meta.env.VITE_API_URL}/paciente/${idpaciente}/setGrow/${idgrow}`;
+
     try {
-        const respuesta = await FetchHelper.fetchWithRetry(url, { method: 'PUT'})
-        const resp = await respuesta.json()
-        return resp
+        const respuesta = await FetchHelper.fetchWithRetry(url, { method: 'PUT'});
+        const resp = await respuesta.json();
+        return resp;
+
     } catch (error) {
-        console.log(error)
+        console.error(error);
     }
 }
 
@@ -193,7 +216,8 @@ export async function eliminarPacienteONG(idPaciente) {
     }
 
     const resp = await respuesta.json();
-    return resp; // lo que devuelva tu backend (ej: { success: true })
+    return resp;
+
   } catch (error) {
     console.error("Error en eliminarPaciente:", error);
     throw error;

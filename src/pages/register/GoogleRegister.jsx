@@ -67,7 +67,7 @@ function GoogleRegister() {
         const formIsValid = validate(datos);
 
         if(formIsValid){
-            console.log('inSubmit');
+
             const resp = await registrarGoogle(datos);
             setInSubmit(false);
 

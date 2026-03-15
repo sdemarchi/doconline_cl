@@ -31,7 +31,7 @@ const FormProvider = ({children}) => {
                             part3b: form3b, tut1: tut1, tut2: tut2, 
                             patologias: patolog,
                             firma: strFirma ? strFirma : firma, aclarac: strAclaracion ? strAclaracion : aclaracion}
-        console.log(formulario)
+
         if(pacienteId > 0){
             const resp = await actualizarFormulario(pacienteId, formulario)
             return resp
@@ -53,8 +53,7 @@ const FormProvider = ({children}) => {
     };
 
     function llenarFormulario(form, patologias){
-        console.log(form)
-        
+
         setPacienteId(form.idpaciente)
         setForm1({
             nom_ape: form.nom_ape,
@@ -99,8 +98,8 @@ const FormProvider = ({children}) => {
                 atenua_dolor: p.atenua_dolor
             })
         )))
-        setPatolog(pat)
-        console.log(pat)
+        setPatolog(pat);
+
         setTut1({
             tut_apeynom: form.tut_apeynom,
             tut_fe_nacim: formatDate(form.tut_fe_nacim),

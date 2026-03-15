@@ -32,7 +32,6 @@ function FormRep3b() {
             const response = await getContactos();
             setContactos(response);
             setEsMenor(form3b.es_menor);
-            console.log(form3b);
             setCargando(false);
         }
         cargaContactos();
@@ -53,7 +52,7 @@ function FormRep3b() {
         data.idcontacto = contactoActual;
         data.es_menor = esMenor ? 1 : 0;
         setForm3b(data);
-        console.log(form3b);
+
         return data.es_menor ? navigate('/tutor-1') : navigate('/formulario-4');
     }
     

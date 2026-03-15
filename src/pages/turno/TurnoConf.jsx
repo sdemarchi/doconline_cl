@@ -22,7 +22,6 @@ function TurnoConf() {
         if(pago?.id){
             
             PagosService.setUtilizado(pago.id,true).then((resp)=>{
-                console.log(resp);
                 if(pago?.id_grow){
                     setGrowPaciente(userData.id,pago.id_grow);
                 }
@@ -30,7 +29,6 @@ function TurnoConf() {
         }
     
         confirmarTurno(turno, cuponSession, comprobante, pago.monto_final, userData.id).then((response)=>{
-            console.log(response);
             if (response.error == 0) {
                 return navigate('/formulario-1');
             } 

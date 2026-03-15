@@ -59,14 +59,13 @@ function RegalarTransf() {
             .post(url, data)
             .then(res => {
                 setUploadResult(1);
-                console.log(res.data.filename);
                 setComprobante(res.data.filename);
                 setEnviando(false);
                 localStorage.setItem("comprobante-enviado",true);
             })
             .catch(err => {
                 setUploadResult(2);
-                console.log(err);
+                console.error(err);
             })
     }
 
@@ -111,8 +110,6 @@ function RegalarTransf() {
             monto_final:pagoSession.precioFinal,
             comprobante:comprobante
         };
-
-        console.log(JSON.stringify(pago));
 
         PagosService.crear(pago).then((resp)=>{
             navigate('/regalar-finalizar/' + resp.codigo)

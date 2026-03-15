@@ -1,7 +1,6 @@
 import validator from 'validator';
 
 export function esFechaValida(valor){
-    console.log(valor)
     if(validator.isDate(valor,{format:'DD/MM/YYYY'})){
         return true;
     } else {

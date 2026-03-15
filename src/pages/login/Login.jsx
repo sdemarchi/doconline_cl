@@ -36,7 +36,7 @@ function Login() {
    
     const gLogin = useGoogleLogin({
         onSuccess: (codeResponse) => setGoogleUser(codeResponse),
-        onError: (error) => console.log('Login Failed:', error)
+        onError: (error) => console.error('Login Failed:', error)
     });
 
     const setRedirect = () => {  //Busca como parametro de la url, una ruta interna para redireccionar despues de iniciar sesión.
@@ -84,7 +84,7 @@ function Login() {
                     setGoogleProfile(res.data)
                     loginConGoogle(res.data.email);
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => console.error(err));
             
         }
     }, [ googleUser ] //eslint-disable-line
@@ -152,7 +152,7 @@ function Login() {
                 })
             }
         } catch (error) {
-           console.log(error)
+           console.error(error)
         }
     }
 
@@ -197,7 +197,7 @@ function Login() {
             }
             
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 

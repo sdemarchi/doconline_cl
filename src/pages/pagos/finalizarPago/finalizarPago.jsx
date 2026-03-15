@@ -63,18 +63,17 @@ export default function FinalizarPago(){
     .post(url, data)
     .then(res => {
         setUploadResult(1);
-        console.log(res.data.filename);
         setComprobante(res.data.filename);
+
         PagosService.editar({...pago, comprobante:res.data.filename},pago.id).then(()=>{
           setEnviando(false);
           localStorage.setItem("comprobante-enviado",true);
         }
         );
-
     })
     .catch(err => {
         setUploadResult(2);
-        console.log(err);
+        console.error(err);
     })
 }
 

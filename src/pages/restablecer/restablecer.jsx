@@ -1,6 +1,6 @@
 import './restablecer.css';
 import { useState } from 'react';
-import Title from '../../components/title/Title';
+import Title from '../../components/title/title';
 import Card from '../../components/card/card';
 import { SubmitButton, ActionButton } from '../../components/Buttons';
 import { Input } from '../../components/FormInput';
@@ -28,7 +28,6 @@ function Restablecer(){
     }else{
       setEnviando(true);
       restablecerSendMail(email).then((response) => {
-        console.log(JSON.stringify(response));
         setEnviado(true);
         setEnviando(false);
       });

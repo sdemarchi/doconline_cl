@@ -67,7 +67,7 @@ async function agregarPacienteONG(growId, paciente) {
         }
     })
     const resp = await respuesta.json()
-    console.log(resp)
+
     return resp;
 
   } catch (error) {
@@ -93,7 +93,6 @@ async function editarPacienteONG(idPaciente,paciente) {
     });
 
     const resp = await respuesta.json();
-    console.log(resp);
     return resp;
 
   } catch (error) {
@@ -117,9 +116,7 @@ async function obtenerPacientesONG(growId) {
       throw new Error(`Error HTTP: ${respuesta.status}`);
     }
 
-    const resp = await respuesta.json();
-    console.log(resp);
-    return resp;
+    return await respuesta.json();
 
   } catch (error) {
     console.error('Error al obtener pacientes:', error);
@@ -143,11 +140,12 @@ async function obtenerONGPorPaciente(dni) {
     }
 
     const resp = await respuesta.json();
-    console.log(resp);
+
     return resp;
 
   } catch (error) {
     console.error('Error al obtener ONG por paciente:', error);
+  
     return null;
   }
 }
@@ -211,11 +209,11 @@ export class ONGService{
           }
       })
       
-      const resp = await respuesta.json()
+      const resp = await respuesta.json();
       return resp;
 
     } catch (error) {
-        console.error(error)
+        console.error(error);
     } 
   }
 

@@ -35,7 +35,6 @@ function FormRep3() {
             setManeja_maq(form3.maneja_maq);
             subirScroll();
             setCargando(false);
-            console.log(form3);
         }
         cargarEstados()
     }, []) //eslint-disable-line

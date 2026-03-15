@@ -5,7 +5,7 @@ export default class Storage {
     static clear = () =>{
         sessionStorage.clear();
         localStorage.clear();
-        console.log('Storage: CLEAR');
+        console.info('Storage: CLEAR');
     }
 
 
@@ -13,7 +13,7 @@ export default class Storage {
         if (typeof rol !== "number") {
         throw new Error("El rol debe ser un número entero");
         }
-        console.log('Setting role:', rol);
+        console.info('Setting role:', rol);
 
         const encoded = btoa(rol.toString());
         localStorage.setItem("rol", encoded);

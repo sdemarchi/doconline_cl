@@ -1,7 +1,6 @@
 import validator from 'validator'
 
 const dateValidator = (value) => {
-    console.log(value)
     return validator.isDate(value,{format:'DD/MM/YYYY'})
 }
 

@@ -1,4 +1,4 @@
-import Title from '../../components/title/Title';
+import Title from '../../components/title/title';
 import { useState } from 'react';
 import Card from '../../components/card/card';
 import { LinkButtonCenter, SubmitButton } from '../../components/Buttons';

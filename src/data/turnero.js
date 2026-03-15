@@ -6,44 +6,43 @@ export async function getPrestadores() {
 }
 
 export async function getCalendario(mes, anio, prestador) {
-    const url = `${import.meta.env.VITE_API_URL}/turnero.calendario/${mes}/${anio}/${prestador}`
-    const response = await fetch(url)
-    const result = await response.json()
-    //console.log(result)
-    return result
+    const url = `${import.meta.env.VITE_API_URL}/turnero.calendario/${mes}/${anio}/${prestador}`;
+    const response = await fetch(url);
+    const result = await response.json();
+
+    return result;
 }
 
 export async function getTurno(fecha, prestador) {
-    const url = `${import.meta.env.VITE_API_URL}/turnero.turno/${fecha}/${prestador}`
-    console.log(url)
-    const response = await fetch(url)
-    const result = await response.json()
-    //console.log(result)
-    return result
+    const url = `${import.meta.env.VITE_API_URL}/turnero.turno/${fecha}/${prestador}`;
+    const response = await fetch(url);
+    const result = await response.json();
+
+    return result;
 }
 
 export async function getTurnos(fecha, prestador) {
-    const url = `${import.meta.env.VITE_API_URL}/turnero.turnos/${fecha}/${prestador}`
-    console.log(url)
-    const response = await fetch(url)
-    const result = await response.json()
-    //console.log(result)
-    return result
+    const url = `${import.meta.env.VITE_API_URL}/turnero.turnos/${fecha}/${prestador}`;
+
+    const response = await fetch(url);
+    const result = await response.json();
+
+    return result;
 }
 
 export async function getPrecios(){
     const url = `${import.meta.env.VITE_API_URL}/turnero.precios`;
     const response = await fetch(url);
     const result = await response.json();
-    //console.log(result)
-    return result
+
+    return result;
 }
 
 export async function getDatosTransf(){
     const url = `${import.meta.env.VITE_API_URL}/turnero.datosTransf`;
     const response = await fetch(url);
     const result = await response.json();
-    //console.log(result)
+
     return result;
 }
 
@@ -51,7 +50,7 @@ export async function aplicarCupon(cupon){
     const url = `${import.meta.env.VITE_API_URL}/turnero.cupon/${cupon}`;
     const response = await fetch(url);
     const result = await response.json();
-    //console.log(result)
+
     return result;
 }
 
@@ -59,7 +58,7 @@ export async function excedeMargen(prestador){
     const url = `${import.meta.env.VITE_API_URL}/turnero.excedeMargen/${prestador}`
     const response = await fetch(url)
     const result = await response.json()
-    //console.log(result)
+
     return result
 }
 
@@ -76,7 +75,7 @@ export async function confirmarTurno(turno, cupon, comprobante, importe, usuario
         comprobante: comprobante,
         pago_id:pago_id
     }
-    console.log(data)
+
 
     try {
         const respuesta = await fetch(url, {
@@ -90,25 +89,22 @@ export async function confirmarTurno(turno, cupon, comprobante, importe, usuario
         return resp;
 
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 }
 
-    /*export async function guardarFormulario(form) {
-        const url = import.meta.env.VITE_API_URL + '/formulario'
-        
-    }*/
+
 
 export async function cancelarTurno(pacienteId){
-    const url = `${import.meta.env.VITE_API_URL}/turnero.cancelar/${pacienteId}`
-    const response = await fetch(url)
-    const result = await response.json()
-    //console.log(result)
-    return result
+    const url = `${import.meta.env.VITE_API_URL}/turnero.cancelar/${pacienteId}`;
+    const response = await fetch(url);
+    const result = await response.json();
+ 
+    return result;
 }
 
 export async function uploadComprobante(file,turnoId){
-    const url = `${import.meta.env.VITE_API_URL}/turnero.comprobante/${turnoId}`
+    const url = `${import.meta.env.VITE_API_URL}/turnero.comprobante/${turnoId}`;
     
     const response = await fetch(url, {
         method: 'POST',
@@ -118,6 +114,7 @@ export async function uploadComprobante(file,turnoId){
             'content-length': `${file.size}`,
         },
     })
-    const result = await response.json()
-    return result
+    
+    const result = await response.json();
+    return result;
 }
