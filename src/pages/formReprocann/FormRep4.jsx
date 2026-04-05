@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import logo from '../assets/logo-doconline-reprocann-500.png'
 import { LinkButton } from '../../components/Buttons';
 import useForm from '../../hooks/useForm';
 import { getDolencias } from '../../data/pacientes';
@@ -12,10 +11,8 @@ import Spinner from '../../components/Spinner';
 function FormRep4() {
     const navigate = useNavigate()
     const { patolog, setPatolog }  = useForm()
-    
     const [dolencias, setDolencias] = useState([])
     const [cargando, setCargando] = useState(true)
-    
     const [, updateState] = useState();
     const forceUpdate = useCallback(() => updateState({}), []);
 

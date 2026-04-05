@@ -217,8 +217,8 @@ function Panel() {
                         <p>facil, seguro y sin moverte</p>
                         <p>de tu casa.</p>
                         {!(turnoPaciente.id > 0) && <button onClick={()=>navigate('/turno')}>Solicitar Turno</button>}
-                        {turnoPaciente.id > 0 && !formSuccess && <button onClick={()=>navigate('/formulario-1')}>Completa tus datos</button>}
-                        {turnoPaciente.id > 0 && formSuccess && <button onClick={()=>navigate('/formulario-1')}>Edita tus datos</button>}
+                        {turnoPaciente.id > 0 && !formSuccess && <button onClick={()=>navigate('/formulario-1')}>Completá tus datos</button>}
+                        {turnoPaciente.id > 0 && formSuccess && <button onClick={()=>navigate('/formulario-1')}>Editá tus datos</button>}
                     </div>
                 </div>
             </div>
@@ -259,7 +259,7 @@ function Panel() {
                 </LinkCard>
 
 
-                <LinkCard to="/formulario-1" title={formSuccess ? 'Edita tus datos' : 'Completa tus datos'}  onlyPc responsive>
+                <LinkCard to="/formulario-1" title={formSuccess ? 'Editá tus datos' : 'Completa tus datos'}  onlyPc responsive>
                     <p className='pb-3'>{formSuccess ? 'Modificá o actualizá tus datos en caso de ser necesario.' : 'Completa los datos necesarios para realizar tu trámite'}</p>
                 </LinkCard>
         

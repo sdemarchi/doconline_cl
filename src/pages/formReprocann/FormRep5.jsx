@@ -1,38 +1,22 @@
-import { useState/*, useEffect, useCallback */} from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import logo from '../assets/logo-doconline-reprocann-500.png'
-import { ActionButton, MiniActionButtonRed } from '../../components/Buttons';
+import { ActionButton } from '../../components/Buttons';
 import useForm from '../../hooks/useForm';
-import SignatureCanvas from 'react-signature-canvas';
-import { ErrorGral } from '../../components/Error';
 import './formReprocann.css';
 import Contacto from '../../components/contacto/contacto';
 import Spinner from '../../components/Spinner';
+import Info from '../../components/info/info';
 
 function FormRep5() {
 
     const navigate = useNavigate();
-    const [signFirma, setSignFirma] = useState();
-    const [signAclaracion, setSignAclaracion] = useState();
-    const { firma, aclaracion, setFirma, setAclaracion, enviarFormulario } = useForm();
-    const [error, setError] = useState('');
-    const [ cargando  ] = useState(false);
+    const { enviarFormulario } = useForm();
+    const [ error, setError ] = useState('');
+    const [ cargando, setCargando ] = useState(false);
 
     async function finalizar() {
-        let urlFirma = null;
-        let urlAcl = null;
-
-        if(firma == null){
-            urlFirma = await signFirma.getTrimmedCanvas().toDataURL('image/png');
-            setFirma(urlFirma);
-        } 
-
-        if(aclaracion == null){
-            urlAcl = await signAclaracion.getTrimmedCanvas().toDataURL('image/png');
-            setAclaracion(urlAcl);
-        }
-
-        const resp = await enviarFormulario(urlFirma, urlAcl);
+       setCargando(true);
+       const resp = await enviarFormulario();
 
         if (resp == 'error 500') {
             return navigate('/form-error');
@@ -40,79 +24,29 @@ function FormRep5() {
         if (resp == '') {
             return navigate('/form-success');
         } else {
+            setCargando(false);
             setError(resp);
         }
     }
 
-    function handleClearFirma() {
-        if(signFirma){
-            signFirma.clear();
-        }
-        setFirma(null);
-    }
-
-    function handleClearAclaracion() {
-        if(signAclaracion){
-            signAclaracion.clear();
-        }
-        setAclaracion(null);
-    }
-
     return (
         <div className="form-rep-container page">
-           <h3 className='text-gray-500 mb-3 text-xl font-semibold'>Firmas</h3>
+           <h3 className='text-gray-500 mb-3 text-xl font-semibold'>Finalizar</h3>
            { cargando ? <Spinner/> :
             <div className="form-rep-content form-rep-form">
-            {error && <ErrorGral>{error}</ErrorGral>}
-            <h6 className="text-gray-500 text-xm font-semibold pt-2">Firma</h6>
-            {firma != null ?
-            <div className="form-rep-firma">
-                <img src={firma} className='p-4' /> 
-            </div>
-            :
-                <div style={{width:"fit-content", margin:"15px auto"}} className='border-gray-300 border border-solid mt-2 form-rep-firma'>
-                    <SignatureCanvas
-                        ref={data => setSignFirma(data)}
-                        canvasProps={{ width: 270, height: 150, className: 'sigCanvas' }}
-                        minWidth={0.7}
-                        maxWidth={1.2}
-                    />
-                </div>}
-            <div className='flex flex-row-reverse pt-1'>
-                <MiniActionButtonRed onClick={() => handleClearFirma()} value="Limpiar" />
-            </div>
+                <Info text="Estás por enviar tus datos. Podrás modificarlos más adelante desde el botón “Editá tus datos”." fontSize="14px" style={{marginBottom:'20px'}}/>
 
-            <h6 className="text-gray-500 text-xm font-semibold pt-2">Aclaración</h6>
-            {aclaracion != null ? 
-                <div className="form-rep-firma">
-                   <img src={aclaracion} className='p-4' /> 
-               </div>
-            :
-                <div style={{width:"fit-content",margin:"15px auto"}} className='border-gray-300 border border-solid mt-2 form-rep-firma' >
-                    <SignatureCanvas
-                        ref={data => setSignAclaracion(data)}
-                        canvasProps={{ width: 270, height: 150, className: 'sigCanvas2' }}
-                        minWidth={0.7}
-                        maxWidth={1.2}
-                />
-                </div>}
-           
-            <div className='flex flex-row-reverse pt-1'>
-                <MiniActionButtonRed onClick={() => handleClearAclaracion()} value="Limpiar" />
-            </div>
+                <div className='pt-6'>
+                    <ActionButton onClick={() => finalizar()} value="Finalizar y Enviar" />
+                </div>
 
-            <div className='pt-6'>
-                <ActionButton onClick={() => finalizar()} value="Finalizar y Enviar" />
-            </div>
+                <div className='mb-0 mx-auto p-3 text-center'>
+                    <button className='text-gray-500' onClick={() => navigate('/formulario-4')}>Atrás</button>
+                </div>
 
-            <div className='mb-0 mx-auto p-3 text-center'>
-                <button className='text-gray-500' onClick={() => navigate('/formulario-4')} >Atrás</button>
-            </div>
-
-
-            <div className="form-rep-contacto">
-                <Contacto />
-            </div>
+                <div className="form-rep-contacto">
+                    <Contacto />
+                </div>
             </div>}
         </div>
     )

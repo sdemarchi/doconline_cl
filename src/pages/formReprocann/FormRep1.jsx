@@ -82,8 +82,6 @@ function FormRep1() {
 
     return (
         <div className="form-rep-container page">
-           {/* <img className="mx-auto w-52 mb-8 pb-2" src={logo}></img> <h1>Formulario Reprocann</h1>*/}
-
             <Title>Completa tus datos</Title>
   
             <div className="form-rep-content">
@@ -132,7 +130,7 @@ function FormRep1() {
 
                             {errors.edad?.type == 'required' && <ErrorReq>Edad</ErrorReq>}
                             {!(errors.edad?.type == 'required') && errors.edad && <Error>Edad no valida</Error>} 
-                            { /*errors.edad?.type == 'max' && <ErrorVal>100</ErrorVal>*/}
+
                         </div>
                     </div>
 

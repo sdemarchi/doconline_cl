@@ -15,9 +15,6 @@ const FormProvider = ({children}) => {
     
     const [ tut1, setTut1 ] = useState({})  
     const [ tut2, setTut2 ] = useState({})  
-    
-    const [ firma, setFirma] = useState()
-    const [ aclaracion, setAclaracion ] = useState()
 
     const [ provActual, setProvActual ] = useState(0)
     const [ provTutActual, setProvTutActual ] = useState(0)
@@ -26,11 +23,10 @@ const FormProvider = ({children}) => {
 
     const [ formCargado, setFormCargado] = useState({})
 
-    async function enviarFormulario(strFirma,strAclaracion){
+    async function enviarFormulario(){
         const formulario = {part1: form1, part2: form2, part3: form3, 
                             part3b: form3b, tut1: tut1, tut2: tut2, 
-                            patologias: patolog,
-                            firma: strFirma ? strFirma : firma, aclarac: strAclaracion ? strAclaracion : aclaracion}
+                            patologias: patolog}
 
         if(pacienteId > 0){
             const resp = await actualizarFormulario(pacienteId, formulario)
@@ -117,8 +113,6 @@ const FormProvider = ({children}) => {
             tut_vinculo: form.tut_vinculo,
             tut_reg_fam: form.tut_reg_fam
         })
-        setFirma(form.firma_v2)
-        setAclaracion(form.aclaracion_v2)
     }
     
     return(
@@ -128,7 +122,6 @@ const FormProvider = ({children}) => {
                                         provTutActual, setProvTutActual, 
                                         ocupacionActual, setOcupacionActual,
                                         contactoActual, setContactoActual,
-                                        firma, setFirma, aclaracion, setAclaracion,
                                         enviarFormulario, formCargado, setFormCargado, 
                                         llenarFormulario
                                         }}>
