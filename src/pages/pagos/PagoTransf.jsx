@@ -189,7 +189,7 @@ function PagoTransf() {
                 mostrarCancelar={false}
             />
 
-            <Title>Transferí a la siguiente cuenta</Title>
+            <Title>Adjuntar comprobante</Title>
 
             <div className="pagos-transf-content">
                 <Card center disabledBorder>

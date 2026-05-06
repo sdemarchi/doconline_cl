@@ -39,6 +39,7 @@ function Pagos() {
     const [ errorMsj, setErrorMsj ] = useState();
     const [ bonificadoONG, setBonificadoONG ] = useState(false);
     const [ nombreONG, setNombreONG ] = useState('');
+    const [ precio, setPrecio ] = useState(0);
 
     var cuponSession = {cupon: '', importe:0};
 
@@ -81,6 +82,7 @@ function Pagos() {
 
         setPrecioCargado(true);
     }
+    
 
     /**
      * Se valida que el cupón ingresado sea válido y pertenezca a un grow.
@@ -291,7 +293,7 @@ function Pagos() {
                                 <FormInputState 
                                     id="turno"
                                     value={cupon}
-                                    onChange={ e => setCupon(e.target.value)}
+                                    onChange={e => setCupon(e.target.value)}
                                     placeholder="A-123456"
                                     rounded
                                 /> 
@@ -311,7 +313,8 @@ function Pagos() {
                             importe={localStorage.getItem("precio_transf") || precioTrans} 
                             descuento={importeCupon}
                             descuentoPorc={grow?.descuento}
-                            textoBoton={bonificadoONG ? "Continuar" : "Ir a Pagar"}
+                            setPrecio={setPrecio}
+                            textoBoton={"Continuar"}
                             mensaje="Desde cualquier banco físico o virtual" 
                             onClick={ (precioFinal) => pagar(precioFinal) } />
 
@@ -324,6 +327,7 @@ function Pagos() {
                     </Card>
 
 
+                    <LinkCard show={!ingresarCodigo} onClick={() => pagar(precio)} title="Ya realicé el pago" onlyCel>Adjuntar comprobante</LinkCard>
                     <LinkCard show={!ingresarCodigo} onClick={()=>setIngresarCodigo(true)} title="Ya han pagado por mí" onlyCel>Ingresar el codigo de pago.</LinkCard>
                    
                     <Card show={ingresarCodigo} onClick={()=>setIngresarCodigo(true)} title="Ingresar código" disabledBorder>
