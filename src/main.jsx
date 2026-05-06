@@ -36,6 +36,7 @@ import Ayuda from './pages/ayuda/ayuda';
 import Restablecer from './pages/restablecer/restablecer.jsx';
 import FormPassword from './pages/restablecer/formPassword.jsx';
 import RePassLayout from './layouts/RePassLayout.jsx';
+import ValidarEmail from './pages/login/validarEmail/validarEmail.jsx';
 
 import Regalar from './pages/regalar-tramite/regalar.jsx';
 import RegalarTransf from './pages/regalar-tramite/regalar-transf/regalar-transf.jsx';
@@ -218,6 +219,10 @@ const router = createBrowserRouter([
     {
       path: '/restablecer-password/:t',
       element:<FormPassword/>
+    },
+   {
+      path: '/validar-email',
+      element:<ValidarEmail/>
     }
   ]
 }

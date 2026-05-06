@@ -1,9 +1,10 @@
 .restablecer-container{
-  background-color: rgba(240, 240, 240, 0.678);
+  background-color: rgb(240, 240, 240);
   width: 100%;
   padding:8px 15px;
   min-height: calc(100vh - 75px);
   margin:0;
+  z-index: 10000;
 }
 
 .restablecer-card-container{

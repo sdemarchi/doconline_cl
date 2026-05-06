@@ -61,7 +61,7 @@ function LinkButton(props) {
         <>{props.success === true ?
             <Link to={props.to}>
                 <button style={{textAlign:'center !important'}} className={'link-button success-button p-left button w-full text-white p-2 rounded-md'} >
-                    <span style={{display:"inline",fontSize:"28px",marginRight:"15px"}}><BsFillPatchCheckFill/></span>{ props.value }
+                    <span style={{display:"inline",fontSize:"28px",marginRight:"15px"}}><BsFillPatchCheckFill/></span> {props.value}
                 </button>
             </Link>
 
@@ -69,7 +69,7 @@ function LinkButton(props) {
 
             <Link to={props.to}>
                 <button style={{textAlign:'center'}} className={ !props.disabled ? 'link-button p-left button w-full text-white p-2 rounded-md' : 'link-button button disabled-button button w-full p-2 ' } >
-                    <span style={{display:"inline",fontSize:"28px",marginRight:"15px"}}>{props.icon}</span>{ props.value }
+                    <span style={{display:"inline",fontSize:"28px",marginRight:"15px"}}>{props.icon}</span> {props.value}
                 </button>
             </Link>
             }

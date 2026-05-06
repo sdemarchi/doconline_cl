@@ -6,14 +6,18 @@ function PagoCard(props) {
 
     const calcularPrecioFinal = () => {
         setPrecioFinal(props.importe);
+        props.setPrecio && props.setPrecio(props.importe);
+        
         if(props.descuentoPorc){
             let precioFinal_ = props.importe - props.importe * (props.descuentoPorc / 100);
             setPrecioFinal(precioFinal_);
+            props.setPrecio && props.setPrecio(precioFinal_);
         }
     }
 
     useEffect(() => {
         calcularPrecioFinal();
+
     },[props.importe,props.descuentoPorc,props.descuento]); //eslint-disable-line
 
     return (<>
@@ -28,17 +32,15 @@ function PagoCard(props) {
                 <h4 className="font-bold pt-2 text-xs leading-5">Descuento de ${props.descuento} aplicado</h4>
                 :
             ''}
-            {
-                (props.descuentoPorc) ?
+
+            {(props.descuentoPorc) ?
                 <h4 className="text-green-600 font-bold pt-2 text-xs leading-5">Descuento del {props.descuentoPorc}% aplicado</h4>
                 :
-            ''
-            }
+            ''}
 
 
             <h4 className="pt-4 pb-2 leading-5" style={{fontSize:'16px',fontWeight:'500',color:'',fontFamily: 'Montserrat'}}>{props.mensaje}</h4>
             <div className="px-6 py-2"><ActionButton onClick={() => props.onClick(precioFinal)} value={props.textoBoton || "Ir a Pagar"} /></div>
-            
             
         </div>}
         </>

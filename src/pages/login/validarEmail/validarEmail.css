@@ -1,0 +1,19 @@
+.validar-email-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.validar-email-container h2{
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color:rgb(75, 75, 75);
+    margin: 15px;
+}
+
+.validar-email-container p{
+    margin-bottom: 30px;
+}

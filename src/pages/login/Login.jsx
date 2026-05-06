@@ -3,6 +3,7 @@ import {/* Form,*/ Link/*, redirect*/, useLocation, useNavigate } from 'react-ro
 import logo from '../../assets/logo-doconline.jpg';
 import { LoginInput } from '../../components/FormInput';
 import {LoginButton } from '../../components/Buttons';
+import {AuthService} from '../../data/auth';
 import useAuth from '../../hooks/useAuth';
 import Alerta from '../../components/Alerta';
 import { GoogleLogin, googleLogout, useGoogleLogin } from '@react-oauth/google'; //eslint-disable-line no-unused-vars
@@ -32,8 +33,16 @@ function Login() {
     const location = useLocation();
     // eslint-disable-next-line
     const regex_mail = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
-   
-   
+    const urlBase = import.meta.env.VITE_API_URL;
+
+
+    let CodigoRespuesta = {
+        OK: 0,
+        ERROR: 1,
+        NO_VERIFICADO: 2 // No realizo la verificación por correo electrónico.
+    }
+
+
     const gLogin = useGoogleLogin({
         onSuccess: (codeResponse) => setGoogleUser(codeResponse),
         onError: (error) => console.error('Login Failed:', error)
@@ -97,67 +106,61 @@ function Login() {
         }
 
         setContenidoCargado(false);
+        const esEmail = regex_mail.test(userid);
+        let respuesta;
 
-        let url = import.meta.env.VITE_API_URL + '/turnero.loginUser';
-
-        if(regex_mail.test(userid)) { //Verifica si es un e-mail
-            url = import.meta.env.VITE_API_URL + '/turnero.loginEmail';
+        if(esEmail) {
+            respuesta = await AuthService.loginEmail(userid,password);   
+        }else{
+            respuesta = await AuthService.login(userid,password);
         }
 
-        try {
-            const respuesta = await fetch(url, {
-                method: 'POST',
-                body: JSON.stringify({userid:userid, password:password}),
-                headers: {
-                    'Content-Type': 'application/json'
+        const resp = await respuesta.json();
+
+        if(resp.error.code == CodigoRespuesta.OK){
+            localStorage.setItem('dc_userId',resp.user.id);
+            localStorage.setItem('dc_userName',resp.user?.userName);
+
+            // Guardo los datos del Grow del usuario en caso de que sea propietario de un Grow
+            // No confundir con el grow extraido de la URL el cual se usa para el codigo de descuento.
+                if(resp.user.growAdmin > 0){
+                const grow = JSON.stringify({idgrow:resp.user.growAdmin,tipo_id:resp.user.tipoGrow});
+
+                if(resp.user.tipoGrow == RolUsuario.Grow){
+                    Storage.setRol(RolUsuario.Grow); // Seteo el rol como Grow
+
+                }else if(resp.user.tipoGrow == RolUsuario.ONG){
+                    Storage.setRol(RolUsuario.ONG); // Seteo el rol como ONG
                 }
-            })
-            
-            const resp = await respuesta.json()
-            
-            if(resp.error.code == 0){
-                localStorage.setItem('dc_userId',resp.user.id);
-                localStorage.setItem('dc_userName',resp.user?.userName);
 
-                // Guardo los datos del Grow del usuario en caso de que sea propietario de un Grow
-                // No confundir con el grow extraido de la URL el cual se usa para el codigo de descuento.
-                  if(resp.user.growAdmin > 0){
-                    const grow = JSON.stringify({idgrow:resp.user.growAdmin,tipo_id:resp.user.tipoGrow});
+                localStorage.setItem('user-grow',grow);
 
-                    if(resp.user.tipoGrow == RolUsuario.Grow){
-                        Storage.setRol(RolUsuario.Grow); // Seteo el rol como Grow
-
-                    }else if(resp.user.tipoGrow == RolUsuario.ONG){
-                        Storage.setRol(RolUsuario.ONG); // Seteo el rol como ONG
-                    }
-
-                    localStorage.setItem('user-grow',grow);
-
-                }else{
-                    Storage.setRol(RolUsuario.Paciente); // Seteo el rol como Paciente
-                }
-   
-                setUser({
-                    userId:resp.user.id,
-                    userName:resp.user.userName
-                })
-
-                return navigate('/panel')
-
-            } else {
-                setContenidoCargado(true);
-                setAlerta({
-                    msg: resp.error.message,
-                    error: true
-                })
+            }else{
+                Storage.setRol(RolUsuario.Paciente); // Seteo el rol como Paciente
             }
-        } catch (error) {
-           console.error(error)
+
+            setUser({
+                userId:resp.user.id,
+                userName:resp.user.userName
+            })
+
+            return navigate('/panel')
+
+        } else if (resp.error.code == CodigoRespuesta.NO_VERIFICADO) {
+            return navigate('/validar-email', {state:{email:userid}});
+
+        } else {
+            setContenidoCargado(true);
+            setAlerta({
+                msg: resp.error.messages,    
+                error: true
+            })
         }
     }
 
     async function loginConGoogle(email) {
         setContenidoCargado(false);
+        
         let url = import.meta.env.VITE_API_URL + '/turnero.loginGoogle';
         
         try {
@@ -169,7 +172,7 @@ function Login() {
 
             const resp = await respuesta.json()
             
-            if(resp.error.code == 0){
+            if(resp.error.code == CodigoRespuesta.OK){
                 localStorage.setItem('dc_userId',resp.user.id);
                 localStorage.setItem('dc_userName',resp.user.userName);
 
@@ -178,7 +181,7 @@ function Login() {
 
                     if(resp.user.tipoGrow == RolUsuario.Grow){
                         Storage.setRol(RolUsuario.Grow); // Seteo el rol como Grow
-
+                        
                     }else if(resp.user.tipoGrow == RolUsuario.ONG){
                         Storage.setRol(RolUsuario.ONG); // Seteo el rol como ONG
                     }
@@ -200,7 +203,6 @@ function Login() {
             console.error(error);
         }
     }
-
 
     return (
         <> { !contenidoCargado && 

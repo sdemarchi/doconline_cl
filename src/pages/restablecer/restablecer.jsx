@@ -37,7 +37,7 @@ function Restablecer(){
   return(
     <>
 
-    { enviando?         
+    { enviando ?         
        <div className="restablecer-container">
           <Spinner/>  
         </div> : 
