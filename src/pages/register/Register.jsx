@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
-import { useActionData, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {FormInput, FormInputDate} from '../../components/FormInput';
 import { SubmitButton } from '../../components/Buttons';
 import Error from '../../components/Error';
-import { esFechaValida, esEmailValido } from '../../utils/validation';
+import { esFechaValida } from '../../utils/validation';
 import { registrar} from '../../data/pacientes';
 import useAuth from '../../hooks/useAuth';
 import './register.css';
 import Spinner from '../../components/Spinner';
+import { AuthService } from '../../data/auth';
 
 function Register() {
     const { setUser } = useAuth();
     const navigate = useNavigate();
-    const actionResult = useActionData();
 
     // ------------ MODEL ------------ //
     const [ nombre, setNombre ] = useState("");
@@ -42,12 +42,14 @@ function Register() {
         }
     };
 
+
     const setUserSession = (user) => {
         localStorage.setItem('dc_userId',user.userId);
         localStorage.setItem('dc_userName',user.userName);
         setUser({ userId: user.userId, userName: user.userName, growAdmin:user.growAdmin });
     }
         
+
     const validate = (datos) => {
         const errores_ = [];
         
@@ -82,6 +84,7 @@ function Register() {
         return true;
     }
 
+
     const submit = async (e) => {
         e.preventDefault();
 
@@ -108,10 +111,14 @@ function Register() {
             const resp = await registrar(datos);
             setInSubmit(false);
     
-            if(resp.error.code == 0){
+            if(resp.error.code == AuthService.CodigoRespuesta.OK){
                 setUserSession({userId: resp.user.id, userName: resp.user.name});
                 return navigate('/panel');
-            } else {
+
+            } else if(resp.error.code  == AuthService.CodigoRespuesta.NO_VERIFICADO){
+                setUserSession({userId: resp.user.id, userName: resp.user.name});
+                return navigate('/validar-email', {state:{email:datos.email}});
+            }else{
                 setErrores([resp.error.message])
             }
         }else{
@@ -166,5 +173,6 @@ function Register() {
         </div>
     )
 }
+
 
 export default Register;

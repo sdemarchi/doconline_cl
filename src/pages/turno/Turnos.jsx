@@ -1,7 +1,7 @@
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ActionButton } from '../../components/Buttons';
 import Calendario from '../../components/calendario/Calendario';
-import { getPrestadores, getCalendario, /*getTurno,*/ getTurnos, excedeMargen } from '../../data/turnero';
+import { getPrestadores, getCalendario, getTurnos, excedeMargen } from '../../data/turnero';
 import { useEffect,  useRef, useState } from 'react';
 import {CustomSelect} from '../../components/select/Select';
 import useTurno from '../../hooks/useTurno';

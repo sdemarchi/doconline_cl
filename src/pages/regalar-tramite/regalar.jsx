@@ -4,7 +4,7 @@ import Info from '../../components/info/info';
 import Card from '../../components/card/card';
 import { ActionButton } from '../../components/Buttons';
 import { InputState } from '../../components/FormInput';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Regalar(){

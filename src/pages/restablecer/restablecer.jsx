@@ -27,7 +27,7 @@ function Restablecer(){
       setMostrarError(true);
     }else{
       setEnviando(true);
-      restablecerSendMail(email).then((response) => {
+      restablecerSendMail(email).then(() => {
         setEnviado(true);
         setEnviando(false);
       });

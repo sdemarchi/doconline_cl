@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {/* Form,*/ Link/*, redirect*/, useLocation, useNavigate } from 'react-router-dom';
+import {Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo-doconline.jpg';
 import { LoginInput } from '../../components/FormInput';
 import {LoginButton } from '../../components/Buttons';
@@ -13,13 +13,12 @@ import './login.css';
 import minImage from '../../assets/min_salud.png';
 import reproImage from '../../assets/reprocan.png';
 import { useParams } from 'react-router-dom';
-import { getGrowById } from '../../data/grows';
 import { getGrowByRoute } from '../../data/grows';
 import Storage from '../../utils/Storage/Storage';
 import RolUsuario from '../../enum/RolUsuario';
 
 function Login() {
-    const { setUser, googleProfile, setGoogleProfile } = useAuth();//eslint-disable-line no-unused-vars
+    const { setUser, setGoogleProfile } = useAuth();
     const [userid, setUserid] = useState('');
     const [password, setPassword] = useState('');
     const [contenidoCargado, setContenidoCargado] = useState('true');
@@ -33,14 +32,6 @@ function Login() {
     const location = useLocation();
     // eslint-disable-next-line
     const regex_mail = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
-    const urlBase = import.meta.env.VITE_API_URL;
-
-
-    let CodigoRespuesta = {
-        OK: 0,
-        ERROR: 1,
-        NO_VERIFICADO: 2 // No realizo la verificación por correo electrónico.
-    }
 
 
     const gLogin = useGoogleLogin({
@@ -117,13 +108,13 @@ function Login() {
 
         const resp = await respuesta.json();
 
-        if(resp.error.code == CodigoRespuesta.OK){
+        if(resp.error.code == AuthService.CodigoRespuesta.OK){
             localStorage.setItem('dc_userId',resp.user.id);
             localStorage.setItem('dc_userName',resp.user?.userName);
 
             // Guardo los datos del Grow del usuario en caso de que sea propietario de un Grow
             // No confundir con el grow extraido de la URL el cual se usa para el codigo de descuento.
-                if(resp.user.growAdmin > 0){
+            if(resp.user.growAdmin > 0){
                 const grow = JSON.stringify({idgrow:resp.user.growAdmin,tipo_id:resp.user.tipoGrow});
 
                 if(resp.user.tipoGrow == RolUsuario.Grow){
@@ -146,13 +137,13 @@ function Login() {
 
             return navigate('/panel')
 
-        } else if (resp.error.code == CodigoRespuesta.NO_VERIFICADO) {
-            return navigate('/validar-email', {state:{email:userid}});
+        } else if (resp.error.code == AuthService.CodigoRespuesta.NO_VERIFICADO) {
+            return navigate('/validar-email', {state:{email:resp.user.email}});
 
         } else {
             setContenidoCargado(true);
             setAlerta({
-                msg: resp.error.messages,    
+                msg: resp.error.message,    
                 error: true
             })
         }
@@ -172,7 +163,7 @@ function Login() {
 
             const resp = await respuesta.json()
             
-            if(resp.error.code == CodigoRespuesta.OK){
+            if(resp.error.code == AuthService.CodigoRespuesta.OK){
                 localStorage.setItem('dc_userId',resp.user.id);
                 localStorage.setItem('dc_userName',resp.user.userName);
 

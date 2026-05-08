@@ -3,7 +3,6 @@ import Info from '../../../components/info/Info';
 import Card from '../../../components/card/card';
 import { ActionButton } from '../../../components/Buttons';
 import NotificacionEmergente from '../../../components/notificacion-emergente/notificacion-emergente.jsx';
-import { InputState } from '../../../components/FormInput';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './regalar-finalizar.css';

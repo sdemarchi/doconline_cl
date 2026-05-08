@@ -3,7 +3,7 @@ import LinkCard from '../../../components/link-card/link-card';
 import ColorCard from '../../../components/color-card/color-card';
 import './tu-grow.css';
 import { useEffect } from 'react';
-import { useState, useRef} from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineQrcode } from "react-icons/ai";
 import { QRCode as QRCodeLogo } from 'react-qrcode-logo';
@@ -16,6 +16,7 @@ import { LuDownload } from "react-icons/lu";
 import CifradoHelper from '../../../utils/CifradoHelper';
 import Storage from '../../../utils/Storage/Storage';
 import RolUsuario from '../../../enum/RolUsuario';
+import { getGrowById } from '../../../data/grows';
 
 export default function TuGrow(){
   const [ mostrarNotificacion , setMostrarNotificacion ] = useState(false);
@@ -61,7 +62,7 @@ export default function TuGrow(){
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
-    };
+    }
   }
 
 
@@ -82,11 +83,14 @@ export default function TuGrow(){
     const grow_ = JSON.parse(localStorage.getItem('user-grow'));
 
     () => {
-      if(id){
-        getGrowById(id).then((response)=>{
-          setGrowDetails(response);
-          setDatosCargados(true);
-        });
+      try{
+        if(grow_.idgrow){
+          getGrowById(grow_.idgrow).then((response)=>{
+            setGrowDetails(response);
+          });
+        }
+      }catch(error){
+        console.error("Error al obtener los detalles del grow. Se usaran datos guardados en memoria.", error);
       }
     }
 

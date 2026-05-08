@@ -1,6 +1,5 @@
 import { ActionButton } from '../../components/Buttons';
 import ColorCard  from '../../components/color-card/color-card';
-import FormInput from '../../components/FormInput'
 import Title from '../../components/title/title';
 import { confirmarTurno } from '../../data/turnero';
 import { setGrowPaciente } from '../../data/pacientes';
@@ -21,7 +20,7 @@ function TurnoConf() {
 
         if(pago?.id){
             
-            PagosService.setUtilizado(pago.id,true).then((resp)=>{
+            PagosService.setUtilizado(pago.id,true).then(()=>{
                 if(pago?.id_grow){
                     setGrowPaciente(userData.id,pago.id_grow);
                 }

@@ -34,7 +34,6 @@ function PagoTransf() {
     const navigate = useNavigate();
     const [cbu, setCbu] = useState();
     const [alias, setAlias] = useState();
-    const [cargando] = useState(0);
     const [enviando, setEnviando] = useState(false);
     const [uploadResult, setUploadResult] = useState(0);
     const [datosCargados, setDatosCargados] = useState(false);

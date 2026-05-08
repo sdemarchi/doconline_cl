@@ -36,17 +36,14 @@ export async function restablecer(datos) {
 }
 
 
-export async function login(userid,password){
-    return await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify({userid:userid, password:password}),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-    })
-}
-
 export class AuthService{
+
+    static CodigoRespuesta = {
+        OK: 0,
+        ERROR: 1,
+        NO_VERIFICADO: 2 // No realizo la verificación por correo electrónico.
+    }
+
     static urlBase(){
         return import.meta.env.VITE_API_URL;
     } 
@@ -74,6 +71,35 @@ export class AuthService{
                 'Content-Type': 'application/json'
             }
         })
+    }
+
+
+    static async enviarVerificacionEmail(email){
+        const url = this.urlBase() + '/user/enviar-verificacion-email';
+
+        return await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({
+                email: email
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
+    static async validarEmail(token){
+        const url = this.urlBase() + '/user/validar-email';
+
+        return await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({
+                token: token
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
 }
 

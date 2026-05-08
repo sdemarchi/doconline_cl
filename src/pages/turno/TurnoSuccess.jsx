@@ -1,6 +1,6 @@
 import icon from '../../assets/icon-success.png';
 //import { useState } from 'react';
-import { ActionButton, LinkButtonCenter } from '../../components/Buttons';
+import { ActionButton } from '../../components/Buttons';
 import useTurno from '../../hooks/useTurno';
 import Contacto from '../../components/contacto/contacto';
 import './turno.css';

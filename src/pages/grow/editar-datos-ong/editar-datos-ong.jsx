@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import NotificacionEmergente from '../../../components/notificacion-emergente/notificacion-emergente';
 import { ONGService } from '../../../data/grows';
 import MensajeConfirmacion from '../../../components/mensajeConfirmacion/mensajeConfirmacion';
-import { useState,useEffect } from 'react';
+import { useState } from 'react';
 
 
 export default function EditarDatosONG() {
@@ -52,7 +52,7 @@ export default function EditarDatosONG() {
         ONGService.editarDatosONG(grow.idgrow, { nombreApellido: nombreYApellido, dni: dni })
         .then(() => {
           userData.dni = dni;
-          grow.titular = titular;
+          grow.titular = nombreYApellido;
           setCargando(false);
           setMostrarMensajeFinalizado(true)
 
@@ -79,7 +79,7 @@ export default function EditarDatosONG() {
             navigate("/tu-grow/");
          }}
  
-         onCancelar={() => setMostrarConfirmacionDesvincular(false)}
+         onCancelar={() => setMostrarMensajeFinalizado(false)}
        />
  
       { cargando ? <Spinner/> :
@@ -100,4 +100,4 @@ export default function EditarDatosONG() {
         <NotificacionEmergente show={error} setShow={setError} text="Ha ocurrido un error" />
       </div>
     );
-};
+}

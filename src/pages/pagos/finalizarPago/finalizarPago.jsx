@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import PagosService from '../../../data/pagos';
 import './finalizarPago.css';
 import '../pagos.css';
+import { copyToClipboard } from '../../../utils/utilFunctions';
 import { ActionButton } from "../../../components/Buttons";
 import Spinner from "../../../components/Spinner";
 import axios from 'axios';
@@ -43,10 +44,16 @@ export default function FinalizarPago(){
     const userDataObject = JSON.parse(userDataString);
 
     PagosService.buscarPorEmail(userDataObject?.email).then((resp)=>{
-      setPago(resp);
-      setCargando(false);
-  });
+        setPago(resp);
+        setCargando(false);
+    });
   }
+
+  const copiarAlPortapapeles = (recurso) => {
+    copyToClipboard(recurso); 
+  }
+  
+
 
   const subirArchivo = async (e) => {
     setEnviando(true);

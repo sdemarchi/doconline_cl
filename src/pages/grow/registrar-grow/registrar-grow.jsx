@@ -1,4 +1,4 @@
-import { ActionButton, LinkButton } from '../../../components/Buttons';
+import { ActionButton } from '../../../components/Buttons';
 import { InputState, SelectState } from '../../../components/FormInput';
 import Card from '../../../components/card/card';
 import Title from '../../../components/title/title';
@@ -38,7 +38,7 @@ export default function RegistrarGrow(){
       setRequiredError(true);
       setProvinceError(false);
       return false;
-    };
+    }
 
     if(provincia === 0){
       setProvinceError(true);
@@ -130,4 +130,4 @@ export default function RegistrarGrow(){
       <NotificacionEmergente show={error} setShow={setError} text="Ha ocurrido un error" />
     </div>
   );
-};
+}

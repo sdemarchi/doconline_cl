@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { SubmitButton } from '../../components/Buttons';
 import useForm from '../../hooks/useForm';
 import TextArea from '../../components/TextArea';
-import /*RadioSiNo, */{RadioSiNoAlt} from '../../components/Radio';
+import {RadioSiNoAlt} from '../../components/Radio';
 import { useForm as useFormHook } from "react-hook-form";
 import { ErrorMax } from '../../components/Error';
 import './formReprocann.css';

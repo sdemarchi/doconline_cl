@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useActionData, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FormInput , FormInputDate } /*,{ FormInputReadonly }*/ from '../../components/FormInput';
 import { SubmitButton } from '../../components/Buttons';
 import { esFechaValida } from '../../utils/validation';
@@ -12,7 +12,6 @@ import Spinner from '../../components/Spinner';
 function GoogleRegister() {
     const { setUser, googleProfile } = useAuth();
     const navigate = useNavigate();
-    const actionResult = useActionData();
 
     // ------------ MODEL ------------ //
     const [ nombre, setNombre ] = useState();
@@ -112,7 +111,7 @@ function GoogleRegister() {
     return (
         <div className="register-container">
             { inSubmit ?
-            <div class="page"> <Spinner /> </div>:
+            <div className="page"> <Spinner /> </div>:
             <>
             <div className='mb-2' style={{textAlign:'center',paddingBottom:'15px',paddingTop:'20px'}}>
               <h2 className="black-title">Registrar usuario</h2>

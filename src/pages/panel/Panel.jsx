@@ -1,4 +1,4 @@
-import { LinkButton, MiniActionButtonRed } from '../../components/Buttons';
+import { LinkButton} from '../../components/Buttons';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { perfil, descargarFormulario, getTurnoPaciente } from '../../data/pacientes';
 import { getGrowByEmail } from '../../data/grows';
@@ -57,7 +57,7 @@ function Panel() {
     async function cancelarMiTurno() {
         const response = await cancelarTurno(user.userId);
 
-        PagosService.setUtilizado(pago.id,false).then((resp) => {
+        PagosService.setUtilizado(pago.id,false).then(() => {
             setPago({...pago, utilizado:0});
         });
         
@@ -125,11 +125,7 @@ function Panel() {
             
             cargarTurnoPaciente();
             setGrowAdmin(resp);
-            
-            /*.then((response)=>{ todo: que paso aca
-                setPago(response);
-            });*/
-        });;
+        });
     }
 
 
@@ -156,7 +152,7 @@ function Panel() {
             }
 
             return navigate('/turno');
-        };
+        }
     }
 
 
@@ -236,7 +232,7 @@ function Panel() {
 
 
                 <ColorCard show={pago?.utilizado === 0 && pago?.verificado === 1} title="Tus pagos" color1="#009FD2" color2="#CE9CEE" color='white' animate onlyPc>
-                    <p class="mt-1">Tenés un pago a tu favor. Podes usarlo en tu próximo turno.</p>
+                    <p className="mt-1">Tenés un pago a tu favor. Podes usarlo en tu próximo turno.</p>
                 </ColorCard> 
 
 
@@ -282,7 +278,7 @@ function Panel() {
 
 
                 <ColorCard show={pago?.utilizado === 0 && pago?.verificado === 1} title="Tus pagos" color1="#009FD2" color2="#CE9CEE" color='white' animate onlyCel responsive>
-                    <p class="mt-1">Tenés un pago a tu favor. Podes usarlo en tu próximo turno.</p>
+                    <p className="mt-1">Tenés un pago a tu favor. Podes usarlo en tu próximo turno.</p>
                 </ColorCard>
                     
           

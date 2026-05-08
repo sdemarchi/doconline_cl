@@ -11,7 +11,6 @@ function FormRep5() {
 
     const navigate = useNavigate();
     const { enviarFormulario } = useForm();
-    const [ error, setError ] = useState('');
     const [ cargando, setCargando ] = useState(false);
 
     async function finalizar() {
@@ -25,7 +24,7 @@ function FormRep5() {
             return navigate('/form-success');
         } else {
             setCargando(false);
-            setError(resp);
+            
         }
     }
 

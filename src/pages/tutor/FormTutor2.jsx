@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import logo from '../assets/logo-doconline-reprocann-500.png'
-import/* FormInput,*/ { FormInputHook } from '../../components/FormInput';
-import { SubmitButton,/* LinkButton*/ } from '../../components/Buttons';
+import { FormInputHook } from '../../components/FormInput';
+import { SubmitButton } from '../../components/Buttons';
 import RadioSiNo from '../../components/Radio';
 import { useForm as useFormHook } from "react-hook-form";
 import Error, { ErrorMax, ErrorReq } from '../../components/Error';
 import useForm from '../../hooks/useForm';
 import { getProvincias } from '../../data/pacientes';
-import Select/*, { SelectHook }*/ from '../../components/select/Select';
+import Select from '../../components/select/Select';
 import Contacto from '../../components/contacto/contacto';
 import './tutor.css';
-//import { selectValidator } from '../data/validators'
+
 
 function FormTutor2() {
     const { register, formState: { errors }, handleSubmit } = useFormHook()

@@ -3,7 +3,12 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100%;
+    max-width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    position:absolute;
+    top:0;
+    left:0;
 }
 
 .validar-email-container h2{
@@ -16,4 +21,45 @@
 
 .validar-email-container p{
     margin-bottom: 30px;
+}
+
+.validar-email-container p strong{ 
+    color:rgb(75, 75, 75)
+}
+
+
+.validar-email-container .correo-reenviado-alert{
+    background: #31cd67;
+    color: #ffffff;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.validar-email-container .reenviar{
+    background: #ededed;
+    color: #212121;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.validar-email-container .reenviar p{
+    margin-bottom: 10px;
+}
+
+@media screen {
+    .validar-email-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 100vw;
+        height: 100vh;
+        box-sizing: border-box;
+    }
+
 }
