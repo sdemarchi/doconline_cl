@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "moduleResolution": "bundler",
+    "ignoreDeprecations": "6.0"
+  }
+}

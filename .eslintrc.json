@@ -6,26 +6,43 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:react/jsx-runtime"
+    "plugin:react/jsx-runtime",
+    "plugin:import/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
     "ecmaFeatures": {
-
       "jsx": true
     },
     "sourceType": "module"
   },
-  "plugins": ["react"],
+  "plugins": [
+    "react",
+    "import"
+  ],
   "rules": {
     "react/display-name": "off",
     "no-unused-vars": "warn",
     "react/prop-types": "off",
-    "no-undef": "error"
+    "no-undef": "error",
+    "import/no-unresolved": "error",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never"
+      }
+    ]
   },
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx"]
+      }
     }
   }
 }
