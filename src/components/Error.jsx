@@ -26,10 +26,10 @@ function ErrorGral({children,show}) {
 function ErrorForm({children,show}) {
   return (
     <>
-    {show !== false &&  
-    <h6 className="text-red-600 text-center" style={{fontSize:'16px'}}>
-        {children}
-    </h6>}
+      {show !== false &&  
+      <h6 className="text-red-600 text-center" style={{fontSize:'16px'}}>
+          {children}
+      </h6>}
     </>
   )
 }
@@ -74,7 +74,7 @@ function ErrorVal({children}) {
 }
 
 function CustomError({ mostrar, children }) {
-  return mostrar && <span style={{color:'red',fontFamily:'Montserrat',transform:'translateY(-12px)',display:'block'}}>{children}</span>;
+  return mostrar && <span style={{color:'red',fontSize:'14px',fontFamily:'Montserrat',transform:'translateY(-12px)',display:'block'}}>{children}</span>;
 }
 
 

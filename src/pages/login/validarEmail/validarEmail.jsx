@@ -1,10 +1,10 @@
-import Card from "../../../components/card/card.jsx";
+import Card from "../../../components/card/card";
 import { useLocation, useNavigate } from 'react-router-dom';
 import './validarEmail.css';
-import { ActionButton } from "../../../components/Buttons.jsx";
+import { ActionButton } from "../../../components/Buttons";
 import Spinner from '../../../components/Spinner';
 import { useEffect, useRef, useState } from "react";
-import { AuthService } from "../../../data/auth.js";
+import { AuthService } from "../../../data/auth";
 
 export default function ValidarEmail() {
 

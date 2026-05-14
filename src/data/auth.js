@@ -17,12 +17,12 @@ export async function restablecer(datos) {
   }
   
 
-  export async function restablecerSendMail(email) {
+  export async function restablecerSendMail(dni) {
     const url = import.meta.env.VITE_API_URL + '/turnero.restablecerSendMail';
     try {
         const respuesta = await fetch(url, {
             method: 'POST',
-            body: JSON.stringify({email:email}),
+            body: JSON.stringify({dni:dni}),
             headers: {
                 'Content-Type': 'application/json'
             }

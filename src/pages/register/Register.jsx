@@ -9,6 +9,7 @@ import useAuth from '../../hooks/useAuth';
 import './register.css';
 import Spinner from '../../components/Spinner';
 import { AuthService } from '../../data/auth';
+import Storage from '../../utils/Storage/Storage';
 
 function Register() {
     const { setUser } = useAuth();
@@ -16,27 +17,25 @@ function Register() {
 
     // ------------ MODEL ------------ //
     const [ nombre, setNombre ] = useState("");
-    const [ username, setUsername] = useState("");
     const [ email, setEmail ] = useState("");
     const [ telefono, setTelefono ] = useState("");
     const [ fechaNac, setFechaNac ] = useState("");
     const [ dni, setDni ] = useState("");
-    const [ domicilio, setDomicilio ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ grow, setGrow ] = useState("");
     //----------------------------------//
 
     const [ confirmarTelefono, setConfirmarTelefono ] = useState("");
-    const [ confirmarEmail, setConfirmarEmail ] = useState("");
     const [ confirmarPassword, setConfirmarPassword ] = useState("");
 
     const [ errores, setErrores ] = useState();
     const [ inSubmit, setInSubmit ] = useState();
 
+
+    // Seteo el growId mediante el cual se registro el usuario mediante QR o Link
     const getGrow = () =>{
-        if (localStorage.getItem('growId')) {
-            const growId_ = localStorage.getItem('growId');
-            setGrow(growId_);
+        if (Storage.getUserGrowId()) {
+            setGrow(Storage.getUserGrowId());
         }else{
             setGrow(null);
         }
@@ -54,8 +53,8 @@ function Register() {
         const errores_ = [];
         
         if (!datos.nombre || !datos.telefono || !datos.fecha_nac || !datos.dni 
-            || !datos.domicilio || !datos.email || !datos.password || !datos.username 
-            || !confirmarPassword || !confirmarEmail || !confirmarTelefono){
+            || !datos.email || !datos.password || !confirmarPassword  
+            || !confirmarTelefono){
 
             errores_.push('Todos los campos son obligatorios');
         }
@@ -71,11 +70,7 @@ function Register() {
         if(confirmarPassword && (datos.password != confirmarPassword)){
             errores_.push('Las contraseñas no coinciden');
         }
-
-        if(confirmarEmail && (datos.email != confirmarEmail)){
-            errores_.push('Los emails no coinciden');
-        }
-
+        
         if(errores_.length){
             setErrores(errores_);
             return false;
@@ -94,16 +89,14 @@ function Register() {
 
         const datos = {
             nombre:nombre,
-            username:username,
             password:password,
             telefono:telefono,
             email:email,
-            domicilio:domicilio,
             dni:dni,
             fecha_nac:fechaNac,
             grow:grow
         }
-    
+        
         const formIsValid = validate(datos);
     
         if(formIsValid){
@@ -117,10 +110,13 @@ function Register() {
 
             } else if(resp.error.code  == AuthService.CodigoRespuesta.NO_VERIFICADO){
                 setUserSession({userId: resp.user.id, userName: resp.user.name});
+               
                 return navigate('/validar-email', {state:{email:datos.email}});
+
             }else{
                 setErrores([resp.error.message])
             }
+
         }else{
             setInSubmit(false);
         }
@@ -128,6 +124,7 @@ function Register() {
 
     useEffect(() => {
         getGrow();
+        Storage.fromLogin(); // Indico que el usuario viene de Registrarse lo cual es necesario para definir el comportamiento de la pantalla inicial.
     },[])
     
     return (
@@ -145,16 +142,12 @@ function Register() {
                     <FormInput setState={setDni} type={"number"} label="DNI*" id="dni" maxlenght="10" placeholder="12345676" />
                 </div>
 
-                <FormInput setState={setDomicilio} type={"text"} label="Domicilio*" id="direccion" placeholder="Calle y Número" />
-
                 <div className='flex flex-row space-x-2'>
                     <FormInput setState={setTelefono} type={"number"} label="Teléfono*" id="telefono" placeholder="342 4392819" />
                     <FormInput setState={setConfirmarTelefono} type={"number"} label="Confirmar Teléfono*" id="telefono_conf" placeholder="342 4392819" />
                 </div>
 
                 <FormInput setState={setEmail} type={"text"} label="E-Mail*" id="email" placeholder="usuario@mail.com" />
-                <FormInput setState={setConfirmarEmail} type={"text"} label="Confirmar E-Mail*" id="email_conf" placeholder="usuario@mail.com" />
-                <FormInput setState={setUsername}type="text" label="Nombre de Usuario*" id="username" placeholder="ingrese un nombre de usuario" />
 
                 <div className='flex flex-row space-x-2'>
                     <FormInput setState={setPassword} type={"password"} label="Contraseña*" id="password"/>

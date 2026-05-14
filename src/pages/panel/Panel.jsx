@@ -15,6 +15,7 @@ import Nav from '../../components/nav/nav';
 import {GrFormNext } from "react-icons/gr";
 import Card from '../../components/card/card';
 import LinkCard from '../../components/link-card/link-card';
+import Storage from '../../utils/Storage/Storage';
 import ColorCard from '../../components/color-card/color-card';
 import PagosService from '../../data/pagos';
 import NotificacionEmergente from '../../components/notificacion-emergente/notificacion-emergente';
@@ -109,10 +110,8 @@ function Panel() {
     }
 
 
-
     const subirScroll = () => window.scrollTo(0, 0);
     
-
 
     const getGrow = async (email) => {
         getGrowByEmail(email).then((resp)=>{
@@ -131,11 +130,11 @@ function Panel() {
 
 
     const redireccionar = () => { // Redirecciona a url interna si esta esta especificada y si los datos estan cargados
-        const fromLogin = localStorage.getItem('fromLogin') || false;
+        const fromLogin = Storage.isFromLogin();
         const urlRedirect = localStorage.getItem('redirect') || false;
         
         if(growAdmin?.idgrow && growCargado && pacienteCargado && fromLogin){
-            localStorage.removeItem('fromLogin');
+            Storage.removeFromLogin();
 
             if(urlRedirect){
                 localStorage.removeItem('redirect');
@@ -146,7 +145,7 @@ function Panel() {
 
         }else if(turnoPaciente?.id == 0 && fromLogin && growCargado && pacienteCargado && !growAdmin?.idgrow){
             if(urlRedirect){
-                localStorage.removeItem('fromLogin');
+                Storage.removeFromLogin();
                 localStorage.removeItem('redirect');
                 return navigate('/'+urlRedirect );
             }
@@ -158,8 +157,7 @@ function Panel() {
 
 
     function logout() {
-        localStorage.clear();
-        localStorage.clear();
+        Storage.clear();
         return navigate('/login');
     }
 
@@ -175,7 +173,6 @@ function Panel() {
             localStorage.removeItem('grow-success');
             setNotificacionGrow(true);
         }
-
     },[]) //eslint-disable-line
 
 

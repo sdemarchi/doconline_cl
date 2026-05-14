@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Card from "../../../components/card/card.jsx";
+import Card from "../../../components/card/card";
 import Spinner from "../../../components/Spinner";
 import useAuth from '../../../hooks/useAuth';
-import { AuthService } from "../../../data/auth.js";
-
+import { AuthService } from "../../../data/auth";
 import Storage from '../../../utils/Storage/Storage';
 import RolUsuario from '../../../enum/RolUsuario';
 
@@ -89,6 +88,7 @@ export default function VerificarToken() {
 
 
     useEffect(() => {
+        Storage.fromLogin();
         verificar();
 
     }, [token]);

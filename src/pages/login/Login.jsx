@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {Link, useLocation, useNavigate } from 'react-router-dom';
+import {Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import logo from '../../assets/logo-doconline.jpg';
 import { LoginInput } from '../../components/FormInput';
 import {LoginButton } from '../../components/Buttons';
@@ -12,10 +12,10 @@ import Spinner from '../../components/Spinner';
 import './login.css';
 import minImage from '../../assets/min_salud.png';
 import reproImage from '../../assets/reprocan.png';
-import { useParams } from 'react-router-dom';
 import { getGrowByRoute } from '../../data/grows';
 import Storage from '../../utils/Storage/Storage';
 import RolUsuario from '../../enum/RolUsuario';
+
 
 function Login() {
     const { setUser, setGoogleProfile } = useAuth();
@@ -43,13 +43,11 @@ function Login() {
         const queryParams = new URLSearchParams(location.search);
         const route = queryParams.get('redirect');
 
-        if(route) localStorage.setItem('redirect',route);
+        if(route) localStorage.setItem('redirect', route);
     }
     
     document.addEventListener("keydown", function(event) {
-        if (event.key === "Enter") {
-            loginButton.click();
-        }
+        if (event.key === "Enter") loginButton.click();
     });
 
     // Guardo los datos del grow extraido de la URL el cual se usa para el codigo de descuento.
@@ -57,19 +55,17 @@ function Login() {
     const getGrowDeURL = () => {
         if(growRoute !== undefined){
             getGrowByRoute(growRoute).then((resp)=>{
-                localStorage.setItem('growId',resp.idgrow);
+                Storage.setUserGrowId(resp.idgrow);
             });
         }else{
-            if (localStorage.getItem('growId')) {
-                localStorage.removeItem('growId');
-            }
+            if (Storage.getUserGrowId()) Storage.removeUserGrowId();
         }
     }
 
     useEffect(() => {
         Storage.clear();
         setRedirect();
-        localStorage.setItem('fromLogin', 'true');
+        Storage.fromLogin(); // Indico que el usuario viene del Login lo cual es necesario para definir el comportamiento de la pantalla inicial.
         getGrowDeURL();
 
         if (googleUser) {
@@ -93,7 +89,7 @@ function Login() {
 
     async function login() {
         if([userid, password].includes('')) {
-            return setAlerta({ msg: 'Todos los campos son obligatorios',error: true });
+            return setAlerta({ msg: 'Todos los campos son obligatorios', error: true });
         }
 
         setContenidoCargado(false);

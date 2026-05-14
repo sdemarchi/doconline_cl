@@ -1,11 +1,11 @@
 
-async function toBase64(file: File, format:string, maxWidth?: number, maxHeight?: number): Promise<string | null> {
+async function toBase64(file, format, maxWidth, maxHeight){
   return new Promise((resolve) => {
     const reader = new FileReader();
 
     reader.onload = (event) => {
       const img = new Image();
-      img.src = event.target?.result as string;
+      img.src = event.target?.result;
 
       img.onload = () => {
         const width = img.width;

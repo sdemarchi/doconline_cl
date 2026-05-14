@@ -4,8 +4,6 @@ import { getDatosTransf } from '../../../data/turnero';
 import useAuth from '../../../hooks/useAuth';
 import useTurno from '../../../hooks/useTurno';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-import { confirmarTurno } from '../../../data/turnero';
-import { setGrowPaciente } from '../../../data/pacientes';
 import Spinner from '../../../components/Spinner';
 import axios from 'axios';
 import copyIcon from '../../../assets/copy-icon.ico';
@@ -24,17 +22,12 @@ function RegalarTransf() {
 
     //-- VARIABLES DE SESION PARA EVITAR PERDER DATOS AL ACTUALIZAR ---------
     const importeSession = localStorage.getItem("precio_transf");
-    const turnoSession = JSON.parse(localStorage.getItem("turno"));
-    const cuponSession = JSON.parse(localStorage.getItem("cupon_validado"));
-
     const { turno, cuponValidado, comprobante, setComprobante } = useTurno();//eslint-disable-line
     //-----------------------------------------------------------------------
 
-    const user = useOutletContext();
     const navigate = useNavigate();
     const [cbu, setCbu] = useState();
     const [alias, setAlias] = useState();
-    const [cargando] = useState(0);
     const [enviando, setEnviando] = useState(false);
     const [uploadResult, setUploadResult] = useState(0);
     const [datosCargados, setDatosCargados] = useState(false);
