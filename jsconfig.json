@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "target": "ES2021",
+    "module": "ESNext",
     "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "baseUrl": "./src",
     "ignoreDeprecations": "6.0"
-  }
+  },
+  "include": ["src"]
 }
