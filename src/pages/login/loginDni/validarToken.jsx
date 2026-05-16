@@ -61,6 +61,7 @@ export default function LoginToken() {
                 });
 
                 if (user.tipoGrow == RolUsuario.Grow) {
+
                     Storage.setRol(RolUsuario.Grow);
 
                 } else if (user.tipoGrow == RolUsuario.ONG) {
