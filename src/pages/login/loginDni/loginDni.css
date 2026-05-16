@@ -1,0 +1,40 @@
+.login-dni-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(240, 240, 240);
+  width: 100%;
+  padding:8px 15px;
+  min-height: calc(100vh);
+  margin:0;
+  z-index: 10000;
+
+}
+
+.login-dni-content{
+    width: 600px;
+}
+
+.login-dni-content h1{
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+}
+
+
+.login-dni-card-container{
+  margin: 10px 0;
+  margin-bottom: 50px;
+}
+
+.login-dni-card-container input{
+  margin: 5px 0;
+}
+
+.login-dni-card-msg{
+  font-family:'Montserrat', sans-serif;
+  color:rgb(58, 58, 58);
+  font-size: 15px;
+  font-weight:500;
+  margin-top:0;
+}

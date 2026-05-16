@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Login from './pages/login/Login.jsx';
-import Register from './pages/register/Register.jsx';
-import Panel from './pages/panel/Panel.jsx';
+import Login from './pages/login/Login';
+import Register from './pages/register/Register';
+import Panel from './pages/panel/Panel';
 
 import FormRep1 from './pages/formReprocann/FormRep1';
 import FormRep2 from './pages/formReprocann/FormRep2';
@@ -22,36 +22,39 @@ import TurnoConf from './pages/turno/TurnoConf';
 import TurnoSuccess from './pages/turno/TurnoSuccess';
 import { AuthProvider } from './context/AuthProvider';
 import GuestLayout from './layouts/GuestLayout';
-import MainLayout from './layouts/MainLayout.jsx';
+import MainLayout from './layouts/MainLayout';
 
-import { TurnoProvider } from './context/TurnoProvider';
 import PagoTransf from './pages/pagos/PagoTransf';
 import FinalizarPago from './pages/pagos/finalizarPago/finalizarPago';
+import { TurnoProvider } from './context/TurnoProvider';
 import { FormProvider } from './context/FormProvider';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import FormRep3b from './pages/formReprocann/FormRep3b';
 import FormError from './pages/formReprocann/FormError';
 import GoogleRegister from './pages/register/GoogleRegister';
 import Ayuda from './pages/ayuda/ayuda';
-import Restablecer from './pages/restablecer/restablecer.jsx';
-import FormPassword from './pages/restablecer/formPassword.jsx';
-import RePassLayout from './layouts/RePassLayout.jsx';
-import ValidarEmail from './pages/login/validarEmail/validarEmail.jsx';
-import VerificarToken from './pages/login/validarEmail/verificarToken.jsx';
+import Restablecer from './pages/restablecer/restablecer';
+import FormPassword from './pages/restablecer/formPassword';
+import RePassLayout from './layouts/RePassLayout';
+import ValidarEmail from './pages/login/validarEmail/validarEmail';
+import VerificarToken from './pages/login/validarEmail/verificarToken';
 
-import Regalar from './pages/regalar-tramite/regalar.jsx';
-import RegalarTransf from './pages/regalar-tramite/regalar-transf/regalar-transf.jsx';
-import RegalarPago from './pages/regalar-tramite/regalar-pago/regalar-pago.jsx';
-import RegalarFinalizar from './pages/regalar-tramite/regalar-finalizar/regalar-finalizar.jsx';
+import Regalar from './pages/regalar-tramite/regalar';
+import RegalarTransf from './pages/regalar-tramite/regalar-transf/regalar-transf';
+import RegalarPago from './pages/regalar-tramite/regalar-pago/regalar-pago';
+import RegalarFinalizar from './pages/regalar-tramite/regalar-finalizar/regalar-finalizar';
 
-import RegistrarGrow from './pages/grow/registrar-grow/registrar-grow.jsx';
-import TuGrow from './pages/grow/tu-grow/tu-grow.jsx';
-import GrowDetalles from './pages/grow/grow-detalles/growDetalles.jsx';
-import GrowEstadisticas from './pages/grow/grow-estadisticas/grow-estadisticas.jsx';
-import EstadisticasONG from './pages/grow/grow-estadisticas/ong-estadisticas.jsx';
-import EditarDatosONG from './pages/grow/editar-datos-ong/editar-datos-ong.jsx';
-import RegistrarPacienteOng from './pages/grow/registrar-paciente-ong/registrar-paciente-ong.jsx';
-import EditarPacienteOng from './pages/grow/editar-paciente-ong/editar-paciente-ong.jsx';
+import RegistrarGrow from './pages/grow/registrar-grow/registrar-grow';
+import TuGrow from './pages/grow/tu-grow/tu-grow';
+import GrowDetalles from './pages/grow/grow-detalles/growDetalles';
+import GrowEstadisticas from './pages/grow/grow-estadisticas/grow-estadisticas';
+import EstadisticasONG from './pages/grow/grow-estadisticas/ong-estadisticas';
+import EditarDatosONG from './pages/grow/editar-datos-ong/editar-datos-ong';
+import RegistrarPacienteOng from './pages/grow/registrar-paciente-ong/registrar-paciente-ong';
+import EditarPacienteOng from './pages/grow/editar-paciente-ong/editar-paciente-ong';
+import LoginDni from './pages/login/loginDni/loginDni';
+import LoginToken from './pages/login/loginDni/validarToken';
+
 
 const router = createBrowserRouter([
   {
@@ -220,15 +223,22 @@ const router = createBrowserRouter([
     {
       path: '/restablecer-password/:t',
       element:<FormPassword/>
+    },    {
+      path: '/login-con-dni',
+      element:<LoginDni/>
     },
     {
-        path: '/validar-email',
-        element:<ValidarEmail/>
+      path: '/validar-email',
+      element:<ValidarEmail/>
     },
     {
-        path: '/verificar-email/:token',
-        element:<VerificarToken/>
-      }
+      path: '/verificar-email/:token',
+      element:<VerificarToken/>
+    },
+    {
+      path: '/login-token/:token',
+      element:<LoginToken/>
+    }
   ]
 }
 ],  

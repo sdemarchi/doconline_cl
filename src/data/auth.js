@@ -36,6 +36,9 @@ export async function restablecer(datos) {
 }
 
 
+
+
+
 export class AuthService{
 
     static CodigoRespuesta = {
@@ -90,6 +93,40 @@ export class AuthService{
 
     static async validarEmail(token){
         const url = this.urlBase() + '/user/validar-email';
+
+        return await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({
+                token: token
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
+
+    static async loginConDni(dni) {
+        const url = import.meta.env.VITE_API_URL + '/user/login-dni';
+        try {
+            const respuesta = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify({dni:dni}),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            const resp = await respuesta.json()
+            return resp;
+    
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+
+    static async loginConToken(token){
+        const url = this.urlBase() + '/user/login-token';
 
         return await fetch(url, {
             method: 'POST',

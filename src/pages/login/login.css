@@ -44,16 +44,24 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
   padding:0 3px;
   margin:10px 0;
   border-color: rgb(219, 219, 219);
   height: 45px;
   width: 100%;
+  padding-left: 15px;
+}
+
+.login-dni-button-icon{
+  color:rgb(20, 174, 209);
+  font-size: 24px;
+  margin:0;
+  height: 30px;
+  margin-right: 2px;
 }
 
 .login-google-button-text{
-  color:rgba(19, 203, 235, 0.753);
+  color:rgba(4, 149, 165, 0.753);
   font-family: 'Montserrat', sans-serif !important;
   font-weight: 600;
   font-size: 15px;

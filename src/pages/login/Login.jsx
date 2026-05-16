@@ -15,6 +15,7 @@ import reproImage from '../../assets/reprocan.png';
 import { getGrowByRoute } from '../../data/grows';
 import Storage from '../../utils/Storage/Storage';
 import RolUsuario from '../../enum/RolUsuario';
+import { FaRegAddressCard } from "react-icons/fa";
 
 
 function Login() {
@@ -96,12 +97,9 @@ function Login() {
         const esEmail = regex_mail.test(userid);
         let respuesta;
 
-        if(esEmail) {
-            respuesta = await AuthService.loginEmail(userid,password);   
-        }else{
-            respuesta = await AuthService.login(userid,password);
-        }
-
+        if(esEmail) respuesta = await AuthService.loginEmail(userid,password);   
+        else respuesta = await AuthService.login(userid,password);
+    
         const resp = await respuesta.json();
 
         if(resp.error.code == AuthService.CodigoRespuesta.OK){
@@ -209,6 +207,11 @@ function Login() {
                     className="login-google-button px-4 py-2 border flex gap-2 border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150">
                     <img className="login-google-button-icon" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"/>
                     <span className="login-google-button-text">Iniciar sesión / registrarme con Google</span>
+                </button>
+                <button onClick={() => navigate('/login-con-dni')}
+                    className="login-google-button px-4 py-2 border flex gap-2 border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150">
+                    <FaRegAddressCard className="login-dni-button-icon" loading="lazy"/>
+                    <span className="login-google-button-text">Iniciar sesión con mi número de DNI</span>
                 </button>
 
                 <span className="login-o">o</span>
