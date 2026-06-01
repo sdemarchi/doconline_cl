@@ -9,8 +9,9 @@ export default class Storage {
 
     static setRol = (rol) => {
         if (typeof rol !== "number") {
-        throw new Error("El rol debe ser un número entero");
+            throw new Error("El rol debe ser un número entero");
         }
+
         console.info('Setting role:', rol);
 
         const encoded = btoa(rol.toString());

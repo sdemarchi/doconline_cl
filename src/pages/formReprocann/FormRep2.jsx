@@ -91,34 +91,14 @@ function FormRep2() {
                 { errors.localidad?.type == 'required' && <ErrorReq>Localidad</ErrorReq> }
                 { errors.localidad?.type == 'maxLength' && <ErrorMax>255</ErrorMax> }
 
-                <FormInputHook label="Domicilio*" id="domicilio" 
-                    defaultValue={form2?.domicilio}
-                    maxLength={255}
-                    register={ register('domicilio', {required:true, maxLength:255}) }
+                <FormInputHook label="Código Postal*" id="cp" 
+                    defaultValue={form2?.cp}
+                    maxLength={20}
+                    register={ register('cp', {required:true, maxLength:20}) }
                 />
-                { errors.domicilio?.type == 'required' && <ErrorReq>Domicilio</ErrorReq> }
-                { errors.domicilio?.type == 'maxLength' && <ErrorMax>255</ErrorMax> }
+                { errors.cp?.type == 'required' && <ErrorReq>Código Postal</ErrorReq> }
+                { errors.cp?.type == 'maxLength' && <ErrorMax>20</ErrorMax> }
 
-                <div className='flex flex-row'>
-                    <div className='basis-1/2 pe-1'>
-                        <FormInputHook label="Código Postal*" id="cp" 
-                            defaultValue={form2?.cp}
-                            maxLength={20}
-                            register={ register('cp', {required:true, maxLength:20}) }
-                        />
-                        { errors.cp?.type == 'required' && <ErrorReq>Código Postal</ErrorReq> }
-                        { errors.cp?.type == 'maxLength' && <ErrorMax>20</ErrorMax> }
-                    </div>
-                    <div className='basis-1/2 ps-1'>
-                        <FormInputHook label="Obra Social" id="osocial"
-                            defaultValue={form2?.osocial}
-                            maxLength={255}
-                            register={ register('osocial', {maxLength:255}) }
-                        />
-                        { errors.osocial?.type == 'maxLength' && <ErrorMax>255</ErrorMax> }
-                    </div>
-                </div>
-                
                 <label className="input-label">Ocupacion*</label>
                 <Select 
                     onChange={e => changeOcupacion(e)}

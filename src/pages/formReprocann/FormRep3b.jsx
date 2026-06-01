@@ -4,7 +4,6 @@ import { FormInputHook } from '../../components/FormInput';
 import { SubmitButton } from '../../components/Buttons';
 import useForm from '../../hooks/useForm';
 import TextArea from '../../components/TextArea';
-import {RadioSiNoAlt}  from '../../components/Radio';
 import { useForm as useFormHook } from "react-hook-form";
 import Error, { ErrorMax } from '../../components/Error';
 import { getContactos } from '../../data/pacientes';
@@ -17,7 +16,6 @@ function FormRep3b() {
     const { register, formState: { errors }, handleSubmit } = useFormHook();
     const { form3b, setForm3b, contactoActual, setContactoActual }  = useForm();
     const [contactos, setContactos] = useState([]);
-    const [esMenor, setEsMenor] = useState(false);
     const [cargando, setCargando] = useState(true);
     const [errorContacto, setErrorContacto] = useState(0);
     const navigate = useNavigate();
@@ -31,7 +29,6 @@ function FormRep3b() {
         async function cargaContactos(){
             const response = await getContactos();
             setContactos(response);
-            setEsMenor(form3b.es_menor);
             setCargando(false);
         }
         cargaContactos();
@@ -50,7 +47,7 @@ function FormRep3b() {
             return;
         }
         data.idcontacto = contactoActual;
-        data.es_menor = esMenor ? 1 : 0;
+        data.es_menor = 0;
         setForm3b(data);
 
         return data.es_menor ? navigate('/tutor-1') : navigate('/formulario-4');
@@ -97,13 +94,7 @@ function FormRep3b() {
                     register={ register('patologia', {maxLength:500}) }
                 />
                 { errors.patologia?.type == 'maxLength' && <ErrorMax>500</ErrorMax> }
-                
-                <RadioSiNoAlt 
-                    label="¿Otra persona cultivará para tí?"
-                    id="es_menor"
-                    checked={ esMenor }
-                    onChange={ () => setEsMenor(!esMenor) }
-                />
+
                 
                 <h6 className="text-gray-500 text-xs leading-3 pb-1 pt-2">Si la respuesta es Sí, ingrese a continuación los datos del tutor</h6>
                 
